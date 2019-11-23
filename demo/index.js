@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDom from 'react-dom'
+import FormBuilder from '../src';
 
 const Demo = () => {
     return (
-        <div>There will be dragons</div>
+        <FormBuilder />
     )
 }
 

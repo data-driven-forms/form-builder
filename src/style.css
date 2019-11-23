@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    padding: 0
+}
+
+.form>div{
+    margin: 16px
+}
+
+.container {
+    background:orange;
+    padding-top:.5em;
+    margin:1px;
+}

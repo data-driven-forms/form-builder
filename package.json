@@ -1,0 +1,11 @@
+{
+  "name": "@data-driven-forms/form-builder",
+  "version": "0.0.1",
+  "description": "Interactive drang and drop editor for creating data driven forms schema",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Martin Marosi",
+  "license": "MIT"
+}

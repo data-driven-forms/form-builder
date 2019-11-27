@@ -12,7 +12,7 @@ import StoreContext from './store-context';
 // );
 
 const Field = ({ field, index, shouldClone }) => {
-  const { FieldActions, FieldLayout, ...rest } = useContext(ComponentsContext);
+  const { componentMapper: { FieldActions, FieldLayout, ...rest } } = useContext(ComponentsContext);
   const { dispatch } = useContext(StoreContext);
   const FieldComponent = rest[field.component];
   const input = { name: field.name };

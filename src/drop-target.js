@@ -10,7 +10,7 @@ const DropTarget = ({
   isDropDisabled,
   shouldClone,
 }) => {
-  const { BuilderColumn } = useContext(ComponentsContext);
+  const { componentMapper: { BuilderColumn } } = useContext(ComponentsContext);
   return (
     <Droppable
       droppableId={dropTarget.id}

@@ -9,9 +9,17 @@ import { formFieldsMapper } from '@data-driven-forms/mui-component-mapper';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-const TextField = ({ input, meta }) => {
+const TextField = props => {
   const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
-  return <Component input={input} meta={meta} />;
+  return (
+    <div style={{
+      position: 'relative',
+      width: '100%',
+    }}
+    >
+      <Component {...props} />
+    </div>
+  );
 };
 
 const FieldActions = ({ onSelect, onDelete, fieldData }) => (

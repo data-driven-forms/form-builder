@@ -4,6 +4,7 @@ div.container {
   border-radius: 2px;
   display: flex;
   flex-direction: column;
+  min-height: calc(100% - 40px);
 }
 div.container:nth-child(2) {
   flex-grow: 1;
@@ -13,6 +14,7 @@ div.task-list {
   padding: 8px;
   min-height: 100px;
   flex-grow: 1;
+  min-height: calc(100% - 16px);
   transition: background-color ease-out .1s;
 }
 

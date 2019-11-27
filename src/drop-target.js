@@ -25,11 +25,11 @@ const DropTarget = ({
             dragging: snapshot.isDraggingOver,
           })}
         >
-          {fields.map((task, index) => (
+          {fields.map((field, index) => (
             <Field
               shouldClone={shouldClone}
-              key={task.id}
-              task={task}
+              key={field.id}
+              field={field}
               index={index}
             />
           ))}

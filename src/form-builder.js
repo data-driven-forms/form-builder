@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import DropTarget from './drop-target';
 import './style.css';
 import StoreContext from './store-context';
@@ -10,11 +11,11 @@ const FORM_LAYOUT = 'form-layout';
 
 const initialData = {
   fields: {
-    'initial-component-1': { id: 'initial-component-1', content: 'Some component of type 1' },
-    'initial-component-2': { id: 'initial-component-2', content: 'Some component of type 2' },
-    'initial-component-3': { id: 'initial-component-3', content: 'Some component of type 3' },
-    'initial-component-4': { id: 'initial-component-4', content: 'Some component of type 4' },
-    'initial-component-5': { id: 'initial-component-5', content: 'Some component of type 5' },
+    'initial-component-1': { preview: true, id: 'initial-component-1', content: 'Some component of type 1', component: componentTypes.TEXT_FIELD },
+    'initial-component-2': { preview: true, id: 'initial-component-2', content: 'Some component of type 2', component: componentTypes.TEXT_FIELD },
+    'initial-component-3': { preview: true, id: 'initial-component-3', content: 'Some component of type 3', component: componentTypes.TEXT_FIELD },
+    'initial-component-4': { preview: true, id: 'initial-component-4', content: 'Some component of type 4', component: componentTypes.TEXT_FIELD },
+    'initial-component-5': { preview: true, id: 'initial-component-5', content: 'Some component of type 5', component: componentTypes.TEXT_FIELD },
   },
   dropTargets: {
     [COMPONENTS_LIST]: {
@@ -78,7 +79,12 @@ const mutateColumns = (result, state) => {
   };
   return {
     dropTargets: { ...dropTargets, [newFinish.id]: newFinish },
-    fields: { ...fields, [newId]: { ...fields[draggableId], id: newId, initialized: false } },
+    fields: {
+      ...fields,
+      [newId]: {
+        ...fields[draggableId], name: fields[draggableId].component, preview: false, id: newId, initialized: false,
+      },
+    },
     selectedComponent: newId,
   };
 };

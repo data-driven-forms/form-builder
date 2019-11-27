@@ -12,8 +12,11 @@ import StoreContext from './store-context';
 // );
 
 const Field = ({ field, index, shouldClone }) => {
-  const { FieldActions } = useContext(ComponentsContext);
+  const { FieldActions, FieldLayout, ...rest } = useContext(ComponentsContext);
   const { dispatch } = useContext(StoreContext);
+  const FieldComponent = rest[field.component];
+  const input = { name: field.name };
+  const meta = {};
   return (
     <Draggable draggableId={field.id} index={index}>
       {(provided, snapshot) => (
@@ -26,14 +29,16 @@ const Field = ({ field, index, shouldClone }) => {
               dragging: snapshot.isDragging,
             })}
           >
-            {field.content}
-            {!shouldClone && (
-              <FieldActions
-                onDelete={() => dispatch({ type: 'removeComponent', payload: field.id })}
-                onSelect={() => dispatch({ type: 'setSelectedComponent', payload: field.id })}
-                fieldData={field}
-              />
-            )}
+            <FieldLayout>
+              {field.preview ? <div>{field.content}</div> : <FieldComponent {...field} input={input} meta={meta} />}
+              {!shouldClone && (
+                <FieldActions
+                  onDelete={() => dispatch({ type: 'removeComponent', payload: field.id })}
+                  onSelect={() => dispatch({ type: 'setSelectedComponent', payload: field.id })}
+                  fieldData={field}
+                />
+              )}
+            </FieldLayout>
           </div>
           {shouldClone && snapshot.isDragging && (
             <div className="task-container">{field.content}</div>

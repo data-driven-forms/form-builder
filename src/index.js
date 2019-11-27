@@ -2,6 +2,8 @@ import React, { useReducer } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import DropTarget from './drop-target';
 import './style.css';
+import StoreContext from './store-context';
+import PropertiesEditor from './properties-editor';
 
 const COMPONENTS_LIST = 'components-list';
 const FORM_LAYOUT = 'form-layout';
@@ -26,6 +28,7 @@ const initialData = {
       fieldsIds: [],
     },
   },
+  selectedComponent: undefined,
 };
 
 const mutateColumns = (result, state) => {
@@ -76,6 +79,7 @@ const mutateColumns = (result, state) => {
   return {
     dropTargets: { ...dropTargets, [newFinish.id]: newFinish },
     fields: { ...fields, [newId]: { ...fields[draggableId], id: newId, initialized: false } },
+    selectedComponent: newId,
   };
 };
 
@@ -89,26 +93,32 @@ const reducer = (state, action) => {
 };
 
 const FormBuilder = () => {
-  const [{ dropTargets, fields }, dispatch] = useReducer(reducer, initialData);
+  const [state, dispatch] = useReducer(reducer, initialData);
   const onDragEnd = result => dispatch({ type: 'setColumns', payload: result });
+  const { dropTargets, fields, selectedComponent } = state;
 
   return (
-    <DragDropContext
-      onDragEnd={onDragEnd}
-    >
-      <div className="layout">
-        <DropTarget
-          isDropDisabled
-          shouldClone
-          dropTarget={dropTargets[COMPONENTS_LIST]}
-          fields={dropTargets[COMPONENTS_LIST].fieldsIds.map((taskId) => fields[taskId])}
-        />
-        <DropTarget
-          dropTarget={dropTargets[FORM_LAYOUT]}
-          fields={dropTargets[FORM_LAYOUT].fieldsIds.map((taskId) => fields[taskId])}
-        />
-      </div>
-    </DragDropContext>
+    <StoreContext.Provider value={{ state, dispatch }}>
+      <DragDropContext
+        onDragEnd={onDragEnd}
+      >
+        <div className="layout">
+          <DropTarget
+            isDropDisabled
+            shouldClone
+            dropTarget={dropTargets[COMPONENTS_LIST]}
+            fields={dropTargets[COMPONENTS_LIST].fieldsIds.map((taskId) => fields[taskId])}
+          />
+          <DropTarget
+            dropTarget={dropTargets[FORM_LAYOUT]}
+            fields={dropTargets[FORM_LAYOUT].fieldsIds.map((taskId) => fields[taskId])}
+          />
+          {selectedComponent && (
+            <PropertiesEditor />
+          )}
+        </div>
+      </DragDropContext>
+    </StoreContext.Provider>
   );
 };
 

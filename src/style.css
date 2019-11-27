@@ -1,5 +1,5 @@
 div.container {
-  margin: 8px;
+  margin: 16px;
   border: 1px solid lightgrey;
   border-radius: 2px;
   display: flex;
@@ -37,4 +37,5 @@ h3.title {
 }
 .layout { 
   display: flex;
+  padding: 8px;
 }

@@ -6,6 +6,8 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Box from '@material-ui/core/Box';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { formFieldsMapper } from '@data-driven-forms/mui-component-mapper';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 const TextField = ({ input, meta }) => {
   const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
@@ -25,10 +27,19 @@ const FieldLayout = ({ children }) => (
   </Box>
 );
 
+const BuilderColumn = ({ children, ...props }) => (
+  <Card {...props}>
+    <CardContent>
+      {children}
+    </CardContent>
+  </Card>
+);
+
 const builderMapper = {
   FieldActions,
   FieldLayout,
   [componentTypes.TEXT_FIELD]: TextField,
+  BuilderColumn,
 };
 
 export default builderMapper;

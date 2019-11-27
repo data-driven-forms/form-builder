@@ -1,14 +1,40 @@
-* {
-    margin: 0;
-    padding: 0
+div.container {
+  margin: 8px;
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+}
+div.container:last-child {
+  flex-grow: 1;
 }
 
-.form>div{
-    margin: 16px
+div.task-list {
+  padding: 8px;
+  min-height: 100px;
+  flex-grow: 1;
+  transition: background-color ease-out .1s;
 }
 
-.container {
-    background:orange;
-    padding-top:.5em;
-    margin:1px;
+div.task-list.dragging {
+  background-color: lightskyblue;
+}
+
+h3.title {
+  padding: 8px;
+}
+
+.task-container {
+  border: 1px solid lightgrey;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 2px;
+  background-color: white;
+  transition: background-color ease-out .1s;
+}
+.task-container.dragging {
+  background-color: lightgreen;
+}
+.layout { 
+  display: flex;
 }

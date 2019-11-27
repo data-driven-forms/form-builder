@@ -1,7 +1,7 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import clsx from 'clsx';
-import Task from './task';
+import Field from './field';
 
 const DropTarget = ({
   dropTarget,
@@ -26,7 +26,7 @@ const DropTarget = ({
           })}
         >
           {fields.map((task, index) => (
-            <Task
+            <Field
               shouldClone={shouldClone}
               key={task.id}
               task={task}

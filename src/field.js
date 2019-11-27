@@ -8,7 +8,7 @@ import clsx from 'clsx';
 //  </div>
 // );
 
-const Task = ({ task, index, shouldClone }) => (
+const Field = ({ task, index, shouldClone }) => (
   <Draggable draggableId={task.id} index={index}>
     {(provided, snapshot) => (
       <Fragment>
@@ -30,4 +30,4 @@ const Task = ({ task, index, shouldClone }) => (
   </Draggable>
 );
 
-export default Task;
+export default Field;

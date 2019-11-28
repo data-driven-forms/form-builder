@@ -32,6 +32,11 @@ const CheckBoxField = ({preview, id, component, initialized, ...props}) => {
   return <Component {...props} />;
 };
 
+const SelectField = ({preview, id, component, initialized, options, ...props}) => {
+  const Component = formFieldsMapper[componentTypes.SELECT];
+  return <Component {...props} options={options || []} />;
+};
+
 const FieldActions = ({ onSelect, onDelete, fieldData }) => (
   <ButtonGroup size="small" aria-label="small outlined button group">
     <Button onClick={onSelect} startIcon={<EditIcon />}>Edit</Button>
@@ -58,7 +63,10 @@ const builderMapper = {
   FieldLayout,
   [componentTypes.TEXT_FIELD]: TextField,
   [componentTypes.CHECKBOX]: CheckBoxField,
+  [componentTypes.SELECT]: SelectField,
   BuilderColumn,
 };
+
+console.log('builderMapper', builderMapper)
 
 export default builderMapper;

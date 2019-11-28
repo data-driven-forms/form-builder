@@ -25,7 +25,16 @@ const componentProperties = {
     IS_DISABLED,
     OPTIONS,
   ],
+  [componentTypes.SELECT]: [
+    OPTIONS,
+    LABEL,
+    IS_DISABLED,
+    PLACEHOLDER,
+    HELPER_TEXT,
+  ],
 };
+
+console.log(componentProperties, pickerMapper);
 
 const Demo = () => (
   <Fragment>

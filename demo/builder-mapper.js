@@ -27,7 +27,7 @@ const TextField = props => {
   );
 };
 
-const CheckBoxField = props => {
+const CheckBoxField = ({preview, id, component, initialized, ...props}) => {
   const Component = formFieldsMapper[componentTypes.CHECKBOX];
   return <Component {...props} />;
 };

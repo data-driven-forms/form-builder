@@ -57,7 +57,7 @@ const PropertiesEditor = () => {
             <Component
               key={property.propertyName}
               {...property}
-              value={field[property.propertyName] || ''}
+              value={field[property.propertyName]}
               onChange={value => handlePropertyChange(value, property.propertyName)}
             />
           );

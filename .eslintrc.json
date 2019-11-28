@@ -29,6 +29,7 @@
         "import/prefer-default-export": "off",
         "consistent-return": "off",
         "react/jsx-fragments": "off",
-        "arrow-parens": "off"
+        "arrow-parens": "off",
+        "no-confusing-arrow": "off"
     }
 }

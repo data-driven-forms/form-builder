@@ -1,3 +1,5 @@
+/* eslint react/no-array-index-key: "off" */
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -33,7 +35,7 @@ const Input = ({
         fullWidth
         label={label}
         onChange={({ target: { value } }) => onChange(value)}
-        value={value}
+        value={value || ''}
       />
     </div>
   );
@@ -73,7 +75,7 @@ const PropertySelect = ({
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={value}
+        value={value || ''}
         onChange={({ target: { value } }) => onChange(value)}
       >
         {options.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
@@ -82,10 +84,47 @@ const PropertySelect = ({
   );
 };
 
+const PropertyOptions = ({ value = [], label, onChange }) => {
+  const handleOptionChange = (option, index, optionKey) => onChange(
+    value.map((item, itemIndex) => index === itemIndex ? ({ ...item, [optionKey]: option }) : item),
+  );
+  const handleRemove = index => onChange(value.filter((_item, itemIndex) => itemIndex !== index));
+  return (
+    <div>
+      <div>
+        {label}
+      </div>
+      <div>
+        <button type="button" onClick={() => onChange([...value, { value: 'value', label: 'label' }])}>Add option</button>
+      </div>
+      <table>
+        {value.map(({ label, value }, index) => (
+          <tbody key={index}>
+            <tr>
+              <td>
+                label
+                <input onChange={({ target: { value } }) => handleOptionChange(value, index, 'label')} value={label || ''} type="text" />
+              </td>
+              <td>
+                value
+                <input onChange={({ target: { value } }) => handleOptionChange(value, index, 'value')} value={value || ''} type="text" />
+              </td>
+              <td>
+                <button type="button" onClick={() => handleRemove(index)}>Remove option</button>
+              </td>
+            </tr>
+          </tbody>
+        ))}
+      </table>
+    </div>
+  );
+};
+
 const propertiesMapper = {
   input: Input,
   switch: PropertySwitch,
   select: PropertySelect,
+  options: PropertyOptions,
 };
 
 export default propertiesMapper;

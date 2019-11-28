@@ -8,7 +8,7 @@ import builderMapper from './builder-mapper';
 import pickerMapper from './picker-mapper';
 import propertiesMapper from './properties-mapper';
 import {
-  LABEL, HELPER_TEXT, PLACEHOLDER, INPUT_TYPE, IS_DISABLED, IS_READ_ONLY,
+  LABEL, HELPER_TEXT, PLACEHOLDER, INPUT_TYPE, IS_DISABLED, IS_READ_ONLY, OPTIONS,
 } from './field-properties';
 
 const componentProperties = {
@@ -23,6 +23,7 @@ const componentProperties = {
   [componentTypes.CHECKBOX]: [
     LABEL,
     IS_DISABLED,
+    OPTIONS,
   ],
 };
 

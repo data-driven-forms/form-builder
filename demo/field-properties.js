@@ -34,3 +34,9 @@ export const IS_READ_ONLY = {
   label: 'Read only',
   component: 'switch',
 };
+
+export const OPTIONS = {
+  propertyName: 'options',
+  label: 'Options',
+  component: 'options',
+};

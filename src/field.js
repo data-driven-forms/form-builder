@@ -3,6 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import clsx from 'clsx';
 import ComponentsContext from './components-context';
 import StoreContext from './store-context';
+import MockFieldProvider from './mock-field-provider';
 
 
 // const Handle = ({ dragHandleProps }) => (
@@ -30,7 +31,7 @@ const Field = ({ field, index, shouldClone }) => {
             })}
           >
             <FieldLayout>
-              {field.preview ? <div>{field.content}</div> : <FieldComponent {...field} input={input} meta={meta} />}
+              {field.preview ? <div>{field.content}</div> : <FieldComponent {...field} FieldProvider={MockFieldProvider} input={input} meta={meta} />}
               {!shouldClone && (
                 <FieldActions
                   onDelete={() => dispatch({ type: 'removeComponent', payload: field.id })}

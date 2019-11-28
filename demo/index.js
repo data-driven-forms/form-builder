@@ -5,6 +5,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
 import builderMapper from './builder-mapper';
+import pickerMapper from './picker-mapper';
 
 const componentProperties = {
   [componentTypes.TEXT_FIELD]: [{
@@ -36,7 +37,11 @@ const Demo = () => (
   <Fragment>
     <CssBaseline />
     <ThemeProvider theme={createMuiTheme({})}>
-      <FormBuilder componentProperties={componentProperties} componentMapper={builderMapper} />
+      <FormBuilder
+        pickerMapper={pickerMapper}
+        componentProperties={componentProperties}
+        componentMapper={builderMapper}
+      />
     </ThemeProvider>
   </Fragment>
 );

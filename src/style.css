@@ -26,8 +26,18 @@ h3.title {
   padding: 8px;
 }
 
+@keyframes mount {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .task-container {
   border: 1px solid lightgrey;
+  animation: mount .5s;
   padding: 8px;
   margin-bottom: 8px;
   border-radius: 2px;

@@ -8,15 +8,29 @@ import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { formFieldsMapper } from '@data-driven-forms/mui-component-mapper';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useTextFieldStyles = makeStyles(() => ({
+  root: {
+    animation: `$mount .3s animation-iteration-count: 1`,
+    position: 'relative',
+    width: '100%',
+  },
+  '@keyframes mount': {
+    '0%': {
+      opacity: 0,
+    },
+    '100%': {
+      opacity: 1,
+    },
+  },
+}));
 
 const TextField = props => {
+  const classes = useTextFieldStyles()
   const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
   return (
-    <div style={{
-      position: 'relative',
-      width: '100%',
-    }}
-    >
+    <div className={classes.root}>
       <Component {...props} />
     </div>
   );

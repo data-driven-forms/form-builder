@@ -5,6 +5,7 @@ import DropTarget from './drop-target';
 import './style.css';
 import StoreContext from './store-context';
 import PropertiesEditor from './properties-editor';
+import ComponentPicker from './component-picker';
 
 const COMPONENTS_LIST = 'components-list';
 const FORM_LAYOUT = 'form-layout';
@@ -80,7 +81,7 @@ const mutateColumns = (result, state) => {
    * Copy to column
    */
 
-  const newId = draggableId.match(/^initial-/) ? draggableId.replace(/^initial-/, '') : draggableId;
+  const newId = Date.now().toString();
   const finishFieldsIds = [...finish.fieldsIds];
   finishFieldsIds.splice(destination.index, 0, newId);
   const newFinish = {
@@ -151,7 +152,7 @@ const FormBuilder = () => {
         onDragEnd={onDragEnd}
       >
         <div className="layout">
-          <DropTarget
+          <ComponentPicker
             isDropDisabled
             shouldClone
             dropTarget={dropTargets[COMPONENTS_LIST]}

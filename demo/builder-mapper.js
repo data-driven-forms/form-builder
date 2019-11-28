@@ -12,17 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useTextFieldStyles = makeStyles(() => ({
   root: {
-    animation: `$mount .3s animation-iteration-count: 1`,
     position: 'relative',
     width: '100%',
-  },
-  '@keyframes mount': {
-    '0%': {
-      opacity: 0,
-    },
-    '100%': {
-      opacity: 1,
-    },
   },
 }));
 

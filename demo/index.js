@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
 import builderMapper from './builder-mapper';
 import pickerMapper from './picker-mapper';
+import propertiesMapper from './properties-mapper';
 
 const componentProperties = {
   [componentTypes.TEXT_FIELD]: [{
@@ -24,12 +25,15 @@ const componentProperties = {
     label: 'Input Type',
     propertyName: 'type',
     options: ['text', 'number', 'password'],
+    component: 'select',
   }, {
     propertyName: 'isDisabled',
     label: 'Disabled',
+    component: 'switch',
   }, {
     propertyName: 'isReadOnly',
     label: 'Read only',
+    component: 'switch',
   }],
 };
 
@@ -41,6 +45,7 @@ const Demo = () => (
         pickerMapper={pickerMapper}
         componentProperties={componentProperties}
         componentMapper={builderMapper}
+        propertiesMapper={propertiesMapper}
       />
     </ThemeProvider>
   </Fragment>

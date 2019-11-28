@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import DropTarget from './drop-target';
 import './style.css';
 import StoreContext from './store-context';
@@ -10,38 +9,6 @@ import ComponentPicker from './component-picker';
 const COMPONENTS_LIST = 'components-list';
 const FORM_LAYOUT = 'form-layout';
 
-const initialData = {
-  fields: {
-    'initial-component-1': {
-      preview: true, id: 'initial-component-1', component: componentTypes.TEXT_FIELD,
-    },
-    'initial-component-2': {
-      preview: true, id: 'initial-component-2', component: componentTypes.TEXT_FIELD,
-    },
-    'initial-component-3': {
-      preview: true, id: 'initial-component-3', component: componentTypes.TEXT_FIELD,
-    },
-    'initial-component-4': {
-      preview: true, id: 'initial-component-4', component: componentTypes.TEXT_FIELD,
-    },
-    'initial-component-5': {
-      preview: true, id: 'initial-component-5', component: componentTypes.TEXT_FIELD,
-    },
-  },
-  dropTargets: {
-    [COMPONENTS_LIST]: {
-      id: COMPONENTS_LIST,
-      title: 'Component chooser',
-      fieldsIds: ['initial-component-1', 'initial-component-2', 'initial-component-3', 'initial-component-4', 'initial-component-5'],
-    },
-    [FORM_LAYOUT]: {
-      id: FORM_LAYOUT,
-      title: 'Form',
-      fieldsIds: [],
-    },
-  },
-  selectedComponent: undefined,
-};
 
 const mutateColumns = (result, state) => {
   const {
@@ -142,8 +109,8 @@ const reducer = (state, action) => {
   }
 };
 
-const FormBuilder = () => {
-  const [state, dispatch] = useReducer(reducer, initialData);
+const FormBuilder = ({initialFields}) => {
+  const [state, dispatch] = useReducer(reducer, initialFields);
   const onDragEnd = result => dispatch({ type: 'setColumns', payload: result });
   const { dropTargets, fields, selectedComponent } = state;
   return (

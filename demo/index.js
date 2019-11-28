@@ -7,38 +7,23 @@ import FormBuilder from '../src/index';
 import builderMapper from './builder-mapper';
 import pickerMapper from './picker-mapper';
 import propertiesMapper from './properties-mapper';
+import {
+  LABEL, HELPER_TEXT, PLACEHOLDER, INPUT_TYPE, IS_DISABLED, IS_READ_ONLY,
+} from './field-properties';
 
 const componentProperties = {
-  [componentTypes.TEXT_FIELD]: [{
-    propertyName: 'label',
-    label: 'Label',
-    component: 'input',
-  }, {
-    propertyName: 'helperText',
-    label: 'Helper text',
-    component: 'input',
-  }, {
-    propertyName: 'placeholder',
-    label: 'Placeholder',
-    component: 'input',
-  }, {
-    label: 'Input Type',
-    propertyName: 'type',
-    options: ['text', 'number', 'password'],
-    component: 'select',
-  }, {
-    propertyName: 'isDisabled',
-    label: 'Disabled',
-    component: 'switch',
-  }, {
-    propertyName: 'isReadOnly',
-    label: 'Read only',
-    component: 'switch',
-  }, {
-    propertyName: 'autoFocus',
-    label: 'Autofocus',
-    component: 'switch',
-  }],
+  [componentTypes.TEXT_FIELD]: [
+    LABEL,
+    HELPER_TEXT,
+    PLACEHOLDER,
+    INPUT_TYPE,
+    IS_DISABLED,
+    IS_READ_ONLY,
+  ],
+  [componentTypes.CHECKBOX]: [
+    LABEL,
+    IS_DISABLED,
+  ],
 };
 
 const Demo = () => (

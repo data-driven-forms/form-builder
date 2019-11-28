@@ -18,13 +18,18 @@ const useTextFieldStyles = makeStyles(() => ({
 }));
 
 const TextField = props => {
-  const classes = useTextFieldStyles()
+  const classes = useTextFieldStyles();
   const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
   return (
     <div className={classes.root}>
       <Component {...props} />
     </div>
   );
+};
+
+const CheckBoxField = props => {
+  const Component = formFieldsMapper[componentTypes.CHECKBOX];
+  return <Component {...props} />;
 };
 
 const FieldActions = ({ onSelect, onDelete, fieldData }) => (
@@ -52,6 +57,7 @@ const builderMapper = {
   FieldActions,
   FieldLayout,
   [componentTypes.TEXT_FIELD]: TextField,
+  [componentTypes.CHECKBOX]: CheckBoxField,
   BuilderColumn,
 };
 

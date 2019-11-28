@@ -33,8 +33,25 @@ const TextFieldOption = () => {
   );
 };
 
+const CheckboxOptions = () => {
+  const classes = useTextFieldStyles();
+  return (
+    <div className={classes.root}>
+      <Button
+        className={clsx(classes.button)}
+        fullWidth
+        variant="contained"
+        color="primary"
+      >
+        Checkbox
+      </Button>
+    </div>
+  );
+};
+
 const pickerMapper = {
   [componentTypes.TEXT_FIELD]: TextFieldOption,
+  [componentTypes.CHECKBOX]: CheckboxOptions,
 };
 
 export default pickerMapper;

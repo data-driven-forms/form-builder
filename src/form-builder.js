@@ -13,19 +13,19 @@ const FORM_LAYOUT = 'form-layout';
 const initialData = {
   fields: {
     'initial-component-1': {
-      preview: true, id: 'initial-component-1', content: 'Some component of type 1', component: componentTypes.TEXT_FIELD,
+      preview: true, id: 'initial-component-1', component: componentTypes.TEXT_FIELD,
     },
     'initial-component-2': {
-      preview: true, id: 'initial-component-2', content: 'Some component of type 2', component: componentTypes.TEXT_FIELD,
+      preview: true, id: 'initial-component-2', component: componentTypes.TEXT_FIELD,
     },
     'initial-component-3': {
-      preview: true, id: 'initial-component-3', content: 'Some component of type 3', component: componentTypes.TEXT_FIELD,
+      preview: true, id: 'initial-component-3', component: componentTypes.TEXT_FIELD,
     },
     'initial-component-4': {
-      preview: true, id: 'initial-component-4', content: 'Some component of type 4', component: componentTypes.TEXT_FIELD,
+      preview: true, id: 'initial-component-4', component: componentTypes.TEXT_FIELD,
     },
     'initial-component-5': {
-      preview: true, id: 'initial-component-5', content: 'Some component of type 5', component: componentTypes.TEXT_FIELD,
+      preview: true, id: 'initial-component-5', component: componentTypes.TEXT_FIELD,
     },
   },
   dropTargets: {

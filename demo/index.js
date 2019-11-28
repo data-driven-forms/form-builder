@@ -34,6 +34,10 @@ const componentProperties = {
     propertyName: 'isReadOnly',
     label: 'Read only',
     component: 'switch',
+  }, {
+    propertyName: 'autoFocus',
+    label: 'Autofocus',
+    component: 'switch',
   }],
 };
 

@@ -85,11 +85,29 @@ const DatePickerOption = () => {
   );
 };
 
+const PlainTextOption = () => {
+  const classes = useTextFieldStyles();
+  return (
+    <div className={classes.root}>
+      <Button
+        tabIndex="-1"
+        className={clsx(classes.button)}
+        fullWidth
+        variant="contained"
+        color="primary"
+      >
+        Plain text
+      </Button>
+    </div>
+  );
+};
+
 const pickerMapper = {
   [componentTypes.TEXT_FIELD]: TextFieldOption,
   [componentTypes.CHECKBOX]: CheckboxOptions,
   [componentTypes.SELECT]: SelectOptions,
   [componentTypes.DATE_PICKER]: DatePickerOption,
+  [componentTypes.PLAIN_TEXT]: PlainTextOption,
 };
 
 export default pickerMapper;

@@ -147,11 +147,33 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
   );
 };
 
+const Textarea = ({
+  label,
+  onChange,
+  value,
+  autoFocus
+}) => {
+  const classes = useInputStyles();
+  return (
+    <div className={classes.root}>
+      <TextField
+        multiline
+        autoFocus={autoFocus}
+        fullWidth
+        label={label}
+        onChange={({ target: { value } }) => onChange(value)}
+        value={value || ''}
+      />
+    </div>
+  );
+};
+
 const propertiesMapper = {
   input: Input,
   switch: PropertySwitch,
   select: PropertySelect,
   options: PropertyOptions,
+  textarea: Textarea,
 };
 
 export default propertiesMapper;

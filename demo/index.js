@@ -19,6 +19,7 @@ import {
   IS_CLEARABLE,
   CLOSE_ON_DAY_SELECT,
   SHOW_TODAY_BUTTON,
+  MULTI_LINE_LABEL,
 } from './field-properties';
 
 const componentProperties = {
@@ -48,6 +49,9 @@ const componentProperties = {
     IS_CLEARABLE,
     CLOSE_ON_DAY_SELECT,
     SHOW_TODAY_BUTTON,
+  ],
+  [componentTypes.PLAIN_TEXT]: [
+    MULTI_LINE_LABEL,
   ],
 };
 

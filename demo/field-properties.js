@@ -64,3 +64,9 @@ export const TODAY_BUTTON_LABEL = {
   label: 'Today button label',
   component: 'input',
 };
+
+export const MULTI_LINE_LABEL = {
+  propertyName: 'label',
+  label: 'Label',
+  component: 'textarea',
+};

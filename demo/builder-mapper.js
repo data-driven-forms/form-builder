@@ -91,12 +91,22 @@ const DatePickerField = ({preview, id, component, initialized, ...props}) => {
   return <Component {...props} />;
 };
 
+const PlainTextField = ({preview, id, component, initialized, label, ...props}) => {
+  const Component = formFieldsMapper[componentTypes.PLAIN_TEXT];
+  return (
+    <div>
+      <Component {...props} label={label || ''} />
+    </div>
+  );
+};
+
 const builderMapper = {
   FieldActions,
   FieldLayout,
   [componentTypes.TEXT_FIELD]: TextField,
   [componentTypes.CHECKBOX]: CheckBoxField,
   [componentTypes.SELECT]: SelectField,
+  [componentTypes.PLAIN_TEXT]: PlainTextField,
   [componentTypes.DATE_PICKER]: DatePickerField,
   BuilderColumn,
 };

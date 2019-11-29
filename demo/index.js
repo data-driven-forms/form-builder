@@ -55,10 +55,19 @@ const componentProperties = {
   ],
   [componentTypes.RADIO]: [
     LABEL,
+    IS_DISABLED,
+    OPTIONS,
+  ],
+  [componentTypes.SWITCH]: [
+    LABEL,
+    IS_READ_ONLY,
+    IS_DISABLED,
+  ],
+  [componentTypes.TEXTAREA]: [
+    LABEL,
     HELPER_TEXT,
     IS_READ_ONLY,
     IS_DISABLED,
-    OPTIONS,
   ],
 };
 

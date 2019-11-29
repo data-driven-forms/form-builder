@@ -9,6 +9,12 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+import red from '@material-ui/core/colors/red';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 
 const useInputStyles = makeStyles(() => ({
@@ -19,6 +25,9 @@ const useInputStyles = makeStyles(() => ({
   formControl: {
     marginTop: 8,
     width: '100%',
+  },
+  danger: {
+    color: red[500],
   },
 }));
 
@@ -85,32 +94,50 @@ const PropertySelect = ({
 };
 
 const PropertyOptions = ({ value = [], label, onChange }) => {
+  const classes = useInputStyles();
   const handleOptionChange = (option, index, optionKey) => onChange(
     value.map((item, itemIndex) => index === itemIndex ? ({ ...item, [optionKey]: option }) : item),
   );
-  const handleRemove = index => onChange(value.filter((_item, itemIndex) => itemIndex !== index));
+  const handleRemove = index => {
+    const options = value.filter((_item, itemIndex) => itemIndex !== index);
+    return onChange(options.length > 0 ? options : undefined);
+  };
   return (
     <div>
-      <div>
-        {label}
-      </div>
-      <div>
-        <button type="button" onClick={() => onChange([...value, { value: 'value', label: 'label' }])}>Add option</button>
-      </div>
+      <Typography>
+        <Box display="flex" justifyContent="flex-start" alignItems="center">
+          <span>
+            {label}
+          </span>
+          <IconButton onClick={() => onChange([...value, { value: '', label: '' }])} color="primary" aria-label="delete option" component="span">
+            <AddIcon />
+          </IconButton>
+        </Box>
+      </Typography>
       <table>
-        {value.map(({ label, value }, index) => (
+        {value.map(({ label, value }, index, allOptions) => (
           <tbody key={index}>
             <tr>
               <td>
-                label
-                <input onChange={({ target: { value } }) => handleOptionChange(value, index, 'label')} value={label || ''} type="text" />
+                <TextField autoFocus placeholder="Label" onChange={({ target: { value } }) => handleOptionChange(value, index, 'label')} value={label || ''} type="text" />
               </td>
               <td>
-                value
-                <input onChange={({ target: { value } }) => handleOptionChange(value, index, 'value')} value={value || ''} type="text" />
+                <TextField
+                  onKeyPress={({ key }) => {
+                    if (key === 'Enter' && index === allOptions.length - 1) {
+                      onChange([...allOptions, { value: '', label: '' }]);
+                    }
+                  }}
+                  placeholder="Value"
+                  onChange={({ target: { value } }) => handleOptionChange(value, index, 'value')}
+                  value={value || ''}
+                  type="text"
+                />
               </td>
               <td>
-                <button type="button" onClick={() => handleRemove(index)}>Remove option</button>
+                <IconButton className={classes.danger} onClick={() => handleRemove(index)} color="secondary" aria-label="delete option" component="span">
+                  <DeleteIcon />
+                </IconButton>
               </td>
             </tr>
           </tbody>

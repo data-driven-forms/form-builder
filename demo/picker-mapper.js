@@ -22,6 +22,7 @@ const TextFieldOption = () => {
   return (
     <div className={classes.root}>
       <Button
+        tabIndex="-1"
         className={clsx(classes.button)}
         fullWidth
         variant="contained"
@@ -38,6 +39,7 @@ const CheckboxOptions = () => {
   return (
     <div className={classes.root}>
       <Button
+        tabIndex="-1"
         className={clsx(classes.button)}
         fullWidth
         variant="contained"
@@ -54,6 +56,7 @@ const SelectOptions = () => {
   return (
     <div className={classes.root}>
       <Button
+        tabIndex="-1"
         className={clsx(classes.button)}
         fullWidth
         variant="contained"

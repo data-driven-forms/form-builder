@@ -1,8 +1,6 @@
 import React, { useContext, Fragment } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import clsx from 'clsx';
 import ComponentsContext from './components-context';
-import StoreContext from './store-context';
 
 const PickerField = ({ field, index }) => {
   const { pickerMapper } = useContext(ComponentsContext);
@@ -19,7 +17,7 @@ const PickerField = ({ field, index }) => {
             <Component {...snapshot} />
           </div>
           {snapshot.isDragging && (
-            <Component />
+            <Component {...snapshot} />
           )}
         </Fragment>
       )}

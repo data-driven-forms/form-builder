@@ -16,6 +16,7 @@ div.task-list {
   flex-grow: 1;
   min-height: calc(100% - 16px);
   transition: background-color ease-out .1s;
+  position: relative;
 }
 
 div.task-list.dragging {

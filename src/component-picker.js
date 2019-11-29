@@ -21,7 +21,6 @@ const ComponentPicker = ({
           </h3>
           <div
             ref={provided.innerRef}
-            {...provided.droppableProps}
             className={clsx('task-list', {
               dragging: snapshot.isDraggingOver,
             })}

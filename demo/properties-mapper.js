@@ -36,11 +36,13 @@ const Input = ({
   label,
   onChange,
   value,
+  autoFocus
 }) => {
   const classes = useInputStyles();
   return (
     <div className={classes.root}>
       <TextField
+        autoFocus={autoFocus}
         fullWidth
         label={label}
         onChange={({ target: { value } }) => onChange(value)}
@@ -104,16 +106,14 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
   };
   return (
     <div>
-      <Typography>
-        <Box display="flex" justifyContent="flex-start" alignItems="center">
-          <span>
-            {label}
-          </span>
-          <IconButton onClick={() => onChange([...value, { value: '', label: '' }])} color="primary" aria-label="delete option" component="span">
-            <AddIcon />
-          </IconButton>
-        </Box>
-      </Typography>
+      <Box component="p" display="flex" justifyContent="flex-start" alignItems="center">
+        <span>
+          {label}
+        </span>
+        <IconButton onClick={() => onChange([...value, { value: '', label: '' }])} color="primary" aria-label="delete option" component="span">
+          <AddIcon />
+        </IconButton>
+      </Box>
       <table>
         {value.map(({ label, value }, index, allOptions) => (
           <tbody key={index}>

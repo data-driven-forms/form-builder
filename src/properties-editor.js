@@ -47,7 +47,7 @@ const PropertiesEditor = () => {
           label="Name"
           type="text"
           value={field.name}
-          initialized={field.initialized}
+          autoFocus={!field.initialized}
           onChange={value => handlePropertyChange(value, 'name')}
         />
       </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import IconButton from '@material-ui/core/IconButton';
 import Box from '@material-ui/core/Box';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { formFieldsMapper } from '@data-driven-forms/mui-component-mapper';
@@ -27,22 +27,51 @@ const TextField = props => {
   );
 };
 
-const CheckBoxField = ({preview, id, component, initialized, ...props}) => {
+const CheckBoxField = ({
+  preview, id, component, initialized, ...props
+}) => {
   const Component = formFieldsMapper[componentTypes.CHECKBOX];
   return <Component {...props} />;
 };
 
-const SelectField = ({preview, id, component, initialized, options, ...props}) => {
+const SelectField = ({
+  preview, id, component, initialized, options, ...props
+}) => {
   const Component = formFieldsMapper[componentTypes.SELECT];
   return <Component {...props} options={options || []} />;
 };
 
-const FieldActions = ({ onSelect, onDelete, fieldData }) => (
-  <ButtonGroup size="small" aria-label="small outlined button group">
-    <Button onClick={onSelect} startIcon={<EditIcon />}>Edit</Button>
-    <Button onClick={onDelete} startIcon={<DeleteIcon />}>Remove</Button>
-  </ButtonGroup>
-);
+const useFieldActionsStyles = makeStyles((theme) => ({
+  root: {
+    marginLeft: 16,
+    heigh: 48,
+    alignSelf: 'center',
+  },
+  editButton: {
+    '&:hover': {
+      color: theme.palette.primary.main,
+    },
+  },
+  deleteButton: {
+    '&:hover': {
+      color: theme.palette.error.main,
+    },
+  },
+}));
+
+const FieldActions = ({ onSelect, onDelete, fieldData }) => {
+  const classes = useFieldActionsStyles();
+  return (
+    <Box className={classes.root} display="flex">
+      <IconButton className={classes.editButton} onClick={onSelect}>
+        <EditIcon />
+      </IconButton>
+      <IconButton className={classes.deleteButton} onClick={onDelete}>
+        <DeleteIcon />
+      </IconButton>
+    </Box>
+  );
+};
 
 const FieldLayout = ({ children }) => (
   <Box display="flex" flexDirection="row" justifyContent="space-between" style={{ padding: 8 }}>

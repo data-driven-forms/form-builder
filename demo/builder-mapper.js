@@ -1,7 +1,6 @@
 import React from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Box from '@material-ui/core/Box';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
@@ -87,12 +86,18 @@ const BuilderColumn = ({ children, ...props }) => (
   </Card>
 );
 
+const DatePickerField = ({preview, id, component, initialized, ...props}) => {
+  const Component = formFieldsMapper[componentTypes.DATE_PICKER];
+  return <Component {...props} />;
+};
+
 const builderMapper = {
   FieldActions,
   FieldLayout,
   [componentTypes.TEXT_FIELD]: TextField,
   [componentTypes.CHECKBOX]: CheckBoxField,
   [componentTypes.SELECT]: SelectField,
+  [componentTypes.DATE_PICKER]: DatePickerField,
   BuilderColumn,
 };
 

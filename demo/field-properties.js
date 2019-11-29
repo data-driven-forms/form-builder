@@ -40,3 +40,27 @@ export const OPTIONS = {
   label: 'Options',
   component: 'options',
 };
+
+export const IS_CLEARABLE = {
+  propertyName: 'isClearable',
+  label: 'Clearable',
+  component: 'switch',
+};
+
+export const CLOSE_ON_DAY_SELECT = {
+  propertyName: 'closeOnDaySelect',
+  label: 'Close on day select',
+  component: 'switch',
+};
+
+export const SHOW_TODAY_BUTTON = {
+  propertyName: 'showTodayButton',
+  label: 'Show today button',
+  component: 'switch',
+};
+
+export const TODAY_BUTTON_LABEL = {
+  propertyName: 'todayButtonLabel',
+  label: 'Today button label',
+  component: 'input',
+};

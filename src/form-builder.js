@@ -85,6 +85,7 @@ const removeComponent = (componentId, state) => {
 
 const setFieldproperty = (field, payload) => ({
   ...field,
+  initialized: true,
   [payload.propertyName]: payload.value,
 });
 

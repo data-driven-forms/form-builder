@@ -67,6 +67,4 @@ const builderMapper = {
   BuilderColumn,
 };
 
-console.log('builderMapper', builderMapper)
-
 export default builderMapper;

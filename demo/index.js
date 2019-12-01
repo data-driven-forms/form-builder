@@ -53,6 +53,22 @@ const componentProperties = {
   [componentTypes.PLAIN_TEXT]: [
     MULTI_LINE_LABEL,
   ],
+  [componentTypes.RADIO]: [
+    LABEL,
+    IS_DISABLED,
+    OPTIONS,
+  ],
+  [componentTypes.SWITCH]: [
+    LABEL,
+    IS_READ_ONLY,
+    IS_DISABLED,
+  ],
+  [componentTypes.TEXTAREA]: [
+    LABEL,
+    HELPER_TEXT,
+    IS_READ_ONLY,
+    IS_DISABLED,
+  ],
 };
 
 console.log(componentProperties, pickerMapper);

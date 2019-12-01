@@ -102,12 +102,67 @@ const PlainTextOption = () => {
   );
 };
 
+const RadioOption = () => {
+  const classes = useTextFieldStyles();
+  return (
+    <div className={classes.root}>
+      <Button
+        tabIndex="-1"
+        className={clsx(classes.button)}
+        fullWidth
+        variant="contained"
+        color="primary"
+      >
+        Radio
+      </Button>
+    </div>
+  );
+};
+
+const SwitchOption = () => {
+  const classes = useTextFieldStyles();
+  return (
+    <div className={classes.root}>
+      <Button
+        tabIndex="-1"
+        className={clsx(classes.button)}
+        fullWidth
+        variant="contained"
+        color="primary"
+      >
+        Switch
+      </Button>
+    </div>
+  );
+};
+
+const TextAreaOption = () => {
+  const classes = useTextFieldStyles();
+  return (
+    <div className={classes.root}>
+      <Button
+        tabIndex="-1"
+        className={clsx(classes.button)}
+        fullWidth
+        variant="contained"
+        color="primary"
+      >
+        TextArea
+      </Button>
+    </div>
+  );
+};
+
+
 const pickerMapper = {
   [componentTypes.TEXT_FIELD]: TextFieldOption,
   [componentTypes.CHECKBOX]: CheckboxOptions,
   [componentTypes.SELECT]: SelectOptions,
   [componentTypes.DATE_PICKER]: DatePickerOption,
   [componentTypes.PLAIN_TEXT]: PlainTextOption,
+  [componentTypes.RADIO]: RadioOption,
+  [componentTypes.SWITCH]: SwitchOption,
+  [componentTypes.TEXTAREA]: TextAreaOption,
 };
 
 export default pickerMapper;

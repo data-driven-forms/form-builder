@@ -100,6 +100,27 @@ const PlainTextField = ({preview, id, component, initialized, label, ...props}) 
   );
 };
 
+const RadioField = ({
+  preview, id, component, initialized, ...props
+}) => {
+  const Component = formFieldsMapper[componentTypes.RADIO];
+  return <Component {...props} />;
+};
+
+const SwitchField = ({
+  preview, id, component, initialized, ...props
+}) => {
+  const Component = formFieldsMapper[componentTypes.SWITCH];
+  return <Component {...props} />;
+};
+
+const TextAreaField = ({
+  preview, id, component, initialized, ...props
+}) => {
+  const Component = formFieldsMapper[componentTypes.TEXTAREA];
+  return <Component {...props} />;
+};
+
 const builderMapper = {
   FieldActions,
   FieldLayout,
@@ -108,6 +129,9 @@ const builderMapper = {
   [componentTypes.SELECT]: SelectField,
   [componentTypes.PLAIN_TEXT]: PlainTextField,
   [componentTypes.DATE_PICKER]: DatePickerField,
+  [componentTypes.RADIO]: RadioField,
+  [componentTypes.SWITCH]: SwitchField,
+  [componentTypes.TEXTAREA]: TextAreaField,
   BuilderColumn,
 };
 

@@ -1,51 +1,56 @@
-import React from 'react';
-import FormBuilder from './form-builder';
-import ComponentsContext from './components-context';
+import React from "react";
+import FormBuilder from "./form-builder";
+import ComponentsContext from "./components-context";
 
-export const COMPONENTS_LIST = 'components-list';
-export const FORM_LAYOUT = 'form-layout';
+export const COMPONENTS_LIST = "components-list";
+export const FORM_LAYOUT = "form-layout";
 
 const createInitialData = (initialFields) => ({
   fields: {
-    ...initialFields,
+    ...initialFields
   },
   dropTargets: {
     [COMPONENTS_LIST]: {
       id: COMPONENTS_LIST,
-      title: 'Component chooser',
-      fieldsIds: Object.keys(initialFields),
+      title: "Component chooser",
+      fieldsIds: Object.keys(initialFields)
     },
     [FORM_LAYOUT]: {
       id: FORM_LAYOUT,
-      title: 'Form',
-      fieldsIds: [],
-    },
+      title: "Form",
+      fieldsIds: []
+    }
   },
-  selectedComponent: undefined,
-}
-);
+  selectedComponent: undefined
+});
 
 const App = ({
   componentMapper,
   componentProperties,
   pickerMapper,
   propertiesMapper,
-  cloneWhileDragging,
+  cloneWhileDragging
 }) => {
-  const initialFields = Object.keys(componentProperties).reduce((acc, curr) => ({
-    ...acc,
-    [`initial-${curr}`]: {
-      preview: true, id: `initial-${curr}`, component: curr, clone: cloneWhileDragging,
-    },
-  }), {});
-  console.log('createInitialData', createInitialData(initialFields));
+  const initialFields = Object.keys(componentProperties).reduce(
+    (acc, curr) => ({
+      ...acc,
+      [`initial-${curr}`]: {
+        preview: true,
+        id: `initial-${curr}`,
+        component: curr,
+        clone: cloneWhileDragging
+      }
+    }),
+    {}
+  );
+  console.log("createInitialData", createInitialData(initialFields));
   return (
     <ComponentsContext.Provider
       value={{
         componentMapper,
         componentProperties,
         pickerMapper,
-        propertiesMapper,
+        propertiesMapper
       }}
     >
       <FormBuilder initialFields={createInitialData(initialFields)} />

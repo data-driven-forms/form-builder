@@ -1,20 +1,20 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import clsx from 'clsx';
-import { componentTypes } from '@data-driven-forms/react-form-renderer';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import clsx from "clsx";
+import { componentTypes } from "@data-driven-forms/react-form-renderer";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useTextFieldStyles = makeStyles(() => ({
   root: {
-    cursor: 'pointer',
+    cursor: "pointer",
     padding: 4,
-    '&:hover>button': {
-      backgroundColor: '#303f9f',
-    },
+    "&:hover>button": {
+      backgroundColor: "#303f9f"
+    }
   },
   button: {
-    pointerEvents: 'none',
-  },
+    pointerEvents: "none"
+  }
 }));
 
 const TextFieldOption = () => {
@@ -22,11 +22,11 @@ const TextFieldOption = () => {
   return (
     <div className={classes.root}>
       <Button
-        tabIndex="-1"
+        tabIndex='-1'
         className={clsx(classes.button)}
         fullWidth
-        variant="contained"
-        color="primary"
+        variant='contained'
+        color='primary'
       >
         Text field
       </Button>
@@ -39,11 +39,11 @@ const CheckboxOptions = () => {
   return (
     <div className={classes.root}>
       <Button
-        tabIndex="-1"
+        tabIndex='-1'
         className={clsx(classes.button)}
         fullWidth
-        variant="contained"
-        color="primary"
+        variant='contained'
+        color='primary'
       >
         Checkbox
       </Button>
@@ -56,11 +56,11 @@ const SelectOptions = () => {
   return (
     <div className={classes.root}>
       <Button
-        tabIndex="-1"
+        tabIndex='-1'
         className={clsx(classes.button)}
         fullWidth
-        variant="contained"
-        color="primary"
+        variant='contained'
+        color='primary'
       >
         Select
       </Button>
@@ -73,11 +73,11 @@ const DatePickerOption = () => {
   return (
     <div className={classes.root}>
       <Button
-        tabIndex="-1"
+        tabIndex='-1'
         className={clsx(classes.button)}
         fullWidth
-        variant="contained"
-        color="primary"
+        variant='contained'
+        color='primary'
       >
         Date picker
       </Button>
@@ -90,11 +90,11 @@ const PlainTextOption = () => {
   return (
     <div className={classes.root}>
       <Button
-        tabIndex="-1"
+        tabIndex='-1'
         className={clsx(classes.button)}
         fullWidth
-        variant="contained"
-        color="primary"
+        variant='contained'
+        color='primary'
       >
         Plain text
       </Button>
@@ -107,11 +107,11 @@ const RadioOption = () => {
   return (
     <div className={classes.root}>
       <Button
-        tabIndex="-1"
+        tabIndex='-1'
         className={clsx(classes.button)}
         fullWidth
-        variant="contained"
-        color="primary"
+        variant='contained'
+        color='primary'
       >
         Radio
       </Button>
@@ -124,11 +124,11 @@ const SwitchOption = () => {
   return (
     <div className={classes.root}>
       <Button
-        tabIndex="-1"
+        tabIndex='-1'
         className={clsx(classes.button)}
         fullWidth
-        variant="contained"
-        color="primary"
+        variant='contained'
+        color='primary'
       >
         Switch
       </Button>
@@ -141,18 +141,17 @@ const TextAreaOption = () => {
   return (
     <div className={classes.root}>
       <Button
-        tabIndex="-1"
+        tabIndex='-1'
         className={clsx(classes.button)}
         fullWidth
-        variant="contained"
-        color="primary"
+        variant='contained'
+        color='primary'
       >
         TextArea
       </Button>
     </div>
   );
 };
-
 
 const pickerMapper = {
   [componentTypes.TEXT_FIELD]: TextFieldOption,
@@ -162,7 +161,7 @@ const pickerMapper = {
   [componentTypes.PLAIN_TEXT]: PlainTextOption,
   [componentTypes.RADIO]: RadioOption,
   [componentTypes.SWITCH]: SwitchOption,
-  [componentTypes.TEXTAREA]: TextAreaOption,
+  [componentTypes.TEXTAREA]: TextAreaOption
 };
 
 export default pickerMapper;

@@ -5,7 +5,7 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "plugin:prettier/recommended"
     ],
     "globals": {
         "Atomics": "readonly",

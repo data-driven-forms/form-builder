@@ -1,7 +1,7 @@
-import React, { useContext, Fragment } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
-import ComponentsContext from './components-context';
-import MockFieldProvider from './mock-field-provider';
+import React, { useContext, Fragment } from "react";
+import { Draggable } from "react-beautiful-dnd";
+import ComponentsContext from "./components-context";
+import MockFieldProvider from "./mock-field-provider";
 
 const PickerField = ({ field, index }) => {
   const { pickerMapper, componentMapper } = useContext(ComponentsContext);
@@ -16,13 +16,19 @@ const PickerField = ({ field, index }) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
           >
-            {snapshot.isDragging && field.clone
-              ? <Clone input={{ name: 'template-clone' }} FieldProvider={MockFieldProvider} meta={{}} name="template-clone" snapshot={{ ...snapshot, isClone: true }} />
-              : <Component {...snapshot} />}
+            {snapshot.isDragging && field.clone ? (
+              <Clone
+                input={{ name: "template-clone" }}
+                FieldProvider={MockFieldProvider}
+                meta={{}}
+                name='template-clone'
+                snapshot={{ ...snapshot, isClone: true }}
+              />
+            ) : (
+              <Component {...snapshot} />
+            )}
           </div>
-          {snapshot.isDragging && (
-          <Component {...snapshot} />
-          )}
+          {snapshot.isDragging && <Component {...snapshot} />}
         </Fragment>
       )}
     </Draggable>

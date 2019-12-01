@@ -1,29 +1,24 @@
-import React, { useReducer } from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
-import DropTarget from './drop-target';
-import './style.css';
-import StoreContext from './store-context';
-import PropertiesEditor from './properties-editor';
-import ComponentPicker from './component-picker';
+import React, { useReducer } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+import DropTarget from "./drop-target";
+import "./style.css";
+import StoreContext from "./store-context";
+import PropertiesEditor from "./properties-editor";
+import ComponentPicker from "./component-picker";
 
-const COMPONENTS_LIST = 'components-list';
-const FORM_LAYOUT = 'form-layout';
-
+const COMPONENTS_LIST = "components-list";
+const FORM_LAYOUT = "form-layout";
 
 const mutateColumns = (result, state) => {
-  const {
-    destination,
-    source,
-    draggableId,
-  } = result;
+  const { destination, source, draggableId } = result;
   const { dropTargets, fields } = state;
   if (!destination) {
     return {};
   }
 
   if (
-    destination.droppableId === source.droppableId
-    && destination.index === source.index
+    destination.droppableId === source.droppableId &&
+    destination.index === source.index
   ) {
     return {};
   }
@@ -40,8 +35,8 @@ const mutateColumns = (result, state) => {
     return {
       dropTargets: {
         ...dropTargets,
-        [source.droppableId]: { ...start, fieldsIds: newFieldsIds },
-      },
+        [source.droppableId]: { ...start, fieldsIds: newFieldsIds }
+      }
     };
   }
   /**
@@ -53,17 +48,21 @@ const mutateColumns = (result, state) => {
   finishFieldsIds.splice(destination.index, 0, newId);
   const newFinish = {
     ...finish,
-    fieldsIds: finishFieldsIds,
+    fieldsIds: finishFieldsIds
   };
   return {
     dropTargets: { ...dropTargets, [newFinish.id]: newFinish },
     fields: {
       ...fields,
       [newId]: {
-        ...fields[draggableId], name: fields[draggableId].component, preview: false, id: newId, initialized: false,
-      },
+        ...fields[draggableId],
+        name: fields[draggableId].component,
+        preview: false,
+        id: newId,
+        initialized: false
+      }
     },
-    selectedComponent: newId,
+    selectedComponent: newId
   };
 };
 
@@ -76,63 +75,68 @@ const removeComponent = (componentId, state) => {
       ...state.dropTargets,
       [FORM_LAYOUT]: {
         ...state.dropTargets[FORM_LAYOUT],
-        fieldsIds: state.dropTargets[FORM_LAYOUT].fieldsIds.filter(id => id !== componentId),
-      },
+        fieldsIds: state.dropTargets[FORM_LAYOUT].fieldsIds.filter(
+          (id) => id !== componentId
+        )
+      }
     },
-    fields: { ...state.fields },
+    fields: { ...state.fields }
   };
 };
 
 const setFieldproperty = (field, payload) => ({
   ...field,
   initialized: true,
-  [payload.propertyName]: payload.value,
+  [payload.propertyName]: payload.value
 });
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'setColumns':
+    case "setColumns":
       return { ...state, ...mutateColumns(action.payload, state) };
-    case 'setSelectedComponent':
+    case "setSelectedComponent":
       return { ...state, selectedComponent: action.payload };
-    case 'removeComponent':
+    case "removeComponent":
       return { ...state, ...removeComponent(action.payload, state) };
-    case 'setFieldProperty':
+    case "setFieldProperty":
       return {
         ...state,
         fields: {
           ...state.fields,
-          [action.payload.fieldId]: setFieldproperty(state.fields[action.payload.fieldId], action.payload),
-        },
+          [action.payload.fieldId]: setFieldproperty(
+            state.fields[action.payload.fieldId],
+            action.payload
+          )
+        }
       };
     default:
       return state;
   }
 };
 
-const FormBuilder = ({initialFields}) => {
+const FormBuilder = ({ initialFields }) => {
   const [state, dispatch] = useReducer(reducer, initialFields);
-  const onDragEnd = result => dispatch({ type: 'setColumns', payload: result });
+  const onDragEnd = (result) => dispatch({ type: "setColumns", payload: result });
   const { dropTargets, fields, selectedComponent } = state;
   return (
     <StoreContext.Provider value={{ state, dispatch }}>
-      <DragDropContext
-        onDragEnd={onDragEnd}
-      >
-        <div className="layout">
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className='layout'>
           <ComponentPicker
             isDropDisabled
             shouldClone
             dropTarget={dropTargets[COMPONENTS_LIST]}
-            fields={dropTargets[COMPONENTS_LIST].fieldsIds.map((taskId) => fields[taskId])}
+            fields={dropTargets[COMPONENTS_LIST].fieldsIds.map(
+              (taskId) => fields[taskId]
+            )}
           />
           <DropTarget
             dropTarget={dropTargets[FORM_LAYOUT]}
-            fields={dropTargets[FORM_LAYOUT].fieldsIds.map((taskId) => fields[taskId])}
+            fields={dropTargets[FORM_LAYOUT].fieldsIds.map(
+              (taskId) => fields[taskId]
+            )}
           />
-          {selectedComponent && (
-            <PropertiesEditor />
-          )}
+          {selectedComponent && <PropertiesEditor />}
         </div>
       </DragDropContext>
     </StoreContext.Provider>

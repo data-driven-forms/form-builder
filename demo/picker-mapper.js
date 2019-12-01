@@ -9,7 +9,10 @@ const useTextFieldStyles = makeStyles(() => ({
     cursor: 'pointer',
     padding: 4,
     '&:hover>button': {
-      backgroundColor: '#303f9f'
+      backgroundColor: '#303f9f',
+      '&.container': {
+        backgroundColor: 'red'
+      }
     }
   },
   button: {
@@ -159,7 +162,7 @@ const SubFormOption = () => {
     <div className={classes.root}>
       <Button
         tabIndex="-1"
-        className={clsx(classes.button)}
+        className={clsx(classes.button, 'container')}
         fullWidth
         variant="contained"
         color="secondary"

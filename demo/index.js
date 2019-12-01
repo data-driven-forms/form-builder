@@ -19,7 +19,9 @@ import {
   IS_CLEARABLE,
   CLOSE_ON_DAY_SELECT,
   SHOW_TODAY_BUTTON,
-  MULTI_LINE_LABEL
+  MULTI_LINE_LABEL,
+  TITLE,
+  DESCRIPTION
 } from './field-properties';
 
 const componentProperties = {
@@ -54,7 +56,7 @@ const componentProperties = {
   },
   [componentTypes.SUB_FORM]: {
     isContainer: true,
-    attributes: []
+    attributes: [TITLE, DESCRIPTION]
   }
 };
 

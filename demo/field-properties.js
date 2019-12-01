@@ -70,3 +70,15 @@ export const MULTI_LINE_LABEL = {
   label: 'Label',
   component: 'textarea'
 };
+
+export const TITLE = {
+  propertyName: 'title',
+  label: 'Title',
+  component: 'input'
+};
+
+export const DESCRIPTION = {
+  propertyName: 'description',
+  label: 'Description',
+  component: 'input'
+};

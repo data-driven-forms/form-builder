@@ -22,13 +22,18 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
   const FieldComponent = rest[field.component];
   const input = { name: field.name };
   const meta = {};
+  const formOptions = {
+    renderForm: () => null
+  };
   if (field.component === 'container-end') {
     return (
       <Draggable isDragDisabled draggableId={field.id} index={index}>
         {(provided) => (
-          <div ref={provided.innerRef} {...provided.draggableProps}>
-            Container end {field.id}
-          </div>
+          <div
+            className="container-end"
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+          ></div>
         )}
       </Draggable>
     );
@@ -43,7 +48,9 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
             {...provided.dragHandleProps}
             className={clsx('task-container', {
               dragging: snapshot.isDragging,
-              selected: selectedComponent === field.id
+              selected: selectedComponent === field.id,
+              'is-container': isContainer,
+              'in-container': field.container
             })}
           >
             <FieldLayout>
@@ -56,6 +63,7 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
                   FieldProvider={MockFieldProvider}
                   input={input}
                   meta={meta}
+                  formOptions={formOptions}
                 />
               )}
               {!shouldClone && (

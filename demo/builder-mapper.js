@@ -169,8 +169,16 @@ const TextAreaField = ({
   );
 };
 
-const SubFormField = () => {
-  return <div>This is sub form</div>;
+const SubFormField = ({ title, description, formOptions }) => {
+  const Component = formFieldsMapper[componentTypes.SUB_FORM];
+  return (
+    <Component
+      fields={[]}
+      title={title || 'Subform'}
+      description={description}
+      formOptions={formOptions}
+    />
+  );
 };
 
 const builderMapper = {

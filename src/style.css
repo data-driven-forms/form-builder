@@ -55,3 +55,24 @@ h3.title {
   display: flex;
   padding: 8px;
 }
+
+.is-container {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-bottom: 0;
+}
+
+.in-container {
+  border-top: none;
+  border-radius: 0;
+  margin-bottom: 0;
+  padding-bottom: 16px;
+}
+
+.container-end {
+  margin-top: 16px;
+  height: 8px;
+  margin-bottom: 8px;
+  background-color: transparent;
+  border-bottom: 1px solid lightgray;
+}

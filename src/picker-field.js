@@ -7,6 +7,9 @@ const PickerField = ({ field, index }) => {
   const { pickerMapper, componentMapper } = useContext(ComponentsContext);
   const Component = pickerMapper[field.component];
   const Clone = componentMapper[field.component];
+  const formOptions = {
+    renderForm: () => null
+  };
   return (
     <Draggable draggableId={field.id} index={index}>
       {(provided, snapshot) => (
@@ -18,6 +21,7 @@ const PickerField = ({ field, index }) => {
           >
             {snapshot.isDragging && field.clone ? (
               <Clone
+                formOptions={formOptions}
                 input={{ name: 'template-clone' }}
                 FieldProvider={MockFieldProvider}
                 meta={{}}

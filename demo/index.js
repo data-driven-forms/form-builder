@@ -1,12 +1,12 @@
-import React, { Fragment } from "react";
-import ReactDom from "react-dom";
-import { componentTypes } from "@data-driven-forms/react-form-renderer";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import FormBuilder from "../src/index";
-import builderMapper from "./builder-mapper";
-import pickerMapper from "./picker-mapper";
-import propertiesMapper from "./properties-mapper";
+import React, { Fragment } from 'react';
+import ReactDom from 'react-dom';
+import { componentTypes } from '@data-driven-forms/react-form-renderer';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormBuilder from '../src/index';
+import builderMapper from './builder-mapper';
+import pickerMapper from './picker-mapper';
+import propertiesMapper from './properties-mapper';
 import {
   LABEL,
   HELPER_TEXT,
@@ -20,7 +20,7 @@ import {
   CLOSE_ON_DAY_SELECT,
   SHOW_TODAY_BUTTON,
   MULTI_LINE_LABEL
-} from "./field-properties";
+} from './field-properties';
 
 const componentProperties = {
   [componentTypes.TEXT_FIELD]: {
@@ -73,4 +73,4 @@ const Demo = () => (
   </Fragment>
 );
 
-ReactDom.render(<Demo />, document.getElementById("root"));
+ReactDom.render(<Demo />, document.getElementById('root'));

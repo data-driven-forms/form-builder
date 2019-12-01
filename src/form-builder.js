@@ -1,13 +1,13 @@
-import React, { useReducer } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
-import DropTarget from "./drop-target";
-import "./style.css";
-import StoreContext from "./store-context";
-import PropertiesEditor from "./properties-editor";
-import ComponentPicker from "./component-picker";
+import React, { useReducer } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
+import DropTarget from './drop-target';
+import './style.css';
+import StoreContext from './store-context';
+import PropertiesEditor from './properties-editor';
+import ComponentPicker from './component-picker';
 
-const COMPONENTS_LIST = "components-list";
-const FORM_LAYOUT = "form-layout";
+const COMPONENTS_LIST = 'components-list';
+const FORM_LAYOUT = 'form-layout';
 
 const isInContainer = (index, containers) => {
   const containerKey = Object.keys(containers).filter(
@@ -141,7 +141,7 @@ const mutateColumns = (result, state) => {
   if (template.isContainer) {
     finishFieldsIds.splice(destination.index, 0, newId, `${newId}-end`);
     newFields[`${newId}-end`] = {
-      component: "container-end",
+      component: 'container-end',
       id: `${newId}-end`
     };
     newContainers.push({
@@ -190,13 +190,13 @@ const setFieldproperty = (field, payload) => ({
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "setColumns":
+    case 'setColumns':
       return { ...state, ...mutateColumns(action.payload, state) };
-    case "setSelectedComponent":
+    case 'setSelectedComponent':
       return { ...state, selectedComponent: action.payload };
-    case "removeComponent":
+    case 'removeComponent':
       return { ...state, ...removeComponent(action.payload, state) };
-    case "setFieldProperty":
+    case 'setFieldProperty':
       return {
         ...state,
         fields: {
@@ -214,12 +214,12 @@ const reducer = (state, action) => {
 
 const FormBuilder = ({ initialFields }) => {
   const [state, dispatch] = useReducer(reducer, initialFields);
-  const onDragEnd = (result) => dispatch({ type: "setColumns", payload: result });
+  const onDragEnd = (result) => dispatch({ type: 'setColumns', payload: result });
   const { dropTargets, fields, selectedComponent } = state;
   return (
     <StoreContext.Provider value={{ state, dispatch }}>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className='layout'>
+        <div className="layout">
           <ComponentPicker
             isDropDisabled
             shouldClone

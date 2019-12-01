@@ -1,9 +1,9 @@
-import React from "react";
-import FormBuilder from "./form-builder";
-import ComponentsContext from "./components-context";
+import React from 'react';
+import FormBuilder from './form-builder';
+import ComponentsContext from './components-context';
 
-export const COMPONENTS_LIST = "components-list";
-export const FORM_LAYOUT = "form-layout";
+export const COMPONENTS_LIST = 'components-list';
+export const FORM_LAYOUT = 'form-layout';
 
 const createInitialData = (initialFields) => ({
   fields: {
@@ -12,12 +12,12 @@ const createInitialData = (initialFields) => ({
   dropTargets: {
     [COMPONENTS_LIST]: {
       id: COMPONENTS_LIST,
-      title: "Component chooser",
+      title: 'Component chooser',
       fieldsIds: Object.keys(initialFields)
     },
     [FORM_LAYOUT]: {
       id: FORM_LAYOUT,
-      title: "Form",
+      title: 'Form',
       fieldsIds: []
     }
   },
@@ -47,11 +47,11 @@ const App = ({
     }),
     {}
   );
-  console.log("createInitialData", createInitialData(initialFields));
+  console.log('createInitialData', createInitialData(initialFields));
   return (
     <ComponentsContext.Provider
       value={{
-        componentMapper: { ...componentMapper, "container-end": ContainerEnd },
+        componentMapper: { ...componentMapper, 'container-end': ContainerEnd },
         componentProperties,
         pickerMapper,
         propertiesMapper

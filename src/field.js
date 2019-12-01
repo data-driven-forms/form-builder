@@ -1,9 +1,9 @@
-import React, { useContext, Fragment } from "react";
-import { Draggable } from "react-beautiful-dnd";
-import clsx from "clsx";
-import ComponentsContext from "./components-context";
-import StoreContext from "./store-context";
-import MockFieldProvider from "./mock-field-provider";
+import React, { useContext, Fragment } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
+import clsx from 'clsx';
+import ComponentsContext from './components-context';
+import StoreContext from './store-context';
+import MockFieldProvider from './mock-field-provider';
 
 // const Handle = ({ dragHandleProps }) => (
 //  <div {...dragHandleProps}>
@@ -22,7 +22,7 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
   const FieldComponent = rest[field.component];
   const input = { name: field.name };
   const meta = {};
-  if (field.component === "container-end") {
+  if (field.component === 'container-end') {
     return (
       <Draggable isDragDisabled draggableId={field.id} index={index}>
         {(provided) => (
@@ -41,7 +41,7 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            className={clsx("task-container", {
+            className={clsx('task-container', {
               dragging: snapshot.isDragging,
               selected: selectedComponent === field.id
             })}
@@ -61,10 +61,10 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
               {!shouldClone && (
                 <FieldActions
                   onDelete={() =>
-                    dispatch({ type: "removeComponent", payload: field.id })
+                    dispatch({ type: 'removeComponent', payload: field.id })
                   }
                   onSelect={() =>
-                    dispatch({ type: "setSelectedComponent", payload: field.id })
+                    dispatch({ type: 'setSelectedComponent', payload: field.id })
                   }
                   fieldData={field}
                 />
@@ -72,7 +72,7 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
             </FieldLayout>
           </div>
           {shouldClone && snapshot.isDragging && (
-            <div className='task-container'>{field.content}</div>
+            <div className="task-container">{field.content}</div>
           )}
         </Fragment>
       )}

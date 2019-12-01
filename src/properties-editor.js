@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import StoreContext from "./store-context";
-import ComponentsContext from "./components-context";
+import React, { useContext } from 'react';
+import StoreContext from './store-context';
+import ComponentsContext from './components-context';
 
 const PropertyDefault = ({ propertyName, value, label, onChange }) => (
   <div>
     <label htmlFor={propertyName}>{label}</label>
     <input
-      type='checkbox'
+      type="checkbox"
       id={propertyName}
       name={propertyName}
       checked={value}
@@ -29,7 +29,7 @@ const PropertiesEditor = () => {
 
   const handlePropertyChange = (value, propertyName) =>
     dispatch({
-      type: "setFieldProperty",
+      type: 'setFieldProperty',
       payload: {
         value,
         propertyName,
@@ -37,16 +37,16 @@ const PropertiesEditor = () => {
       }
     });
   return (
-    <BuilderColumn className='container'>
+    <BuilderColumn className="container">
       <h1>There will be properties editor</h1>
       <h2>{fields[selectedComponent].name}</h2>
       <div>
         <NameComponent
-          label='Name'
-          type='text'
+          label="Name"
+          type="text"
           value={field.name}
           autoFocus={!field.initialized}
-          onChange={(value) => handlePropertyChange(value, "name")}
+          onChange={(value) => handlePropertyChange(value, 'name')}
         />
       </div>
       <div>

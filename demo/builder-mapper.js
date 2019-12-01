@@ -78,20 +78,35 @@ const FieldLayout = ({ children }) => (
   </Box>
 );
 
-const BuilderColumn = ({ children, ...props }) => (
-  <Card {...props}>
-    <CardContent>
-      {children}
-    </CardContent>
-  </Card>
-);
+const useBuilderStyles = makeStyles(() => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: 'calc(100% - 24px)',
+  },
+}));
 
-const DatePickerField = ({preview, id, component, initialized, ...props}) => {
+const BuilderColumn = ({ children, ...props }) => {
+  const classes = useBuilderStyles();
+  return (
+    <Card {...props}>
+      <CardContent className={classes.root}>
+        {children}
+      </CardContent>
+    </Card>
+  );
+};
+
+const DatePickerField = ({
+  preview, id, component, initialized, ...props
+}) => {
   const Component = formFieldsMapper[componentTypes.DATE_PICKER];
   return <Component {...props} />;
 };
 
-const PlainTextField = ({preview, id, component, initialized, label, ...props}) => {
+const PlainTextField = ({
+  preview, id, component, initialized, label, ...props
+}) => {
   const Component = formFieldsMapper[componentTypes.PLAIN_TEXT];
   return (
     <div>

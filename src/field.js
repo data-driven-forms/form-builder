@@ -12,7 +12,7 @@ import MockFieldProvider from './mock-field-provider';
 //  </div>
 // );
 
-const Field = ({ field, index, shouldClone }) => {
+const Field = ({ field: { clone, ...field }, index, shouldClone }) => {
   const { componentMapper: { FieldActions, FieldLayout, ...rest } } = useContext(ComponentsContext);
   const { dispatch } = useContext(StoreContext);
   const FieldComponent = rest[field.component];
@@ -31,7 +31,7 @@ const Field = ({ field, index, shouldClone }) => {
             })}
           >
             <FieldLayout>
-              {field.preview ? <div>{field.content}</div> : <FieldComponent {...field} FieldProvider={MockFieldProvider} input={input} meta={meta} />}
+              {field.preview ? <div>{field.content}</div> : <FieldComponent {...field} snapshot={snapshot} FieldProvider={MockFieldProvider} input={input} meta={meta} />}
               {!shouldClone && (
                 <FieldActions
                   onDelete={() => dispatch({ type: 'removeComponent', payload: field.id })}

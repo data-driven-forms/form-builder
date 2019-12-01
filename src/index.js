@@ -30,12 +30,15 @@ const App = ({
   componentProperties,
   pickerMapper,
   propertiesMapper,
+  cloneWhileDragging,
 }) => {
   const initialFields = Object.keys(componentProperties).reduce((acc, curr) => ({
     ...acc,
-    [`initial-${curr}`]: { preview: true, id: `initial-${curr}`, component: curr },
+    [`initial-${curr}`]: {
+      preview: true, id: `initial-${curr}`, component: curr, clone: cloneWhileDragging,
+    },
   }), {});
-  console.log('createInitialData', createInitialData(initialFields))
+  console.log('createInitialData', createInitialData(initialFields));
   return (
     <ComponentsContext.Provider
       value={{

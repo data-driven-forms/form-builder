@@ -71,8 +71,6 @@ const componentProperties = {
   ],
 };
 
-console.log(componentProperties, pickerMapper);
-
 const Demo = () => (
   <Fragment>
     <CssBaseline />
@@ -82,6 +80,7 @@ const Demo = () => (
         componentProperties={componentProperties}
         componentMapper={builderMapper}
         propertiesMapper={propertiesMapper}
+        cloneWhileDragging
       />
     </ThemeProvider>
   </Fragment>

@@ -16,21 +16,21 @@ const useTextFieldStyles = makeStyles(() => ({
   },
 }));
 
-const TextField = props => {
+const TextField = ({ snapshot, ...props }) => {
   const classes = useTextFieldStyles();
   const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
   return (
     <div className={classes.root}>
-      <Component {...props} />
+      <Component {...props} label={snapshot.isDragging ? 'Text input' : props.label} />
     </div>
   );
 };
 
 const CheckBoxField = ({
-  preview, id, component, initialized, ...props
+  preview, id, component, initialized, snapshot, ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.CHECKBOX];
-  return <Component {...props} />;
+  return <Component {...props} label={props.label || 'Please provide label'} />;
 };
 
 const SelectField = ({
@@ -110,7 +110,7 @@ const PlainTextField = ({
   const Component = formFieldsMapper[componentTypes.PLAIN_TEXT];
   return (
     <div>
-      <Component {...props} label={label || ''} />
+      <Component {...props} label={label || 'Please provide a label to plain text component'} />
     </div>
   );
 };
@@ -119,21 +119,24 @@ const RadioField = ({
   preview, id, component, initialized, ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.RADIO];
-  return <Component {...props} />;
+  if(!props.options) {
+    return <p>Radio field does not have any options.</p>
+  }
+  return <Component {...props} input={{...props.input, onChange: console.log}} />;
 };
 
 const SwitchField = ({
-  preview, id, component, initialized, ...props
+  preview, id, component, initialized, snapshot, ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.SWITCH];
-  return <Component {...props} />;
+  return <Component {...props} label={snapshot.isDragging ? 'Switch field' : props.label} />;
 };
 
 const TextAreaField = ({
-  preview, id, component, initialized, ...props
+  preview, id, component, initialized, snapshot, ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.TEXTAREA];
-  return <Component {...props} />;
+  return <Component {...props} label={snapshot.isDragging ? 'Texarea' : props.label} />;
 };
 
 const builderMapper = {

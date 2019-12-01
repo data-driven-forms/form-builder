@@ -11,14 +11,28 @@ import MockFieldProvider from "./mock-field-provider";
 //  </div>
 // );
 
-const Field = ({ field: { clone, ...field }, index, shouldClone }) => {
+const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) => {
   const {
     componentMapper: { FieldActions, FieldLayout, ...rest }
   } = useContext(ComponentsContext);
-  const { dispatch, state: { selectedComponent } } = useContext(StoreContext);
+  const {
+    dispatch,
+    state: { selectedComponent }
+  } = useContext(StoreContext);
   const FieldComponent = rest[field.component];
   const input = { name: field.name };
   const meta = {};
+  if (field.component === "container-end") {
+    return (
+      <Draggable isDragDisabled draggableId={field.id} index={index}>
+        {(provided) => (
+          <div ref={provided.innerRef} {...provided.draggableProps}>
+            Container end {field.id}
+          </div>
+        )}
+      </Draggable>
+    );
+  }
   return (
     <Draggable draggableId={field.id} index={index}>
       {(provided, snapshot) => (

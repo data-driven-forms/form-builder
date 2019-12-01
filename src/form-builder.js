@@ -9,9 +9,16 @@ import ComponentPicker from "./component-picker";
 const COMPONENTS_LIST = "components-list";
 const FORM_LAYOUT = "form-layout";
 
+const isInContainer = (index, containers) => {
+  const containerKey = Object.keys(containers).filter(
+    (c) =>
+      index > containers[c].boundaries[0] && index <= containers[c].boundaries[1]
+  );
+  return containerKey ? containers[containerKey] : false;
+};
 const mutateColumns = (result, state) => {
   const { destination, source, draggableId } = result;
-  const { dropTargets, fields } = state;
+  const { dropTargets, fields, containers } = state;
   if (!destination) {
     return {};
   }
@@ -25,19 +32,84 @@ const mutateColumns = (result, state) => {
 
   const start = dropTargets[source.droppableId];
   const finish = dropTargets[destination.droppableId];
+  const template = fields[draggableId];
   /**
    * moving in column
    */
   if (start === finish) {
-    const newFieldsIds = [...start.fieldsIds];
-    newFieldsIds.splice(source.index, 1);
-    newFieldsIds.splice(destination.index, 0, draggableId);
-    return {
-      dropTargets: {
-        ...dropTargets,
-        [source.droppableId]: { ...start, fieldsIds: newFieldsIds }
+    if (template.isContainer && isInContainer(destination.index, containers)) {
+      /**
+       * No container nesting just now
+       */
+      return;
+    }
+    if (template.isContainer) {
+      const newFieldsIds = [...start.fieldsIds];
+      newFieldsIds.splice(source.index, template.children.length + 2);
+      newFieldsIds.splice(
+        destination.index,
+        0,
+        draggableId,
+        ...template.children,
+        `${draggableId}-end`
+      );
+      return {
+        dropTargets: {
+          ...dropTargets,
+          [source.droppableId]: { ...start, fieldsIds: newFieldsIds }
+        }
+      };
+    } else {
+      const newFieldsIds = [...start.fieldsIds];
+      const moveContainer = isInContainer(destination.index, containers);
+      const newFields = { ...fields };
+      /**
+       * Move into from root
+       * filed was not in container before
+       */
+      if (moveContainer && !fields[draggableId].container) {
+        newFields[moveContainer.id].children = [
+          ...newFields[moveContainer.id].children,
+          draggableId
+        ];
+        newFields[draggableId].container = moveContainer.id;
       }
-    };
+      /**
+       * Move field outside of a container to root
+       */
+      if (fields[draggableId].container && !moveContainer) {
+        newFields[fields[draggableId].container].children = newFields[
+          fields[draggableId].container
+        ].children.filter((child) => child !== draggableId);
+        delete newFields[draggableId].container;
+      }
+      /**
+       * Move field between containers
+       */
+      if (
+        moveContainer &&
+        fields[draggableId].container &&
+        fields[draggableId].container !== moveContainer.id
+      ) {
+        newFields[moveContainer.id].children = [
+          ...newFields[moveContainer.id].children,
+          draggableId
+        ];
+        newFields[fields[draggableId].container].children = newFields[
+          fields[draggableId].container
+        ].children.filter((child) => child !== draggableId);
+        newFields[draggableId].container = moveContainer.id;
+      }
+      newFieldsIds.splice(source.index, 1);
+      newFieldsIds.splice(destination.index, 0, draggableId);
+      return {
+        fields: newFields,
+        dropTargets: {
+          ...dropTargets,
+          [source.droppableId]: { ...start, fieldsIds: newFieldsIds }
+        }
+      };
+    }
   }
   /**
    * Copy to column
@@ -45,30 +117,56 @@ const mutateColumns = (result, state) => {
 
   const newId = Date.now().toString();
   const finishFieldsIds = [...finish.fieldsIds];
-  finishFieldsIds.splice(destination.index, 0, newId);
+  const container = isInContainer(destination.index, containers);
+
+  const newFields = {
+    ...fields,
+    [newId]: {
+      ...fields[draggableId],
+      name: fields[draggableId].component,
+      preview: false,
+      id: newId,
+      initialized: false,
+      container: container && container.id,
+      children: template.isContainer && []
+    }
+  };
+  const newContainers = [...containers];
+  if (container) {
+    newFields[container.id] = {
+      ...newFields[container.id],
+      children: [...newFields[container.id].children, newId]
+    };
+  }
+  if (template.isContainer) {
+    finishFieldsIds.splice(destination.index, 0, newId, `${newId}-end`);
+    newFields[`${newId}-end`] = {
+      component: "container-end",
+      id: `${newId}-end`
+    };
+    newContainers.push({
+      id: newId,
+      boundaries: [destination.index, destination.index + 1]
+    });
+  } else {
+    finishFieldsIds.splice(destination.index, 0, newId);
+  }
   const newFinish = {
     ...finish,
     fieldsIds: finishFieldsIds
   };
   return {
     dropTargets: { ...dropTargets, [newFinish.id]: newFinish },
-    fields: {
-      ...fields,
-      [newId]: {
-        ...fields[draggableId],
-        name: fields[draggableId].component,
-        preview: false,
-        id: newId,
-        initialized: false
-      }
-    },
-    selectedComponent: newId
+    fields: newFields,
+    selectedComponent: newId,
+    containers: newContainers
   };
 };
 
 const removeComponent = (componentId, state) => {
   const { fields } = state;
   delete fields[componentId];
+  delete fields[`${componentId}-end`];
   return {
     selectedComponent: undefined,
     dropTargets: {
@@ -76,7 +174,7 @@ const removeComponent = (componentId, state) => {
       [FORM_LAYOUT]: {
         ...state.dropTargets[FORM_LAYOUT],
         fieldsIds: state.dropTargets[FORM_LAYOUT].fieldsIds.filter(
-          (id) => id !== componentId
+          (id) => id !== componentId && id !== `${componentId}-end`
         )
       }
     },

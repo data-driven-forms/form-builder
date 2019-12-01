@@ -21,8 +21,11 @@ const createInitialData = (initialFields) => ({
       fieldsIds: []
     }
   },
-  selectedComponent: undefined
+  selectedComponent: undefined,
+  containers: []
 });
+
+const ContainerEnd = ({ id }) => <div>{id}</div>;
 
 const App = ({
   componentMapper,
@@ -38,7 +41,8 @@ const App = ({
         preview: true,
         id: `initial-${curr}`,
         component: curr,
-        clone: cloneWhileDragging
+        clone: cloneWhileDragging,
+        isContainer: componentProperties[curr].isContainer
       }
     }),
     {}
@@ -47,7 +51,7 @@ const App = ({
   return (
     <ComponentsContext.Provider
       value={{
-        componentMapper,
+        componentMapper: { ...componentMapper, "container-end": ContainerEnd },
         componentProperties,
         pickerMapper,
         propertiesMapper

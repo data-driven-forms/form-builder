@@ -24,7 +24,7 @@ const PropertiesEditor = () => {
     propertiesMapper
   } = useContext(ComponentsContext);
   const field = fields[selectedComponent];
-  const properties = componentProperties[field.component];
+  const properties = componentProperties[field.component].attributes;
   const NameComponent = propertiesMapper.input;
 
   const handlePropertyChange = (value, propertyName) =>

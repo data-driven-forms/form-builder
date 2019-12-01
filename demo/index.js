@@ -23,27 +23,39 @@ import {
 } from "./field-properties";
 
 const componentProperties = {
-  [componentTypes.TEXT_FIELD]: [
-    LABEL,
-    HELPER_TEXT,
-    PLACEHOLDER,
-    INPUT_TYPE,
-    IS_DISABLED,
-    IS_READ_ONLY
-  ],
-  [componentTypes.CHECKBOX]: [LABEL, IS_DISABLED, OPTIONS],
-  [componentTypes.SELECT]: [OPTIONS, LABEL, IS_DISABLED, PLACEHOLDER, HELPER_TEXT],
-  [componentTypes.DATE_PICKER]: [
-    LABEL,
-    TODAY_BUTTON_LABEL,
-    IS_CLEARABLE,
-    CLOSE_ON_DAY_SELECT,
-    SHOW_TODAY_BUTTON
-  ],
-  [componentTypes.PLAIN_TEXT]: [MULTI_LINE_LABEL],
-  [componentTypes.RADIO]: [LABEL, IS_DISABLED, OPTIONS],
-  [componentTypes.SWITCH]: [LABEL, IS_READ_ONLY, IS_DISABLED],
-  [componentTypes.TEXTAREA]: [LABEL, HELPER_TEXT, IS_READ_ONLY, IS_DISABLED]
+  [componentTypes.TEXT_FIELD]: {
+    attributes: [
+      LABEL,
+      HELPER_TEXT,
+      PLACEHOLDER,
+      INPUT_TYPE,
+      IS_DISABLED,
+      IS_READ_ONLY
+    ]
+  },
+  [componentTypes.CHECKBOX]: { attributes: [LABEL, IS_DISABLED, OPTIONS] },
+  [componentTypes.SELECT]: {
+    attributes: [OPTIONS, LABEL, IS_DISABLED, PLACEHOLDER, HELPER_TEXT]
+  },
+  [componentTypes.DATE_PICKER]: {
+    attributes: [
+      LABEL,
+      TODAY_BUTTON_LABEL,
+      IS_CLEARABLE,
+      CLOSE_ON_DAY_SELECT,
+      SHOW_TODAY_BUTTON
+    ]
+  },
+  [componentTypes.PLAIN_TEXT]: { attributes: [MULTI_LINE_LABEL] },
+  [componentTypes.RADIO]: { attributes: [LABEL, IS_DISABLED, OPTIONS] },
+  [componentTypes.SWITCH]: { attributes: [LABEL, IS_READ_ONLY, IS_DISABLED] },
+  [componentTypes.TEXTAREA]: {
+    attributes: [LABEL, HELPER_TEXT, IS_READ_ONLY, IS_DISABLED]
+  },
+  [componentTypes.SUB_FORM]: {
+    isContainer: true,
+    attributes: []
+  }
 };
 
 const Demo = () => (

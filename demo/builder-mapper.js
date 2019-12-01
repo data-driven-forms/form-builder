@@ -169,6 +169,10 @@ const TextAreaField = ({
   );
 };
 
+const SubFormField = () => {
+  return <div>This is sub form</div>;
+};
+
 const builderMapper = {
   FieldActions,
   FieldLayout,
@@ -180,6 +184,7 @@ const builderMapper = {
   [componentTypes.RADIO]: RadioField,
   [componentTypes.SWITCH]: SwitchField,
   [componentTypes.TEXTAREA]: TextAreaField,
+  [componentTypes.SUB_FORM]: SubFormField,
   BuilderColumn
 };
 

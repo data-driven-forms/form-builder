@@ -46,7 +46,7 @@ h3.title {
   margin-bottom: 8px;
   border-radius: 2px;
   background-color: white;
-  transition: all ease-out .1s;
+  transition: box-shadow ease-out .1s;
 }
 .task-container.dragging {
   background-color: lightgreen;

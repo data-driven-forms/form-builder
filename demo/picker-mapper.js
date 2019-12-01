@@ -153,6 +153,23 @@ const TextAreaOption = () => {
   );
 };
 
+const SubFormOption = () => {
+  const classes = useTextFieldStyles();
+  return (
+    <div className={classes.root}>
+      <Button
+        tabIndex='-1'
+        className={clsx(classes.button)}
+        fullWidth
+        variant='contained'
+        color='secondary'
+      >
+        Sub form
+      </Button>
+    </div>
+  );
+};
+
 const pickerMapper = {
   [componentTypes.TEXT_FIELD]: TextFieldOption,
   [componentTypes.CHECKBOX]: CheckboxOptions,
@@ -161,7 +178,8 @@ const pickerMapper = {
   [componentTypes.PLAIN_TEXT]: PlainTextOption,
   [componentTypes.RADIO]: RadioOption,
   [componentTypes.SWITCH]: SwitchOption,
-  [componentTypes.TEXTAREA]: TextAreaOption
+  [componentTypes.TEXTAREA]: TextAreaOption,
+  [componentTypes.SUB_FORM]: SubFormOption
 };
 
 export default pickerMapper;

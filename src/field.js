@@ -17,7 +17,7 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
   } = useContext(ComponentsContext);
   const {
     dispatch,
-    state: { selectedComponent }
+    state: { selectedComponent, draggingContainer, fields }
   } = useContext(StoreContext);
   const FieldComponent = rest[field.component];
   const input = { name: field.name };
@@ -30,7 +30,9 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
       <Draggable isDragDisabled draggableId={field.id} index={index}>
         {(provided) => (
           <div
-            className="container-end"
+            className={clsx('container-end', {
+              hide: !!field.id.match(new RegExp(`^${draggingContainer}-end`))
+            })}
             ref={provided.innerRef}
             {...provided.draggableProps}
           ></div>
@@ -50,7 +52,10 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
               dragging: snapshot.isDragging,
               selected: selectedComponent === field.id,
               'is-container': isContainer,
-              'in-container': field.container
+              'in-container': field.container,
+              hide:
+                field.container !== undefined &&
+                field.container === draggingContainer
             })}
           >
             <FieldLayout>
@@ -79,9 +84,6 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
               )}
             </FieldLayout>
           </div>
-          {shouldClone && snapshot.isDragging && (
-            <div className="task-container">{field.content}</div>
-          )}
         </Fragment>
       )}
     </Draggable>

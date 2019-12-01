@@ -188,14 +188,30 @@ const setFieldproperty = (field, payload) => ({
   [payload.propertyName]: payload.value
 });
 
+const dragStart = (field, state) => {
+  if (
+    field.draggableId.match(/^initial-/) ||
+    !state.fields[field.draggableId].isContainer
+  ) {
+    return {};
+  }
+  return { draggingContainer: field.draggableId };
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'setColumns':
-      return { ...state, ...mutateColumns(action.payload, state) };
+      return {
+        ...state,
+        ...mutateColumns(action.payload, state),
+        draggingContainer: undefined
+      };
     case 'setSelectedComponent':
       return { ...state, selectedComponent: action.payload };
     case 'removeComponent':
       return { ...state, ...removeComponent(action.payload, state) };
+    case 'dragStart':
+      return { ...state, ...dragStart(action.payload, state) };
     case 'setFieldProperty':
       return {
         ...state,
@@ -215,10 +231,12 @@ const reducer = (state, action) => {
 const FormBuilder = ({ initialFields }) => {
   const [state, dispatch] = useReducer(reducer, initialFields);
   const onDragEnd = (result) => dispatch({ type: 'setColumns', payload: result });
+  const onDragStart = (draggable) =>
+    dispatch({ type: 'dragStart', payload: draggable });
   const { dropTargets, fields, selectedComponent } = state;
   return (
     <StoreContext.Provider value={{ state, dispatch }}>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
         <div className="layout">
           <ComponentPicker
             isDropDisabled

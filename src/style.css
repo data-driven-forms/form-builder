@@ -76,3 +76,11 @@ h3.title {
   background-color: transparent;
   border-bottom: 1px solid lightgray;
 }
+
+.task-container.hide, .container-end.hide {
+  visibility: hidden;
+  height: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}

@@ -15,7 +15,7 @@ const Field = ({ field: { clone, ...field }, index, shouldClone }) => {
   const {
     componentMapper: { FieldActions, FieldLayout, ...rest }
   } = useContext(ComponentsContext);
-  const { dispatch } = useContext(StoreContext);
+  const { dispatch, state: { selectedComponent } } = useContext(StoreContext);
   const FieldComponent = rest[field.component];
   const input = { name: field.name };
   const meta = {};
@@ -28,7 +28,8 @@ const Field = ({ field: { clone, ...field }, index, shouldClone }) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             className={clsx("task-container", {
-              dragging: snapshot.isDragging
+              dragging: snapshot.isDragging,
+              selected: selectedComponent === field.id
             })}
           >
             <FieldLayout>

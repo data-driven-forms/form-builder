@@ -120,7 +120,6 @@ const mutateColumns = (result, state) => {
   const newId = Date.now().toString();
   const finishFieldsIds = [...finish.fieldsIds];
   const container = isInContainer(destination.index, containers);
-  console.log('container:', container);
 
   const newFields = {
     ...fields,
@@ -173,6 +172,18 @@ const mutateColumns = (result, state) => {
 
 const removeComponent = (componentId, state) => {
   const { fields } = state;
+  const field = { ...fields[componentId] };
+  let containers = [...state.containers];
+  if (field.container) {
+    /**
+     * adjust container size if field was in container
+     */
+    containers = containers.map((c) =>
+      c.id === field.container
+        ? { ...c, boundaries: [c.boundaries[0], c.boundaries[1] - 1] }
+        : c
+    );
+  }
   delete fields[componentId];
   delete fields[`${componentId}-end`];
   return {
@@ -186,7 +197,8 @@ const removeComponent = (componentId, state) => {
         )
       }
     },
-    fields: { ...state.fields }
+    fields: { ...state.fields },
+    containers
   };
 };
 

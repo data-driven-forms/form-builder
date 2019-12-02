@@ -10,10 +10,12 @@ const COMPONENTS_LIST = 'components-list';
 const FORM_LAYOUT = 'form-layout';
 
 const isInContainer = (index, containers) => {
-  const containerKey = Object.keys(containers).filter(
-    (c) =>
+  const containerKey = Object.keys(containers).filter((c) => {
+    console.log(index, containers[c]);
+    return (
       index > containers[c].boundaries[0] && index <= containers[c].boundaries[1]
-  );
+    );
+  });
   return containerKey ? containers[containerKey] : false;
 };
 const mutateColumns = (result, state) => {
@@ -118,6 +120,7 @@ const mutateColumns = (result, state) => {
   const newId = Date.now().toString();
   const finishFieldsIds = [...finish.fieldsIds];
   const container = isInContainer(destination.index, containers);
+  console.log('container:', container);
 
   const newFields = {
     ...fields,
@@ -131,12 +134,17 @@ const mutateColumns = (result, state) => {
       children: template.isContainer && []
     }
   };
-  const newContainers = [...containers];
+  let newContainers = [...containers];
   if (container) {
     newFields[container.id] = {
       ...newFields[container.id],
       children: [...newFields[container.id].children, newId]
     };
+    newContainers = newContainers.map((c) =>
+      c.id === container.id
+        ? { ...c, boundaries: [c.boundaries[0], c.boundaries[1] + 1] }
+        : c
+    );
   }
   if (template.isContainer) {
     finishFieldsIds.splice(destination.index, 0, newId, `${newId}-end`);

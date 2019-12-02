@@ -10,28 +10,30 @@ const DropTarget = ({ dropTarget, fields, isDropDisabled, shouldClone }) => {
   } = useContext(ComponentsContext);
   return (
     <Droppable droppableId={dropTarget.id} isDropDisabled={isDropDisabled}>
-      {(provided, snapshot) => (
-        <BuilderColumn className="container">
-          <h3 className="title">{dropTarget.title}</h3>
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            className={clsx('task-list', {
-              dragging: snapshot.isDraggingOver
-            })}
-          >
-            {fields.map((field, index) => (
-              <Field
-                shouldClone={shouldClone}
-                key={field.id}
-                field={field}
-                index={index}
-              />
-            ))}
-            {provided.placeholder}
-          </div>
-        </BuilderColumn>
-      )}
+      {(provided, snapshot) => {
+        return (
+          <BuilderColumn className="container">
+            <h3 className="title">{dropTarget.title}</h3>
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={clsx('task-list', {
+                dragging: snapshot.isDraggingOver
+              })}
+            >
+              {fields.map((field, index) => (
+                <Field
+                  shouldClone={shouldClone}
+                  key={field.id}
+                  field={field}
+                  index={index}
+                />
+              ))}
+              {provided.placeholder}
+            </div>
+          </BuilderColumn>
+        );
+      }}
     </Droppable>
   );
 };

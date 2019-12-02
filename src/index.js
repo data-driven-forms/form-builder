@@ -47,7 +47,6 @@ const App = ({
     }),
     {}
   );
-  console.log('createInitialData', createInitialData(initialFields));
   return (
     <ComponentsContext.Provider
       value={{

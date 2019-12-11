@@ -8,7 +8,9 @@ import postcss from 'rollup-plugin-postcss';
 
 const globals = {
   react: 'React',
-  'react-dom': 'ReactDOM'
+  'react-dom': 'ReactDOM',
+  '@patternfly/react-core': 'PatternflyReact',
+  '@data-driven-forms/react-form-renderer': '@data-driven-forms/react-form-renderer'
 };
 
 const babelOptions = {

@@ -4,9 +4,12 @@ import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
-import builderMapper from './builder-mapper';
-import pickerMapper from './picker-mapper';
-import propertiesMapper from './properties-mapper';
+// import builderMapper from './builder-mapper';
+// import pickerMapper from './picker-mapper';
+// import propertiesMapper from './properties-mapper';
+
+import { builderMapper, pickerMapper, propertiesMapper } from '../pf4-mappers';
+
 import {
   LABEL,
   HELPER_TEXT,

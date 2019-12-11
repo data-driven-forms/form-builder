@@ -1,11 +1,11 @@
 import React, { useReducer, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import DropTarget from './drop-target';
-import './style.css';
 import StoreContext from './store-context';
 import PropertiesEditor from './properties-editor';
 import ComponentPicker from './component-picker';
 import throttle from 'lodash/throttle';
+import './style.css';
 
 const COMPONENTS_LIST = 'components-list';
 const FORM_LAYOUT = 'form-layout';
@@ -249,10 +249,28 @@ const reducer = (state, action) => {
   }
 };
 
+const ARTIFICIAL_KEYS = [
+  'preview',
+  'clone',
+  'initialized',
+  'id',
+  'isContainer',
+  'children',
+  'container'
+];
+
+const sanitizeField = (field) => {
+  const result = { ...field };
+  ARTIFICIAL_KEYS.forEach((key) => {
+    delete result[key];
+  });
+  return result;
+};
+
 const createSchema = (fields) => {
   const keys = Object.keys(fields).filter((key) => !key.match(/^initial-/));
   return {
-    fields: keys.map((key) => fields[key])
+    fields: keys.map((key) => sanitizeField(fields[key]))
   };
 };
 

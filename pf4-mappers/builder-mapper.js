@@ -4,15 +4,13 @@ import { formFieldsMapper } from '@data-driven-forms/pf4-component-mapper';
 import { Button, Card, CardBody } from '@patternfly/react-core';
 import { TractorIcon, EditIcon } from '@patternfly/react-icons';
 
-console.log(formFieldsMapper)
-
 const TextField = ({ snapshot, ...props }) => {
   const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
   return (
     <div>
       <Component
         {...props}
-        label={snapshot.isDragging ? 'Text input' : props.label}
+        label={snapshot.isDragging ? props.label || 'Text input' : props.label}
       />
     </div>
   );
@@ -63,7 +61,7 @@ const FieldLayout = ({ children }) => (
 
 const BuilderColumn = ({ children, ...props }) => {
   return (
-    <Card {...props}>
+    <Card {...props} className="pf4-builder-column">
       <CardBody>{children}</CardBody>
     </Card>
   );

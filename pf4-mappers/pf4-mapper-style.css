@@ -10,3 +10,10 @@
   background-color: var(--pf-c-button--m-primary--hover--BackgroundColor);
 }
 
+.pf4-builder-column {
+  margin: 16px
+}
+.pf4-builder-column:nth-child(2) {
+  flex-grow: 1;
+}
+

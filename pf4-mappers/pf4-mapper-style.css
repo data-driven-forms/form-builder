@@ -1,0 +1,12 @@
+.pf4-picker-root {
+  width: 100%;
+  margin-bottom: 8px;
+}
+.pf4-picker-root>button {
+  width: 100%;
+  pointer-events: none;
+}
+.pf4-picker-root:hover>button {
+  background-color: var(--pf-c-button--m-primary--hover--BackgroundColor);
+}
+

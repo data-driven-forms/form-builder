@@ -2,95 +2,33 @@ import React from 'react';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { Button } from '@patternfly/react-core';
 
-const TextFieldOption = () => {
-  return (
-    <div>
-      <Button tabIndex={-1} fullWidth variant="primary" color="primary">
-        Text field
-      </Button>
-    </div>
-  );
-};
+import './pf4-mapper-style.css';
 
-const CheckboxOptions = () => {
-  return (
-    <div>
-      <Button tabIndex={-1} fullWidth variant="primary" color="primary">
-        Checkbox
-      </Button>
-    </div>
-  );
-};
+const PickerRoot = ({ label }) => (
+  <div className="pf4-picker-root">
+    <Button tabIndex={-1} fullWidth variant="primary" color="primary">
+      {label}
+    </Button>
+  </div>
+);
 
-const SelectOptions = () => {
-  return (
-    <div>
-      <Button tabIndex={-1} fullWidth variant="primary" color="primary">
-        Select
-      </Button>
-    </div>
-  );
-};
+const TextFieldOption = () => <PickerRoot label="Text field" />;
 
-const DatePickerOption = () => {
-  return (
-    <div>
-      <Button tabIndex={-1} fullWidth variant="primary" color="primary">
-        Date picker
-      </Button>
-    </div>
-  );
-};
+const CheckboxOptions = () => <PickerRoot label="Checkbox" />;
 
-const PlainTextOption = () => {
-  return (
-    <div>
-      <Button tabIndex={-1} fullWidth variant="primary" color="primary">
-        Plain text
-      </Button>
-    </div>
-  );
-};
+const SelectOptions = () => <PickerRoot label="Select" />;
 
-const RadioOption = () => {
-  return (
-    <div>
-      <Button tabIndex={-1} fullWidth variant="primary" color="primary">
-        Radio
-      </Button>
-    </div>
-  );
-};
+const DatePickerOption = () => <PickerRoot label="Date picker" />;
 
-const SwitchOption = () => {
-  return (
-    <div>
-      <Button tabIndex={-1} fullWidth variant="primary" color="primary">
-        Switch
-      </Button>
-    </div>
-  );
-};
+const PlainTextOption = () => <PickerRoot label="Plain text" />;
 
-const TextAreaOption = () => {
-  return (
-    <div>
-      <Button tabIndex={-1} fullWidth variant="primary" color="primary">
-        TextArea
-      </Button>
-    </div>
-  );
-};
+const RadioOption = () => <PickerRoot label="Radio" />;
 
-const SubFormOption = () => {
-  return (
-    <div>
-      <Button tabIndex={-1} fullWidth variant="primary" color="secondary">
-        Sub form
-      </Button>
-    </div>
-  );
-};
+const SwitchOption = () => <PickerRoot label="Switch" />;
+
+const TextAreaOption = () => <PickerRoot label="Textarea" />;
+
+const SubFormOption = () => <PickerRoot label="Sub form" />;
 
 const pickerMapper = {
   [componentTypes.TEXT_FIELD]: TextFieldOption,

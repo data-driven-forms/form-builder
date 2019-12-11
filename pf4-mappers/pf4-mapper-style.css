@@ -16,4 +16,8 @@
 .pf4-builder-column:nth-child(2) {
   flex-grow: 1;
 }
+.pf4-builder-column:nth-child(2)>.pf-c-card__body {
+  display: flex;
+  flex-direction: column;
+}
 

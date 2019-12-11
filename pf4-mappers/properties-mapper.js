@@ -1,21 +1,26 @@
 /* eslint react/no-array-index-key: "off" */
 
 import React from 'react';
-import { Button, TextArea, TextInput, Switch } from '@patternfly/react-core';
+import {
+  Button,
+  FormGroup,
+  TextArea,
+  TextInput,
+  Switch
+} from '@patternfly/react-core';
 import { CrossIcon, PlusIcon } from '@patternfly/react-icons';
 import { rawComponents } from '@data-driven-forms/pf4-component-mapper';
 
 const Input = ({ label, onChange, value, autoFocus }) => {
   return (
-    <div>
+    <FormGroup label={label} fieldId={label}>
       <TextInput
+        id={label}
         autoFocus={autoFocus}
-        fullWidth
-        label={label}
         onChange={(value) => onChange(value)}
         value={value || ''}
       />
-    </div>
+    </FormGroup>
   );
 };
 
@@ -23,11 +28,13 @@ const PropertySwitch = ({ value, onChange, label }) => {
   return (
     <div>
       <Switch
-        checked={Boolean(value)}
-        onChange={(checked) => onChange(checked)}
+        isChecked={Boolean(value)}
+        onChange={(checked) => {
+          console.log('checked', checked);
+          return onChange(checked);
+        }}
         label={label}
       />
-      }
     </div>
   );
 };
@@ -40,6 +47,7 @@ const PropertySelect = ({ value, label, onChange, options }) => {
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value={value || ''}
+        options={options.map((option) => ({ value: option, label: option }))}
         onChange={(value) => onChange(value)}
       />
     </div>
@@ -103,7 +111,6 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
               </td>
               <td>
                 <Button
-                  className={classes.danger}
                   onClick={() => handleRemove(index)}
                   color="secondary"
                   aria-label="delete option"

@@ -1,10 +1,11 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import DropTarget from './drop-target';
 import './style.css';
 import StoreContext from './store-context';
 import PropertiesEditor from './properties-editor';
 import ComponentPicker from './component-picker';
+import throttle from 'lodash/throttle';
 
 const COMPONENTS_LIST = 'components-list';
 const FORM_LAYOUT = 'form-layout';
@@ -248,8 +249,22 @@ const reducer = (state, action) => {
   }
 };
 
-const FormBuilder = ({ initialFields }) => {
+const createSchema = (fields) => {
+  const keys = Object.keys(fields).filter((key) => !key.match(/^initial-/));
+  return {
+    fields: keys.map((key) => fields[key])
+  };
+};
+
+const throttledChange = throttle(createSchema, 100);
+
+const FormBuilder = ({ initialFields, onChange }) => {
   const [state, dispatch] = useReducer(reducer, initialFields);
+
+  useEffect(() => {
+    onChange(throttledChange(state.fields));
+  });
+
   const onDragEnd = (result) => dispatch({ type: 'setColumns', payload: result });
   const onDragStart = (draggable) =>
     dispatch({ type: 'dragStart', payload: draggable });

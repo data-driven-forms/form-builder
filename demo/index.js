@@ -65,6 +65,7 @@ const Demo = () => (
     <CssBaseline />
     <ThemeProvider theme={createMuiTheme({})}>
       <FormBuilder
+        onChange={console.log}
         pickerMapper={pickerMapper}
         componentProperties={componentProperties}
         componentMapper={builderMapper}

@@ -32,7 +32,8 @@ const App = ({
   componentProperties,
   pickerMapper,
   propertiesMapper,
-  cloneWhileDragging
+  cloneWhileDragging,
+  ...props
 }) => {
   const initialFields = Object.keys(componentProperties).reduce(
     (acc, curr) => ({
@@ -56,7 +57,7 @@ const App = ({
         propertiesMapper
       }}
     >
-      <FormBuilder initialFields={createInitialData(initialFields)} />
+      <FormBuilder initialFields={createInitialData(initialFields)} {...props} />
     </ComponentsContext.Provider>
   );
 };

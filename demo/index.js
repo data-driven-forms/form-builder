@@ -60,11 +60,22 @@ const componentProperties = {
   }
 };
 
+const schema = {
+  fields: [
+    {
+      component: 'text-field',
+      name: 'my-text-field',
+      label: 'Something'
+    }
+  ]
+};
+
 const Demo = () => (
   <Fragment>
     <CssBaseline />
     <ThemeProvider theme={createMuiTheme({})}>
       <FormBuilder
+        schema={schema}
         onChange={console.log}
         pickerMapper={pickerMapper}
         componentProperties={componentProperties}

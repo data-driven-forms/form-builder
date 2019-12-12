@@ -73,11 +73,12 @@ const SelectField = ({
   options,
   input,
   isMulti,
+  multi,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.SELECT];
   let sanitizedInput = { ...input };
-  if (isMulti && !Array.isArray(input.value)) {
+  if ((isMulti || multi) && !Array.isArray(input.value)) {
     sanitizedInput.value = [];
   }
   return (

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import StoreContext from './store-context';
 import ComponentsContext from './components-context';
 
@@ -19,7 +19,7 @@ const PropertiesEditor = () => {
   const { state, dispatch } = useContext(StoreContext);
   const { selectedComponent, fields } = state;
   const {
-    componentMapper: { BuilderColumn },
+    componentMapper: { BuilderColumn, PropertiesEditor },
     componentProperties,
     propertiesMapper
   } = useContext(ComponentsContext);
@@ -38,33 +38,35 @@ const PropertiesEditor = () => {
     });
   return (
     <BuilderColumn className="container">
-      <h1>There will be properties editor</h1>
-      <h2>{fields[selectedComponent].name}</h2>
-      <div>
-        <NameComponent
-          label="Name"
-          type="text"
-          value={field.name}
-          autoFocus={!field.initialized}
-          onChange={(value) => handlePropertyChange(value, 'name')}
-        />
-      </div>
-      <div>
-        {properties.map((property) => {
-          const Component = propertiesMapper[property.component] || PropertyDefault;
-          return (
-            <Component
-              key={property.propertyName}
-              {...property}
-              value={field[property.propertyName]}
-              onChange={(value) =>
-                handlePropertyChange(value, property.propertyName)
-              }
+      <PropertiesEditor
+        fieldName={fields[selectedComponent].name}
+        propertiesChildren={
+          <Fragment>
+            <NameComponent
+              label="Name"
+              type="text"
+              value={field.name}
+              autoFocus={!field.initialized}
+              onChange={(value) => handlePropertyChange(value, 'name')}
             />
-          );
-        })}
-      </div>
-      <pre>{JSON.stringify(field, null, 2)}</pre>
+            {properties.map((property) => {
+              const Component =
+                propertiesMapper[property.component] || PropertyDefault;
+              return (
+                <Component
+                  key={property.propertyName}
+                  {...property}
+                  value={field[property.propertyName]}
+                  onChange={(value) =>
+                    handlePropertyChange(value, property.propertyName)
+                  }
+                />
+              );
+            })}
+            <pre>{JSON.stringify(field, null, 2)}</pre>
+          </Fragment>
+        }
+      />
     </BuilderColumn>
   );
 };

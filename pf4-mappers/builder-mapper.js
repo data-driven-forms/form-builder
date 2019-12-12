@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { formFieldsMapper } from '@data-driven-forms/pf4-component-mapper';
-import { Button, Card, CardBody } from '@patternfly/react-core';
+import { Button, Card, CardBody, Form, Title } from '@patternfly/react-core';
 import { TrashIcon, EditIcon } from '@patternfly/react-icons';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
@@ -239,6 +239,23 @@ const SubFormField = ({ title, description, formOptions }) => {
   );
 };
 
+const PropertiesEditor = ({ propertiesChildren, fieldName }) => (
+  <div>
+    <Title headingLevel="h2" size="2xl">
+      Properties editor
+    </Title>
+    <Title headingLevel="h3" size="1xl">
+      Field: {fieldName}
+    </Title>
+    <Form>{propertiesChildren}</Form>
+  </div>
+);
+
+PropertiesEditor.propTypes = {
+  propertiesChildren: childrenPropType,
+  fieldName: PropTypes.string
+};
+
 SubFormField.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
@@ -248,6 +265,7 @@ SubFormField.propTypes = {
 const builderMapper = {
   FieldActions,
   FieldLayout,
+  PropertiesEditor,
   [componentTypes.TEXT_FIELD]: TextField,
   [componentTypes.CHECKBOX]: CheckBoxField,
   [componentTypes.SELECT]: SelectField,

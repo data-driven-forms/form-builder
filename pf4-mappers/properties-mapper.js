@@ -26,7 +26,7 @@ const Input = ({ label, onChange, value, autoFocus }) => {
 
 const PropertySwitch = ({ value, onChange, label }) => {
   return (
-    <div>
+    <FormGroup fieldId={label}>
       <Switch
         isChecked={Boolean(value)}
         id={`${label}-property`}
@@ -36,22 +36,20 @@ const PropertySwitch = ({ value, onChange, label }) => {
         }}
         label={label}
       />
-    </div>
+    </FormGroup>
   );
 };
 
 const PropertySelect = ({ value, label, onChange, options }) => {
   return (
-    <div>
-      <div>{label}</div>
+    <FormGroup label={label} fieldId={label}>
       <rawComponents.Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
+        id={label}
         value={value || ''}
         options={options.map((option) => ({ value: option, label: option }))}
         onChange={(value) => onChange(value)}
       />
-    </div>
+    </FormGroup>
   );
 };
 

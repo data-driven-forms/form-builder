@@ -29,6 +29,7 @@ const PropertySwitch = ({ value, onChange, label }) => {
     <div>
       <Switch
         isChecked={Boolean(value)}
+        id={`${label}-property`}
         onChange={(checked) => {
           console.log('checked', checked);
           return onChange(checked);

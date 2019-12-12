@@ -1,11 +1,6 @@
-import * as fieldProperties from './field-properties';
-import builderMapper from './builder-mapper';
-import pickerMapper from './picker-mapper';
-import propertiesMapper from './properties-mapper';
+import * as fp from './field-properties';
+export { default as builderMapper } from './builder-mapper';
+export { default as pickerMapper } from './picker-mapper';
+export { default as propertiesMapper } from './properties-mapper';
 
-export default {
-  fieldProperties,
-  builderMapper,
-  pickerMapper,
-  propertiesMapper
-};
+export const fieldProperties = fp;

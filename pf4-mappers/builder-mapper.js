@@ -1,19 +1,47 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { formFieldsMapper } from '@data-driven-forms/pf4-component-mapper';
 import { Button, Card, CardBody } from '@patternfly/react-core';
-import { TractorIcon, EditIcon } from '@patternfly/react-icons';
+import { TrashIcon, EditIcon } from '@patternfly/react-icons';
 
-const TextField = ({ snapshot, ...props }) => {
+const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
+const childrenPropType = PropTypes.oneOfType([
+  PropTypes.node,
+  PropTypes.arrayOf(PropTypes.node)
+]);
+
+const commonPropTypes = {
+  component: PropTypes.string,
+  snapshot: snapshotPropType,
+  label: PropTypes.string,
+  preview: PropTypes.bool,
+  id: PropTypes.string,
+  initialized: PropTypes.bool
+};
+
+const ComponentWrapper = ({ children }) => (
+  <div className="pf4-component-wrapper">{children}</div>
+);
+
+ComponentWrapper.propTypes = {
+  children: childrenPropType
+};
+
+const TextField = ({ snapshot, preview, initialized, ...props }) => {
   const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
   return (
-    <div>
+    <ComponentWrapper>
       <Component
         {...props}
         label={snapshot.isDragging ? props.label || 'Text input' : props.label}
       />
-    </div>
+    </ComponentWrapper>
   );
+};
+
+TextField.propTypes = {
+  ...commonPropTypes
 };
 
 const CheckBoxField = ({
@@ -25,25 +53,49 @@ const CheckBoxField = ({
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.CHECKBOX];
-  return <Component {...props} label={props.label || 'Please provide label'} />;
+  return (
+    <ComponentWrapper>
+      <Component {...props} label={props.label || 'Please provide label'} />
+    </ComponentWrapper>
+  );
+};
+
+CheckBoxField.propTypes = {
+  ...commonPropTypes
 };
 
 const SelectField = ({ preview, id, component, initialized, options, ...props }) => {
   const Component = formFieldsMapper[componentTypes.SELECT];
-  return <Component {...props} options={options || []} />;
+  return (
+    <ComponentWrapper>
+      <Component {...props} options={options || []} />
+    </ComponentWrapper>
+  );
 };
 
-const FieldActions = ({ onSelect, onDelete, fieldData }) => {
+SelectField.propTypes = {
+  ...commonPropTypes,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({ value: PropTypes.any, label: PropTypes.string })
+  )
+};
+
+const FieldActions = ({ onSelect, onDelete }) => {
   return (
     <div style={{ display: 'flex' }}>
       <Button onClick={onSelect}>
         <EditIcon />
       </Button>
       <Button onClick={onDelete}>
-        <TractorIcon />
+        <TrashIcon />
       </Button>
     </div>
   );
+};
+
+FieldActions.propTypes = {
+  onSelect: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 
 const FieldLayout = ({ children }) => (
@@ -59,6 +111,10 @@ const FieldLayout = ({ children }) => (
   </div>
 );
 
+FieldLayout.propTypes = {
+  children: childrenPropType
+};
+
 const BuilderColumn = ({ children, ...props }) => {
   return (
     <Card {...props} className="pf4-builder-column">
@@ -67,9 +123,21 @@ const BuilderColumn = ({ children, ...props }) => {
   );
 };
 
+BuilderColumn.propTypes = {
+  children: childrenPropType
+};
+
 const DatePickerField = ({ preview, id, component, initialized, ...props }) => {
   const Component = formFieldsMapper[componentTypes.DATE_PICKER];
-  return <Component {...props} />;
+  return (
+    <ComponentWrapper>
+      <Component {...props} />
+    </ComponentWrapper>
+  );
+};
+
+DatePickerField.propTypes = {
+  ...commonPropTypes
 };
 
 const PlainTextField = ({
@@ -82,13 +150,17 @@ const PlainTextField = ({
 }) => {
   const Component = formFieldsMapper[componentTypes.PLAIN_TEXT];
   return (
-    <div>
+    <ComponentWrapper>
       <Component
         {...props}
         label={label || 'Please provide a label to plain text component'}
       />
-    </div>
+    </ComponentWrapper>
   );
+};
+
+PlainTextField.propTypes = {
+  ...commonPropTypes
 };
 
 const RadioField = ({ preview, id, component, initialized, ...props }) => {
@@ -96,7 +168,18 @@ const RadioField = ({ preview, id, component, initialized, ...props }) => {
   if (!props.options) {
     return <p>Radio field does not have any options.</p>;
   }
-  return <Component {...props} input={{ ...props.input, onChange: console.log }} />;
+  return (
+    <ComponentWrapper>
+      <Component {...props} input={{ ...props.input, onChange: console.log }} />
+    </ComponentWrapper>
+  );
+};
+
+RadioField.propTypes = {
+  ...commonPropTypes,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({ label: PropTypes.string, value: PropTypes.any })
+  )
 };
 
 const SwitchField = ({
@@ -109,11 +192,17 @@ const SwitchField = ({
 }) => {
   const Component = formFieldsMapper[componentTypes.SWITCH];
   return (
-    <Component
-      {...props}
-      label={snapshot.isDragging ? 'Switch field' : props.label}
-    />
+    <ComponentWrapper>
+      <Component
+        {...props}
+        label={snapshot.isDragging ? 'Switch field' : props.label}
+      />
+    </ComponentWrapper>
   );
+};
+
+SwitchField.propTypes = {
+  ...commonPropTypes
 };
 
 const TextAreaField = ({
@@ -126,20 +215,34 @@ const TextAreaField = ({
 }) => {
   const Component = formFieldsMapper[componentTypes.TEXTAREA];
   return (
-    <Component {...props} label={snapshot.isDragging ? 'Texarea' : props.label} />
+    <ComponentWrapper>
+      <Component {...props} label={snapshot.isDragging ? 'Texarea' : props.label} />
+    </ComponentWrapper>
   );
+};
+
+TextAreaField.propTypes = {
+  ...commonPropTypes
 };
 
 const SubFormField = ({ title, description, formOptions }) => {
   const Component = formFieldsMapper[componentTypes.SUB_FORM];
   return (
-    <Component
-      fields={[]}
-      title={title || 'Subform'}
-      description={description}
-      formOptions={formOptions}
-    />
+    <ComponentWrapper>
+      <Component
+        fields={[]}
+        title={title || 'Subform'}
+        description={description}
+        formOptions={formOptions}
+      />
+    </ComponentWrapper>
   );
+};
+
+SubFormField.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  formOptions: PropTypes.object
 };
 
 const builderMapper = {

@@ -6,7 +6,7 @@ import './pf4-mapper-style.css';
 
 const PickerRoot = ({ label }) => (
   <div className="pf4-picker-root">
-    <Button tabIndex={-1} fullWidth variant="primary" color="primary">
+    <Button tabIndex={-1} variant="primary" color="primary">
       {label}
     </Button>
   </div>

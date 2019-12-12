@@ -66,9 +66,20 @@ const componentProperties = {
 const schema = {
   fields: [
     {
-      component: 'text-field',
+      component: componentTypes.SELECT,
       name: 'my-text-field',
-      label: 'Something'
+      label: 'Something',
+      isMulti: true,
+      options: [
+        {
+          label: '1',
+          value: 1
+        },
+        {
+          label: '2',
+          value: 2
+        }
+      ]
     }
   ]
 };

@@ -65,11 +65,24 @@ CheckBoxField.propTypes = {
   ...commonPropTypes
 };
 
-const SelectField = ({ preview, id, component, initialized, options, ...props }) => {
+const SelectField = ({
+  preview,
+  id,
+  component,
+  initialized,
+  options,
+  input,
+  isMulti,
+  ...props
+}) => {
   const Component = formFieldsMapper[componentTypes.SELECT];
+  let sanitizedInput = { ...input };
+  if (isMulti && !Array.isArray(input.value)) {
+    sanitizedInput.value = [];
+  }
   return (
     <ComponentWrapper>
-      <Component {...props} options={options || []} />
+      <Component {...props} input={sanitizedInput} options={options || []} />
     </ComponentWrapper>
   );
 };

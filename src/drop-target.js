@@ -4,7 +4,13 @@ import clsx from 'clsx';
 import Field from './field';
 import ComponentsContext from './components-context';
 
-const DropTarget = ({ dropTarget, fields, isDropDisabled, shouldClone }) => {
+const DropTarget = ({
+  dropTarget,
+  fields,
+  isDropDisabled,
+  shouldClone,
+  disableDrag
+}) => {
   const {
     componentMapper: { BuilderColumn }
   } = useContext(ComponentsContext);
@@ -12,7 +18,7 @@ const DropTarget = ({ dropTarget, fields, isDropDisabled, shouldClone }) => {
     <Droppable droppableId={dropTarget.id} isDropDisabled={isDropDisabled}>
       {(provided, snapshot) => {
         return (
-          <BuilderColumn className="container">
+          <BuilderColumn className="container form-preview">
             <h3 className="title">{dropTarget.title}</h3>
             <div
               ref={provided.innerRef}
@@ -23,6 +29,7 @@ const DropTarget = ({ dropTarget, fields, isDropDisabled, shouldClone }) => {
             >
               {fields.map((field, index) => (
                 <Field
+                  disableDrag={disableDrag}
                   shouldClone={shouldClone}
                   key={field.id}
                   field={field}

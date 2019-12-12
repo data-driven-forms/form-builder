@@ -276,7 +276,7 @@ const createSchema = (fields) => {
 
 const throttledChange = throttle(createSchema, 100);
 
-const FormBuilder = ({ initialFields, onChange }) => {
+const FormBuilder = ({ initialFields, onChange, disableDrag }) => {
   const [state, dispatch] = useReducer(reducer, initialFields);
 
   useEffect(() => {
@@ -291,15 +291,18 @@ const FormBuilder = ({ initialFields, onChange }) => {
     <StoreContext.Provider value={{ state, dispatch }}>
       <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
         <div className="layout">
-          <ComponentPicker
-            isDropDisabled
-            shouldClone
-            dropTarget={dropTargets[COMPONENTS_LIST]}
-            fields={dropTargets[COMPONENTS_LIST].fieldsIds.map(
-              (taskId) => fields[taskId]
-            )}
-          />
+          {!disableDrag && (
+            <ComponentPicker
+              isDropDisabled
+              shouldClone
+              dropTarget={dropTargets[COMPONENTS_LIST]}
+              fields={dropTargets[COMPONENTS_LIST].fieldsIds.map(
+                (taskId) => fields[taskId]
+              )}
+            />
+          )}
           <DropTarget
+            disableDrag={disableDrag}
             dropTarget={dropTargets[FORM_LAYOUT]}
             fields={dropTargets[FORM_LAYOUT].fieldsIds.map(
               (taskId) => fields[taskId]

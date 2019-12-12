@@ -6,7 +6,7 @@ div.container {
   flex-direction: column;
   min-height: calc(100% - 40px);
 }
-div.container:nth-child(2) {
+.container.form-preview{
   flex-grow: 1;
 }
 

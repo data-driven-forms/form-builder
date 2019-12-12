@@ -97,7 +97,7 @@ const useBuilderStyles = makeStyles(() => ({
   }
 }));
 
-const BuilderColumn = ({ children, ...props }) => {
+const BuilderColumn = ({ children, className, ...props }) => {
   const classes = useBuilderStyles();
   return (
     <Card {...props}>

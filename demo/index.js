@@ -85,6 +85,7 @@ const Demo = () => (
         componentMapper={builderMapper}
         propertiesMapper={propertiesMapper}
         cloneWhileDragging
+        disableDrag={false}
       />
     </ThemeProvider>
   </Fragment>

@@ -4,6 +4,7 @@ import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { formFieldsMapper } from '@data-driven-forms/pf4-component-mapper';
 import { Button, Card, CardBody, Form, Title } from '@patternfly/react-core';
 import { TrashIcon, EditIcon } from '@patternfly/react-icons';
+import clsx from 'clsx';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
 const childrenPropType = PropTypes.oneOfType([
@@ -115,15 +116,16 @@ FieldLayout.propTypes = {
   children: childrenPropType
 };
 
-const BuilderColumn = ({ children, ...props }) => {
+const BuilderColumn = ({ children, className, ...props }) => {
   return (
-    <Card {...props} className="pf4-builder-column">
+    <Card {...props} className={clsx('pf4-builder-column', className)}>
       <CardBody>{children}</CardBody>
     </Card>
   );
 };
 
 BuilderColumn.propTypes = {
+  className: PropTypes.arrayOf(PropTypes.string),
   children: childrenPropType
 };
 

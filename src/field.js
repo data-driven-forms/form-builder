@@ -11,7 +11,12 @@ import MockFieldProvider from './mock-field-provider';
 //  </div>
 // );
 
-const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) => {
+const Field = ({
+  field: { clone, isContainer, ...field },
+  index,
+  shouldClone,
+  disableDrag
+}) => {
   const {
     componentMapper: { FieldActions, FieldLayout, ...rest }
   } = useContext(ComponentsContext);
@@ -41,7 +46,7 @@ const Field = ({ field: { clone, isContainer, ...field }, index, shouldClone }) 
     );
   }
   return (
-    <Draggable draggableId={field.id} index={index}>
+    <Draggable isDragDisabled={disableDrag} draggableId={field.id} index={index}>
       {(provided, snapshot) => (
         <Fragment>
           <div

@@ -8,7 +8,7 @@ import {
   TextInput,
   Switch
 } from '@patternfly/react-core';
-import { CrossIcon, PlusIcon } from '@patternfly/react-icons';
+import { TrashIcon, PlusIcon } from '@patternfly/react-icons';
 import { rawComponents } from '@data-driven-forms/pf4-component-mapper';
 
 const Input = ({ label, onChange, value, autoFocus }) => {
@@ -76,18 +76,19 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
         <span>{label}</span>
         <Button
           onClick={() => onChange([...value, { value: '', label: '' }])}
-          variant="primary"
+          variant="plain"
           aria-label="delete option"
         >
           <PlusIcon />
         </Button>
       </p>
       <table>
-        {value.map(({ label, value }, index, allOptions) => (
-          <tbody key={index}>
-            <tr>
-              <td>
+        <tbody>
+          {value.map(({ label, value }, index, allOptions) => (
+            <tr key={index}>
+              <td className="pf4-options-propery-editor-cell">
                 <TextInput
+                  aria-label={`option-label-${index}`}
                   autoFocus
                   placeholder="Label"
                   onChange={(value) => handleOptionChange(value, index, 'label')}
@@ -95,8 +96,9 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
                   type="text"
                 />
               </td>
-              <td>
+              <td className="pf4-options-propery-editor-cell">
                 <TextInput
+                  aria-label={`option-value-${index}`}
                   onKeyPress={({ key }) => {
                     if (key === 'Enter' && index === allOptions.length - 1) {
                       onChange([...allOptions, { value: '', label: '' }]);
@@ -111,16 +113,15 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
               <td>
                 <Button
                   onClick={() => handleRemove(index)}
-                  color="secondary"
+                  variant="plain"
                   aria-label="delete option"
-                  component="span"
                 >
-                  <CrossIcon />
+                  <TrashIcon className="pf4-danger-color" />
                 </Button>
               </td>
             </tr>
-          </tbody>
-        ))}
+          ))}
+        </tbody>
       </table>
     </div>
   );

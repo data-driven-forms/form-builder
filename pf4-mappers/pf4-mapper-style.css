@@ -33,3 +33,12 @@
 .pf4-field-actions > button:not(:last-child) {
   margin-right: 8px;
 }
+.pf4-danger-color:hover{
+  background-color: var(--pf-global--danger-color--100);
+}
+button:hover>svg.pf4-danger-color {
+  fill: var(--pf-global--danger-color--100);
+}
+.pf4-options-propery-editor-cell:not(:last-child) {
+  padding-right: 8px;
+}

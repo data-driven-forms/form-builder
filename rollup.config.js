@@ -13,7 +13,8 @@ const globals = {
   '@patternfly/react-core': 'PatternflyReact',
   '@patternfly/react-icons': 'ReactIcons',
   '@data-driven-forms/react-form-renderer': '@data-driven-forms/react-form-renderer',
-  '@data-driven-forms/react-form-renderer': '@data-driven-forms/pf4-component-mapper'
+  '@data-driven-forms/pf4-component-mapper':
+    '@data-driven-forms/pf4-component-mapper'
 };
 
 const babelOptions = {

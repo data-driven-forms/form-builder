@@ -4,13 +4,16 @@ import babel from 'rollup-plugin-babel';
 import replace from 'rollup-plugin-replace';
 import nodeGlobals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
+import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 import postcss from 'rollup-plugin-postcss';
 
 const globals = {
   react: 'React',
   'react-dom': 'ReactDOM',
   '@patternfly/react-core': 'PatternflyReact',
-  '@data-driven-forms/react-form-renderer': '@data-driven-forms/react-form-renderer'
+  '@patternfly/react-icons': 'ReactIcons',
+  '@data-driven-forms/react-form-renderer': '@data-driven-forms/react-form-renderer',
+  '@data-driven-forms/react-form-renderer': '@data-driven-forms/pf4-component-mapper'
 };
 
 const babelOptions = {
@@ -22,7 +25,11 @@ const babelOptions = {
 const commonjsOptions = {
   ignoreGlobal: true,
   namedExports: {
-    'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer']
+    'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer'],
+    'node_modules/@data-driven-forms/pf4-component-mapper/dist/index.js': [
+      'formFieldsMapper',
+      'rawComponents'
+    ]
   }
 };
 
@@ -54,7 +61,35 @@ export default [
       }),
       postcss({
         inject: true
-      })
+      }),
+      sizeSnapshot()
+    ]
+  },
+  {
+    onwarn,
+    input: './pf4-mappers/index.js',
+    output: {
+      file: './dist/pf4-builder-mappers.js',
+      format: 'umd',
+      name: '@data-driven-forms/form-builder-pf4-mappers',
+      exports: 'named',
+      globals
+    },
+    external: Object.keys(globals),
+    plugins: [
+      nodeResolve(),
+      babel(babelOptions),
+      commonjs(commonjsOptions),
+      nodeGlobals(), // Wait for https://github.com/cssinjs/jss/pull/893
+      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+      terser({
+        keep_classnames: true,
+        keep_fnames: true
+      }),
+      postcss({
+        inject: true
+      }),
+      sizeSnapshot()
     ]
   }
 ];

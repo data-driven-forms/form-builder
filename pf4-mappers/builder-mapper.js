@@ -82,7 +82,7 @@ SelectField.propTypes = {
 
 const FieldActions = ({ onSelect, onDelete }) => {
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="pf4-field-actions" style={{ display: 'flex' }}>
       <Button onClick={onSelect}>
         <EditIcon />
       </Button>

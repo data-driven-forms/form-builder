@@ -6,7 +6,7 @@
   width: 100%;
   pointer-events: none;
 }
-.pf4-picker-root:hover>button {
+.pf4-picker-root:hover > button {
   background-color: var(--pf-c-button--m-primary--hover--BackgroundColor);
 }
 
@@ -25,3 +25,11 @@
   margin-right: 16px;
 }
 
+.pf4-field-actions {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.pf4-field-actions > button:not(:last-child) {
+  margin-right: 8px;
+}

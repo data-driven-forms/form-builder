@@ -1,6 +1,6 @@
 {
   "name": "@data-driven-forms/form-builder",
-  "version": "0.0.1-rc2",
+  "version": "0.0.1-rc3",
   "description": "Interactive drang and drop editor for creating data driven forms schema",
   "main": "dist/index.js",
   "files": ["dist/*"],
@@ -56,5 +56,11 @@
     "react": "^16.12.0",
     "react-beautiful-dnd": "^12.1.1",
     "react-dom": "^16.12.0"
+  },
+  "peerDependencies": {
+    "@data-driven-forms/pf4-component-mapper": "^1.23.6",
+    "@patternfly/react-core": "^3.124.1",
+    "@patternfly/react-icons": "^3.14.24",
+    "@data-driven-forms/react-form-renderer": "^1.23.0"
   }
 }

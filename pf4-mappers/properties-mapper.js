@@ -11,11 +11,12 @@ import {
 import { TrashIcon, PlusIcon } from '@patternfly/react-icons';
 import { rawComponents } from '@data-driven-forms/pf4-component-mapper';
 
-const Input = ({ label, onChange, value, autoFocus }) => {
+const Input = ({ label, onChange, value, autoFocus, type }) => {
   return (
     <FormGroup label={label} fieldId={label}>
       <TextInput
         id={label}
+        type={type}
         autoFocus={autoFocus}
         onChange={(value) => onChange(value)}
         value={value || ''}
@@ -30,10 +31,7 @@ const PropertySwitch = ({ value, onChange, label }) => {
       <Switch
         isChecked={Boolean(value)}
         id={`${label}-property`}
-        onChange={(checked) => {
-          console.log('checked', checked);
-          return onChange(checked);
-        }}
+        onChange={(checked) => onChange(checked)}
         label={label}
       />
     </FormGroup>
@@ -77,7 +75,7 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
         <Button
           onClick={() => onChange([...value, { value: '', label: '' }])}
           variant="plain"
-          aria-label="delete option"
+          aria-label="add option"
         >
           <PlusIcon />
         </Button>

@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
-import { componentTypes } from '@data-driven-forms/react-form-renderer';
+import {
+  componentTypes,
+  validatorTypes
+} from '@data-driven-forms/react-form-renderer';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
@@ -70,6 +73,13 @@ const schema = {
       name: 'my-text-field',
       label: 'Something',
       isMulti: true,
+      isRequired: true,
+      validate: [
+        {
+          type: validatorTypes.REQUIRED,
+          message: 'This field is required'
+        }
+      ],
       options: [
         {
           label: '1',

@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { validatorTypes } from '@data-driven-forms/react-form-renderer';
 import DropTarget from './drop-target';
 import StoreContext from './store-context';
 import PropertiesEditor from './properties-editor';
@@ -11,12 +12,10 @@ const COMPONENTS_LIST = 'components-list';
 const FORM_LAYOUT = 'form-layout';
 
 const isInContainer = (index, containers) => {
-  const containerKey = Object.keys(containers).filter((c) => {
-    console.log(index, containers[c]);
-    return (
+  const containerKey = Object.keys(containers).filter(
+    (c) =>
       index > containers[c].boundaries[0] && index <= containers[c].boundaries[1]
-    );
-  });
+  );
   return containerKey ? containers[containerKey] : false;
 };
 const mutateColumns = (result, state) => {
@@ -219,6 +218,29 @@ const dragStart = (field, state) => {
   return { draggingContainer: field.draggableId };
 };
 
+const changeValidator = (field, { index, action, fieldId, ...validator }) => {
+  const result = { ...field };
+  const validate = result.validate || [];
+  if (validator.type === validatorTypes.REQUIRED) {
+    result.isRequired = action !== 'remove';
+  }
+  if (action === 'remove') {
+    result.validate = [...validate.slice(0, index), ...validate.slice(index + 1)];
+  }
+
+  if (action === 'add') {
+    result.validate = [...validate, { ...validator }];
+  }
+
+  if (action === 'modify') {
+    result.validate = validate.map((item, itemIndex) =>
+      itemIndex === index ? { ...item, ...validator } : item
+    );
+  }
+
+  return result;
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'setColumns':
@@ -239,6 +261,17 @@ const reducer = (state, action) => {
         fields: {
           ...state.fields,
           [action.payload.fieldId]: setFieldproperty(
+            state.fields[action.payload.fieldId],
+            action.payload
+          )
+        }
+      };
+    case 'setFieldValidator':
+      return {
+        ...state,
+        fields: {
+          ...state.fields,
+          [action.payload.fieldId]: changeValidator(
             state.fields[action.payload.fieldId],
             action.payload
           )

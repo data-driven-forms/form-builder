@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
-import { formFieldsMapper } from '@data-driven-forms/pf4-component-mapper';
+import {
+  formFieldsMapper,
+  rawComponents
+} from '@data-driven-forms/pf4-component-mapper';
 import { Button, Card, CardBody, Form, Title } from '@patternfly/react-core';
 import { TrashIcon, EditIcon } from '@patternfly/react-icons';
 import clsx from 'clsx';
@@ -139,7 +142,7 @@ const BuilderColumn = ({ children, className, ...props }) => {
 };
 
 BuilderColumn.propTypes = {
-  className: PropTypes.arrayOf(PropTypes.string),
+  className: PropTypes.string,
   children: childrenPropType
 };
 
@@ -255,20 +258,45 @@ const SubFormField = ({ title, description, formOptions }) => {
   );
 };
 
-const PropertiesEditor = ({ propertiesChildren, fieldName }) => (
-  <div>
-    <Title headingLevel="h2" size="2xl">
-      Properties editor
-    </Title>
-    <Title headingLevel="h3" size="1xl">
-      Field: {fieldName}
-    </Title>
-    <Form>{propertiesChildren}</Form>
-  </div>
-);
+const PropertiesEditor = ({
+  propertiesChildren,
+  validationChildren,
+  fieldName,
+  addValidator,
+  avaiableValidators
+}) => {
+  const Select = rawComponents.Select;
+  return (
+    <div>
+      <Title headingLevel="h2" size="2xl">
+        Properties editor
+      </Title>
+      <Title headingLevel="h3" size="1xl">
+        Field: {fieldName}
+      </Title>
+      <Form>{propertiesChildren}</Form>
+      <Form>
+        <Title headingLevel="h3" size="1xl">
+          Validations
+        </Title>
+        {validationChildren}
+        <Select
+          placeholder="Choose new validator"
+          onChange={(value) => addValidator(value)}
+          options={avaiableValidators}
+        />
+      </Form>
+    </div>
+  );
+};
 
 PropertiesEditor.propTypes = {
   propertiesChildren: childrenPropType,
+  validationChildren: childrenPropType,
+  avaiableValidators: PropTypes.arrayOf(
+    PropTypes.shape({ label: PropTypes.string, value: PropTypes.string })
+  ).isRequired,
+  addValidator: PropTypes.func.isRequired,
   fieldName: PropTypes.string
 };
 

@@ -81,7 +81,7 @@ const PropertiesEditor = () => {
       }
     });
 
-  const handleValidatorChange = (value, action, index) =>
+  const handleValidatorChange = (value = {}, action, index) =>
     dispatch({
       type: 'setFieldValidator',
       payload: {
@@ -158,16 +158,21 @@ const PropertiesEditor = () => {
             {validate.map(({ type, ...rest }, index) =>
               type !== validatorTypes.REQUIRED ? (
                 <Fragment key={`${type}-${index}`}>
-                  <h1>{type}</h1>
                   {validatorsProperties[type].map((property, propertyIndex) => (
                     <ValidatorProperty
-                      onChange={handleValidatorChange}
                       key={propertyIndex}
+                      onChange={handleValidatorChange}
                       property={property}
                       value={rest[property.propertyName]}
                       index={index}
                     />
                   ))}
+                  <button
+                    type="button"
+                    onClick={() => handleValidatorChange({}, 'remove', index)}
+                  >
+                    Delete
+                  </button>
                 </Fragment>
               ) : null
             )}

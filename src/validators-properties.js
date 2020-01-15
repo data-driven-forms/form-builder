@@ -62,13 +62,29 @@ export default {
     messageType
   ],
   [validatorTypes.MAX_NUMBER_VALUE]: [
-    { ...thresholdType, label: 'Maximum value' },
-    includeThresholdType,
+    {
+      ...thresholdType,
+      label: 'Maximum value',
+      propertyName: 'value',
+      label: 'Value'
+    },
+    {
+      ...includeThresholdType,
+      label: 'Include value'
+    },
     messageType
   ],
   [validatorTypes.MIN_NUMBER_VALUE]: [
-    { ...thresholdType, label: 'Minimum value' },
-    includeThresholdType,
+    {
+      ...thresholdType,
+      label: 'Minimum value',
+      propertyName: 'value',
+      label: 'Value'
+    },
+    {
+      ...includeThresholdType,
+      label: 'Include value'
+    },
     messageType
   ],
   [validatorTypes.MIN_ITEMS_VALIDATOR]: [

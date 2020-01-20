@@ -31,7 +31,7 @@ const DropTarget = ({
               {fields.map((field, index) => (
                 <Field
                   disableDrag={disableDrag}
-                  disableDelete={disableDelete}
+                  disableDelete={disableDelete && field.restricted}
                   shouldClone={shouldClone}
                   key={field.id}
                   field={field}

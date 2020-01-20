@@ -35,6 +35,7 @@ const ValidatorProperty = ({ property, onChange, value, index }) => {
   const restrictionProperty =
     property.restriction && property.original
       ? {
+          isDisabled: property.restriction.lock,
           [property.restriction.inputAttribute]:
             property.original[property.restriction.validatorAttribute]
         }
@@ -69,7 +70,8 @@ ValidatorProperty.propTypes = {
     label: PropTypes.string.isRequired,
     restriction: PropTypes.shape({
       inputAttribute: PropTypes.string.isRequired,
-      validatorAttribute: PropTypes.string.isRequired
+      validatorAttribute: PropTypes.string.isRequired,
+      lock: PropTypes.bool
     })
   }),
   onChange: PropTypes.func.isRequired,

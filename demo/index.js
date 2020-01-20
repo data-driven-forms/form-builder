@@ -102,6 +102,17 @@ const schema = {
           value: 14
         }
       ]
+    },
+    {
+      component: componentTypes.TEXT_FIELD,
+      name: 'pattern-field',
+      label: 'Pattern field',
+      validate: [
+        {
+          type: validatorTypes.PATTERN_VALIDATOR,
+          pattern: /^Foo$/
+        }
+      ]
     }
   ]
 };
@@ -132,6 +143,7 @@ const schemaTemplate = {
       component: componentTypes.TEXT_FIELD,
       name: 'my-number-field',
       label: 'Number field',
+      type: 'number',
       validate: [
         {
           type: validatorTypes.MAX_NUMBER_VALUE,
@@ -140,6 +152,17 @@ const schemaTemplate = {
         {
           type: validatorTypes.MIN_NUMBER_VALUE,
           value: 14
+        }
+      ]
+    },
+    {
+      component: componentTypes.TEXT_FIELD,
+      name: 'pattern-field',
+      label: 'Pattern field',
+      validate: [
+        {
+          type: validatorTypes.PATTERN_VALIDATOR,
+          pattern: /^Foo$/
         }
       ]
     }

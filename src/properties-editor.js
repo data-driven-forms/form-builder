@@ -29,7 +29,7 @@ const validatorOptions = Object.keys(validatorTypes)
   .filter((key) => validatorTypes[key] !== validatorTypes.REQUIRED)
   .map((key) => ({ value: validatorTypes[key], label: validatorTypes[key] }));
 
-const ValidatorProperty = ({ property, onChange, value, index }) => {
+const ValidatorProperty = ({ property, onChange, value, index, restricted }) => {
   const { propertiesMapper } = useContext(ComponentsContext);
   const Component = propertiesMapper[property.component];
   const restrictionProperty =
@@ -44,7 +44,11 @@ const ValidatorProperty = ({ property, onChange, value, index }) => {
     <Component
       value={value}
       type={property.type}
-      onBlur={() => onChange(validatorChangeValue(property, value), 'modify', index)}
+      onBlur={() =>
+        property.propertyName !== 'message' &&
+        restricted &&
+        onChange(validatorChangeValue(property, value), 'modify', index)
+      }
       onChange={(value) =>
         onChange(
           {
@@ -68,6 +72,7 @@ ValidatorProperty.propTypes = {
     component: PropTypes.string.isRequired,
     type: PropTypes.string,
     label: PropTypes.string.isRequired,
+    restricted: PropTypes.bool,
     restriction: PropTypes.shape({
       inputAttribute: PropTypes.string.isRequired,
       validatorAttribute: PropTypes.string.isRequired,
@@ -207,7 +212,7 @@ const PropertiesEditor = () => {
                 }
               />
             )}
-            {validate.map(({ type, original, ...rest }, index) =>
+            {validate.map(({ type, original, restricted, ...rest }, index) =>
               type !== validatorTypes.REQUIRED ? (
                 <Fragment key={`${type}-${index}`}>
                   {validatorsProperties[type].map((property, propertyIndex) => (
@@ -218,6 +223,7 @@ const PropertiesEditor = () => {
                         ...property,
                         original
                       }}
+                      restricted={restricted}
                       value={rest[property.propertyName]}
                       index={index}
                     />

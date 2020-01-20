@@ -82,7 +82,6 @@ const App = ({
   mode,
   ...props
 }) => {
-  console.log('mode: ', mode);
   const initialFields = Object.keys(componentProperties).reduce(
     (acc, curr) => ({
       ...acc,

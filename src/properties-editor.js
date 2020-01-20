@@ -43,8 +43,16 @@ const ValidatorProperty = ({ property, onChange, value, index }) => {
     <Component
       value={value}
       type={property.type}
+      onBlur={() => onChange(validatorChangeValue(property, value), 'modify', index)}
       onChange={(value) =>
-        onChange(validatorChangeValue(property, value), 'modify', index)
+        onChange(
+          {
+            [property.propertyName]:
+              property.type === 'number' ? Number(value) : value
+          },
+          'modify',
+          index
+        )
       }
       label={property.label}
       {...restrictionProperty}

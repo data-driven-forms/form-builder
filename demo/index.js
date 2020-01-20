@@ -87,6 +87,21 @@ const schema = {
           threshold: 10
         }
       ]
+    },
+    {
+      component: componentTypes.TEXT_FIELD,
+      name: 'my-number-field',
+      label: 'Number field',
+      validate: [
+        {
+          type: validatorTypes.MAX_NUMBER_VALUE,
+          value: 33
+        },
+        {
+          type: validatorTypes.MIN_NUMBER_VALUE,
+          value: 14
+        }
+      ]
     }
   ]
 };
@@ -110,6 +125,21 @@ const schemaTemplate = {
         {
           type: validatorTypes.MAX_LENGTH,
           threshold: 10
+        }
+      ]
+    },
+    {
+      component: componentTypes.TEXT_FIELD,
+      name: 'my-number-field',
+      label: 'Number field',
+      validate: [
+        {
+          type: validatorTypes.MAX_NUMBER_VALUE,
+          value: 50
+        },
+        {
+          type: validatorTypes.MIN_NUMBER_VALUE,
+          value: 14
         }
       ]
     }

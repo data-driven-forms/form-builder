@@ -15,7 +15,8 @@ const Field = ({
   field: { clone, isContainer, ...field },
   index,
   shouldClone,
-  disableDrag
+  disableDrag,
+  disableDelete
 }) => {
   const {
     componentMapper: { FieldActions, FieldLayout, ...rest }
@@ -78,8 +79,11 @@ const Field = ({
               )}
               {!shouldClone && (
                 <FieldActions
-                  onDelete={() =>
-                    dispatch({ type: 'removeComponent', payload: field.id })
+                  onDelete={
+                    disableDelete
+                      ? undefined
+                      : () =>
+                          dispatch({ type: 'removeComponent', payload: field.id })
                   }
                   onSelect={() =>
                     dispatch({ type: 'setSelectedComponent', payload: field.id })

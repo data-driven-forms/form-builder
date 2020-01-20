@@ -9,7 +9,8 @@ const DropTarget = ({
   fields,
   isDropDisabled,
   shouldClone,
-  disableDrag
+  disableDrag,
+  disableDelete
 }) => {
   const {
     componentMapper: { BuilderColumn }
@@ -30,6 +31,7 @@ const DropTarget = ({
               {fields.map((field, index) => (
                 <Field
                   disableDrag={disableDrag}
+                  disableDelete={disableDelete}
                   shouldClone={shouldClone}
                   key={field.id}
                   field={field}

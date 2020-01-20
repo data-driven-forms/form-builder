@@ -112,6 +112,7 @@ const App = ({
           mode === 'subset',
           schemaTemplate
         )}
+        mode={mode}
         {...props}
       />
     </ComponentsContext.Provider>

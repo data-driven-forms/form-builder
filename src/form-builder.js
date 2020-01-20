@@ -309,7 +309,7 @@ const createSchema = (fields) => {
 
 const throttledChange = throttle(createSchema, 100);
 
-const FormBuilder = ({ initialFields, onChange, disableDrag }) => {
+const FormBuilder = ({ initialFields, onChange, disableDrag, mode }) => {
   const [state, dispatch] = useReducer(reducer, initialFields);
 
   useEffect(() => {
@@ -337,6 +337,7 @@ const FormBuilder = ({ initialFields, onChange, disableDrag }) => {
           <DropTarget
             disableDrag={disableDrag}
             dropTarget={dropTargets[FORM_LAYOUT]}
+            disableDelete={mode === 'subset'}
             fields={dropTargets[FORM_LAYOUT].fieldsIds.map(
               (taskId) => fields[taskId]
             )}

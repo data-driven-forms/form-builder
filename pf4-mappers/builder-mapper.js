@@ -104,16 +104,18 @@ const FieldActions = ({ onSelect, onDelete }) => {
       <Button onClick={onSelect}>
         <EditIcon />
       </Button>
-      <Button onClick={onDelete}>
-        <TrashIcon />
-      </Button>
+      {onDelete && (
+        <Button onClick={onDelete}>
+          <TrashIcon />
+        </Button>
+      )}
     </div>
   );
 };
 
 FieldActions.propTypes = {
   onSelect: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
+  onDelete: PropTypes.func
 };
 
 const FieldLayout = ({ children }) => (

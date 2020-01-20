@@ -40,6 +40,7 @@ const ValidatorProperty = ({ property, onChange, value, index, restricted }) => 
             property.original[property.restriction.validatorAttribute]
         }
       : {};
+
   return (
     <Component
       value={value}
@@ -212,7 +213,7 @@ const PropertiesEditor = () => {
                 }
               />
             )}
-            {validate.map(({ type, original, restricted, ...rest }, index) =>
+            {validate.map(({ type, original, ...rest }, index) =>
               type !== validatorTypes.REQUIRED ? (
                 <Fragment key={`${type}-${index}`}>
                   {validatorsProperties[type].map((property, propertyIndex) => (
@@ -223,7 +224,7 @@ const PropertiesEditor = () => {
                         ...property,
                         original
                       }}
-                      restricted={restricted}
+                      restricted={field.restricted}
                       value={rest[property.propertyName]}
                       index={index}
                     />

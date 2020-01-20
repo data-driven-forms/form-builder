@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext, useState, useEffect, Fragment } from 'react';
 import { validatorTypes } from '@data-driven-forms/react-form-renderer';
 import PropTypes from 'prop-types';
 import StoreContext from './store-context';
@@ -92,6 +92,16 @@ const PropertyDefault = ({ propertyName, value, label, onChange }) => (
   </div>
 );
 
+const checkRequiredDisabled = (field) => {
+  return !!(
+    field.restricted &&
+    !!field.validate &&
+    !!field.validate.find(
+      ({ type, original }) => original && type === validatorTypes.REQUIRED
+    )
+  );
+};
+
 const PropertiesEditor = () => {
   const { state, dispatch } = useContext(StoreContext);
   const { selectedComponent, fields } = state;
@@ -100,7 +110,11 @@ const PropertiesEditor = () => {
     componentProperties,
     propertiesMapper
   } = useContext(ComponentsContext);
+  const [requiredDisabled, setRequiredDisabled] = useState(false);
   const field = fields[selectedComponent];
+  useEffect(() => {
+    setRequiredDisabled(() => checkRequiredDisabled(fields[selectedComponent]));
+  }, [selectedComponent]);
   const properties = componentProperties[field.component].attributes;
   const validate = field.validate || [];
   const NameComponent = propertiesMapper.input;
@@ -166,7 +180,7 @@ const PropertiesEditor = () => {
               value={field.isRequired}
               label="Required"
               fieldId="required-validator"
-              isDisabled={field.restricted && field.isRequired}
+              isDisabled={requiredDisabled}
               onChange={(value) =>
                 handleValidatorChange(
                   {

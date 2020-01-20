@@ -1,6 +1,6 @@
 /* eslint react/no-array-index-key: "off" */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   Button,
   FormGroup,
@@ -11,17 +11,21 @@ import {
 import { TrashIcon, PlusIcon } from '@patternfly/react-icons';
 import { rawComponents } from '@data-driven-forms/pf4-component-mapper';
 
-const Input = ({ label, onChange, value, autoFocus, type }) => {
+const Input = ({ label, onChange, value, autoFocus, type, isDisabled, ...rest }) => {
   return (
-    <FormGroup label={label} fieldId={label}>
-      <TextInput
-        id={label}
-        type={type}
-        autoFocus={autoFocus}
-        onChange={(value) => onChange(value)}
-        value={value || ''}
-      />
-    </FormGroup>
+    <Fragment>
+      <FormGroup label={label} fieldId={label}>
+        <TextInput
+          id={label}
+          type={type}
+          autoFocus={autoFocus}
+          onChange={(value) => onChange(value)}
+          value={value || ''}
+          isDisabled={isDisabled}
+          {...rest}
+        />
+      </FormGroup>
+    </Fragment>
   );
 };
 

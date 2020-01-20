@@ -1,11 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FormBuilder from './form-builder';
 import ComponentsContext from './components-context';
 
 export const COMPONENTS_LIST = 'components-list';
 export const FORM_LAYOUT = 'form-layout';
 
-const createInitialData = (initialFields, schema) => {
+/**
+ * Returns a flat fields object to be rendered and edited in the editor
+ * @param {Object} initialFields available field definitions in component chooser
+ * @param {Object} schema data driven form schema
+ * @param {Boolean} isSubset if true, options will be only editable to certain degree
+ * @param {Object} schemaTemplate original from which a subset is created. If not specified, editable boundaries will be created from schema
+ */
+const createInitialData = (initialFields, schema, isSubset, schemaTemplate) => {
   const fields = {
     ...initialFields
   };
@@ -21,6 +29,24 @@ const createInitialData = (initialFields, schema) => {
         preview: false,
         initialized: true
       };
+      if (isSubset) {
+        let template;
+        if (schemaTemplate) {
+          template = schemaTemplate.fields.find(({ name }) => name === field.name);
+        }
+        fields[id] = {
+          ...fields[id],
+          restricted: true,
+          validate: fields[id].validate
+            ? fields[id].validate.map((validator, index) => ({
+                ...validator,
+                original: template
+                  ? { ...template.validate[index] }
+                  : { ...validator }
+              }))
+            : undefined
+        };
+      }
     });
   }
 
@@ -52,8 +78,11 @@ const App = ({
   propertiesMapper,
   cloneWhileDragging,
   schema,
+  schemaTemplate,
+  mode,
   ...props
 }) => {
+  console.log('mode: ', mode);
   const initialFields = Object.keys(componentProperties).reduce(
     (acc, curr) => ({
       ...acc,
@@ -77,11 +106,24 @@ const App = ({
       }}
     >
       <FormBuilder
-        initialFields={createInitialData(initialFields, schema)}
+        initialFields={createInitialData(
+          initialFields,
+          schema,
+          mode === 'subset',
+          schemaTemplate
+        )}
         {...props}
       />
     </ComponentsContext.Provider>
   );
+};
+
+App.propTypes = {
+  mode: PropTypes.oneOf(['default', 'subset'])
+};
+
+App.defaultProps = {
+  mode: 'default'
 };
 
 export default App;

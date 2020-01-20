@@ -69,25 +69,39 @@ const componentProperties = {
 const schema = {
   fields: [
     {
-      component: componentTypes.SELECT,
+      component: componentTypes.TEXT_FIELD,
       name: 'my-text-field',
       label: 'Something',
-      isMulti: true,
       isRequired: true,
       validate: [
         {
           type: validatorTypes.REQUIRED,
           message: 'This field is required'
-        }
-      ],
-      options: [
-        {
-          label: '1',
-          value: 1
         },
         {
-          label: '2',
-          value: 2
+          type: validatorTypes.MIN_LENGTH,
+          threshold: 7
+        }
+      ]
+    }
+  ]
+};
+
+const schemaTemplate = {
+  fields: [
+    {
+      component: componentTypes.TEXT_FIELD,
+      name: 'my-text-field',
+      label: 'Something',
+      isRequired: true,
+      validate: [
+        {
+          type: validatorTypes.REQUIRED,
+          message: 'This field is required'
+        },
+        {
+          type: validatorTypes.MIN_LENGTH,
+          threshold: 5
         }
       ]
     }
@@ -100,6 +114,7 @@ const Demo = () => (
     <ThemeProvider theme={createMuiTheme({})}>
       <FormBuilder
         schema={schema}
+        schemaTemplate={schemaTemplate}
         onChange={console.log}
         pickerMapper={pickerMapper}
         componentProperties={componentProperties}
@@ -107,6 +122,7 @@ const Demo = () => (
         propertiesMapper={propertiesMapper}
         cloneWhileDragging
         disableDrag={false}
+        mode="subset"
       />
     </ThemeProvider>
   </Fragment>

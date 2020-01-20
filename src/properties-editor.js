@@ -5,6 +5,24 @@ import StoreContext from './store-context';
 import ComponentsContext from './components-context';
 import validatorsProperties from './validators-properties';
 
+const restrictionHandler = {
+  min: (value, defaultValue) =>
+    !value ? defaultValue : value < defaultValue ? defaultValue : value
+};
+
+const validatorChangeValue = (property, value) => {
+  let result = property.type === 'number' ? Number(result) : result;
+  if (property.restriction) {
+    result = restrictionHandler[property.restriction.inputAttribute](
+      value,
+      property.original[property.restriction.validatorAttribute]
+    );
+  }
+  return {
+    [property.propertyName]: result
+  };
+};
+
 const validatorOptions = Object.keys(validatorTypes)
   .filter((key) => validatorTypes[key] !== validatorTypes.REQUIRED)
   .map((key) => ({ value: validatorTypes[key], label: validatorTypes[key] }));
@@ -12,31 +30,37 @@ const validatorOptions = Object.keys(validatorTypes)
 const ValidatorProperty = ({ property, onChange, value, index }) => {
   const { propertiesMapper } = useContext(ComponentsContext);
   const Component = propertiesMapper[property.component];
+  const restrictionProperty =
+    property.restriction && property.original
+      ? {
+          [property.restriction.inputAttribute]:
+            property.original[property.restriction.validatorAttribute]
+        }
+      : {};
   return (
     <Component
       value={value}
       type={property.type}
       onChange={(value) =>
-        onChange(
-          {
-            [property.propertyName]:
-              property.type === 'number' ? Number(value) : value
-          },
-          'modify',
-          index
-        )
+        onChange(validatorChangeValue(property, value), 'modify', index)
       }
       label={property.label}
+      {...restrictionProperty}
     />
   );
 };
 
 ValidatorProperty.propTypes = {
   property: PropTypes.shape({
+    original: PropTypes.object,
     propertyName: PropTypes.string.isRequired,
     component: PropTypes.string.isRequired,
     type: PropTypes.string,
-    label: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired,
+    restriction: PropTypes.shape({
+      inputAttribute: PropTypes.string.isRequired,
+      validatorAttribute: PropTypes.string.isRequired
+    })
   }),
   onChange: PropTypes.func.isRequired,
   value: PropTypes.any,
@@ -105,6 +129,7 @@ const PropertiesEditor = () => {
               type="text"
               value={field.name}
               autoFocus={!field.initialized}
+              isDisabled={fields[selectedComponent].restricted}
               onChange={(value) => handlePropertyChange(value, 'name')}
             />
             {properties.map((property) => {
@@ -155,24 +180,29 @@ const PropertiesEditor = () => {
                 }
               />
             )}
-            {validate.map(({ type, ...rest }, index) =>
+            {validate.map(({ type, original, ...rest }, index) =>
               type !== validatorTypes.REQUIRED ? (
                 <Fragment key={`${type}-${index}`}>
                   {validatorsProperties[type].map((property, propertyIndex) => (
                     <ValidatorProperty
                       key={propertyIndex}
                       onChange={handleValidatorChange}
-                      property={property}
+                      property={{
+                        ...property,
+                        original
+                      }}
                       value={rest[property.propertyName]}
                       index={index}
                     />
                   ))}
-                  <button
-                    type="button"
-                    onClick={() => handleValidatorChange({}, 'remove', index)}
-                  >
-                    Delete
-                  </button>
+                  {!original && (
+                    <button
+                      type="button"
+                      onClick={() => handleValidatorChange({}, 'remove', index)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </Fragment>
               ) : null
             )}

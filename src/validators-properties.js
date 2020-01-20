@@ -54,7 +54,14 @@ export default {
     messageType
   ],
   [validatorTypes.MIN_LENGTH]: [
-    { ...thresholdType, label: 'Min length' },
+    {
+      ...thresholdType,
+      label: 'Min length',
+      restriction: {
+        inputAttribute: 'min',
+        validatorAttribute: thresholdType.propertyName
+      }
+    },
     messageType
   ],
   [validatorTypes.EXACT_LENGTH]: [

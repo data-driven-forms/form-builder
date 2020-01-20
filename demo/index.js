@@ -81,6 +81,10 @@ const schema = {
         {
           type: validatorTypes.MIN_LENGTH,
           threshold: 7
+        },
+        {
+          type: validatorTypes.MAX_LENGTH,
+          threshold: 10
         }
       ]
     }
@@ -102,6 +106,10 @@ const schemaTemplate = {
         {
           type: validatorTypes.MIN_LENGTH,
           threshold: 5
+        },
+        {
+          type: validatorTypes.MAX_LENGTH,
+          threshold: 10
         }
       ]
     }

@@ -7,7 +7,9 @@ import validatorsProperties from './validators-properties';
 
 const restrictionHandler = {
   min: (value, defaultValue) =>
-    !value ? defaultValue : value < defaultValue ? defaultValue : value
+    !value ? defaultValue : value < defaultValue ? defaultValue : value,
+  max: (value, defaultValue) =>
+    !value ? defaultValue : value > defaultValue ? defaultValue : value
 };
 
 const validatorChangeValue = (property, value) => {

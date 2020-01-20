@@ -50,7 +50,14 @@ const urlTypes = urlOptions.map((option) => ({
 
 export default {
   [validatorTypes.MAX_LENGTH]: [
-    { ...thresholdType, label: 'Max length' },
+    {
+      ...thresholdType,
+      label: 'Max length',
+      restriction: {
+        inputAttribute: 'max',
+        validatorAttribute: thresholdType.propertyName
+      }
+    },
     messageType
   ],
   [validatorTypes.MIN_LENGTH]: [

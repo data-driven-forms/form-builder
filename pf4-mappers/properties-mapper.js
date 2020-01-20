@@ -29,7 +29,7 @@ const Input = ({ label, onChange, value, autoFocus, type, isDisabled, ...rest })
   );
 };
 
-const PropertySwitch = ({ value, onChange, label }) => {
+const PropertySwitch = ({ value, onChange, label, isDisabled }) => {
   return (
     <FormGroup fieldId={label}>
       <Switch
@@ -37,6 +37,7 @@ const PropertySwitch = ({ value, onChange, label }) => {
         id={`${label}-property`}
         onChange={(checked) => onChange(checked)}
         label={label}
+        isDisabled={isDisabled}
       />
     </FormGroup>
   );

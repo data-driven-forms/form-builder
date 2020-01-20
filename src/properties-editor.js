@@ -156,6 +156,7 @@ const PropertiesEditor = () => {
               value={field.isRequired}
               label="Required"
               fieldId="required-validator"
+              isDisabled={field.restricted && field.isRequired}
               onChange={(value) =>
                 handleValidatorChange(
                   {

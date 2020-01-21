@@ -154,6 +154,7 @@ const PropertiesEditor = () => {
         fieldName={fields[selectedComponent].name}
         avaiableValidators={validatorOptions}
         addValidator={(type) => handleValidatorChange({ type }, 'add')}
+        handleClose={() => dispatch({ type: 'setSelectedComponent' })}
         propertiesChildren={
           <Fragment>
             <NameComponent

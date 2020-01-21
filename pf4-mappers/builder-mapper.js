@@ -6,7 +6,7 @@ import {
   rawComponents
 } from '@data-driven-forms/pf4-component-mapper';
 import { Button, Card, CardBody, Form, Title } from '@patternfly/react-core';
-import { TrashIcon, EditIcon } from '@patternfly/react-icons';
+import { TrashIcon, EditIcon, TimesIcon } from '@patternfly/react-icons';
 import clsx from 'clsx';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
@@ -265,13 +265,22 @@ const PropertiesEditor = ({
   validationChildren,
   fieldName,
   addValidator,
-  avaiableValidators
+  avaiableValidators,
+  handleClose,
 }) => {
   const Select = rawComponents.Select;
   return (
-    <div>
-      <Title headingLevel="h2" size="2xl">
+    <div className>
+      <Title headingLevel="h2" size="2xl" className="pf4-properties-editor-title">
         Properties editor
+        <Button
+          className="close-button"
+          variant="plain"
+          aria-label="close properties editor"
+          onClick={handleClose}
+        >
+          <TimesIcon />
+        </Button>
       </Title>
       <Title headingLevel="h3" size="1xl">
         Field: {fieldName}
@@ -299,7 +308,8 @@ PropertiesEditor.propTypes = {
     PropTypes.shape({ label: PropTypes.string, value: PropTypes.string })
   ).isRequired,
   addValidator: PropTypes.func.isRequired,
-  fieldName: PropTypes.string
+  fieldName: PropTypes.string,
+  handleClose: PropTypes.func.isRequired
 };
 
 SubFormField.propTypes = {

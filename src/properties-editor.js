@@ -112,7 +112,7 @@ const PropertiesEditor = () => {
   const { state, dispatch } = useContext(StoreContext);
   const { selectedComponent, fields } = state;
   const {
-    componentMapper: { BuilderColumn, PropertiesEditor },
+    componentMapper: { BuilderColumn, PropertiesEditor, PropertyGroup },
     componentProperties,
     propertiesMapper
   } = useContext(ComponentsContext);
@@ -183,40 +183,51 @@ const PropertiesEditor = () => {
         }
         validationChildren={
           <Fragment>
-            <IsRequiredComponent
-              value={field.isRequired}
-              label="Required"
-              fieldId="required-validator"
-              isDisabled={requiredDisabled}
-              onChange={(value) =>
-                handleValidatorChange(
-                  {
-                    type: validatorTypes.REQUIRED
-                  },
-                  value ? 'add' : 'remove',
-                  0
-                )
-              }
-            />
-            {field.isRequired && (
-              <MessageComponent
-                label="Message"
-                fieldId="required-message"
-                value={validate[0].message || ''}
+            <PropertyGroup className="ddorg__form__builder-validators-validator-group">
+              <h3 className="ddorg__form__builder-validators-validator-title">
+                Required validator
+              </h3>
+              <IsRequiredComponent
+                value={field.isRequired}
+                label="Required"
+                fieldId="required-validator"
+                isDisabled={requiredDisabled}
                 onChange={(value) =>
                   handleValidatorChange(
                     {
-                      message: value
+                      type: validatorTypes.REQUIRED
                     },
-                    'modify',
+                    value ? 'add' : 'remove',
                     0
                   )
                 }
               />
-            )}
+              {field.isRequired && (
+                <MessageComponent
+                  label="Message"
+                  fieldId="required-message"
+                  value={validate[0].message || ''}
+                  onChange={(value) =>
+                    handleValidatorChange(
+                      {
+                        message: value
+                      },
+                      'modify',
+                      0
+                    )
+                  }
+                />
+              )}
+            </PropertyGroup>
             {validate.map(({ type, original, ...rest }, index) =>
               type !== validatorTypes.REQUIRED ? (
-                <Fragment key={`${type}-${index}`}>
+                <PropertyGroup
+                  key={`${type}-${index}`}
+                  className="ddorg__form__builder-validators-validator-group"
+                >
+                  <h3 className="ddorg__form__builder-validators-validator-title">
+                    {type.split('-').join(' ')}
+                  </h3>
                   {validatorsProperties[type].map((property, propertyIndex) => (
                     <ValidatorProperty
                       key={propertyIndex}
@@ -238,7 +249,7 @@ const PropertiesEditor = () => {
                       Delete
                     </button>
                   )}
-                </Fragment>
+                </PropertyGroup>
               ) : null
             )}
           </Fragment>

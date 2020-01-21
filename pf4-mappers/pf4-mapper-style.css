@@ -51,3 +51,15 @@ button:hover>svg.pf4-danger-color {
 .pf4-properties-editor-title .close-button {
   margin-left: auto
 }
+.ddorg__form__builder-validators-validator-title {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.ddorg__form__builder-validators-validator-group.pf4 > .pf-c-form__group {
+  margin-left: 16px;
+}
+
+.pf4-tabs {
+  margin-bottom: 16px;
+}

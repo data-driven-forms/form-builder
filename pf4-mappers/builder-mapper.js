@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import {
   formFieldsMapper,
   rawComponents
 } from '@data-driven-forms/pf4-component-mapper';
-import { Button, Card, CardBody, Form, Title } from '@patternfly/react-core';
+import {
+  Button,
+  Card,
+  CardBody,
+  Form,
+  Title,
+  Tabs,
+  Tab
+} from '@patternfly/react-core';
 import { TrashIcon, EditIcon, TimesIcon } from '@patternfly/react-icons';
 import clsx from 'clsx';
 
@@ -266,8 +274,9 @@ const PropertiesEditor = ({
   fieldName,
   addValidator,
   avaiableValidators,
-  handleClose,
+  handleClose
 }) => {
+  const [activeTab, setActiveTab] = useState(0);
   const Select = rawComponents.Select;
   return (
     <div className>
@@ -285,18 +294,34 @@ const PropertiesEditor = ({
       <Title headingLevel="h3" size="1xl">
         Field: {fieldName}
       </Title>
-      <Form>{propertiesChildren}</Form>
-      <Form>
-        <Title headingLevel="h3" size="1xl">
-          Validations
-        </Title>
-        {validationChildren}
-        <Select
-          placeholder="Choose new validator"
-          onChange={(value) => addValidator(value)}
-          options={avaiableValidators}
-        />
-      </Form>
+      <Tabs
+        className="pf4-tabs"
+        isFilled
+        activeKey={activeTab}
+        onSelect={(_e, tabIndex) => setActiveTab(tabIndex)}
+      >
+        <Tab tabIndex="-1" eventKey={0} title="Props">
+          <Card>
+            <CardBody>
+              <Form>{propertiesChildren}</Form>
+            </CardBody>
+          </Card>
+        </Tab>
+        <Tab tabIndex="-1" eventKey={1} title="Validation">
+          <Form>
+            {validationChildren}
+            <Card>
+              <CardBody>
+                <Select
+                  placeholder="Choose new validator"
+                  onChange={(value) => addValidator(value)}
+                  options={avaiableValidators}
+                />
+              </CardBody>
+            </Card>
+          </Form>
+        </Tab>
+      </Tabs>
     </div>
   );
 };
@@ -318,6 +343,21 @@ SubFormField.propTypes = {
   formOptions: PropTypes.object
 };
 
+const PropertyGroup = ({ className, children, ...props }) => (
+  <Card>
+    <CardBody>
+      <Form className={clsx(className, 'pf4')} {...props}>
+        {children}
+      </Form>
+    </CardBody>
+  </Card>
+);
+
+PropertyGroup.propTypes = {
+  className: PropTypes.string,
+  children: childrenPropType
+};
+
 const builderMapper = {
   FieldActions,
   FieldLayout,
@@ -331,7 +371,8 @@ const builderMapper = {
   [componentTypes.SWITCH]: SwitchField,
   [componentTypes.TEXTAREA]: TextAreaField,
   [componentTypes.SUB_FORM]: SubFormField,
-  BuilderColumn
+  BuilderColumn,
+  PropertyGroup
 };
 
 export default builderMapper;

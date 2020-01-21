@@ -42,7 +42,15 @@ ComponentWrapper.propTypes = {
   children: childrenPropType
 };
 
-const TextField = ({ snapshot, preview, initialized, ...props }) => {
+const TextField = ({
+  snapshot,
+  preview,
+  initialized,
+  restricted,
+  propertyName,
+  fieldId,
+  ...props
+}) => {
   const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
   return (
     <ComponentWrapper>
@@ -133,7 +141,6 @@ const FieldLayout = ({ children }) => (
     style={{
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'space-between',
       padding: 8
     }}
   >
@@ -337,9 +344,9 @@ const PropertiesEditor = ({
         </Card>
       </div>
       <div hidden={activeTab !== 1}>
-        <Form>
-          <Card>
-            <CardBody>
+        <Card className="pf4-validators-property-group">
+          <CardBody>
+            <Form>
               <FormGroup label="Add validator" fieldId="new-validator">
                 <Select
                   id="new-validator"
@@ -348,10 +355,10 @@ const PropertiesEditor = ({
                   options={avaiableValidators}
                 />
               </FormGroup>
-            </CardBody>
-          </Card>
-          {validationChildren}
-        </Form>
+            </Form>
+          </CardBody>
+        </Card>
+        {validationChildren}
       </div>
     </div>
   );
@@ -376,7 +383,7 @@ SubFormField.propTypes = {
 };
 
 const PropertyGroup = ({ className, children, title, handleDelete, ...props }) => (
-  <Card>
+  <Card className="pf4-validators-property-group">
     <CardHeader>
       <Title headingLevel="h3" size="1xl" className="pf4-validators-validator-title">
         {title}

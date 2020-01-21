@@ -11,7 +11,7 @@ import {
 import { TrashIcon, PlusIcon } from '@patternfly/react-icons';
 import { rawComponents } from '@data-driven-forms/pf4-component-mapper';
 
-const Input = ({ label, onChange, value, autoFocus, type, isDisabled, ...rest }) => {
+const Input = ({ label, onChange, value, autoFocus, type, isDisabled, restricted, propertyName, fieldId, ...rest }) => {
   return (
     <Fragment>
       <FormGroup label={label} fieldId={label}>

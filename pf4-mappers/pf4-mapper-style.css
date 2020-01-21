@@ -13,6 +13,9 @@
 .pf4-builder-column {
   margin: 16px
 }
+.pf4-builder-column:nth-child(1) > .pf-c-form {
+  display: block;
+}
 .pf4-builder-column:nth-child(2) {
   flex-grow: 1;
 }
@@ -22,6 +25,11 @@
 }
 .pf4-builder-column:nth-child(3) {
   flex-grow: 0.75;
+  background: transparent;
+  box-shadow: none;
+}
+.pf4-builder-column:nth-child(3) > .pf-c-card__body{
+  padding: 0
 }
 .pf4-component-wrapper {
   flex-grow: 1;
@@ -55,7 +63,9 @@ button:hover>svg.pf4-danger-color {
   text-transform: capitalize;
   font-weight: 600;
 }
-
-.pf4-tabs {
+.pf4-tabs-container {
+  padding: 0 !important;
+}
+.pf4-properties-editor-header {
   margin-bottom: 16px;
 }

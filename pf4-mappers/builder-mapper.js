@@ -10,6 +10,7 @@ import {
   Card,
   CardBody,
   Form,
+  FormGroup,
   Title,
   Tabs,
   Tab
@@ -146,7 +147,7 @@ FieldLayout.propTypes = {
 const BuilderColumn = ({ children, className, ...props }) => {
   return (
     <Card {...props} className={clsx('pf4-builder-column', className)}>
-      <CardBody>{children}</CardBody>
+      <CardBody className="pf-c-form">{children}</CardBody>
     </Card>
   );
 };
@@ -279,49 +280,66 @@ const PropertiesEditor = ({
   const [activeTab, setActiveTab] = useState(0);
   const Select = rawComponents.Select;
   return (
-    <div className>
-      <Title headingLevel="h2" size="2xl" className="pf4-properties-editor-title">
-        Properties editor
-        <Button
-          className="close-button"
-          variant="plain"
-          aria-label="close properties editor"
-          onClick={handleClose}
-        >
-          <TimesIcon />
-        </Button>
-      </Title>
-      <Title headingLevel="h3" size="1xl">
-        Field: {fieldName}
-      </Title>
-      <Tabs
-        className="pf4-tabs"
-        isFilled
-        activeKey={activeTab}
-        onSelect={(_e, tabIndex) => setActiveTab(tabIndex)}
-      >
-        <Tab tabIndex="-1" eventKey={0} title="Props">
+    <div>
+      <Card className="pf4-properties-editor-header">
+        <CardBody>
+          <Title
+            headingLevel="h2"
+            size="2xl"
+            className="pf4-properties-editor-title"
+          >
+            Properties editor
+            <Button
+              className="close-button"
+              variant="plain"
+              aria-label="close properties editor"
+              onClick={handleClose}
+            >
+              <TimesIcon />
+            </Button>
+          </Title>
+          <Title headingLevel="h3" size="1xl">
+            Field: {fieldName}
+          </Title>
+        </CardBody>
+      </Card>
+      <Card>
+        <CardBody className="pf4-tabs-container">
+          <Tabs
+            className="pf4-tabs"
+            isFilled
+            activeKey={activeTab}
+            onSelect={(_e, tabIndex) => setActiveTab(tabIndex)}
+          >
+            <Tab tabIndex="-1" eventKey={0} title="Props" />
+            <Tab tabIndex="-1" eventKey={1} title="Validation" />
+          </Tabs>
+        </CardBody>
+      </Card>
+      <div hidden={activeTab !== 0}>
+        <Card>
+          <CardBody>
+            <Form>{propertiesChildren}</Form>
+          </CardBody>
+        </Card>
+      </div>
+      <div hidden={activeTab !== 1}>
+        <Form>
           <Card>
             <CardBody>
-              <Form>{propertiesChildren}</Form>
-            </CardBody>
-          </Card>
-        </Tab>
-        <Tab tabIndex="-1" eventKey={1} title="Validation">
-          <Form>
-            {validationChildren}
-            <Card>
-              <CardBody>
+              <FormGroup label="Add validator" fieldId="new-validator">
                 <Select
+                  id="new-validator"
                   placeholder="Choose new validator"
                   onChange={(value) => addValidator(value)}
                   options={avaiableValidators}
                 />
-              </CardBody>
-            </Card>
-          </Form>
-        </Tab>
-      </Tabs>
+              </FormGroup>
+            </CardBody>
+          </Card>
+          {validationChildren}
+        </Form>
+      </div>
     </div>
   );
 };

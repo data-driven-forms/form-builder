@@ -189,10 +189,10 @@ const PropertiesEditor = () => {
         }
         validationChildren={
           <Fragment>
-            <PropertyGroup className="ddorg__form__builder-validators-validator-group">
-              <h3 className="ddorg__form__builder-validators-validator-title">
-                Required validator
-              </h3>
+            <PropertyGroup
+              title="required validator"
+              className="ddorg__form__builder-validators-validator-group"
+            >
               <IsRequiredComponent
                 value={field.isRequired}
                 label="Required"
@@ -231,12 +231,15 @@ const PropertiesEditor = () => {
             {validate.map(({ type, original, ...rest }, index) =>
               type !== validatorTypes.REQUIRED ? (
                 <PropertyGroup
+                  title={type.split('-').join(' ')}
+                  handleDelete={
+                    !original
+                      ? () => handleValidatorChange({}, 'remove', index)
+                      : undefined
+                  }
                   key={`${type}-${index}`}
                   className="ddorg__form__builder-validators-validator-group"
                 >
-                  <h3 className="ddorg__form__builder-validators-validator-title">
-                    {type.split('-').join(' ')}
-                  </h3>
                   {validatorsProperties[type].map((property, propertyIndex) => (
                     <ValidatorProperty
                       key={propertyIndex}
@@ -250,14 +253,6 @@ const PropertiesEditor = () => {
                       index={index}
                     />
                   ))}
-                  {!original && (
-                    <button
-                      type="button"
-                      onClick={() => handleValidatorChange({}, 'remove', index)}
-                    >
-                      Delete
-                    </button>
-                  )}
                 </PropertyGroup>
               ) : null
             )}

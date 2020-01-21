@@ -13,7 +13,8 @@ import {
   FormGroup,
   Title,
   Tabs,
-  Tab
+  Tab,
+  CardHeader
 } from '@patternfly/react-core';
 import { TrashIcon, EditIcon, TimesIcon } from '@patternfly/react-icons';
 import clsx from 'clsx';
@@ -361,8 +362,18 @@ SubFormField.propTypes = {
   formOptions: PropTypes.object
 };
 
-const PropertyGroup = ({ className, children, ...props }) => (
+const PropertyGroup = ({ className, children, title, handleDelete, ...props }) => (
   <Card>
+    <CardHeader>
+      <Title headingLevel="h3" size="1xl" className="pf4-validators-validator-title">
+        {title}
+        {handleDelete && (
+          <Button variant="plain" onClick={handleDelete}>
+            <TrashIcon />
+          </Button>
+        )}
+      </Title>
+    </CardHeader>
     <CardBody>
       <Form className={clsx(className, 'pf4')} {...props}>
         {children}
@@ -373,7 +384,9 @@ const PropertyGroup = ({ className, children, ...props }) => (
 
 PropertyGroup.propTypes = {
   className: PropTypes.string,
-  children: childrenPropType
+  children: childrenPropType,
+  title: PropTypes.string.isRequired,
+  handleDelete: PropTypes.func
 };
 
 const builderMapper = {

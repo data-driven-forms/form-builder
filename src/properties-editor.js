@@ -114,7 +114,8 @@ const PropertiesEditor = () => {
   const {
     componentMapper: { BuilderColumn, PropertiesEditor, PropertyGroup },
     componentProperties,
-    propertiesMapper
+    propertiesMapper,
+    debug
   } = useContext(ComponentsContext);
   const [requiredDisabled, setRequiredDisabled] = useState(false);
   const field = fields[selectedComponent];
@@ -255,7 +256,7 @@ const PropertiesEditor = () => {
           </Fragment>
         }
       />
-      <pre>{JSON.stringify(field, null, 2)}</pre>
+      {debug && <pre>{JSON.stringify(field, null, 2)}</pre>}
     </BuilderColumn>
   );
 };

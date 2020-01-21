@@ -80,6 +80,7 @@ const App = ({
   schema,
   schemaTemplate,
   mode,
+  debug,
   ...props
 }) => {
   const initialFields = Object.keys(componentProperties).reduce(
@@ -101,7 +102,8 @@ const App = ({
         componentMapper: { ...componentMapper, 'container-end': ContainerEnd },
         componentProperties,
         pickerMapper,
-        propertiesMapper
+        propertiesMapper,
+        debug
       }}
     >
       <FormBuilder
@@ -119,11 +121,13 @@ const App = ({
 };
 
 App.propTypes = {
-  mode: PropTypes.oneOf(['default', 'subset'])
+  mode: PropTypes.oneOf(['default', 'subset']),
+  debug: PropTypes.bool
 };
 
 App.defaultProps = {
-  mode: 'default'
+  mode: 'default',
+  debug: false
 };
 
 export default App;

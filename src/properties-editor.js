@@ -161,6 +161,15 @@ const PropertiesEditor = () => {
         avaiableValidators={validatorOptions}
         addValidator={(type) => handleValidatorChange({ type }, 'add')}
         handleClose={() => dispatch({ type: 'setSelectedComponent' })}
+        handleDelete={
+          !fields[selectedComponent].restricted
+            ? () =>
+                dispatch({
+                  type: 'removeComponent',
+                  payload: fields[selectedComponent].id
+                })
+            : undefined
+        }
         propertiesChildren={
           <Fragment>
             <NameComponent

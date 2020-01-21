@@ -56,7 +56,7 @@ button:hover>svg.pf4-danger-color {
 .pf4-properties-editor-title {
   display: flex;
 }
-.pf4-properties-editor-title .close-button {
+.pf4-properties-editor-title .editor-header-button:first-child {
   margin-left: auto
 }
 .pf4-validators-validator-title {
@@ -71,4 +71,8 @@ button:hover>svg.pf4-danger-color {
 }
 .pf4-properties-editor-header {
   margin-bottom: 16px;
+}
+.task-container.selected {
+  border-bottom: 3px solid var(--pf-global--primary-color--100);
+  transition: border-color .3s linear;
 }

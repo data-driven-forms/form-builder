@@ -110,12 +110,12 @@ SelectField.propTypes = {
 
 const FieldActions = ({ onSelect, onDelete }) => {
   return (
-    <div className="pf4-field-actions" style={{ display: 'flex' }}>
-      <Button onClick={onSelect}>
+    <div className="pf4-field-actions">
+      <Button variant="plain" onClick={onSelect}>
         <EditIcon />
       </Button>
       {onDelete && (
-        <Button onClick={onDelete}>
+        <Button variant="plain" onClick={onDelete}>
           <TrashIcon />
         </Button>
       )}
@@ -276,7 +276,8 @@ const PropertiesEditor = ({
   fieldName,
   addValidator,
   avaiableValidators,
-  handleClose
+  handleClose,
+  handleDelete
 }) => {
   const [activeTab, setActiveTab] = useState(0);
   const Select = rawComponents.Select;
@@ -290,8 +291,19 @@ const PropertiesEditor = ({
             className="pf4-properties-editor-title"
           >
             Properties editor
+            {handleDelete && (
+              <Button
+                className="editor-header-button"
+                variant="plain"
+                onClick={handleDelete}
+                isDisabled={!handleDelete}
+                aria-label="delete field"
+              >
+                <TrashIcon />
+              </Button>
+            )}
             <Button
-              className="close-button"
+              className="editor-header-button"
               variant="plain"
               aria-label="close properties editor"
               onClick={handleClose}
@@ -353,7 +365,8 @@ PropertiesEditor.propTypes = {
   ).isRequired,
   addValidator: PropTypes.func.isRequired,
   fieldName: PropTypes.string,
-  handleClose: PropTypes.func.isRequired
+  handleClose: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func
 };
 
 SubFormField.propTypes = {

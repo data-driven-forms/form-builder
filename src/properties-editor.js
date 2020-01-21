@@ -149,6 +149,11 @@ const PropertiesEditor = () => {
       }
     });
 
+  const requiredIndex = validate.reduce(
+    (acc, curr, index) => (curr.type === validatorTypes.REQUIRED ? index : acc),
+    0
+  );
+
   return (
     <BuilderColumn className="container">
       <PropertiesEditor
@@ -199,7 +204,7 @@ const PropertiesEditor = () => {
                       type: validatorTypes.REQUIRED
                     },
                     value ? 'add' : 'remove',
-                    0
+                    requiredIndex
                   )
                 }
               />
@@ -207,14 +212,17 @@ const PropertiesEditor = () => {
                 <MessageComponent
                   label="Message"
                   fieldId="required-message"
-                  value={validate[0].message || ''}
+                  value={
+                    validate.find(({ type }) => type === validatorTypes.REQUIRED)
+                      .message || ''
+                  }
                   onChange={(value) =>
                     handleValidatorChange(
                       {
                         message: value
                       },
                       'modify',
-                      0
+                      requiredIndex
                     )
                   }
                 />

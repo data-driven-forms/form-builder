@@ -13,14 +13,13 @@ const DropTarget = ({
   disableDelete
 }) => {
   const {
-    componentMapper: { BuilderColumn }
+    componentMapper: { FormContainer }
   } = useContext(ComponentsContext);
   return (
     <Droppable droppableId={dropTarget.id} isDropDisabled={isDropDisabled}>
       {(provided, snapshot) => {
         return (
-          <BuilderColumn className="container form-preview">
-            <h3 className="title">{dropTarget.title}</h3>
+          <FormContainer className="container form-preview">
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
@@ -40,7 +39,7 @@ const DropTarget = ({
               ))}
               {provided.placeholder}
             </div>
-          </BuilderColumn>
+          </FormContainer>
         );
       }}
     </Droppable>

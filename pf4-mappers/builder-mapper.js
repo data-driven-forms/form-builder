@@ -16,11 +16,7 @@ import {
   Tab,
   CardHeader
 } from '@patternfly/react-core';
-import {
-  TrashIcon,
-  EllipsisVIcon,
-  TimesIcon,
-} from '@patternfly/react-icons';
+import { TrashIcon, TimesIcon, ArrowsAltIcon } from '@patternfly/react-icons';
 import clsx from 'clsx';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
@@ -120,12 +116,19 @@ SelectField.propTypes = {
   )
 };
 
-const FieldLayout = ({ children }) => (
-  <div className="pf4-field-layout">{children}</div>
+const FieldLayout = ({ children, disableDrag }) => (
+  <div
+    className={clsx('pf4-field-layout', {
+      'drag-disabled': disableDrag
+    })}
+  >
+    {children}
+  </div>
 );
 
 FieldLayout.propTypes = {
-  children: childrenPropType
+  children: childrenPropType,
+  disableDrag: PropTypes.bool
 };
 
 const BuilderColumn = ({ children, className, ...props }) => {
@@ -256,7 +259,6 @@ const SubFormField = ({ title, description, formOptions }) => {
 const PropertiesEditor = ({
   propertiesChildren,
   validationChildren,
-  fieldName,
   addValidator,
   avaiableValidators,
   handleClose,
@@ -265,7 +267,7 @@ const PropertiesEditor = ({
   const [activeTab, setActiveTab] = useState(0);
   const Select = rawComponents.Select;
   return (
-    <div>
+    <div className="pf4-properties-editor-container">
       <Card className="pf4-properties-editor-header">
         <CardBody>
           <Title
@@ -293,9 +295,6 @@ const PropertiesEditor = ({
             >
               <TimesIcon />
             </Button>
-          </Title>
-          <Title headingLevel="h3" size="1xl">
-            Field: {fieldName}
           </Title>
         </CardBody>
       </Card>
@@ -387,7 +386,7 @@ PropertyGroup.propTypes = {
 
 const DragHandle = ({ dragHandleProps }) => (
   <div {...dragHandleProps} className="pf4-drag-handle">
-    <EllipsisVIcon className="pf4-drag-handle-icon" />
+    <ArrowsAltIcon className="pf4-drag-handle-icon" />
   </div>
 );
 
@@ -402,9 +401,21 @@ DragHandle.propTypes = {
   })
 };
 
+const FormContainer = ({ children, className }) => (
+  <div className={clsx(className, 'pf-c-form', 'pf4-builder-form-container')}>
+    {children}
+  </div>
+);
+
+FormContainer.propTypes = {
+  children: childrenPropType,
+  className: PropTypes.string
+};
+
 const builderMapper = {
   FieldLayout,
   PropertiesEditor,
+  FormContainer,
   [componentTypes.TEXT_FIELD]: TextField,
   [componentTypes.CHECKBOX]: CheckBoxField,
   [componentTypes.SELECT]: SelectField,

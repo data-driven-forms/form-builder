@@ -1,7 +1,5 @@
 div.container {
   margin: 16px;
-  border: 1px solid lightgrey;
-  border-radius: 2px;
   display: flex;
   flex-direction: column;
   min-height: calc(100% - 40px);
@@ -55,7 +53,6 @@ h3.title {
 }
 .layout { 
   display: flex;
-  padding: 8px;
 }
 
 .is-container {

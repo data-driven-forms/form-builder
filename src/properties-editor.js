@@ -155,7 +155,7 @@ const PropertiesEditor = () => {
   );
 
   return (
-    <BuilderColumn className="container">
+    <Fragment>
       <PropertiesEditor
         fieldName={fields[selectedComponent].name}
         avaiableValidators={validatorOptions}
@@ -269,7 +269,7 @@ const PropertiesEditor = () => {
         }
       />
       {debug && <pre>{JSON.stringify(field, null, 2)}</pre>}
-    </BuilderColumn>
+    </Fragment>
   );
 };
 

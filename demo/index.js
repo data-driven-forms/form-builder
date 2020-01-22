@@ -182,7 +182,7 @@ const Demo = () => (
         componentMapper={builderMapper}
         propertiesMapper={propertiesMapper}
         cloneWhileDragging
-        disableDrag={false}
+        disableDrag={true}
         mode="subset"
       />
     </ThemeProvider>

@@ -13,7 +13,6 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import red from '@material-ui/core/colors/red';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 const useInputStyles = makeStyles(() => ({

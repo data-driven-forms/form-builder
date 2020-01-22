@@ -62,7 +62,7 @@ const Field = ({
                 field.container === draggingContainer
             })}
           >
-            <FieldLayout>
+            <FieldLayout disableDrag={disableDrag}>
               {field.preview ? (
                 <div>{field.content}</div>
               ) : (
@@ -76,7 +76,7 @@ const Field = ({
                 />
               )}
             </FieldLayout>
-            {!shouldClone && (
+            {!shouldClone && !disableDrag && (
               <DragHandle dragHandleProps={{ ...provided.dragHandleProps }} />
             )}
           </div>

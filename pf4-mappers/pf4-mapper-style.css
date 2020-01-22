@@ -33,16 +33,13 @@
 }
 .pf4-component-wrapper {
   flex-grow: 1;
-  margin-right: 16px;
 }
 
 .pf4-field-actions {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
-}
-.pf4-field-actions > button:not(:last-child) {
-  margin-right: 8px;
+  position: relative;
 }
 .pf4-danger-color:hover{
   background-color: var(--pf-global--danger-color--100);
@@ -72,10 +69,35 @@ button:hover>svg.pf4-danger-color {
 .pf4-properties-editor-header {
   margin-bottom: 16px;
 }
-.task-container.selected {
+.task-container.selected .pf4-field-layout, .task-container.selected .pf4-drag-handle{
   border-bottom: 3px solid var(--pf-global--primary-color--100);
   transition: border-color .3s linear;
 }
 .pf4-validators-property-group:not(:last-child) {
   margin-bottom: 16px;
+}
+.task-container {
+  display: flex;
+  border: 0;
+  border-radius: 0;
+}
+.pf4-field-layout {
+  padding: 8px;
+  flex-grow: 1;
+  border: 1px solid lightgray;
+  border-right: none;
+}
+.pf4-drag-handle {
+  position: relative;
+  padding: 4px;
+  border: 1px solid lightgray;
+  border-left: none;
+  background-color: var(--pf-global--disabled-color--300);
+}
+.pf4-drag-handle .pf4-drag-handle-icon {
+  fill: #B9B9B9;
+  transition: fill .3s linear;
+}
+.task-container.selected .pf4-drag-handle .pf4-drag-handle-icon {
+  fill: var(--pf-global--primary-color--100);
 }

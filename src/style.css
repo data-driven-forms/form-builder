@@ -42,13 +42,13 @@ h3.title {
 .task-container {
   border: 1px solid lightgrey;
   animation: mount .5s;
-  padding: 8px;
   margin-bottom: 8px;
   border-radius: 2px;
   background-color: white;
   transition-property: box-shadow, background-color;
   transition-duration: .1s, .3s;
   transition-timing-function: ease-in;
+  cursor: pointer;
 }
 .task-container.dragging {
   background-color: lightgreen;

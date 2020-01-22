@@ -16,7 +16,11 @@ import {
   Tab,
   CardHeader
 } from '@patternfly/react-core';
-import { TrashIcon, EditIcon, TimesIcon } from '@patternfly/react-icons';
+import {
+  TrashIcon,
+  EllipsisVIcon,
+  TimesIcon,
+} from '@patternfly/react-icons';
 import clsx from 'clsx';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
@@ -116,36 +120,8 @@ SelectField.propTypes = {
   )
 };
 
-const FieldActions = ({ onSelect, onDelete }) => {
-  return (
-    <div className="pf4-field-actions">
-      <Button variant="plain" onClick={onSelect}>
-        <EditIcon />
-      </Button>
-      {onDelete && (
-        <Button variant="plain" onClick={onDelete}>
-          <TrashIcon />
-        </Button>
-      )}
-    </div>
-  );
-};
-
-FieldActions.propTypes = {
-  onSelect: PropTypes.func.isRequired,
-  onDelete: PropTypes.func
-};
-
 const FieldLayout = ({ children }) => (
-  <div
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-      padding: 8
-    }}
-  >
-    {children}
-  </div>
+  <div className="pf4-field-layout">{children}</div>
 );
 
 FieldLayout.propTypes = {
@@ -409,8 +385,24 @@ PropertyGroup.propTypes = {
   handleDelete: PropTypes.func
 };
 
+const DragHandle = ({ dragHandleProps }) => (
+  <div {...dragHandleProps} className="pf4-drag-handle">
+    <EllipsisVIcon className="pf4-drag-handle-icon" />
+  </div>
+);
+
+DragHandle.propTypes = {
+  dragHandleProps: PropTypes.shape({
+    'data-rbd-drag-handle-draggable-id': PropTypes.string.isRequired,
+    'data-rbd-drag-handle-context-id': PropTypes.string.isRequired,
+    'aria-labelledby': PropTypes.string,
+    tabIndex: PropTypes.number,
+    draggable: PropTypes.bool,
+    onDragStart: PropTypes.func.isRequired
+  })
+};
+
 const builderMapper = {
-  FieldActions,
   FieldLayout,
   PropertiesEditor,
   [componentTypes.TEXT_FIELD]: TextField,
@@ -423,7 +415,8 @@ const builderMapper = {
   [componentTypes.TEXTAREA]: TextAreaField,
   [componentTypes.SUB_FORM]: SubFormField,
   BuilderColumn,
-  PropertyGroup
+  PropertyGroup,
+  DragHandle
 };
 
 export default builderMapper;

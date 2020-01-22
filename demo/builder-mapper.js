@@ -79,12 +79,7 @@ const FieldActions = ({ onSelect, onDelete, fieldData }) => {
 };
 
 const FieldLayout = ({ children }) => (
-  <Box
-    display="flex"
-    flexDirection="row"
-    justifyContent="space-between"
-    style={{ padding: 8 }}
-  >
+  <Box display="flex" flexDirection="row" justifyContent="space-between">
     {children}
   </Box>
 );

@@ -5,12 +5,6 @@ import ComponentsContext from './components-context';
 import StoreContext from './store-context';
 import MockFieldProvider from './mock-field-provider';
 
-// const Handle = ({ dragHandleProps }) => (
-//  <div {...dragHandleProps}>
-//    Drag handler
-//  </div>
-// );
-
 const Field = ({
   field: { clone, isContainer, ...field },
   index,
@@ -19,7 +13,7 @@ const Field = ({
   disableDelete
 }) => {
   const {
-    componentMapper: { FieldActions, FieldLayout, ...rest }
+    componentMapper: { FieldActions, FieldLayout, DragHandle, ...rest }
   } = useContext(ComponentsContext);
   const {
     dispatch,
@@ -49,11 +43,15 @@ const Field = ({
   return (
     <Draggable isDragDisabled={disableDrag} draggableId={field.id} index={index}>
       {(provided, snapshot) => (
-        <Fragment>
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          onClick={() =>
+            dispatch({ type: 'setSelectedComponent', payload: field.id })
+          }
+          className="draggable-container"
+        >
           <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
             className={clsx('task-container', {
               dragging: snapshot.isDragging,
               selected: selectedComponent === field.id,
@@ -77,23 +75,12 @@ const Field = ({
                   formOptions={formOptions}
                 />
               )}
-              {!shouldClone && (
-                <FieldActions
-                  onDelete={
-                    disableDelete
-                      ? undefined
-                      : () =>
-                          dispatch({ type: 'removeComponent', payload: field.id })
-                  }
-                  onSelect={() =>
-                    dispatch({ type: 'setSelectedComponent', payload: field.id })
-                  }
-                  fieldData={field}
-                />
-              )}
             </FieldLayout>
+            {!shouldClone && (
+              <DragHandle dragHandleProps={{ ...provided.dragHandleProps }} />
+            )}
           </div>
-        </Fragment>
+        </div>
       )}
     </Draggable>
   );

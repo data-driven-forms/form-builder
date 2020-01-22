@@ -18,6 +18,7 @@
 }
 .pf4-builder-column:nth-child(2) {
   flex-grow: 1;
+  width: 30%;
 }
 .pf4-builder-column:nth-child(2)>.pf-c-card__body {
   display: flex;
@@ -90,6 +91,7 @@ button:hover>svg.pf4-danger-color {
 .pf4-drag-handle {
   position: relative;
   padding: 4px;
+  padding-top: 8px;
   border: 1px solid lightgray;
   border-left: none;
   background-color: var(--pf-global--disabled-color--300);

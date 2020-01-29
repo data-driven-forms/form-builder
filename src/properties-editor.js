@@ -112,7 +112,7 @@ const PropertiesEditor = () => {
   const { state, dispatch } = useContext(StoreContext);
   const { selectedComponent, fields } = state;
   const {
-    componentMapper: { BuilderColumn, PropertiesEditor, PropertyGroup },
+    componentMapper: { PropertiesEditor, PropertyGroup },
     componentProperties,
     propertiesMapper,
     debug
@@ -125,6 +125,7 @@ const PropertiesEditor = () => {
   const properties = componentProperties[field.component].attributes;
   const validate = field.validate || [];
   const NameComponent = propertiesMapper.input;
+  const InitialValueComponent = propertiesMapper.input;
   const MessageComponent = propertiesMapper.input;
   const IsRequiredComponent = propertiesMapper.switch;
 
@@ -179,6 +180,12 @@ const PropertiesEditor = () => {
               autoFocus={!field.initialized}
               isDisabled={fields[selectedComponent].restricted}
               onChange={(value) => handlePropertyChange(value, 'name')}
+            />
+            <NameComponent
+              label="Initial value"
+              type="text"
+              value={field.initialValue}
+              onChange={(value) => handlePropertyChange(value, 'initialValue')}
             />
             {properties.map((property) => {
               const Component =

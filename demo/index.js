@@ -72,6 +72,7 @@ const schema = {
       component: componentTypes.TEXT_FIELD,
       name: 'my-text-field',
       label: 'Something',
+      initialValue: 'Foo',
       isRequired: true,
       validate: [
         {
@@ -124,6 +125,7 @@ const schemaTemplate = {
       name: 'my-text-field',
       label: 'Something',
       isRequired: true,
+      initialValue: 'Foo',
       validate: [
         {
           type: validatorTypes.REQUIRED,
@@ -182,7 +184,7 @@ const Demo = () => (
         componentMapper={builderMapper}
         propertiesMapper={propertiesMapper}
         cloneWhileDragging
-        disableDrag={true}
+        disableDrag={false}
         mode="subset"
       />
     </ThemeProvider>

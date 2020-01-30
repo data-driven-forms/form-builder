@@ -31,15 +31,23 @@ const createInitialData = (initialFields, schema, isSubset, schemaTemplate) => {
       };
       if (isSubset) {
         let template;
+        let templateOptions =
+          fields[id].options &&
+          fields[id].options.map((option) => ({ ...option, restoreable: true }));
         if (schemaTemplate) {
           template = schemaTemplate.fields.find(({ name }) => name === field.name);
+        }
+        if (template && template.options) {
+          template.options.forEach((option) => {
+            if (!templateOptions.find(({ value }) => value === option.value)) {
+              templateOptions.push({ ...option, restoreable: true, deleted: true });
+            }
+          });
         }
         fields[id] = {
           ...fields[id],
           restricted: true,
-          options: fields[id].options
-            ? fields[id].options.map((option) => ({ ...option, restoreable: true }))
-            : undefined,
+          options: templateOptions,
           validate: fields[id].validate
             ? fields[id].validate.map((validator, index) => ({
                 ...validator,

@@ -1,27 +1,24 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import { Field as FinalFormField } from 'react-final-form';
 import clsx from 'clsx';
 import ComponentsContext from './components-context';
 import StoreContext from './store-context';
-import MockFieldProvider from './mock-field-provider';
 
 const Field = ({
-  field: { clone, isContainer, ...field },
+  field: { clone, isContainer, validate, ...field },
   index,
   shouldClone,
-  disableDrag,
-  disableDelete
+  disableDrag
 }) => {
   const {
     componentMapper: { FieldActions, FieldLayout, DragHandle, ...rest }
   } = useContext(ComponentsContext);
   const {
     dispatch,
-    state: { selectedComponent, draggingContainer, fields }
+    state: { selectedComponent, draggingContainer }
   } = useContext(StoreContext);
   const FieldComponent = rest[field.component];
-  const input = { name: field.name };
-  const meta = {};
   const formOptions = {
     renderForm: () => null
   };
@@ -66,12 +63,11 @@ const Field = ({
               {field.preview ? (
                 <div>{field.content}</div>
               ) : (
-                <FieldComponent
+                <FinalFormField
                   {...field}
+                  component={FieldComponent}
                   snapshot={snapshot}
-                  FieldProvider={MockFieldProvider}
-                  input={input}
-                  meta={meta}
+                  FieldProvider={FieldComponent}
                   formOptions={formOptions}
                 />
               )}

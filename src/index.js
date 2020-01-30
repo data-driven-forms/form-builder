@@ -37,6 +37,9 @@ const createInitialData = (initialFields, schema, isSubset, schemaTemplate) => {
         fields[id] = {
           ...fields[id],
           restricted: true,
+          options: fields[id].options
+            ? fields[id].options.map((option) => ({ ...option, restoreable: true }))
+            : undefined,
           validate: fields[id].validate
             ? fields[id].validate.map((validator, index) => ({
                 ...validator,

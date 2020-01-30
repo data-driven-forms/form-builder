@@ -1,6 +1,6 @@
 {
   "name": "@data-driven-forms/form-builder",
-  "version": "0.0.1-rc16",
+  "version": "0.0.1-rc17",
   "description": "Interactive drang and drop editor for creating data driven forms schema",
   "main": "dist/index.js",
   "files": [
@@ -18,7 +18,7 @@
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
-    "@data-driven-forms/pf4-component-mapper": "^1.23.6",
+    "@data-driven-forms/pf4-component-mapper": "^1.27.1",
     "@patternfly/react-core": "^3.124.1",
     "@patternfly/react-icons": "^3.14.24",
     "babel-loader": "^8.0.6",
@@ -54,14 +54,16 @@
     "@material-ui/core": "^4.7.0",
     "@material-ui/icons": "^4.5.1",
     "clsx": "^1.0.4",
+    "final-form": "^4.18.7",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-beautiful-dnd": "^12.1.1",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "react-final-form": "^6.3.5"
   },
   "peerDependencies": {
-    "@data-driven-forms/pf4-component-mapper": "^1.23.6",
+    "@data-driven-forms/pf4-component-mapper": "^1.27.1",
     "@data-driven-forms/react-form-renderer": "^1.23.0",
     "@patternfly/react-core": "^3.124.1",
     "@patternfly/react-icons": "^3.14.24"

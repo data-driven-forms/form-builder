@@ -289,7 +289,8 @@ const ARTIFICIAL_KEYS = [
   'id',
   'isContainer',
   'children',
-  'container'
+  'container',
+  'restricted'
 ];
 
 const sanitizeField = (field) => {
@@ -297,6 +298,11 @@ const sanitizeField = (field) => {
   ARTIFICIAL_KEYS.forEach((key) => {
     delete result[key];
   });
+  if (result.options) {
+    result.options = result.options
+      .filter(({ deleted }) => !deleted)
+      .map(({ restoreable, ...option }) => option);
+  }
   return result;
 };
 

@@ -8,10 +8,21 @@ import {
   TextInput,
   Switch
 } from '@patternfly/react-core';
-import { TrashIcon, PlusIcon } from '@patternfly/react-icons';
+import { TrashIcon, PlusIcon, TrashRestoreIcon } from '@patternfly/react-icons';
 import { rawComponents } from '@data-driven-forms/pf4-component-mapper';
 
-const Input = ({ label, onChange, value, autoFocus, type, isDisabled, restricted, propertyName, fieldId, ...rest }) => {
+const Input = ({
+  label,
+  onChange,
+  value,
+  autoFocus,
+  type,
+  isDisabled,
+  restricted,
+  propertyName,
+  fieldId,
+  ...rest
+}) => {
   return (
     <Fragment>
       <FormGroup label={label} fieldId={label}>
@@ -63,8 +74,20 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
         index === itemIndex ? { ...item, [optionKey]: option } : item
       )
     );
-  const handleRemove = (index) => {
-    const options = value.filter((_item, itemIndex) => itemIndex !== index);
+  const handleRemove = (index, restoreable) => {
+    let options;
+    if (restoreable) {
+      options = value.map((item, itemIndex) =>
+        itemIndex === index
+          ? {
+              ...item,
+              deleted: !item.deleted
+            }
+          : item
+      );
+    } else {
+      options = value.filter((_item, itemIndex) => itemIndex !== index);
+    }
     return onChange(options.length > 0 ? options : undefined);
   };
   return (
@@ -85,14 +108,15 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
           <PlusIcon />
         </Button>
       </p>
-      <table>
+      <table className="pf4-options-property-editor-table">
         <tbody>
-          {value.map(({ label, value }, index, allOptions) => (
+          {value.map(({ label, value, restoreable, deleted }, index, allOptions) => (
             <tr key={index}>
               <td className="pf4-options-propery-editor-cell">
                 <TextInput
                   aria-label={`option-label-${index}`}
                   autoFocus
+                  isDisabled={deleted}
                   placeholder="Label"
                   onChange={(value) => handleOptionChange(value, index, 'label')}
                   value={label || ''}
@@ -108,6 +132,7 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
                     }
                   }}
                   placeholder="Value"
+                  isDisabled={deleted}
                   onChange={(value) => handleOptionChange(value, index, 'value')}
                   value={value || ''}
                   type="text"
@@ -115,11 +140,15 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
               </td>
               <td>
                 <Button
-                  onClick={() => handleRemove(index)}
+                  onClick={() => handleRemove(index, restoreable)}
                   variant="plain"
                   aria-label="delete option"
                 >
-                  <TrashIcon className="pf4-danger-color" />
+                  {deleted ? (
+                    <TrashRestoreIcon className="pf4-success-color" />
+                  ) : (
+                    <TrashIcon className="pf4-danger-color" />
+                  )}
                 </Button>
               </td>
             </tr>

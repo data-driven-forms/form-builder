@@ -109,3 +109,9 @@ button:hover>svg.pf4-danger-color {
 .pf4-properties-editor-container .pf-c-card {
   box-shadow: none;
 }
+.pf4-options-property-editor-table tr:not(:last-child) td {
+  padding-bottom: 8px;
+}
+button:hover>svg.pf4-success-color{
+  fill: var(--pf-global--link--Color);
+}

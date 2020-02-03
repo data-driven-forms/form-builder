@@ -5,11 +5,26 @@ import replace from 'rollup-plugin-replace';
 import nodeGlobals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
+import { createFilter } from 'rollup-pluginutils';
 import postcss from 'rollup-plugin-postcss';
+
+const externals = createFilter(
+  [
+    'react',
+    'react-dom',
+    'prop-types',
+    '@data-driven-forms/react-form-renderer',
+    '@patternfly/react-core/**',
+    '@patternfly/react-icons/**'
+  ],
+  null,
+  { resolve: false }
+);
 
 const globals = {
   react: 'React',
   'react-dom': 'ReactDOM',
+  'prop-types': 'PropTypes',
   '@patternfly/react-core': 'PatternflyReact',
   '@patternfly/react-icons': 'ReactIcons',
   '@data-driven-forms/react-form-renderer': '@data-driven-forms/react-form-renderer',
@@ -49,7 +64,7 @@ export default [
       exports: 'named',
       globals
     },
-    external: Object.keys(globals),
+    external: externals,
     plugins: [
       nodeResolve(),
       babel(babelOptions),

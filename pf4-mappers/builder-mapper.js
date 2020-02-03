@@ -5,18 +5,19 @@ import {
   formFieldsMapper,
   rawComponents
 } from '@data-driven-forms/pf4-component-mapper';
-import {
-  Button,
-  Card,
-  CardBody,
-  Form,
-  FormGroup,
-  Title,
-  Tabs,
-  Tab,
-  CardHeader
-} from '@patternfly/react-core';
-import { TrashIcon, TimesIcon, ArrowsAltIcon } from '@patternfly/react-icons';
+
+import { Button } from '@patternfly/react-core/dist/js/components/Button/Button';
+import { Card } from '@patternfly/react-core/dist/js/components/Card/Card';
+import { CardBody } from '@patternfly/react-core/dist/js/components/Card/CardBody';
+import { CardHeader } from '@patternfly/react-core/dist/js/components/Card/CardHeader';
+import { Form } from '@patternfly/react-core/dist/js/components/Form/Form';
+import { FormGroup } from '@patternfly/react-core/dist/js/components/Form/FormGroup';
+import { Title } from '@patternfly/react-core/dist/js/components/Title/Title';
+import { Tab } from '@patternfly/react-core/dist/js/components/Tabs/Tab';
+import { Tabs } from '@patternfly/react-core/dist/js/components/Tabs/Tabs';
+import TrashIcon from '@patternfly/react-icons/dist/js/icons/trash-icon';
+import TimesIcon from '@patternfly/react-icons/dist/js/icons/times-icon';
+import ArrowsAltIcon from '@patternfly/react-icons/dist/js/icons/arrows-alt-icon';
 import clsx from 'clsx';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;

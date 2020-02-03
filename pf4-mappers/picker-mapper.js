@@ -1,6 +1,6 @@
 import React from 'react';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
-import { Button } from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core/dist/js/components/Button/Button';
 
 import './pf4-mapper-style.css';
 

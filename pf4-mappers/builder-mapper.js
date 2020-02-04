@@ -17,7 +17,8 @@ import { Tab } from '@patternfly/react-core/dist/js/components/Tabs/Tab';
 import { Tabs } from '@patternfly/react-core/dist/js/components/Tabs/Tabs';
 import TrashIcon from '@patternfly/react-icons/dist/js/icons/trash-icon';
 import TimesIcon from '@patternfly/react-icons/dist/js/icons/times-icon';
-import ArrowsAltIcon from '@patternfly/react-icons/dist/js/icons/arrows-alt-icon';
+import GripVerticalIcon from '@patternfly/react-icons/dist/js/icons/grip-vertical-icon';
+import EyeSlashIcon from '@patternfly/react-icons/dist/js/icons/eye-slash-icon';
 import clsx from 'clsx';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
@@ -35,12 +36,22 @@ const commonPropTypes = {
   initialized: PropTypes.bool
 };
 
-const ComponentWrapper = ({ children }) => (
-  <div className="pf4-component-wrapper">{children}</div>
+const ComponentWrapper = ({ hideField, children }) => (
+  <div
+    className={clsx('pf4-component-wrapper', {
+      hidden: hideField
+    })}
+  >
+    <div className="pf4-hidefield-overlay">
+      <EyeSlashIcon size="xl" className="hide-indicator" />
+      {children}
+    </div>
+  </div>
 );
 
 ComponentWrapper.propTypes = {
-  children: childrenPropType
+  children: childrenPropType,
+  hideField: PropTypes.bool
 };
 
 const TextField = ({
@@ -50,11 +61,12 @@ const TextField = ({
   restricted,
   propertyName,
   fieldId,
+  hideField,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
   return (
-    <ComponentWrapper>
+    <ComponentWrapper hideField={hideField}>
       <Component
         {...props}
         label={snapshot.isDragging ? props.label || 'Text input' : props.label}
@@ -73,11 +85,12 @@ const CheckBoxField = ({
   component,
   initialized,
   snapshot,
+  hideField,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.CHECKBOX];
   return (
-    <ComponentWrapper>
+    <ComponentWrapper hideField={hideField}>
       <Component {...props} label={props.label || 'Please provide label'} />
     </ComponentWrapper>
   );
@@ -87,10 +100,17 @@ CheckBoxField.propTypes = {
   ...commonPropTypes
 };
 
-const SelectField = ({ preview, component, initialized, options, ...props }) => {
+const SelectField = ({
+  preview,
+  component,
+  initialized,
+  options,
+  hideField,
+  ...props
+}) => {
   const Component = formFieldsMapper[componentTypes.SELECT];
   return (
-    <ComponentWrapper>
+    <ComponentWrapper hideField={hideField}>
       <Component
         {...props}
         options={options && options.filter(({ deleted }) => !deleted)}
@@ -134,10 +154,17 @@ BuilderColumn.propTypes = {
   children: childrenPropType
 };
 
-const DatePickerField = ({ preview, id, component, initialized, ...props }) => {
+const DatePickerField = ({
+  preview,
+  id,
+  component,
+  initialized,
+  hideField,
+  ...props
+}) => {
   const Component = formFieldsMapper[componentTypes.DATE_PICKER];
   return (
-    <ComponentWrapper>
+    <ComponentWrapper hideField={hideField}>
       <Component {...props} />
     </ComponentWrapper>
   );
@@ -153,11 +180,12 @@ const PlainTextField = ({
   component,
   initialized,
   label,
+  hideField,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.PLAIN_TEXT];
   return (
-    <ComponentWrapper>
+    <ComponentWrapper hideField={hideField}>
       <Component
         {...props}
         label={label || 'Please provide a label to plain text component'}
@@ -170,13 +198,20 @@ PlainTextField.propTypes = {
   ...commonPropTypes
 };
 
-const RadioField = ({ preview, id, component, initialized, ...props }) => {
+const RadioField = ({
+  preview,
+  id,
+  component,
+  initialized,
+  hideField,
+  ...props
+}) => {
   const Component = formFieldsMapper[componentTypes.RADIO];
   if (!props.options) {
     return <p>Radio field does not have any options.</p>;
   }
   return (
-    <ComponentWrapper>
+    <ComponentWrapper hideField={hideField}>
       <Component {...props} input={{ ...props.input, onChange: console.log }} />
     </ComponentWrapper>
   );
@@ -195,11 +230,12 @@ const SwitchField = ({
   component,
   initialized,
   snapshot,
+  hideField,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.SWITCH];
   return (
-    <ComponentWrapper>
+    <ComponentWrapper hideField={hideField}>
       <Component
         {...props}
         label={snapshot.isDragging ? 'Switch field' : props.label}
@@ -218,11 +254,12 @@ const TextAreaField = ({
   component,
   initialized,
   snapshot,
+  hideField,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.TEXTAREA];
   return (
-    <ComponentWrapper>
+    <ComponentWrapper hideField={hideField}>
       <Component {...props} label={snapshot.isDragging ? 'Texarea' : props.label} />
     </ComponentWrapper>
   );
@@ -232,10 +269,10 @@ TextAreaField.propTypes = {
   ...commonPropTypes
 };
 
-const SubFormField = ({ title, description, formOptions }) => {
+const SubFormField = ({ title, description, formOptions, hideField }) => {
   const Component = formFieldsMapper[componentTypes.SUB_FORM];
   return (
-    <ComponentWrapper>
+    <ComponentWrapper hideField={hideField}>
       <Component
         fields={[]}
         title={title || 'Subform'}
@@ -376,7 +413,7 @@ PropertyGroup.propTypes = {
 
 const DragHandle = ({ dragHandleProps }) => (
   <div {...dragHandleProps} className="pf4-drag-handle">
-    <ArrowsAltIcon className="pf4-drag-handle-icon" />
+    <GripVerticalIcon className="pf4-drag-handle-icon" />
   </div>
 );
 

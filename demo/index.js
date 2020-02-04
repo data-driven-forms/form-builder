@@ -27,7 +27,8 @@ import {
   SHOW_TODAY_BUTTON,
   MULTI_LINE_LABEL,
   TITLE,
-  DESCRIPTION
+  DESCRIPTION,
+  HIDE_FIELD
 } from './field-properties';
 
 const componentProperties = {
@@ -38,12 +39,15 @@ const componentProperties = {
       PLACEHOLDER,
       INPUT_TYPE,
       IS_DISABLED,
-      IS_READ_ONLY
+      IS_READ_ONLY,
+      HIDE_FIELD
     ]
   },
-  [componentTypes.CHECKBOX]: { attributes: [LABEL, IS_DISABLED, OPTIONS] },
+  [componentTypes.CHECKBOX]: {
+    attributes: [LABEL, IS_DISABLED, OPTIONS, HIDE_FIELD]
+  },
   [componentTypes.SELECT]: {
-    attributes: [OPTIONS, LABEL, IS_DISABLED, PLACEHOLDER, HELPER_TEXT]
+    attributes: [OPTIONS, LABEL, IS_DISABLED, PLACEHOLDER, HELPER_TEXT, HIDE_FIELD]
   },
   [componentTypes.DATE_PICKER]: {
     attributes: [
@@ -51,14 +55,17 @@ const componentProperties = {
       TODAY_BUTTON_LABEL,
       IS_CLEARABLE,
       CLOSE_ON_DAY_SELECT,
-      SHOW_TODAY_BUTTON
+      SHOW_TODAY_BUTTON,
+      HIDE_FIELD
     ]
   },
   [componentTypes.PLAIN_TEXT]: { attributes: [MULTI_LINE_LABEL] },
-  [componentTypes.RADIO]: { attributes: [LABEL, IS_DISABLED, OPTIONS] },
-  [componentTypes.SWITCH]: { attributes: [LABEL, IS_READ_ONLY, IS_DISABLED] },
+  [componentTypes.RADIO]: { attributes: [LABEL, IS_DISABLED, OPTIONS, HIDE_FIELD] },
+  [componentTypes.SWITCH]: {
+    attributes: [LABEL, IS_READ_ONLY, IS_DISABLED, HIDE_FIELD]
+  },
   [componentTypes.TEXTAREA]: {
-    attributes: [LABEL, HELPER_TEXT, IS_READ_ONLY, IS_DISABLED]
+    attributes: [LABEL, HELPER_TEXT, IS_READ_ONLY, IS_DISABLED, HIDE_FIELD]
   },
   [componentTypes.SUB_FORM]: {
     isContainer: true,
@@ -74,6 +81,7 @@ const schema = {
       label: 'Something',
       initialValue: 'Foo',
       isRequired: true,
+      hideField: true,
       validate: [
         {
           type: validatorTypes.REQUIRED,

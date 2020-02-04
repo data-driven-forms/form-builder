@@ -5,6 +5,38 @@ import StoreContext from './store-context';
 import ComponentsContext from './components-context';
 import validatorsProperties from './validators-properties';
 
+const propertyValidationMapper = {
+  isDisabled: ({ initialValue, isRequired, isDisabled }) => ({
+    ...(isRequired &&
+      isDisabled &&
+      !initialValue && {
+        message: 'Field must have an initial value when required and disabled.',
+        code: 'isDisabled.isRequired.initialValue'
+      })
+  }),
+  isReadOnly: ({ initialValue, isRequired, isReadOnly }) => ({
+    ...(isRequired &&
+      isReadOnly &&
+      !initialValue && {
+        message: 'Field must have an initial value when required and read only.',
+        code: 'isReadOnly.isRequired.initialValue'
+      })
+  }),
+  hideField: ({ initialValue, isRequired, hideField }) => ({
+    ...(isRequired &&
+      hideField &&
+      !initialValue && {
+        message: 'Field must have an initial value when required and hidden.',
+        code: 'hideField.isRequired.initialValue'
+      })
+  })
+};
+
+const propertiesValidation = (type) => {
+  const validation = propertyValidationMapper[type];
+  return validation ? validation : () => ({});
+};
+
 const restrictionHandler = {
   min: (value, defaultValue) =>
     !value ? defaultValue : value < defaultValue ? defaultValue : value,
@@ -181,7 +213,7 @@ const PropertiesEditor = () => {
               isDisabled={fields[selectedComponent].restricted}
               onChange={(value) => handlePropertyChange(value, 'name')}
             />
-            <NameComponent
+            <InitialValueComponent
               label="Initial value"
               type="text"
               value={field.initialValue}
@@ -190,9 +222,13 @@ const PropertiesEditor = () => {
             {properties.map((property) => {
               const Component =
                 propertiesMapper[property.component] || PropertyDefault;
+              const propertyValidation = propertiesValidation(property.propertyName)(
+                field
+              );
               return (
                 <Component
                   key={property.propertyName}
+                  propertyValidation={propertyValidation}
                   {...property}
                   value={field[property.propertyName]}
                   onChange={(value) =>

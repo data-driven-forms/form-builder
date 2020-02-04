@@ -30,6 +30,7 @@
 }
 .pf4-component-wrapper {
   flex-grow: 1;
+  position: relative;
 }
 
 .pf4-field-actions {
@@ -114,4 +115,43 @@ button:hover>svg.pf4-danger-color {
 }
 button:hover>svg.pf4-success-color{
   fill: var(--pf-global--link--Color);
+}
+@keyframes overlay-transition {
+  from {
+    background-color: rgba(200,200,200,.0);
+  }
+  to {
+    background-color: rgba(200,200,200,.6);
+  }
+}
+
+.pf4-hidefield-overlay::before {
+  position: absolute;
+  content: "";
+  width: calc(100% + 18px);
+  height: calc(100% + 17.3px);
+  top: -9px;
+  left: -9px;
+  transition: background-color linear .3s;
+  background-color: transparent;
+  pointer-events: none;
+}
+.pf4-component-wrapper.hidden .pf4-hidefield-overlay::before {
+  background-color: rgba(200,200,200,.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: fill;
+}
+.pf4-component-wrapper svg.hide-indicator{
+  position: absolute;
+  left: calc(100% / 2);
+  top: calc(100% / 2 - 1.5em);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity linear .3s;
+}
+
+.pf4-component-wrapper.hidden svg.hide-indicator{
+  opacity: 1;
 }

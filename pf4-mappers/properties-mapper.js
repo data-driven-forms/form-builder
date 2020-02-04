@@ -11,6 +11,20 @@ import PlusIcon from '@patternfly/react-icons/dist/js/icons/plus-icon';
 import TrashRestoreIcon from '@patternfly/react-icons/dist/js/icons/trash-restore-icon';
 import { rawComponents } from '@data-driven-forms/pf4-component-mapper';
 
+const FormGroupWrapper = ({
+  propertyValidation: { message },
+  children,
+  ...props
+}) => (
+  <FormGroup helperTextInvalid={message} isValid={!message} {...props}>
+    {children}
+  </FormGroup>
+);
+
+FormGroupWrapper.defaultProps = {
+  propertyValidation: {}
+};
+
 const Input = ({
   label,
   onChange,
@@ -21,11 +35,16 @@ const Input = ({
   restricted,
   propertyName,
   fieldId,
+  propertyValidation,
   ...rest
 }) => {
   return (
     <Fragment>
-      <FormGroup label={label} fieldId={label}>
+      <FormGroupWrapper
+        label={label}
+        fieldId={label}
+        propertyValidation={propertyValidation}
+      >
         <TextInput
           id={label}
           type={type}
@@ -35,39 +54,47 @@ const Input = ({
           isDisabled={isDisabled}
           {...rest}
         />
-      </FormGroup>
+      </FormGroupWrapper>
     </Fragment>
   );
 };
 
-const PropertySwitch = ({ value, onChange, label, isDisabled }) => {
-  return (
-    <FormGroup fieldId={label}>
-      <Switch
-        isChecked={Boolean(value)}
-        id={`${label}-property`}
-        onChange={(checked) => onChange(checked)}
-        label={label}
-        isDisabled={isDisabled}
-      />
-    </FormGroup>
-  );
-};
+const PropertySwitch = ({
+  value,
+  onChange,
+  label,
+  isDisabled,
+  propertyValidation
+}) => (
+  <FormGroupWrapper fieldId={label} propertyValidation={propertyValidation}>
+    <Switch
+      isChecked={Boolean(value)}
+      id={`${label}-property`}
+      onChange={(checked) => onChange(checked)}
+      label={label}
+      isDisabled={isDisabled}
+    />
+  </FormGroupWrapper>
+);
 
-const PropertySelect = ({ value, label, onChange, options }) => {
+const PropertySelect = ({ value, label, onChange, options, propertyValidation }) => {
   return (
-    <FormGroup label={label} fieldId={label}>
+    <FormGroupWrapper
+      label={label}
+      fieldId={label}
+      propertyValidation={propertyValidation}
+    >
       <rawComponents.Select
         id={label}
         value={value || ''}
         options={options.map((option) => ({ value: option, label: option }))}
         onChange={(value) => onChange(value)}
       />
-    </FormGroup>
+    </FormGroupWrapper>
   );
 };
 
-const PropertyOptions = ({ value = [], label, onChange }) => {
+const PropertyOptions = ({ value = [], label, onChange, propertyValidation }) => {
   const handleOptionChange = (option, index, optionKey) =>
     onChange(
       value.map((item, itemIndex) =>
@@ -159,9 +186,9 @@ const PropertyOptions = ({ value = [], label, onChange }) => {
   );
 };
 
-const Textarea = ({ label, onChange, value, autoFocus }) => {
+const Textarea = ({ label, onChange, value, autoFocus, propertyValidation }) => {
   return (
-    <div>
+    <FormGroupWrapper fieldId={label} propertyValidation={propertyValidation}>
       <TextArea
         multiline
         autoFocus={autoFocus}
@@ -169,7 +196,7 @@ const Textarea = ({ label, onChange, value, autoFocus }) => {
         onChange={(value) => onChange(value)}
         value={value || ''}
       />
-    </div>
+    </FormGroupWrapper>
   );
 };
 

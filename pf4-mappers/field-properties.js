@@ -82,3 +82,9 @@ export const DESCRIPTION = {
   label: 'Description',
   component: 'input'
 };
+
+export const HIDE_FIELD = {
+  propertyName: 'hideField',
+  label: 'Hidden',
+  component: 'switch'
+};

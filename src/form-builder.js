@@ -5,70 +5,11 @@ import DropTarget from './drop-target';
 import StoreContext from './store-context';
 import PropertiesEditor from './properties-editor';
 import ComponentPicker from './component-picker';
+import propertiesValidation from './properties-editor/initial-value-checker';
 import './style.css';
 
 const COMPONENTS_LIST = 'components-list';
 const FORM_LAYOUT = 'form-layout';
-
-const propertyStrings = {
-  isRequired: 'required',
-  isDisabled: 'disabled',
-  isReadOnly: 'read only',
-  hideField: 'hidden'
-};
-
-const initialValueCheckMessage = ({ isDisabled, isReadOnly, hideField }) => {
-  return `Initial value must be set if field is required and at the same time ${Object.entries(
-    {
-      isDisabled,
-      isReadOnly,
-      hideField
-    }
-  )
-    .filter(([, value]) => value)
-    .map(([key]) => propertyStrings[key])
-    .join(' or ')}.`;
-};
-
-const initialValueCheck = ({
-  initialValue,
-  isRequired,
-  isDisabled,
-  isReadOnly,
-  hideField
-}) =>
-  !initialValue && isRequired && (isDisabled || isReadOnly || hideField)
-    ? {
-        initialValue: {
-          message: initialValueCheckMessage({
-            isDisabled,
-            isReadOnly,
-            hideField
-          }),
-          code: 'errors.initialValue',
-          codeDependencies: {
-            isRequired,
-            isDisabled,
-            isReadOnly,
-            hideField
-          }
-        }
-      }
-    : {
-        initialValue: undefined
-      };
-
-const propertyValidationMapper = {
-  isDisabled: initialValueCheck,
-  isReadOnly: initialValueCheck,
-  hideField: initialValueCheck,
-  initialValue: initialValueCheck
-};
-
-const propertiesValidation = (type) => {
-  const validation = propertyValidationMapper[type];
-  return validation ? validation : () => ({});
-};
 
 const isInContainer = (index, containers) => {
   const containerKey = Object.keys(containers).filter(

@@ -1,7 +1,7 @@
 import React, { useContext, Fragment } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import PropTypes from 'prop-types';
 import ComponentsContext from './components-context';
-import MockFieldProvider from './mock-field-provider';
 
 const PickerField = ({ field, index }) => {
   const { pickerMapper, componentMapper } = useContext(ComponentsContext);
@@ -23,7 +23,6 @@ const PickerField = ({ field, index }) => {
               <Clone
                 formOptions={formOptions}
                 input={{ name: 'template-clone' }}
-                FieldProvider={MockFieldProvider}
                 meta={{}}
                 name="template-clone"
                 snapshot={{ ...snapshot, isClone: true }}
@@ -37,6 +36,15 @@ const PickerField = ({ field, index }) => {
       )}
     </Draggable>
   );
+};
+
+PickerField.propTypes = {
+  index: PropTypes.number.isRequired,
+  field: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    component: PropTypes.string.isRequired,
+    clone: PropTypes.bool
+  }).isRequired
 };
 
 export default PickerField;

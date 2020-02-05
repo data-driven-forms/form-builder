@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 import ComponentsContext from './components-context';
 import PickerField from './picker-field';
 
@@ -28,6 +29,18 @@ const ComponentPicker = ({ dropTarget, fields }) => {
       )}
     </Droppable>
   );
+};
+
+ComponentPicker.propTypes = {
+  fields: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  dropTarget: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default ComponentPicker;

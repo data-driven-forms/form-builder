@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Field as FinalFormField } from 'react-final-form';
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 import ComponentsContext from './components-context';
 import StoreContext from './store-context';
 
@@ -80,6 +81,18 @@ const Field = ({
       )}
     </Draggable>
   );
+};
+
+Field.propTypes = {
+  index: PropTypes.number.isRequired,
+  shouldClone: PropTypes.bool,
+  disableDrag: PropTypes.bool,
+  field: PropTypes.shape({
+    clone: PropTypes.bool,
+    isContainer: PropTypes.bool,
+    preview: PropTypes.bool,
+    validate: PropTypes.any
+  }).isRequired
 };
 
 export default Field;

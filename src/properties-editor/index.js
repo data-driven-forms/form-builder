@@ -1,102 +1,14 @@
-import React, { useContext, useState, useEffect, Fragment, memo } from 'react';
+import React, { useContext, useState, useEffect, Fragment } from 'react';
 import { validatorTypes } from '@data-driven-forms/react-form-renderer';
-import PropTypes from 'prop-types';
-import StoreContext from './store-context';
-import ComponentsContext from './components-context';
-import validatorsProperties from './validators-properties';
-
-const restrictionHandler = {
-  min: (value, defaultValue) =>
-    !value ? defaultValue : value < defaultValue ? defaultValue : value,
-  max: (value, defaultValue) =>
-    !value ? defaultValue : value > defaultValue ? defaultValue : value
-};
-
-const validatorChangeValue = (property, value) => {
-  let result = property.type === 'number' ? Number(result) : result;
-  if (property.restriction) {
-    result = restrictionHandler[property.restriction.inputAttribute](
-      value,
-      property.original[property.restriction.validatorAttribute]
-    );
-  }
-  return {
-    [property.propertyName]: result
-  };
-};
+import StoreContext from '../store-context';
+import ComponentsContext from '../components-context';
+import validatorsProperties from '../validators-properties';
+import MemoizedProperty from './memoized-property';
+import MemoizedValidator from './memozied-validator';
 
 const validatorOptions = Object.keys(validatorTypes)
   .filter((key) => validatorTypes[key] !== validatorTypes.REQUIRED)
   .map((key) => ({ value: validatorTypes[key], label: validatorTypes[key] }));
-
-const ValidatorProperty = ({ property, onChange, value, index, restricted }) => {
-  const { propertiesMapper } = useContext(ComponentsContext);
-  const Component = propertiesMapper[property.component];
-  const restrictionProperty =
-    property.restriction && property.original
-      ? {
-          isDisabled: property.restriction.lock,
-          [property.restriction.inputAttribute]:
-            property.original[property.restriction.validatorAttribute]
-        }
-      : {};
-
-  return (
-    <Component
-      value={value}
-      type={property.type}
-      onBlur={() =>
-        property.propertyName !== 'message' &&
-        restricted &&
-        onChange(validatorChangeValue(property, value), 'modify', index)
-      }
-      onChange={(value) =>
-        onChange(
-          {
-            [property.propertyName]:
-              property.type === 'number' ? Number(value) : value
-          },
-          'modify',
-          index
-        )
-      }
-      label={property.label}
-      {...restrictionProperty}
-    />
-  );
-};
-
-ValidatorProperty.propTypes = {
-  property: PropTypes.shape({
-    original: PropTypes.object,
-    propertyName: PropTypes.string.isRequired,
-    component: PropTypes.string.isRequired,
-    type: PropTypes.string,
-    label: PropTypes.string.isRequired,
-    restricted: PropTypes.bool,
-    restriction: PropTypes.shape({
-      inputAttribute: PropTypes.string.isRequired,
-      validatorAttribute: PropTypes.string.isRequired,
-      lock: PropTypes.bool
-    })
-  }),
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.any,
-  index: PropTypes.number.isRequired
-};
-
-const PropertyDefault = ({ propertyName, value, label, onChange }) => (
-  <div>
-    <label htmlFor={propertyName}>{label}</label>
-    <input
-      type="checkbox"
-      id={propertyName}
-      name={propertyName}
-      checked={value}
-      onChange={({ target: { checked } }) => onChange(checked)}
-    />
-  </div>
-);
 
 const checkRequiredDisabled = (field) => {
   return !!(
@@ -107,84 +19,6 @@ const checkRequiredDisabled = (field) => {
     )
   );
 };
-
-const PropertyComponent = ({
-  Component,
-  property,
-  field,
-  handlePropertyChange,
-  ...props
-}) => (
-  <Component
-    propertyValidation={
-      field.propertyValidation && field.propertyValidation[property.propertyName]
-    }
-    {...props}
-    {...property}
-    value={field[property.propertyName]}
-    onChange={(value) => handlePropertyChange(value, property.propertyName)}
-  />
-);
-
-PropertyComponent.propTypes = {
-  Component: PropTypes.oneOfType([PropTypes.node, PropTypes.func, PropTypes.element])
-    .isRequired,
-  property: PropTypes.shape({ propertyName: PropTypes.string.isRequired })
-    .isRequired,
-  field: PropTypes.shape({
-    propertyValidation: PropTypes.object
-  }).isRequired,
-  handlePropertyChange: PropTypes.func.isRequired
-};
-
-const MemoizedProperty = memo(
-  PropertyComponent,
-  (prevProps, nextProps) =>
-    prevProps.field[prevProps.property.propertyName] ===
-      nextProps.field[nextProps.property.propertyName] &&
-    prevProps.field.propertyValidation &&
-    prevProps.field.propertyValidation[nextProps.property.propertyName] ===
-      nextProps.field.propertyValidation &&
-    nextProps.field.propertyValidation[nextProps.property.propertyName]
-);
-
-const ValidatorComponent = ({
-  handleValidatorChange,
-  property,
-  original,
-  field,
-  validator,
-  index
-}) => (
-  <ValidatorProperty
-    onChange={handleValidatorChange}
-    property={{
-      ...property,
-      original
-    }}
-    restricted={field.restricted}
-    value={validator[property.propertyName]}
-    index={index}
-  />
-);
-
-ValidatorComponent.propTypes = {
-  handleValidatorChange: PropTypes.func.isRequired,
-  property: PropTypes.shape({
-    propertyName: PropTypes.string.isRequired
-  }).isRequired,
-  original: PropTypes.object,
-  field: PropTypes.shape({ restricted: PropTypes.bool }).isRequired,
-  validator: PropTypes.object,
-  index: PropTypes.number.isRequired
-};
-
-const MemoizedValidator = memo(ValidatorComponent, (prevProps, nextProps) => {
-  return (
-    prevProps.validator[prevProps.property.propertyName] ===
-    nextProps.validator[nextProps.property.propertyName]
-  );
-});
 
 const PropertiesEditor = () => {
   const { state, dispatch } = useContext(StoreContext);
@@ -271,8 +105,7 @@ const PropertiesEditor = () => {
               property={{ propertyName: 'initialValue' }}
             />
             {properties.map((property) => {
-              const Component =
-                propertiesMapper[property.component] || PropertyDefault;
+              const Component = propertiesMapper[property.component];
               return (
                 <MemoizedProperty
                   key={property.propertyName}

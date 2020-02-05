@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import clsx from 'clsx';
 import { Form } from 'react-final-form';
+import PropTypes from 'prop-types';
 import Field from './field';
 import ComponentsContext from './components-context';
 
@@ -49,6 +50,19 @@ const DropTarget = ({
       }}
     </Droppable>
   );
+};
+
+DropTarget.propTypes = {
+  dropTarget: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired,
+  fields: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  isDropDisabled: PropTypes.bool,
+  shouldClone: PropTypes.bool,
+  disableDrag: PropTypes.bool,
+  disableDelete: PropTypes.bool
 };
 
 export default DropTarget;

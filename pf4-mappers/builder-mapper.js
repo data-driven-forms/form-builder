@@ -62,6 +62,7 @@ const TextField = ({
   propertyName,
   fieldId,
   hideField,
+  propertyValidation,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
@@ -86,6 +87,7 @@ const CheckBoxField = ({
   initialized,
   snapshot,
   hideField,
+  propertyValidation,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.CHECKBOX];
@@ -106,6 +108,7 @@ const SelectField = ({
   initialized,
   options,
   hideField,
+  propertyValidation,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.SELECT];
@@ -160,6 +163,7 @@ const DatePickerField = ({
   component,
   initialized,
   hideField,
+  propertyValidation,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.DATE_PICKER];
@@ -181,6 +185,7 @@ const PlainTextField = ({
   initialized,
   label,
   hideField,
+  propertyValidation,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.PLAIN_TEXT];
@@ -204,6 +209,7 @@ const RadioField = ({
   component,
   initialized,
   hideField,
+  propertyValidation,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.RADIO];
@@ -231,6 +237,7 @@ const SwitchField = ({
   initialized,
   snapshot,
   hideField,
+  propertyValidation,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.SWITCH];
@@ -255,6 +262,7 @@ const TextAreaField = ({
   initialized,
   snapshot,
   hideField,
+  propertyValidation,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.TEXTAREA];
@@ -269,7 +277,13 @@ TextAreaField.propTypes = {
   ...commonPropTypes
 };
 
-const SubFormField = ({ title, description, formOptions, hideField }) => {
+const SubFormField = ({
+  title,
+  description,
+  formOptions,
+  hideField,
+  propertyValidation
+}) => {
   const Component = formFieldsMapper[componentTypes.SUB_FORM];
   return (
     <ComponentWrapper hideField={hideField}>

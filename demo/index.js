@@ -7,6 +7,7 @@ import {
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
+import debounce from 'lodash/debounce';
 // import builderMapper from './builder-mapper';
 // import pickerMapper from './picker-mapper';
 // import propertiesMapper from './properties-mapper';
@@ -215,6 +216,8 @@ const schemaTemplate = {
   ]
 };
 
+const debounced = debounce(console.log, 250);
+
 const Demo = () => (
   <Fragment>
     <CssBaseline />
@@ -222,7 +225,7 @@ const Demo = () => (
       <FormBuilder
         schema={schema}
         schemaTemplate={schemaTemplate}
-        onChange={console.log}
+        onChange={debounced}
         pickerMapper={pickerMapper}
         componentProperties={componentProperties}
         componentMapper={builderMapper}
@@ -230,7 +233,7 @@ const Demo = () => (
         cloneWhileDragging
         disableDrag={false}
         mode="subset"
-        debug={true}
+        debug={false}
       />
     </ThemeProvider>
   </Fragment>

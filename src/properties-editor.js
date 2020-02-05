@@ -1,41 +1,9 @@
-import React, { useContext, useState, useEffect, Fragment } from 'react';
+import React, { useContext, useState, useEffect, Fragment, memo } from 'react';
 import { validatorTypes } from '@data-driven-forms/react-form-renderer';
 import PropTypes from 'prop-types';
 import StoreContext from './store-context';
 import ComponentsContext from './components-context';
 import validatorsProperties from './validators-properties';
-
-const propertyValidationMapper = {
-  isDisabled: ({ initialValue, isRequired, isDisabled }) => ({
-    ...(isRequired &&
-      isDisabled &&
-      !initialValue && {
-        message: 'Field must have an initial value when required and disabled.',
-        code: 'isDisabled.isRequired.initialValue'
-      })
-  }),
-  isReadOnly: ({ initialValue, isRequired, isReadOnly }) => ({
-    ...(isRequired &&
-      isReadOnly &&
-      !initialValue && {
-        message: 'Field must have an initial value when required and read only.',
-        code: 'isReadOnly.isRequired.initialValue'
-      })
-  }),
-  hideField: ({ initialValue, isRequired, hideField }) => ({
-    ...(isRequired &&
-      hideField &&
-      !initialValue && {
-        message: 'Field must have an initial value when required and hidden.',
-        code: 'hideField.isRequired.initialValue'
-      })
-  })
-};
-
-const propertiesValidation = (type) => {
-  const validation = propertyValidationMapper[type];
-  return validation ? validation : () => ({});
-};
 
 const restrictionHandler = {
   min: (value, defaultValue) =>
@@ -140,6 +108,80 @@ const checkRequiredDisabled = (field) => {
   );
 };
 
+const PropertyComponent = ({
+  Component,
+  property,
+  field,
+  handlePropertyChange,
+  ...props
+}) => (
+  <Component
+    propertyValidation={
+      field.propertyValidation && field.propertyValidation[property.propertyName]
+    }
+    {...props}
+    {...property}
+    value={field[property.propertyName]}
+    onChange={(value) => handlePropertyChange(value, property.propertyName)}
+  />
+);
+
+PropertyComponent.propTypes = {
+  Component: PropTypes.oneOfType([PropTypes.node, PropTypes.func, PropTypes.element])
+    .isRequired,
+  property: PropTypes.shape({ propertyName: PropTypes.string.isRequired })
+    .isRequired,
+  field: PropTypes.shape({
+    propertyValidation: PropTypes.object
+  }).isRequired,
+  handlePropertyChange: PropTypes.func.isRequired
+};
+
+const MemoizedProperty = memo(
+  PropertyComponent,
+  (prevProps, nextProps) =>
+    prevProps.field[prevProps.property.propertyName] ===
+    nextProps.field[nextProps.property.propertyName]
+);
+
+const ValidatorComponent = ({
+  handleValidatorChange,
+  property,
+  original,
+  field,
+  validator,
+  index
+}) => (
+  <ValidatorProperty
+    onChange={handleValidatorChange}
+    property={{
+      ...property,
+      original
+    }}
+    restricted={field.restricted}
+    value={validator[property.propertyName]}
+    index={index}
+  />
+);
+
+ValidatorComponent.propTypes = {
+  handleValidatorChange: PropTypes.func.isRequired,
+  property: PropTypes.shape({
+    propertyName: PropTypes.string.isRequired
+  }).isRequired,
+  original: PropTypes.object,
+  field: PropTypes.shape({ restricted: PropTypes.bool }).isRequired,
+  validator: PropTypes.object,
+  index: PropTypes.number.isRequired
+};
+
+const MemoizedValidator = memo(ValidatorComponent, (prevProps, nextProps) => {
+  return (
+    prevProps.validator[prevProps.property.propertyName] ===
+    nextProps.validator[nextProps.property.propertyName]
+  );
+});
+
 const PropertiesEditor = () => {
   const { state, dispatch } = useContext(StoreContext);
   const { selectedComponent, fields } = state;
@@ -205,35 +247,35 @@ const PropertiesEditor = () => {
         }
         propertiesChildren={
           <Fragment>
-            <NameComponent
-              label="Name"
-              type="text"
-              value={field.name}
+            <MemoizedProperty
+              Component={NameComponent}
+              field={field}
+              property={{ propertyName: 'name' }}
               autoFocus={!field.initialized}
               isDisabled={fields[selectedComponent].restricted}
-              onChange={(value) => handlePropertyChange(value, 'name')}
+              value={field.name}
+              handlePropertyChange={handlePropertyChange}
+              label="Name"
             />
-            <InitialValueComponent
+            <MemoizedProperty
               label="Initial value"
               type="text"
+              Component={InitialValueComponent}
               value={field.initialValue}
-              onChange={(value) => handlePropertyChange(value, 'initialValue')}
+              handlePropertyChange={handlePropertyChange}
+              field={field}
+              property={{ propertyName: 'initialValue' }}
             />
             {properties.map((property) => {
               const Component =
                 propertiesMapper[property.component] || PropertyDefault;
-              const propertyValidation = propertiesValidation(property.propertyName)(
-                field
-              );
               return (
-                <Component
+                <MemoizedProperty
                   key={property.propertyName}
-                  propertyValidation={propertyValidation}
-                  {...property}
-                  value={field[property.propertyName]}
-                  onChange={(value) =>
-                    handlePropertyChange(value, property.propertyName)
-                  }
+                  Component={Component}
+                  field={field}
+                  property={property}
+                  handlePropertyChange={handlePropertyChange}
                 />
               );
             })}
@@ -293,15 +335,13 @@ const PropertiesEditor = () => {
                   className="ddorg__form__builder-validators-validator-group"
                 >
                   {validatorsProperties[type].map((property, propertyIndex) => (
-                    <ValidatorProperty
+                    <MemoizedValidator
                       key={propertyIndex}
-                      onChange={handleValidatorChange}
-                      property={{
-                        ...property,
-                        original
-                      }}
-                      restricted={field.restricted}
-                      value={rest[property.propertyName]}
+                      handleValidatorChange={handleValidatorChange}
+                      field={field}
+                      validator={rest}
+                      property={property}
+                      original={original}
                       index={index}
                     />
                   ))}

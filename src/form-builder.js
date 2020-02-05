@@ -5,11 +5,70 @@ import DropTarget from './drop-target';
 import StoreContext from './store-context';
 import PropertiesEditor from './properties-editor';
 import ComponentPicker from './component-picker';
-import throttle from 'lodash/throttle';
 import './style.css';
 
 const COMPONENTS_LIST = 'components-list';
 const FORM_LAYOUT = 'form-layout';
+
+const propertyStrings = {
+  isRequired: 'required',
+  isDisabled: 'disabled',
+  isReadOnly: 'read only',
+  hideField: 'hidden'
+};
+
+const initialValueCheckMessage = ({ isDisabled, isReadOnly, hideField }) => {
+  return `Initial value must be set if field is required and at the same time ${Object.entries(
+    {
+      isDisabled,
+      isReadOnly,
+      hideField
+    }
+  )
+    .filter(([, value]) => value)
+    .map(([key]) => propertyStrings[key])
+    .join(' or ')}.`;
+};
+
+const initialValueCheck = ({
+  initialValue,
+  isRequired,
+  isDisabled,
+  isReadOnly,
+  hideField
+}) =>
+  !initialValue && isRequired && (isDisabled || isReadOnly || hideField)
+    ? {
+        initialValue: {
+          message: initialValueCheckMessage({
+            isDisabled,
+            isReadOnly,
+            hideField
+          }),
+          code: 'errors.initialValue',
+          codeDependencies: {
+            isRequired,
+            isDisabled,
+            isReadOnly,
+            hideField
+          }
+        }
+      }
+    : {
+        initialValue: undefined
+      };
+
+const propertyValidationMapper = {
+  isDisabled: initialValueCheck,
+  isReadOnly: initialValueCheck,
+  hideField: initialValueCheck,
+  initialValue: initialValueCheck
+};
+
+const propertiesValidation = (type) => {
+  const validation = propertyValidationMapper[type];
+  return validation ? validation : () => ({});
+};
 
 const isInContainer = (index, containers) => {
   const containerKey = Object.keys(containers).filter(
@@ -202,11 +261,20 @@ const removeComponent = (componentId, state) => {
   };
 };
 
-const setFieldproperty = (field, payload) => ({
-  ...field,
-  initialized: true,
-  [payload.propertyName]: payload.value
-});
+const setFieldproperty = (field, payload) => {
+  const modifiedField = {
+    ...field,
+    initialized: true,
+    [payload.propertyName]: payload.value
+  };
+  return {
+    ...modifiedField,
+    propertyValidation: {
+      ...modifiedField.propertyValidation,
+      ...propertiesValidation(payload.propertyName)(modifiedField)
+    }
+  };
+};
 
 const dragStart = (field, state) => {
   if (
@@ -290,7 +358,8 @@ const ARTIFICIAL_KEYS = [
   'isContainer',
   'children',
   'container',
-  'restricted'
+  'restricted',
+  'propertyValidation'
 ];
 
 const sanitizeField = (field) => {
@@ -308,18 +377,25 @@ const sanitizeField = (field) => {
 
 const createSchema = (fields) => {
   const keys = Object.keys(fields).filter((key) => !key.match(/^initial-/));
-  return {
-    fields: keys.map((key) => sanitizeField(fields[key]))
-  };
+  const invalid = Object.keys(fields).find(
+    (key) =>
+      fields[key].propertyValidation &&
+      Object.keys(fields[key].propertyValidation).length > 0 &&
+      Object.entries(fields[key].propertyValidation).find(([, value]) => value)
+  );
+  return [
+    {
+      fields: keys.map((key) => sanitizeField(fields[key]))
+    },
+    !invalid
+  ];
 };
-
-const throttledChange = throttle(createSchema, 100);
 
 const FormBuilder = ({ initialFields, onChange, disableDrag, mode }) => {
   const [state, dispatch] = useReducer(reducer, initialFields);
 
   useEffect(() => {
-    onChange(throttledChange(state.fields));
+    onChange(...createSchema(state.fields));
   });
 
   const onDragEnd = (result) => dispatch({ type: 'setColumns', payload: result });

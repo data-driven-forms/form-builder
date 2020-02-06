@@ -58,13 +58,7 @@ const App = ({
 App.propTypes = {
   mode: PropTypes.oneOf(['default', 'subset']),
   debug: PropTypes.bool,
-  componentMapper: PropTypes.shape({
-    [PropTypes.string.isRequired]: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.element,
-      PropTypes.func
-    ]).isRequired
-  }),
+  componentMapper: PropTypes.object,
   componentProperties: PropTypes.shape({
     attributes: PropTypes.arrayOf(
       PropTypes.shape({
@@ -74,20 +68,8 @@ App.propTypes = {
       })
     )
   }),
-  pickerMapper: PropTypes.shape({
-    [PropTypes.string.isRequired]: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.element,
-      PropTypes.func
-    ]).isRequired
-  }),
-  propertiesMapper: PropTypes.shape({
-    [PropTypes.string.isRequired]: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.element,
-      PropTypes.func
-    ]).isRequired
-  }),
+  pickerMapper: PropTypes.object,
+  propertiesMapper: PropTypes.object,
   cloneWhileDragging: PropTypes.bool,
   schema: PropTypes.object,
   schemaTemplate: PropTypes.object

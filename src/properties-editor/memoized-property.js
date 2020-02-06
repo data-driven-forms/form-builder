@@ -15,6 +15,7 @@ const PropertyComponent = ({
     {...props}
     {...property}
     value={field[property.propertyName]}
+    restricted={field.restricted}
     onChange={(value) => handlePropertyChange(value, property.propertyName)}
   />
 );
@@ -25,7 +26,8 @@ PropertyComponent.propTypes = {
   property: PropTypes.shape({ propertyName: PropTypes.string.isRequired })
     .isRequired,
   field: PropTypes.shape({
-    propertyValidation: PropTypes.object
+    propertyValidation: PropTypes.object,
+    restricted: PropTypes.bool
   }).isRequired,
   handlePropertyChange: PropTypes.func.isRequired
 };

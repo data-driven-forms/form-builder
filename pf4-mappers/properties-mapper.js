@@ -94,7 +94,8 @@ const PropertySelect = ({ value, label, onChange, options, propertyValidation })
   );
 };
 
-const PropertyOptions = ({ value = [], label, onChange, propertyValidation }) => {
+const PropertyOptions = ({ value = [], label, onChange, restricted, ...rest }) => {
+  console.log('property options res: ', rest);
   const handleOptionChange = (option, index, optionKey) =>
     onChange(
       value.map((item, itemIndex) =>
@@ -127,13 +128,15 @@ const PropertyOptions = ({ value = [], label, onChange, propertyValidation }) =>
         }}
       >
         <span>{label}</span>
-        <Button
-          onClick={() => onChange([...value, { value: '', label: '' }])}
-          variant="plain"
-          aria-label="add option"
-        >
-          <PlusIcon />
-        </Button>
+        {!restricted && (
+          <Button
+            onClick={() => onChange([...value, { value: '', label: '' }])}
+            variant="plain"
+            aria-label="add option"
+          >
+            <PlusIcon />
+          </Button>
+        )}
       </p>
       <table className="pf4-options-property-editor-table">
         <tbody>

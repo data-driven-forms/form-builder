@@ -36,8 +36,9 @@ ValidatorComponent.propTypes = {
 const MemoizedValidator = memo(
   ValidatorComponent,
   (prevProps, nextProps) =>
+    prevProps.field.name === nextProps.field.name &&
     prevProps.validator[prevProps.property.propertyName] ===
-    nextProps.validator[nextProps.property.propertyName]
+      nextProps.validator[nextProps.property.propertyName]
 );
 
 export default MemoizedValidator;

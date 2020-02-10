@@ -231,15 +231,14 @@ const Demo = () => (
         disableDrag={false}
         mode="subset"
         debug={false}
-      >
-        {({ getSchema, isValid }) => (
+        controlPanel={({ getSchema, isValid }) => (
           <div>
             <button onClick={() => console.log('schema', getSchema())}>
               Save, {JSON.stringify({ isValid }, null, 2)}
             </button>
           </div>
         )}
-      </FormBuilder>
+      />
     </ThemeProvider>
   </Fragment>
 );

@@ -35,12 +35,13 @@ PropertyComponent.propTypes = {
 const MemoizedProperty = memo(
   PropertyComponent,
   (prevProps, nextProps) =>
+    prevProps.field.name === nextProps.field.name &&
     prevProps.field[prevProps.property.propertyName] ===
       nextProps.field[nextProps.property.propertyName] &&
     prevProps.field.propertyValidation &&
     prevProps.field.propertyValidation[nextProps.property.propertyName] ===
-      nextProps.field.propertyValidation &&
-    nextProps.field.propertyValidation[nextProps.property.propertyName]
+      (nextProps.field.propertyValidation &&
+        nextProps.field.propertyValidation[nextProps.property.propertyName])
 );
 
 export default MemoizedProperty;

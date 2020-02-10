@@ -15,7 +15,13 @@ const throttleValidator = throttle(validateOutput, 250);
 const COMPONENTS_LIST = 'components-list';
 const FORM_LAYOUT = 'form-layout';
 
-const FormBuilder = ({ initialFields, disableDrag, mode, children, childrenPosition }) => {
+const FormBuilder = ({
+  initialFields,
+  disableDrag,
+  mode,
+  controlPanel,
+  controlPanelPosition
+}) => {
   const [state, dispatch] = useReducer(builderReducer, initialFields);
   const getSchema = () => createSchema(state.fields);
 
@@ -23,10 +29,12 @@ const FormBuilder = ({ initialFields, disableDrag, mode, children, childrenPosit
   const onDragStart = (draggable) =>
     dispatch({ type: 'dragStart', payload: draggable });
   const { dropTargets, fields, selectedComponent } = state;
-  const Controls = () => children({ getSchema, isValid: throttleValidator(state.fields) })
+  const Controls = controlPanel;
   return (
     <StoreContext.Provider value={{ state, dispatch }}>
-      {childrenPosition === 'top' && <Controls />}
+      {controlPanelPosition === 'top' && (
+        <Controls getSchema={getSchema} isValid={throttleValidator(state.fields)} />
+      )}
       <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
         <div className="layout">
           {!disableDrag && (
@@ -50,18 +58,24 @@ const FormBuilder = ({ initialFields, disableDrag, mode, children, childrenPosit
           {selectedComponent && <PropertiesEditor />}
         </div>
       </DragDropContext>
-      {childrenPosition === 'bottom' && <Controls />}
+      {controlPanelPosition === 'bottom' && (
+        <Controls getSchema={getSchema} isValid={throttleValidator(state.fields)} />
+      )}
     </StoreContext.Provider>
   );
 };
 
 FormBuilder.propTypes = {
-  children: PropTypes.func.isRequired,
-  childrenPosition: PropTypes.oneOf(['top', 'bottom'])
+  controlPanel: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.element,
+    PropTypes.func
+  ]).isRequired,
+  controlPanelPosition: PropTypes.oneOf(['top', 'bottom'])
 };
 
 FormBuilder.defaultProps = {
-  childrenPosition: 'top'
+  controlPanelPosition: 'top'
 };
 
 export default FormBuilder;

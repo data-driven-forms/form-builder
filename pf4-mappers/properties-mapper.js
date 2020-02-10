@@ -94,8 +94,7 @@ const PropertySelect = ({ value, label, onChange, options, propertyValidation })
   );
 };
 
-const PropertyOptions = ({ value = [], label, onChange, restricted, ...rest }) => {
-  console.log('property options res: ', rest);
+const PropertyOptions = ({ value = [], label, onChange, restricted }) => {
   const handleOptionChange = (option, index, optionKey) =>
     onChange(
       value.map((item, itemIndex) =>
@@ -145,7 +144,6 @@ const PropertyOptions = ({ value = [], label, onChange, restricted, ...rest }) =
               <td className="pf4-options-propery-editor-cell">
                 <TextInput
                   aria-label={`option-label-${index}`}
-                  autoFocus
                   isDisabled={deleted}
                   placeholder="Label"
                   onChange={(value) => handleOptionChange(value, index, 'label')}

@@ -31,6 +31,7 @@ const App = ({
     }),
     {}
   );
+  console.log('render');
   return (
     <ComponentsContext.Provider
       value={{

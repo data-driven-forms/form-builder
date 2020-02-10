@@ -216,8 +216,6 @@ const schemaTemplate = {
   ]
 };
 
-const debounced = debounce(console.log, 250);
-
 const Demo = () => (
   <Fragment>
     <CssBaseline />
@@ -225,7 +223,6 @@ const Demo = () => (
       <FormBuilder
         schema={schema}
         schemaTemplate={schemaTemplate}
-        onChange={debounced}
         pickerMapper={pickerMapper}
         componentProperties={componentProperties}
         componentMapper={builderMapper}
@@ -234,7 +231,15 @@ const Demo = () => (
         disableDrag={false}
         mode="subset"
         debug={false}
-      />
+      >
+        {({ getSchema, isValid }) => (
+          <div>
+            <button onClick={() => console.log('schema', getSchema())}>
+              Save, {JSON.stringify({ isValid }, null, 2)}
+            </button>
+          </div>
+        )}
+      </FormBuilder>
     </ThemeProvider>
   </Fragment>
 );

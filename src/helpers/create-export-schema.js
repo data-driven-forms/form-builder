@@ -23,20 +23,21 @@ const sanitizeField = (field) => {
   return result;
 };
 
-const createSchema = (fields) => {
-  const keys = Object.keys(fields).filter((key) => !key.match(/^initial-/));
-  const invalid = Object.keys(fields).find(
+export const validateOutput = (fields) => {
+  const valid = Object.keys(fields).find(
     (key) =>
       fields[key].propertyValidation &&
       Object.keys(fields[key].propertyValidation).length > 0 &&
       Object.entries(fields[key].propertyValidation).find(([, value]) => value)
   );
-  return [
-    {
-      fields: keys.map((key) => sanitizeField(fields[key]))
-    },
-    !invalid
-  ];
+  return !valid;
+};
+
+const createSchema = (fields) => {
+  const keys = Object.keys(fields).filter((key) => !key.match(/^initial-/));
+  return {
+    fields: keys.map((key) => sanitizeField(fields[key]))
+  };
 };
 
 export default createSchema;

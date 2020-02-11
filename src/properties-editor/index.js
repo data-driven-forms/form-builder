@@ -1,10 +1,16 @@
 import React, { useContext, useState, useEffect, Fragment } from 'react';
 import { validatorTypes } from '@data-driven-forms/react-form-renderer';
-import StoreContext from '../store-context';
 import ComponentsContext from '../components-context';
 import validatorsProperties from '../validators-properties';
 import MemoizedProperty from './memoized-property';
 import MemoizedValidator from './memozied-validator';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import {
+  SET_FIELD_VALIDATOR,
+  SET_FIELD_PROPERTY,
+  SET_SELECTED_COMPONENT,
+  REMOVE_COMPONENT
+} from '../builder-state/builder-reducer';
 
 const validatorOptions = Object.keys(validatorTypes)
   .filter((key) => validatorTypes[key] !== validatorTypes.REQUIRED)
@@ -21,8 +27,11 @@ const checkRequiredDisabled = (field) => {
 };
 
 const PropertiesEditor = () => {
-  const { state, dispatch } = useContext(StoreContext);
-  const { selectedComponent, fields } = state;
+  const dispatch = useDispatch();
+  const field = useSelector(
+    ({ selectedComponent, fields }) => fields[selectedComponent],
+    shallowEqual
+  );
   const {
     componentMapper: { PropertiesEditor, PropertyGroup },
     componentProperties,
@@ -30,10 +39,9 @@ const PropertiesEditor = () => {
     debug
   } = useContext(ComponentsContext);
   const [requiredDisabled, setRequiredDisabled] = useState(false);
-  const field = fields[selectedComponent];
   useEffect(() => {
-    setRequiredDisabled(() => checkRequiredDisabled(fields[selectedComponent]));
-  }, [selectedComponent]);
+    setRequiredDisabled(() => checkRequiredDisabled(field));
+  }, [field]);
   const properties = componentProperties[field.component].attributes;
   const validate = field.validate || [];
   const NameComponent = propertiesMapper.input;
@@ -43,7 +51,7 @@ const PropertiesEditor = () => {
 
   const handlePropertyChange = (value, propertyName) =>
     dispatch({
-      type: 'setFieldProperty',
+      type: SET_FIELD_PROPERTY,
       payload: {
         value,
         propertyName,
@@ -53,7 +61,7 @@ const PropertiesEditor = () => {
 
   const handleValidatorChange = (value = {}, action, index) =>
     dispatch({
-      type: 'setFieldValidator',
+      type: SET_FIELD_VALIDATOR,
       payload: {
         ...value,
         fieldId: field.id,
@@ -66,23 +74,25 @@ const PropertiesEditor = () => {
     (acc, curr, index) => (curr.type === validatorTypes.REQUIRED ? index : acc),
     0
   );
+
   const hasPropertyError =
-    field.propertyValidation && Object.keys(field.propertyValidation).length > 0;
+    field.propertyValidation &&
+    Object.entries(field.propertyValidation).find(([, value]) => value);
 
   return (
     <Fragment>
       <PropertiesEditor
-        fieldName={fields[selectedComponent].name}
+        fieldName={field.name}
         hasPropertyError={hasPropertyError}
         avaiableValidators={validatorOptions}
         addValidator={(type) => handleValidatorChange({ type }, 'add')}
-        handleClose={() => dispatch({ type: 'setSelectedComponent' })}
+        handleClose={() => dispatch({ type: SET_SELECTED_COMPONENT })}
         handleDelete={
-          !fields[selectedComponent].restricted
+          !field.restricted
             ? () =>
                 dispatch({
-                  type: 'removeComponent',
-                  payload: fields[selectedComponent].id
+                  type: REMOVE_COMPONENT,
+                  payload: field.id
                 })
             : undefined
         }
@@ -90,11 +100,9 @@ const PropertiesEditor = () => {
           <Fragment>
             <MemoizedProperty
               Component={NameComponent}
-              field={field}
               property={{ propertyName: 'name' }}
               autoFocus={!field.initialized}
-              isDisabled={fields[selectedComponent].restricted}
-              value={field.name}
+              isDisabled={field.restricted}
               handlePropertyChange={handlePropertyChange}
               label="Name"
             />
@@ -102,9 +110,7 @@ const PropertiesEditor = () => {
               label="Initial value"
               type="text"
               Component={InitialValueComponent}
-              value={field.initialValue}
               handlePropertyChange={handlePropertyChange}
-              field={field}
               property={{ propertyName: 'initialValue' }}
             />
             {properties.map((property) => {
@@ -113,7 +119,6 @@ const PropertiesEditor = () => {
                 <MemoizedProperty
                   key={property.propertyName}
                   Component={Component}
-                  field={field}
                   property={property}
                   handlePropertyChange={handlePropertyChange}
                 />
@@ -178,7 +183,6 @@ const PropertiesEditor = () => {
                     <MemoizedValidator
                       key={propertyIndex}
                       handleValidatorChange={handleValidatorChange}
-                      field={field}
                       validator={rest}
                       property={property}
                       original={original}

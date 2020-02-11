@@ -1,25 +1,25 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import ValidatorProperty from './validator-property';
+import { useSelector, shallowEqual } from 'react-redux';
 
-const ValidatorComponent = ({
-  handleValidatorChange,
-  property,
-  original,
-  field,
-  validator,
-  index
-}) => (
-  <ValidatorProperty
-    onChange={handleValidatorChange}
-    property={{
-      ...property,
-      original
-    }}
-    restricted={field.restricted}
-    value={validator[property.propertyName]}
-    index={index}
-  />
+const ValidatorComponent = memo(
+  ({ handleValidatorChange, property, original, validator, restricted, index }) => (
+    <ValidatorProperty
+      onChange={handleValidatorChange}
+      property={{
+        ...property,
+        original
+      }}
+      restricted={restricted}
+      value={validator[property.propertyName]}
+      index={index}
+    />
+  ),
+  (prevProps, nextProps) => {
+    const key = nextProps.property.propertyName;
+    return prevProps.validator[key] === nextProps.validator[key];
+  }
 );
 
 ValidatorComponent.propTypes = {
@@ -28,17 +28,17 @@ ValidatorComponent.propTypes = {
     propertyName: PropTypes.string.isRequired
   }).isRequired,
   original: PropTypes.object,
-  field: PropTypes.shape({ restricted: PropTypes.bool }).isRequired,
   validator: PropTypes.object,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  restricted: PropTypes.bool
 };
 
-const MemoizedValidator = memo(
-  ValidatorComponent,
-  (prevProps, nextProps) =>
-    prevProps.field.name === nextProps.field.name &&
-    prevProps.validator[prevProps.property.propertyName] ===
-      nextProps.validator[nextProps.property.propertyName]
-);
+const MemoizedValidator = (props) => {
+  const restricted = useSelector(
+    ({ fields, selectedComponent }) => fields[selectedComponent].restricted,
+    shallowEqual
+  );
+  return <ValidatorComponent {...props} restricted={restricted} />;
+};
 
 export default MemoizedValidator;

@@ -43,6 +43,7 @@ const ValidatorProperty = ({ property, onChange, value, index, restricted }) => 
         restricted &&
         onChange(validatorChangeValue(property, value), 'modify', index)
       }
+      fieldId={`${property.propertyName}-${index}`}
       onChange={(value) =>
         onChange(
           {

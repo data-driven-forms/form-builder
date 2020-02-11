@@ -1,14 +1,14 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 import throttle from 'lodash/throttle';
 import DropTarget from './drop-target';
-import StoreContext from './store-context';
 import PropertiesEditor from './properties-editor';
 import ComponentPicker from './component-picker';
-import builderReducer from './builder-state/builder-reducer';
+import { INITIALIZE } from './builder-state/builder-reducer';
 import createSchema, { validateOutput } from './helpers/create-export-schema';
 import './style.css';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 const throttleValidator = throttle(validateOutput, 250);
 
@@ -22,16 +22,23 @@ const FormBuilder = ({
   controlPanel,
   controlPanelPosition
 }) => {
-  const [state, dispatch] = useReducer(builderReducer, initialFields);
   const getSchema = () => createSchema(state.fields);
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state, shallowEqual);
+  useEffect(() => {
+    dispatch({ type: INITIALIZE, payload: initialFields });
+  }, []);
 
   const onDragEnd = (result) => dispatch({ type: 'setColumns', payload: result });
   const onDragStart = (draggable) =>
     dispatch({ type: 'dragStart', payload: draggable });
   const { dropTargets, fields, selectedComponent } = state;
   const Controls = controlPanel;
+  if (!state.initialized) {
+    return <div>Loading</div>;
+  }
   return (
-    <StoreContext.Provider value={{ state, dispatch }}>
+    <Fragment>
       {controlPanelPosition === 'top' && (
         <Controls getSchema={getSchema} isValid={throttleValidator(state.fields)} />
       )}
@@ -61,7 +68,7 @@ const FormBuilder = ({
       {controlPanelPosition === 'bottom' && (
         <Controls getSchema={getSchema} isValid={throttleValidator(state.fields)} />
       )}
-    </StoreContext.Provider>
+    </Fragment>
   );
 };
 

@@ -1,23 +1,22 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, shallowEqual } from 'react-redux';
 
-const PropertyComponent = ({
-  Component,
-  property,
-  field,
-  handlePropertyChange,
-  ...props
-}) => (
-  <Component
-    propertyValidation={
-      field.propertyValidation && field.propertyValidation[property.propertyName]
-    }
-    {...props}
-    {...property}
-    value={field[property.propertyName]}
-    restricted={field.restricted}
-    onChange={(value) => handlePropertyChange(value, property.propertyName)}
-  />
+const PropertyComponent = memo(
+  ({ Component, property, handlePropertyChange, ...props }) => {
+    return (
+      <Component
+        {...props}
+        {...property}
+        fieldId={`${property.propertyName}`}
+        onChange={(value) => handlePropertyChange(value, property.propertyName)}
+      />
+    );
+  },
+  (prevProps, nextProps) =>
+    prevProps.value === nextProps.value &&
+    prevProps.restricted === nextProps.restricted &&
+    shallowEqual(prevProps.propertyValidation, nextProps.propertyValidation)
 );
 
 PropertyComponent.propTypes = {
@@ -28,20 +27,36 @@ PropertyComponent.propTypes = {
   field: PropTypes.shape({
     propertyValidation: PropTypes.object,
     restricted: PropTypes.bool
-  }).isRequired,
+  }),
   handlePropertyChange: PropTypes.func.isRequired
 };
 
-const MemoizedProperty = memo(
-  PropertyComponent,
-  (prevProps, nextProps) =>
-    prevProps.field.name === nextProps.field.name &&
-    prevProps.field[prevProps.property.propertyName] ===
-      nextProps.field[nextProps.property.propertyName] &&
-    prevProps.field.propertyValidation &&
-    prevProps.field.propertyValidation[nextProps.property.propertyName] ===
-      (nextProps.field.propertyValidation &&
-        nextProps.field.propertyValidation[nextProps.property.propertyName])
-);
+const MemoizedProperty = (props) => {
+  const { value, restricted, propertyValidation } = useSelector(
+    ({ fields, selectedComponent }) => {
+      const field = fields[selectedComponent];
+      return {
+        value: field[props.property.propertyName],
+        restricted: field.restricted,
+        propertyValidation:
+          field.propertyValidation &&
+          field.propertyValidation[props.property.propertyName]
+      };
+    },
+    shallowEqual
+  );
+  return (
+    <PropertyComponent
+      {...props}
+      value={value}
+      restricted={restricted}
+      propertyValidation={propertyValidation}
+    />
+  );
+};
+
+MemoizedProperty.propTypes = {
+  property: PropTypes.shape({ propertyName: PropTypes.string.isRequired }).isRequired
+};
 
 export default MemoizedProperty;

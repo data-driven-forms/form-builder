@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import FormBuilder from './form-builder';
 import ComponentsContext from './components-context';
 import createInitialData from './helpers/create-initial-data';
+import { Provider } from 'react-redux';
+import builderStore from './builder-state/builder-store';
 
 const ContainerEnd = ({ id }) => <div>{id}</div>;
 
@@ -41,16 +43,18 @@ const App = ({
         debug
       }}
     >
-      <FormBuilder
-        initialFields={createInitialData(
-          initialFields,
-          schema,
-          mode === 'subset',
-          schemaTemplate
-        )}
-        mode={mode}
-        {...props}
-      />
+      <Provider store={builderStore}>
+        <FormBuilder
+          initialFields={createInitialData(
+            initialFields,
+            schema,
+            mode === 'subset',
+            schemaTemplate
+          )}
+          mode={mode}
+          {...props}
+        />
+      </Provider>
     </ComponentsContext.Provider>
   );
 };

@@ -42,11 +42,11 @@ const Input = ({
     <Fragment>
       <FormGroupWrapper
         label={label}
-        fieldId={label}
+        fieldId={fieldId}
         propertyValidation={propertyValidation}
       >
         <TextInput
-          id={label}
+          id={fieldId}
           type={type}
           autoFocus={autoFocus}
           onChange={(value) => onChange(value)}

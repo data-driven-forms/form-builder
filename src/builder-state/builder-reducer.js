@@ -241,21 +241,31 @@ const changeValidator = (field, { index, action, fieldId, ...validator }) => {
   return result;
 };
 
+export const SET_COLUMNS = 'setColumns';
+export const SET_SELECTED_COMPONENT = 'setSelectedComponent';
+export const REMOVE_COMPONENT = 'removeComponent';
+export const DRAG_START = 'dragStart';
+export const SET_FIELD_PROPERTY = 'setFieldProperty';
+export const SET_FIELD_VALIDATOR = 'setFieldValidator';
+export const INITIALIZE = 'initialize';
+
 const builderReducer = (state, action) => {
   switch (action.type) {
-    case 'setColumns':
+    case INITIALIZE:
+      return { ...state, ...action.payload, initialized: true };
+    case SET_COLUMNS:
       return {
         ...state,
         ...mutateColumns(action.payload, state),
         draggingContainer: undefined
       };
-    case 'setSelectedComponent':
+    case SET_SELECTED_COMPONENT:
       return { ...state, selectedComponent: action.payload };
-    case 'removeComponent':
+    case REMOVE_COMPONENT:
       return { ...state, ...removeComponent(action.payload, state) };
-    case 'dragStart':
+    case DRAG_START:
       return { ...state, ...dragStart(action.payload, state) };
-    case 'setFieldProperty':
+    case SET_FIELD_PROPERTY:
       return {
         ...state,
         fields: {
@@ -266,7 +276,7 @@ const builderReducer = (state, action) => {
           )
         }
       };
-    case 'setFieldValidator':
+    case SET_FIELD_VALIDATOR:
       return {
         ...state,
         fields: {

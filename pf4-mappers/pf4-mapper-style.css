@@ -92,6 +92,8 @@ button:hover>svg.pf4-danger-color {
   border: 1px solid lightgray;
   border-left: none;
   background-color: var(--pf-global--disabled-color--300);
+  display: flex;
+  flex-direction: column;
 }
 .pf4-drag-handle .pf4-drag-handle-icon {
   fill: #B9B9B9;
@@ -154,4 +156,12 @@ button:hover>svg.pf4-success-color{
 
 .pf4-component-wrapper.hidden svg.hide-indicator{
   opacity: 1;
+}
+
+.pf4-property-error-icon {
+  fill: var(--pf-global--danger-color--100)
+}
+
+.icon-spacer-bottom {
+  margin-bottom: 8px;
 }

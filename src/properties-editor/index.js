@@ -66,11 +66,14 @@ const PropertiesEditor = () => {
     (acc, curr, index) => (curr.type === validatorTypes.REQUIRED ? index : acc),
     0
   );
+  const hasPropertyError =
+    field.propertyValidation && Object.keys(field.propertyValidation).length > 0;
 
   return (
     <Fragment>
       <PropertiesEditor
         fieldName={fields[selectedComponent].name}
+        hasPropertyError={hasPropertyError}
         avaiableValidators={validatorOptions}
         addValidator={(type) => handleValidatorChange({ type }, 'add')}
         handleClose={() => dispatch({ type: 'setSelectedComponent' })}

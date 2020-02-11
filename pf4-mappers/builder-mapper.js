@@ -19,6 +19,7 @@ import TrashIcon from '@patternfly/react-icons/dist/js/icons/trash-icon';
 import TimesIcon from '@patternfly/react-icons/dist/js/icons/times-icon';
 import GripVerticalIcon from '@patternfly/react-icons/dist/js/icons/grip-vertical-icon';
 import EyeSlashIcon from '@patternfly/react-icons/dist/js/icons/eye-slash-icon';
+import ExclamationCircleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-circle-icon';
 import clsx from 'clsx';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
@@ -63,6 +64,7 @@ const TextField = ({
   fieldId,
   hideField,
   propertyValidation,
+  hasPropertyError,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
@@ -303,7 +305,8 @@ const PropertiesEditor = ({
   addValidator,
   avaiableValidators,
   handleClose,
-  handleDelete
+  handleDelete,
+  hasPropertyError
 }) => {
   const [activeTab, setActiveTab] = useState(0);
   const Select = rawComponents.Select;
@@ -347,7 +350,18 @@ const PropertiesEditor = ({
             activeKey={activeTab}
             onSelect={(_e, tabIndex) => setActiveTab(tabIndex)}
           >
-            <Tab tabIndex="-1" eventKey={0} title="Props" />
+            <Tab
+              tabIndex="-1"
+              eventKey={0}
+              title={
+                <span>
+                  Properties{' '}
+                  {hasPropertyError && (
+                    <ExclamationCircleIcon className="pf4-property-error-icon" />
+                  )}
+                </span>
+              }
+            />
             <Tab tabIndex="-1" eventKey={1} title="Validation" />
           </Tabs>
         </CardBody>
@@ -425,8 +439,11 @@ PropertyGroup.propTypes = {
   handleDelete: PropTypes.func
 };
 
-const DragHandle = ({ dragHandleProps }) => (
+const DragHandle = ({ dragHandleProps, hasPropertyError }) => (
   <div {...dragHandleProps} className="pf4-drag-handle">
+    {hasPropertyError && (
+      <ExclamationCircleIcon className="pf4-property-error-icon icon-spacer-bottom" />
+    )}
     <GripVerticalIcon className="pf4-drag-handle-icon" />
   </div>
 );
@@ -439,7 +456,8 @@ DragHandle.propTypes = {
     tabIndex: PropTypes.number,
     draggable: PropTypes.bool,
     onDragStart: PropTypes.func.isRequired
-  })
+  }),
+  hasPropertyError: PropTypes.bool
 };
 
 const FormContainer = ({ children, className }) => (

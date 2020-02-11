@@ -23,6 +23,8 @@ const Field = ({
   const formOptions = {
     renderForm: () => null
   };
+  const hasPropertyError =
+    field.propertyValidation && Object.keys(field.propertyValidation).length > 0;
   if (field.component === 'container-end') {
     return (
       <Draggable isDragDisabled draggableId={field.id} index={index}>
@@ -70,11 +72,15 @@ const Field = ({
                   snapshot={snapshot}
                   FieldProvider={FieldComponent}
                   formOptions={formOptions}
+                  hasPropertyError={hasPropertyError}
                 />
               )}
             </FieldLayout>
             {!shouldClone && !disableDrag && (
-              <DragHandle dragHandleProps={{ ...provided.dragHandleProps }} />
+              <DragHandle
+                hasPropertyError={hasPropertyError}
+                dragHandleProps={{ ...provided.dragHandleProps }}
+              />
             )}
           </div>
         </div>

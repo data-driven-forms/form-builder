@@ -439,12 +439,12 @@ PropertyGroup.propTypes = {
   handleDelete: PropTypes.func
 };
 
-const DragHandle = ({ dragHandleProps, hasPropertyError }) => (
+const DragHandle = ({ dragHandleProps, hasPropertyError, disableDrag }) => (
   <div {...dragHandleProps} className="pf4-drag-handle">
     {hasPropertyError && (
       <ExclamationCircleIcon className="pf4-property-error-icon icon-spacer-bottom" />
     )}
-    <GripVerticalIcon className="pf4-drag-handle-icon" />
+    {!disableDrag && <GripVerticalIcon className="pf4-drag-handle-icon" />}
   </div>
 );
 
@@ -457,6 +457,7 @@ DragHandle.propTypes = {
     draggable: PropTypes.bool,
     onDragStart: PropTypes.func.isRequired
   }),
+  disableDrag: PropTypes.bool,
   hasPropertyError: PropTypes.bool
 };
 

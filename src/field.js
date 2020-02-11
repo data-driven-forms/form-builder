@@ -77,8 +77,9 @@ const Field = memo(
                   />
                 )}
               </FieldLayout>
-              {!shouldClone && !disableDrag && (
+              {!shouldClone && (
                 <DragHandle
+                  disableDrag={disableDrag}
                   hasPropertyError={hasPropertyError}
                   dragHandleProps={{ ...provided.dragHandleProps }}
                 />

@@ -94,6 +94,7 @@ button:hover>svg.pf4-danger-color {
   background-color: var(--pf-global--disabled-color--300);
   display: flex;
   flex-direction: column;
+  min-width: 25px;
 }
 .pf4-drag-handle .pf4-drag-handle-icon {
   fill: #B9B9B9;

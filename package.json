@@ -1,6 +1,6 @@
 {
   "name": "@data-driven-forms/form-builder",
-  "version": "0.0.1-rc26",
+  "version": "0.0.1-rc27",
   "description": "Interactive drang and drop editor for creating data driven forms schema",
   "main": "dist/index.js",
   "files": [

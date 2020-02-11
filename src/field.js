@@ -89,8 +89,7 @@ const Field = memo(
         )}
       </Draggable>
     );
-  },
-  (prevProps, nextProps) => nextProps.field.id !== nextProps.selectedComponent
+  }
 );
 
 Field.propTypes = {

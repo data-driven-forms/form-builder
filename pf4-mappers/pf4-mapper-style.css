@@ -66,14 +66,14 @@ button:hover>svg.pf4-danger-color {
 .pf4-tabs-container {
   padding: 0 !important;
 }
-.task-container.selected .pf4-field-layout, .task-container.selected .pf4-drag-handle {
+.ddorg__form-builder__field-container.selected .pf4-field-layout, .ddorg__form-builder__field-container.selected .pf4-drag-handle {
   border-bottom: 3px solid var(--pf-global--primary-color--100);
   transition: border-color .3s linear;
 }
 .pf4-validators-property-group:not(:last-child) {
   border-bottom: 2px solid #ebebeb;
 }
-.task-container {
+.ddorg__form-builder__field-container {
   display: flex;
   border: 0;
   border-radius: 0;
@@ -102,7 +102,7 @@ button:hover>svg.pf4-danger-color {
   fill: #B9B9B9;
   transition: fill .3s linear;
 }
-.task-container.selected .pf4-drag-handle .pf4-drag-handle-icon, .task-container:hover .pf4-drag-handle .pf4-drag-handle-icon {
+.ddorg__form-builder__field-container.selected .pf4-drag-handle .pf4-drag-handle-icon, .ddorg__form-builder__field-container:hover .pf4-drag-handle .pf4-drag-handle-icon {
   fill: var(--pf-global--primary-color--100);
 }
 .pf4-properties-editor-container {

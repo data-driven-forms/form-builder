@@ -7,8 +7,8 @@ import PropertiesEditor from './properties-editor';
 import ComponentPicker from './component-picker';
 import { INITIALIZE } from './builder-state/builder-reducer';
 import createSchema, { validateOutput } from './helpers/create-export-schema';
-import './style.css';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import './style.css';
 
 const throttleValidator = throttle(validateOutput, 250);
 
@@ -20,7 +20,8 @@ const FormBuilder = ({
   disableDrag,
   mode,
   controlPanel,
-  controlPanelPosition
+  controlPanelPosition,
+  classNamePrefix
 }) => {
   const getSchema = () => createSchema(state.fields);
   const dispatch = useDispatch();
@@ -38,12 +39,16 @@ const FormBuilder = ({
     return <div>Loading</div>;
   }
   return (
-    <Fragment>
+    <div className={`${classNamePrefix}__form-builder-container`}>
       {controlPanelPosition === 'top' && (
-        <Controls getSchema={getSchema} isValid={throttleValidator(state.fields)} />
+        <Controls
+          className={`${classNamePrefix}__form-builder-controls`}
+          getSchema={getSchema}
+          isValid={throttleValidator(state.fields)}
+        />
       )}
       <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
-        <div className="layout">
+        <div className={`${classNamePrefix}__form-builder-layout`}>
           {!disableDrag && (
             <ComponentPicker
               isDropDisabled
@@ -66,9 +71,13 @@ const FormBuilder = ({
         </div>
       </DragDropContext>
       {controlPanelPosition === 'bottom' && (
-        <Controls getSchema={getSchema} isValid={throttleValidator(state.fields)} />
+        <Controls
+          className={`${classNamePrefix}__form-builder-controls`}
+          getSchema={getSchema}
+          isValid={throttleValidator(state.fields)}
+        />
       )}
-    </Fragment>
+    </div>
   );
 };
 
@@ -78,7 +87,8 @@ FormBuilder.propTypes = {
     PropTypes.element,
     PropTypes.func
   ]).isRequired,
-  controlPanelPosition: PropTypes.oneOf(['top', 'bottom'])
+  controlPanelPosition: PropTypes.oneOf(['top', 'bottom']),
+  classNamePrefix: PropTypes.string.isRequired
 };
 
 FormBuilder.defaultProps = {

@@ -16,7 +16,8 @@ const Field = memo(
     draggingContainer
   }) => {
     const {
-      componentMapper: { FieldActions, FieldLayout, DragHandle, ...rest }
+      componentMapper: { FieldActions, FieldLayout, DragHandle, ...rest },
+      classNamePrefix
     } = useContext(ComponentsContext);
     const dispatch = useDispatch();
     const FieldComponent = rest[field.component];
@@ -60,10 +61,10 @@ const Field = memo(
               onClick={() =>
                 dispatch({ type: 'setSelectedComponent', payload: field.id })
               }
-              className="draggable-container"
+              className={`${classNamePrefix}__draggable-container`}
             >
               <div
-                className={clsx('task-container', {
+                className={clsx(`${classNamePrefix}__field-container`, {
                   dragging: snapshot.isDragging,
                   selected: selectedComponent === field.id,
                   'is-container': isContainer,

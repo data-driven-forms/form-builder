@@ -230,8 +230,8 @@ const Demo = () => (
         disableDrag={false}
         mode="subset"
         debug={false}
-        controlPanel={({ getSchema, isValid }) => (
-          <div>
+        controlPanel={({ getSchema, isValid, className }) => (
+          <div className={className}>
             <button onClick={() => console.log('schema', getSchema())}>
               Save, {JSON.stringify({ isValid }, null, 2)}
             </button>

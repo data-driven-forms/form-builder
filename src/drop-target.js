@@ -15,7 +15,8 @@ const DropTarget = ({
   disableDelete
 }) => {
   const {
-    componentMapper: { FormContainer }
+    componentMapper: { FormContainer },
+    classNamePrefix
   } = useContext(ComponentsContext);
   return (
     <Droppable droppableId={dropTarget.id} isDropDisabled={isDropDisabled}>
@@ -23,11 +24,11 @@ const DropTarget = ({
         return (
           <Form onSubmit={() => {}}>
             {() => (
-              <FormContainer className="container form-preview">
+              <FormContainer className={`${classNamePrefix}__form-preview`}>
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={clsx('task-list', {
+                  className={clsx(`${classNamePrefix}__drop-list`, {
                     dragging: snapshot.isDraggingOver
                   })}
                 >

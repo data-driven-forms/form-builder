@@ -61,7 +61,7 @@ const createInitialData = (initialFields, schema, isSubset, schemaTemplate) => {
     dropTargets: {
       [COMPONENTS_LIST]: {
         id: COMPONENTS_LIST,
-        title: 'Component chooser',
+        title: 'Component picker',
         fieldsIds: Object.keys(initialFields)
       },
       [FORM_LAYOUT]: {

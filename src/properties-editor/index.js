@@ -36,7 +36,8 @@ const PropertiesEditor = () => {
     componentMapper: { PropertiesEditor, PropertyGroup },
     componentProperties,
     propertiesMapper,
-    debug
+    debug,
+    classnamePrefix
   } = useContext(ComponentsContext);
   const [requiredDisabled, setRequiredDisabled] = useState(false);
   useEffect(() => {
@@ -130,7 +131,7 @@ const PropertiesEditor = () => {
           <Fragment>
             <PropertyGroup
               title="required validator"
-              className="ddorg__form__builder-validators-validator-group"
+              className={`${classnamePrefix}__validators-validator-group`}
             >
               <IsRequiredComponent
                 value={field.isRequired}
@@ -179,7 +180,7 @@ const PropertiesEditor = () => {
                       : undefined
                   }
                   key={`${type}-${index}`}
-                  className="ddorg__form__builder-validators-validator-group"
+                  className={`${classnamePrefix}__validators-validator-group`}
                 >
                   {validatorsProperties[type].map((property, propertyIndex) => (
                     <MemoizedValidator

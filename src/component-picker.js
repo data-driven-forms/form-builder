@@ -7,16 +7,17 @@ import PickerField from './picker-field';
 
 const ComponentPicker = ({ dropTarget, fields }) => {
   const {
-    componentMapper: { BuilderColumn }
+    componentMapper: { BuilderColumn },
+    classNamePrefix
   } = useContext(ComponentsContext);
   return (
     <Droppable droppableId={dropTarget.id} isDropDisabled>
       {(provided, snapshot) => (
-        <BuilderColumn className="container">
+        <BuilderColumn className={`${classNamePrefix}__component-picker-container`}>
           <h3 className="title">{dropTarget.title}</h3>
           <div
             ref={provided.innerRef}
-            className={clsx('task-list', {
+            className={clsx(`${classNamePrefix}__picker-list`, {
               dragging: snapshot.isDraggingOver
             })}
           >

@@ -1,18 +1,24 @@
-div.container {
+.ddorg__form-builder__component-picker-container {
   margin: 16px;
   display: flex;
   flex-direction: column;
   min-height: calc(100% - 40px);
 }
-.container.form-preview{
-  flex-grow: 1;
+
+.ddorg__form-builder__form-builder-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.ddorg__form-builder__form-builder-layout {
+  flex: 2;
 }
 
-div.task-container.selected {
+div.ddorg__form-builder__field-container.selected {
   box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
 }
 
-div.task-list {
+.ddorg__form-builder__picker-list {
   padding: 8px;
   min-height: 100px;
   flex-grow: 1;
@@ -20,7 +26,10 @@ div.task-list {
   position: relative;
 }
 
-div.task-list.dragging {
+.ddorg__form-builder__drop-list {
+  margin: 16px;
+}
+.ddorg__form-builder__drop-list.dragging {
   background-color: lightskyblue;
 }
 
@@ -37,7 +46,7 @@ h3.title {
   }
 }
 
-.task-container {
+.ddorg__form-builder__field-container {
   border: 1px solid lightgrey;
   animation: mount .5s;
   margin-bottom: 8px;
@@ -48,10 +57,10 @@ h3.title {
   transition-timing-function: ease-in;
   cursor: pointer;
 }
-.task-container.dragging {
+.ddorg__form-builder__field-container.dragging {
   background-color: lightgreen;
 }
-.layout { 
+.ddorg__form-builder__form-builder-layout { 
   display: flex;
 }
 
@@ -76,7 +85,7 @@ h3.title {
   border-bottom: 1px solid lightgray;
 }
 
-.task-container.hide, .container-end.hide {
+.ddorg__form-builder__field-container.hide, .container-end.hide {
   visibility: hidden;
   height: 0;
   padding: 0;

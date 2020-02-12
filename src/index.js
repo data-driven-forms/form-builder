@@ -18,6 +18,7 @@ const App = ({
   schemaTemplate,
   mode,
   debug,
+  classNamePrefix,
   ...props
 }) => {
   const initialFields = Object.keys(componentProperties).reduce(
@@ -40,7 +41,8 @@ const App = ({
         componentProperties,
         pickerMapper,
         propertiesMapper,
-        debug
+        debug,
+        classNamePrefix
       }}
     >
       <Provider store={builderStore}>
@@ -51,6 +53,7 @@ const App = ({
             mode === 'subset',
             schemaTemplate
           )}
+          classNamePrefix={classNamePrefix}
           mode={mode}
           {...props}
         />
@@ -76,12 +79,14 @@ App.propTypes = {
   propertiesMapper: PropTypes.object,
   cloneWhileDragging: PropTypes.bool,
   schema: PropTypes.object,
-  schemaTemplate: PropTypes.object
+  schemaTemplate: PropTypes.object,
+  classNamePrefix: PropTypes.string
 };
 
 App.defaultProps = {
   mode: 'default',
-  debug: false
+  debug: false,
+  classNamePrefix: 'ddorg__form-builder'
 };
 
 export default App;

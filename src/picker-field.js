@@ -26,10 +26,10 @@ const PickerField = memo(
                   input={{ name: 'template-clone' }}
                   meta={{}}
                   name="template-clone"
-                  snapshot={{ ...snapshot, isClone: true }}
+                  innerProps={{ snapshot, isClone: true }}
                 />
               ) : (
-                <Component {...snapshot} />
+                <Component innerProps={{ snapshot, isClone: true }} />
               )}
             </div>
             {snapshot.isDragging && <Component {...snapshot} />}

@@ -30,7 +30,9 @@ const childrenPropType = PropTypes.oneOfType([
 
 const commonPropTypes = {
   component: PropTypes.string,
-  snapshot: snapshotPropType,
+  innerProps: PropTypes.shape({
+    snapshot: snapshotPropType
+  }).isRequired,
   label: PropTypes.string,
   preview: PropTypes.bool,
   id: PropTypes.string,
@@ -56,13 +58,9 @@ ComponentWrapper.propTypes = {
 };
 
 const TextField = ({
-  snapshot,
-  preview,
-  initialized,
-  restricted,
+  innerProps: { snapshot, hideField },
   propertyName,
   fieldId,
-  hideField,
   propertyValidation,
   hasPropertyError,
   ...props
@@ -83,12 +81,8 @@ TextField.propTypes = {
 };
 
 const CheckBoxField = ({
-  preview,
+  innerProps: { hideField },
   id,
-  component,
-  initialized,
-  snapshot,
-  hideField,
   propertyValidation,
   ...props
 }) => {
@@ -105,11 +99,8 @@ CheckBoxField.propTypes = {
 };
 
 const SelectField = ({
-  preview,
-  component,
-  initialized,
+  innerProps: { hideField },
   options,
-  hideField,
   propertyValidation,
   ...props
 }) => {
@@ -129,6 +120,10 @@ SelectField.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({ value: PropTypes.any, label: PropTypes.string })
   )
+};
+
+SelectField.defaultProps = {
+  onChange: () => {}
 };
 
 const FieldLayout = ({ children, disableDrag }) => (
@@ -160,11 +155,7 @@ BuilderColumn.propTypes = {
 };
 
 const DatePickerField = ({
-  preview,
-  id,
-  component,
-  initialized,
-  hideField,
+  innerProps: { hideField },
   propertyValidation,
   ...props
 }) => {
@@ -181,12 +172,8 @@ DatePickerField.propTypes = {
 };
 
 const PlainTextField = ({
-  preview,
-  id,
-  component,
-  initialized,
+  innerProps: { hideField },
   label,
-  hideField,
   propertyValidation,
   ...props
 }) => {
@@ -206,12 +193,9 @@ PlainTextField.propTypes = {
 };
 
 const RadioField = ({
-  preview,
-  id,
-  component,
-  initialized,
-  hideField,
+  innerProps: { hideField },
   propertyValidation,
+  innerProps,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.RADIO];
@@ -235,12 +219,7 @@ RadioField.defaultProps = {
 };
 
 const SwitchField = ({
-  preview,
-  id,
-  component,
-  initialized,
-  snapshot,
-  hideField,
+  innerProps: { snapshot, hideField },
   propertyValidation,
   ...props
 }) => {
@@ -260,12 +239,7 @@ SwitchField.propTypes = {
 };
 
 const TextAreaField = ({
-  preview,
-  id,
-  component,
-  initialized,
-  snapshot,
-  hideField,
+  innerProps: { snapshot, hideField },
   propertyValidation,
   hasPropertyError,
   ...props
@@ -286,8 +260,7 @@ const SubFormField = ({
   title,
   description,
   formOptions,
-  hideField,
-  propertyValidation
+  innerProps: { hideField }
 }) => {
   const Component = formFieldsMapper[componentTypes.SUB_FORM];
   return (

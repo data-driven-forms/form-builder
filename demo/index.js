@@ -7,7 +7,6 @@ import {
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
-import debounce from 'lodash/debounce';
 // import builderMapper from './builder-mapper';
 // import pickerMapper from './picker-mapper';
 // import propertiesMapper from './properties-mapper';
@@ -230,7 +229,7 @@ const Demo = () => (
         cloneWhileDragging
         disableDrag={false}
         mode="subset"
-        debug={true}
+        debug={false}
         controlPanel={({ getSchema, isValid }) => (
           <div>
             <button onClick={() => console.log('schema', getSchema())}>

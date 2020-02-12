@@ -41,52 +41,62 @@ const Field = memo(
         </Draggable>
       );
     }
+    const { hideField, initialized, preview, restricted, ...cleanField } = field;
     return (
       <Draggable isDragDisabled={disableDrag} draggableId={field.id} index={index}>
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            onClick={() =>
-              dispatch({ type: 'setSelectedComponent', payload: field.id })
-            }
-            className="draggable-container"
-          >
+        {(provided, snapshot) => {
+          const innerProps = {
+            snapshot: snapshot,
+            hasPropertyError: !!hasPropertyError,
+            hideField,
+            initialized,
+            preview,
+            restricted
+          };
+          return (
             <div
-              className={clsx('task-container', {
-                dragging: snapshot.isDragging,
-                selected: selectedComponent === field.id,
-                'is-container': isContainer,
-                'in-container': field.container,
-                hide:
-                  field.container !== undefined &&
-                  field.container === draggingContainer
-              })}
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              onClick={() =>
+                dispatch({ type: 'setSelectedComponent', payload: field.id })
+              }
+              className="draggable-container"
             >
-              <FieldLayout disableDrag={disableDrag}>
-                {field.preview ? (
-                  <div>{field.content}</div>
-                ) : (
-                  <FinalFormField
-                    {...field}
-                    component={FieldComponent}
-                    snapshot={snapshot}
-                    FieldProvider={FinalFormField}
-                    formOptions={formOptions}
+              <div
+                className={clsx('task-container', {
+                  dragging: snapshot.isDragging,
+                  selected: selectedComponent === field.id,
+                  'is-container': isContainer,
+                  'in-container': field.container,
+                  hide:
+                    field.container !== undefined &&
+                    field.container === draggingContainer
+                })}
+              >
+                <FieldLayout disableDrag={disableDrag}>
+                  {field.preview ? (
+                    <div>{field.content}</div>
+                  ) : (
+                    <FinalFormField
+                      {...cleanField}
+                      component={FieldComponent}
+                      FieldProvider={FinalFormField}
+                      formOptions={formOptions}
+                      innerProps={innerProps}
+                    />
+                  )}
+                </FieldLayout>
+                {!shouldClone && (
+                  <DragHandle
+                    disableDrag={disableDrag}
                     hasPropertyError={!!hasPropertyError}
+                    dragHandleProps={{ ...provided.dragHandleProps }}
                   />
                 )}
-              </FieldLayout>
-              {!shouldClone && (
-                <DragHandle
-                  disableDrag={disableDrag}
-                  hasPropertyError={!!hasPropertyError}
-                  dragHandleProps={{ ...provided.dragHandleProps }}
-                />
-              )}
+              </div>
             </div>
-          </div>
-        )}
+          );
+        }}
       </Draggable>
     );
   }

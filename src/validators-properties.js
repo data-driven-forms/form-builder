@@ -80,7 +80,6 @@ export default {
       ...thresholdType,
       label: 'Maximum value',
       propertyName: 'value',
-      label: 'Value',
       restriction: {
         inputAttribute: 'max',
         validatorAttribute: 'value'
@@ -97,7 +96,6 @@ export default {
       ...thresholdType,
       label: 'Minimum value',
       propertyName: 'value',
-      label: 'Value',
       restriction: {
         inputAttribute: 'min',
         validatorAttribute: 'value'

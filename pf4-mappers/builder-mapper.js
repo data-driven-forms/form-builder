@@ -275,6 +275,10 @@ const SubFormField = ({
   );
 };
 
+SubFormField.propTypes = {
+  innerProps: PropTypes.shape({ hideField: PropTypes.bool }).isRequired
+};
+
 const PropertiesEditor = ({
   propertiesChildren,
   validationChildren,
@@ -379,7 +383,8 @@ PropertiesEditor.propTypes = {
   addValidator: PropTypes.func.isRequired,
   fieldName: PropTypes.string,
   handleClose: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func
+  handleDelete: PropTypes.func,
+  hasPropertyError: PropTypes.bool
 };
 
 SubFormField.propTypes = {

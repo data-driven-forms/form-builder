@@ -10,7 +10,7 @@
     "test": "jest --coverage",
     "start": "webpack-dev-server --hot --open --mode development",
     "build": "rollup -c ./rollup.config.js",
-    "lint": "eslint ./"
+    "lint": "eslint ./src; eslint ./pf4-mappers"
   },
   "author": "Martin Marosi",
   "license": "MIT",
@@ -21,6 +21,7 @@
     "@data-driven-forms/pf4-component-mapper": "^1.27.3",
     "@patternfly/react-core": "^3.134.2",
     "@patternfly/react-icons": "^3.14.39",
+    "babel-eslint": "^10.0.3",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
@@ -29,6 +30,8 @@
     "enzyme-to-json": "^3.4.4",
     "eslint": "^6.7.1",
     "eslint-config-prettier": "^6.7.0",
+    "eslint-config-react-app": "^5.2.0",
+    "eslint-plugin-flowtype": "^4.6.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
@@ -77,7 +80,9 @@
     "@patternfly/react-icons": "^3.14.39"
   },
   "jest": {
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "collectCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"

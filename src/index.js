@@ -8,6 +8,10 @@ import builderStore from './builder-state/builder-store';
 
 const ContainerEnd = ({ id }) => <div>{id}</div>;
 
+ContainerEnd.propTypes = {
+  id: PropTypes.string
+};
+
 const App = ({
   componentMapper,
   componentProperties,

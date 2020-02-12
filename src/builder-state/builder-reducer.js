@@ -1,5 +1,6 @@
 import { validatorTypes } from '@data-driven-forms/react-form-renderer';
 import propertiesValidation from '../properties-editor/initial-value-checker';
+import { FORM_LAYOUT } from '../helpers/create-initial-data';
 
 const isInContainer = (index, containers) => {
   const containerKey = Object.keys(containers).filter(

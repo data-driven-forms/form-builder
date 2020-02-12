@@ -10,7 +10,7 @@ const restrictionHandler = {
 };
 
 const validatorChangeValue = (property, value) => {
-  let result = property.type === 'number' ? Number(result) : result;
+  let result = property.type === 'number' ? Number(value) : value;
   if (property.restriction) {
     result = restrictionHandler[property.restriction.inputAttribute](
       value,

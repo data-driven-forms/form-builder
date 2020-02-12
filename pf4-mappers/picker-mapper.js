@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { Button } from '@patternfly/react-core/dist/js/components/Button/Button';
 
@@ -11,6 +12,10 @@ const PickerRoot = ({ label }) => (
     </Button>
   </div>
 );
+
+PickerRoot.propTypes = {
+  label: PropTypes.string.isRequired
+};
 
 const TextFieldOption = () => <PickerRoot label="Text field" />;
 

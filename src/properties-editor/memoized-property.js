@@ -37,13 +37,20 @@ const PropertyComponent = memo(
 PropertyComponent.propTypes = {
   Component: PropTypes.oneOfType([PropTypes.node, PropTypes.func, PropTypes.element])
     .isRequired,
-  property: PropTypes.shape({ propertyName: PropTypes.string.isRequired })
-    .isRequired,
   field: PropTypes.shape({
-    propertyValidation: PropTypes.object,
     restricted: PropTypes.bool
   }),
-  handlePropertyChange: PropTypes.func.isRequired
+  handlePropertyChange: PropTypes.func.isRequired,
+  property: PropTypes.shape({
+    propertyName: PropTypes.string.isRequired,
+    label: PropTypes.string,
+    value: PropTypes.any,
+    options: PropTypes.array
+  }).isRequired,
+  restricted: PropTypes.bool,
+  propertyValidation: PropTypes.shape({
+    propertyValidation: PropTypes.object
+  })
 };
 
 const MemoizedProperty = (props) => {
@@ -71,7 +78,9 @@ const MemoizedProperty = (props) => {
 };
 
 MemoizedProperty.propTypes = {
-  property: PropTypes.shape({ propertyName: PropTypes.string.isRequired }).isRequired
+  property: PropTypes.shape({
+    propertyName: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default MemoizedProperty;

@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 import throttle from 'lodash/throttle';
@@ -88,7 +88,10 @@ FormBuilder.propTypes = {
     PropTypes.func
   ]).isRequired,
   controlPanelPosition: PropTypes.oneOf(['top', 'bottom']),
-  classNamePrefix: PropTypes.string.isRequired
+  classNamePrefix: PropTypes.string.isRequired,
+  initialFields: PropTypes.object,
+  disableDrag: PropTypes.bool,
+  mode: PropTypes.string.isRequired
 };
 
 FormBuilder.defaultProps = {

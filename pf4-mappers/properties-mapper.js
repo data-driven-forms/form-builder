@@ -1,5 +1,4 @@
 /* eslint react/no-array-index-key: "off" */
-
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from '@patternfly/react-core/dist/js/components/Switch/Switch';
@@ -47,7 +46,6 @@ const Input = ({
       >
         <TextInput
           id={fieldId}
-          onChange={(value) => onChange(value)}
           value={typeof value === undefined ? '' : value.toString()}
           {...rest}
         />

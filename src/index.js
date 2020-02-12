@@ -51,12 +51,7 @@ const App = ({
     >
       <Provider store={builderStore}>
         <FormBuilder
-          initialFields={createInitialData(
-            initialFields,
-            schema,
-            mode === 'subset',
-            schemaTemplate
-          )}
+          initialFields={createInitialData(initialFields, schema, mode === 'subset', schemaTemplate)}
           classNamePrefix={classNamePrefix}
           mode={mode}
           {...props}

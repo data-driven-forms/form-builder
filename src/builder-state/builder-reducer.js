@@ -3,10 +3,7 @@ import propertiesValidation from '../properties-editor/initial-value-checker';
 import { FORM_LAYOUT } from '../helpers/create-initial-data';
 
 const isInContainer = (index, containers) => {
-  const containerKey = Object.keys(containers).filter(
-    (c) =>
-      index > containers[c].boundaries[0] && index <= containers[c].boundaries[1]
-  );
+  const containerKey = Object.keys(containers).filter((c) => index > containers[c].boundaries[0] && index <= containers[c].boundaries[1]);
   return containerKey ? containers[containerKey] : false;
 };
 
@@ -17,20 +14,17 @@ const mutateColumns = (result, state) => {
     return {};
   }
 
-  if (
-    destination.droppableId === source.droppableId &&
-    destination.index === source.index
-  ) {
+  if (destination.droppableId === source.droppableId && destination.index === source.index) {
     return {};
   }
 
   const start = dropTargets[source.droppableId];
   const finish = dropTargets[destination.droppableId];
   const template = fields[draggableId];
-  /**
-   * moving in column
-   */
-  if (start === finish) {
+
+  const isMovingInColumn = start === finish;
+
+  if (isMovingInColumn) {
     if (template.isContainer && isInContainer(destination.index, containers)) {
       /**
        * No container nesting just now
@@ -40,13 +34,7 @@ const mutateColumns = (result, state) => {
     if (template.isContainer) {
       const newFieldsIds = [...start.fieldsIds];
       newFieldsIds.splice(source.index, template.children.length + 2);
-      newFieldsIds.splice(
-        destination.index,
-        0,
-        draggableId,
-        ...template.children,
-        `${draggableId}-end`
-      );
+      newFieldsIds.splice(destination.index, 0, draggableId, ...template.children, `${draggableId}-end`);
       return {
         dropTargets: {
           ...dropTargets,
@@ -62,36 +50,26 @@ const mutateColumns = (result, state) => {
        * filed was not in container before
        */
       if (moveContainer && !fields[draggableId].container) {
-        newFields[moveContainer.id].children = [
-          ...newFields[moveContainer.id].children,
-          draggableId
-        ];
+        newFields[moveContainer.id].children = [...newFields[moveContainer.id].children, draggableId];
         newFields[draggableId].container = moveContainer.id;
       }
       /**
        * Move field outside of a container to root
        */
       if (fields[draggableId].container && !moveContainer) {
-        newFields[fields[draggableId].container].children = newFields[
-          fields[draggableId].container
-        ].children.filter((child) => child !== draggableId);
+        newFields[fields[draggableId].container].children = newFields[fields[draggableId].container].children.filter(
+          (child) => child !== draggableId
+        );
         delete newFields[draggableId].container;
       }
       /**
        * Move field between containers
        */
-      if (
-        moveContainer &&
-        fields[draggableId].container &&
-        fields[draggableId].container !== moveContainer.id
-      ) {
-        newFields[moveContainer.id].children = [
-          ...newFields[moveContainer.id].children,
-          draggableId
-        ];
-        newFields[fields[draggableId].container].children = newFields[
-          fields[draggableId].container
-        ].children.filter((child) => child !== draggableId);
+      if (moveContainer && fields[draggableId].container && fields[draggableId].container !== moveContainer.id) {
+        newFields[moveContainer.id].children = [...newFields[moveContainer.id].children, draggableId];
+        newFields[fields[draggableId].container].children = newFields[fields[draggableId].container].children.filter(
+          (child) => child !== draggableId
+        );
         newFields[draggableId].container = moveContainer.id;
       }
       newFieldsIds.splice(source.index, 1);
@@ -131,11 +109,7 @@ const mutateColumns = (result, state) => {
       ...newFields[container.id],
       children: [...newFields[container.id].children, newId]
     };
-    newContainers = newContainers.map((c) =>
-      c.id === container.id
-        ? { ...c, boundaries: [c.boundaries[0], c.boundaries[1] + 1] }
-        : c
-    );
+    newContainers = newContainers.map((c) => (c.id === container.id ? { ...c, boundaries: [c.boundaries[0], c.boundaries[1] + 1] } : c));
   }
   if (template.isContainer) {
     finishFieldsIds.splice(destination.index, 0, newId, `${newId}-end`);
@@ -170,11 +144,7 @@ const removeComponent = (componentId, state) => {
     /**
      * adjust container size if field was in container
      */
-    containers = containers.map((c) =>
-      c.id === field.container
-        ? { ...c, boundaries: [c.boundaries[0], c.boundaries[1] - 1] }
-        : c
-    );
+    containers = containers.map((c) => (c.id === field.container ? { ...c, boundaries: [c.boundaries[0], c.boundaries[1] - 1] } : c));
   }
   delete fields[componentId];
   delete fields[`${componentId}-end`];
@@ -184,9 +154,7 @@ const removeComponent = (componentId, state) => {
       ...state.dropTargets,
       [FORM_LAYOUT]: {
         ...state.dropTargets[FORM_LAYOUT],
-        fieldsIds: state.dropTargets[FORM_LAYOUT].fieldsIds.filter(
-          (id) => id !== componentId && id !== `${componentId}-end`
-        )
+        fieldsIds: state.dropTargets[FORM_LAYOUT].fieldsIds.filter((id) => id !== componentId && id !== `${componentId}-end`)
       }
     },
     fields: { ...state.fields },
@@ -210,10 +178,7 @@ const setFieldproperty = (field, payload) => {
 };
 
 const dragStart = (field, state) => {
-  if (
-    field.draggableId.match(/^initial-/) ||
-    !state.fields[field.draggableId].isContainer
-  ) {
+  if (field.draggableId.match(/^initial-/) || !state.fields[field.draggableId].isContainer) {
     return {};
   }
   return { draggingContainer: field.draggableId };
@@ -234,9 +199,7 @@ const changeValidator = (field, { index, action, fieldId, ...validator }) => {
   }
 
   if (action === 'modify') {
-    result.validate = validate.map((item, itemIndex) =>
-      itemIndex === index ? { ...item, ...validator } : item
-    );
+    result.validate = validate.map((item, itemIndex) => (itemIndex === index ? { ...item, ...validator } : item));
   }
 
   return result;
@@ -271,10 +234,7 @@ const builderReducer = (state, action) => {
         ...state,
         fields: {
           ...state.fields,
-          [action.payload.fieldId]: setFieldproperty(
-            state.fields[action.payload.fieldId],
-            action.payload
-          )
+          [action.payload.fieldId]: setFieldproperty(state.fields[action.payload.fieldId], action.payload)
         }
       };
     case SET_FIELD_VALIDATOR:
@@ -282,10 +242,7 @@ const builderReducer = (state, action) => {
         ...state,
         fields: {
           ...state.fields,
-          [action.payload.fieldId]: changeValidator(
-            state.fields[action.payload.fieldId],
-            action.payload
-          )
+          [action.payload.fieldId]: changeValidator(state.fields[action.payload.fieldId], action.payload)
         }
       };
     default:

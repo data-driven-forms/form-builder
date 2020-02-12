@@ -3,19 +3,14 @@ import PropTypes from 'prop-types';
 import ComponentsContext from '../components-context';
 
 const restrictionHandler = {
-  min: (value, defaultValue) =>
-    !value ? defaultValue : value < defaultValue ? defaultValue : value,
-  max: (value, defaultValue) =>
-    !value ? defaultValue : value > defaultValue ? defaultValue : value
+  min: (value, defaultValue) => (!value ? defaultValue : value < defaultValue ? defaultValue : value),
+  max: (value, defaultValue) => (!value ? defaultValue : value > defaultValue ? defaultValue : value)
 };
 
 const validatorChangeValue = (property, value) => {
   let result = property.type === 'number' ? Number(value) : value;
   if (property.restriction) {
-    result = restrictionHandler[property.restriction.inputAttribute](
-      value,
-      property.original[property.restriction.validatorAttribute]
-    );
+    result = restrictionHandler[property.restriction.inputAttribute](value, property.original[property.restriction.validatorAttribute]);
   }
   return {
     [property.propertyName]: result
@@ -29,8 +24,7 @@ const ValidatorProperty = ({ property, onChange, value, index, restricted }) => 
     property.restriction && property.original
       ? {
           isDisabled: property.restriction.lock,
-          [property.restriction.inputAttribute]:
-            property.original[property.restriction.validatorAttribute]
+          [property.restriction.inputAttribute]: property.original[property.restriction.validatorAttribute]
         }
       : {};
 
@@ -43,17 +37,12 @@ const ValidatorProperty = ({ property, onChange, value, index, restricted }) => 
       value={value}
       type={property.type}
       isDisabled={isDisabled}
-      onBlur={() =>
-        property.propertyName !== 'message' &&
-        restricted &&
-        onChange(validatorChangeValue(property, value), 'modify', index)
-      }
+      onBlur={() => property.propertyName !== 'message' && restricted && onChange(validatorChangeValue(property, value), 'modify', index)}
       fieldId={`${property.propertyName}-${index}`}
       onChange={(value) =>
         onChange(
           {
-            [property.propertyName]:
-              property.type === 'number' ? Number(value) : value
+            [property.propertyName]: property.type === 'number' ? Number(value) : value
           },
           'modify',
           index

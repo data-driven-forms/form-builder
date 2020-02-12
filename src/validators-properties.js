@@ -25,19 +25,7 @@ const patternType = {
   propertyName: 'pattern'
 };
 
-const urlOptions = [
-  'emptyProtocol',
-  'protocolIdentifier',
-  'basicAuth',
-  'local',
-  'ipv4',
-  'ipv6',
-  'host',
-  'port',
-  'path',
-  'search',
-  'hash'
-];
+const urlOptions = ['emptyProtocol', 'protocolIdentifier', 'basicAuth', 'local', 'ipv4', 'ipv6', 'host', 'port', 'path', 'search', 'hash'];
 
 const urlTypes = urlOptions.map((option) => ({
   propertyName: option,
@@ -71,10 +59,7 @@ export default {
     },
     messageType
   ],
-  [validatorTypes.EXACT_LENGTH]: [
-    { ...thresholdType, label: 'Exact length' },
-    messageType
-  ],
+  [validatorTypes.EXACT_LENGTH]: [{ ...thresholdType, label: 'Exact length' }, messageType],
   [validatorTypes.MAX_NUMBER_VALUE]: [
     {
       ...thresholdType,
@@ -107,13 +92,7 @@ export default {
     },
     messageType
   ],
-  [validatorTypes.MIN_ITEMS_VALIDATOR]: [
-    { ...thresholdType, label: 'Minimum number of items' },
-    messageType
-  ],
-  [validatorTypes.PATTERN_VALIDATOR]: [
-    { ...patternType, restriction: { lock: true } },
-    messageType
-  ],
+  [validatorTypes.MIN_ITEMS_VALIDATOR]: [{ ...thresholdType, label: 'Minimum number of items' }, messageType],
+  [validatorTypes.PATTERN_VALIDATOR]: [{ ...patternType, restriction: { lock: true } }, messageType],
   [validatorTypes.URL]: [messageType, ...urlTypes]
 };

@@ -15,11 +15,7 @@ const PickerField = memo(
       <Draggable draggableId={field.id} index={index}>
         {(provided, snapshot) => (
           <Fragment>
-            <div
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-            >
+            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
               {snapshot.isDragging && field.clone ? (
                 <Clone
                   formOptions={formOptions}

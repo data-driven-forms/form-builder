@@ -6,14 +6,7 @@ import PropTypes from 'prop-types';
 import Field from './field';
 import ComponentsContext from './components-context';
 
-const DropTarget = ({
-  dropTarget,
-  fields,
-  isDropDisabled,
-  shouldClone,
-  disableDrag,
-  disableDelete
-}) => {
+const DropTarget = ({ dropTarget, fields, isDropDisabled, shouldClone, disableDrag, disableDelete }) => {
   const {
     componentMapper: { FormContainer },
     classNamePrefix

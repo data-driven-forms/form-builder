@@ -5,33 +5,19 @@ import validatorsProperties from '../validators-properties';
 import MemoizedProperty from './memoized-property';
 import MemoizedValidator from './memozied-validator';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import {
-  SET_FIELD_VALIDATOR,
-  SET_FIELD_PROPERTY,
-  SET_SELECTED_COMPONENT,
-  REMOVE_COMPONENT
-} from '../builder-state/builder-reducer';
+import { SET_FIELD_VALIDATOR, SET_FIELD_PROPERTY, SET_SELECTED_COMPONENT, REMOVE_COMPONENT } from '../builder-state/builder-reducer';
 
 const validatorOptions = Object.keys(validatorTypes)
   .filter((key) => validatorTypes[key] !== validatorTypes.REQUIRED)
   .map((key) => ({ value: validatorTypes[key], label: validatorTypes[key] }));
 
 const checkRequiredDisabled = (field) => {
-  return !!(
-    field.restricted &&
-    !!field.validate &&
-    !!field.validate.find(
-      ({ type, original }) => original && type === validatorTypes.REQUIRED
-    )
-  );
+  return !!(field.restricted && !!field.validate && !!field.validate.find(({ type, original }) => original && type === validatorTypes.REQUIRED));
 };
 
 const PropertiesEditor = () => {
   const dispatch = useDispatch();
-  const field = useSelector(
-    ({ selectedComponent, fields }) => fields[selectedComponent],
-    shallowEqual
-  );
+  const field = useSelector(({ selectedComponent, fields }) => fields[selectedComponent], shallowEqual);
   const {
     componentMapper: { PropertiesEditor, PropertyGroup },
     componentProperties,
@@ -71,14 +57,9 @@ const PropertiesEditor = () => {
       }
     });
 
-  const requiredIndex = validate.reduce(
-    (acc, curr, index) => (curr.type === validatorTypes.REQUIRED ? index : acc),
-    0
-  );
+  const requiredIndex = validate.reduce((acc, curr, index) => (curr.type === validatorTypes.REQUIRED ? index : acc), 0);
 
-  const hasPropertyError =
-    field.propertyValidation &&
-    Object.entries(field.propertyValidation).find(([, value]) => value);
+  const hasPropertyError = field.propertyValidation && Object.entries(field.propertyValidation).find(([, value]) => value);
 
   return (
     <Fragment>
@@ -117,22 +98,14 @@ const PropertiesEditor = () => {
             {properties.map((property) => {
               const Component = propertiesMapper[property.component];
               return (
-                <MemoizedProperty
-                  key={property.propertyName}
-                  Component={Component}
-                  property={property}
-                  handlePropertyChange={handlePropertyChange}
-                />
+                <MemoizedProperty key={property.propertyName} Component={Component} property={property} handlePropertyChange={handlePropertyChange} />
               );
             })}
           </Fragment>
         }
         validationChildren={
           <Fragment>
-            <PropertyGroup
-              title="required validator"
-              className={`${classnamePrefix}__validators-validator-group`}
-            >
+            <PropertyGroup title="required validator" className={`${classnamePrefix}__validators-validator-group`}>
               <IsRequiredComponent
                 value={field.isRequired}
                 label="Required"
@@ -154,10 +127,7 @@ const PropertiesEditor = () => {
                   label="Message"
                   fieldId="required-message"
                   innerProps={{}}
-                  value={
-                    validate.find(({ type }) => type === validatorTypes.REQUIRED)
-                      .message || ''
-                  }
+                  value={validate.find(({ type }) => type === validatorTypes.REQUIRED).message || ''}
                   onChange={(value) =>
                     handleValidatorChange(
                       {
@@ -174,11 +144,7 @@ const PropertiesEditor = () => {
               type !== validatorTypes.REQUIRED ? (
                 <PropertyGroup
                   title={type.split('-').join(' ')}
-                  handleDelete={
-                    !original
-                      ? () => handleValidatorChange({}, 'remove', index)
-                      : undefined
-                  }
+                  handleDelete={!original ? () => handleValidatorChange({}, 'remove', index) : undefined}
                   key={`${type}-${index}`}
                   className={`${classnamePrefix}__validators-validator-group`}
                 >

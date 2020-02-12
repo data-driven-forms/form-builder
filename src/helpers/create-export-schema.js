@@ -1,14 +1,4 @@
-const ARTIFICIAL_KEYS = [
-  'preview',
-  'clone',
-  'initialized',
-  'id',
-  'isContainer',
-  'children',
-  'container',
-  'restricted',
-  'propertyValidation'
-];
+const ARTIFICIAL_KEYS = ['preview', 'clone', 'initialized', 'id', 'isContainer', 'children', 'container', 'restricted', 'propertyValidation'];
 
 const sanitizeField = (field) => {
   const result = { ...field };
@@ -16,9 +6,7 @@ const sanitizeField = (field) => {
     delete result[key];
   });
   if (result.options) {
-    result.options = result.options
-      .filter(({ deleted }) => !deleted)
-      .map(({ restoreable, ...option }) => option);
+    result.options = result.options.filter(({ deleted }) => !deleted).map(({ restoreable, ...option }) => option);
   }
   return result;
 };

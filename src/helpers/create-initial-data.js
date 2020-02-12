@@ -26,9 +26,7 @@ const createInitialData = (initialFields, schema, isSubset, schemaTemplate) => {
       };
       if (isSubset) {
         let template;
-        let templateOptions =
-          fields[id].options &&
-          fields[id].options.map((option) => ({ ...option, restoreable: true }));
+        let templateOptions = fields[id].options && fields[id].options.map((option) => ({ ...option, restoreable: true }));
         if (schemaTemplate) {
           template = schemaTemplate.fields.find(({ name }) => name === field.name);
         }
@@ -46,9 +44,7 @@ const createInitialData = (initialFields, schema, isSubset, schemaTemplate) => {
           validate: fields[id].validate
             ? fields[id].validate.map((validator, index) => ({
                 ...validator,
-                original: template
-                  ? { ...template.validate[index] }
-                  : { ...validator }
+                original: template ? { ...template.validate[index] } : { ...validator }
               }))
             : undefined
         };

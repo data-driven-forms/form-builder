@@ -137,6 +137,7 @@ const PropertiesEditor = () => {
                 label="Required"
                 fieldId="required-validator"
                 isDisabled={requiredDisabled}
+                innerProps={{}}
                 onChange={(value) =>
                   handleValidatorChange(
                     {
@@ -151,6 +152,7 @@ const PropertiesEditor = () => {
                 <MessageComponent
                   label="Message"
                   fieldId="required-message"
+                  innerProps={{}}
                   value={
                     validate.find(({ type }) => type === validatorTypes.REQUIRED)
                       .message || ''

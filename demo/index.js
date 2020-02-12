@@ -230,7 +230,7 @@ const Demo = () => (
         cloneWhileDragging
         disableDrag={false}
         mode="subset"
-        debug={false}
+        debug={true}
         controlPanel={({ getSchema, isValid }) => (
           <div>
             <button onClick={() => console.log('schema', getSchema())}>

@@ -3,12 +3,27 @@ import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
 const PropertyComponent = memo(
-  ({ Component, property, handlePropertyChange, ...props }) => {
+  ({
+    Component,
+    property: { label, value, options, ...property },
+    handlePropertyChange,
+    restricted,
+    propertyValidation,
+    ...props
+  }) => {
+    const innerProps = {
+      property,
+      restricted,
+      propertyValidation
+    };
     return (
       <Component
+        label={label}
+        value={value}
+        options={options}
         {...props}
-        {...property}
-        fieldId={`${property.propertyName}`}
+        innerProps={innerProps}
+        fieldId={property.propertyName}
         onChange={(value) => handlePropertyChange(value, property.propertyName)}
       />
     );

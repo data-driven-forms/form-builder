@@ -73,14 +73,14 @@ const Field = memo(
                     snapshot={snapshot}
                     FieldProvider={FieldComponent}
                     formOptions={formOptions}
-                    hasPropertyError={hasPropertyError}
+                    hasPropertyError={!!hasPropertyError}
                   />
                 )}
               </FieldLayout>
               {!shouldClone && (
                 <DragHandle
                   disableDrag={disableDrag}
-                  hasPropertyError={hasPropertyError}
+                  hasPropertyError={!!hasPropertyError}
                   dragHandleProps={{ ...provided.dragHandleProps }}
                 />
               )}

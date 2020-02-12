@@ -1,6 +1,7 @@
 /* eslint react/no-array-index-key: "off" */
 
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { Switch } from '@patternfly/react-core/dist/js/components/Switch/Switch';
 import { Button } from '@patternfly/react-core/dist/js/components/Button/Button';
 import { FormGroup } from '@patternfly/react-core/dist/js/components/Form/FormGroup';
@@ -21,21 +22,20 @@ const FormGroupWrapper = ({
   </FormGroup>
 );
 
+FormGroupWrapper.propTypes = {
+  propertyValidation: PropTypes.shape({ message: PropTypes.string }),
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)])
+};
+
 FormGroupWrapper.defaultProps = {
   propertyValidation: {}
 };
 
 const Input = ({
   label,
-  onChange,
   value,
-  autoFocus,
-  type,
-  isDisabled,
-  restricted,
-  propertyName,
   fieldId,
-  propertyValidation,
+  innerProps: { propertyValidation },
   ...rest
 }) => {
   return (
@@ -47,11 +47,8 @@ const Input = ({
       >
         <TextInput
           id={fieldId}
-          type={type}
-          autoFocus={autoFocus}
           onChange={(value) => onChange(value)}
-          value={value || ''}
-          isDisabled={isDisabled}
+          value={typeof value === undefined ? '' : value.toString()}
           {...rest}
         />
       </FormGroupWrapper>
@@ -59,42 +56,83 @@ const Input = ({
   );
 };
 
+Input.propTypes = {
+  label: PropTypes.oneOfType([PropTypes.string]).isRequired,
+  value: PropTypes.any,
+  fieldId: PropTypes.string.isRequired,
+  innerProps: PropTypes.shape({
+    propertyValidation: PropTypes.shape({ message: PropTypes.string })
+  }).isRequired
+};
+
+Input.defaultProps = {
+  onChange: () => {},
+  value: ''
+};
+
 const PropertySwitch = ({
   value,
-  onChange,
-  label,
-  isDisabled,
-  propertyValidation
+  fieldId,
+  innerProps: { propertyValidation },
+  ...rest
 }) => (
-  <FormGroupWrapper fieldId={label} propertyValidation={propertyValidation}>
-    <Switch
-      isChecked={Boolean(value)}
-      id={`${label}-property`}
-      onChange={(checked) => onChange(checked)}
-      label={label}
-      isDisabled={isDisabled}
+  <FormGroupWrapper fieldId={fieldId} propertyValidation={propertyValidation}>
+    <Switch isChecked={Boolean(value)} id={fieldId} {...rest} />
+  </FormGroupWrapper>
+);
+
+PropertySwitch.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.any,
+  fieldId: PropTypes.string.isRequired,
+  innerProps: PropTypes.shape({
+    propertyValidation: PropTypes.shape({ message: PropTypes.string })
+  }).isRequired
+};
+
+PropertySwitch.defaultProps = {
+  value: false
+};
+
+const PropertySelect = ({
+  label,
+  options,
+  fieldId,
+  innerProps: { propertyValidation },
+  ...rest
+}) => (
+  <FormGroupWrapper
+    label={label}
+    fieldId={fieldId}
+    propertyValidation={propertyValidation}
+  >
+    <rawComponents.Select
+      id={fieldId}
+      options={options.map((option) => ({ value: option, label: option }))}
+      {...rest}
     />
   </FormGroupWrapper>
 );
 
-const PropertySelect = ({ value, label, onChange, options, propertyValidation }) => {
-  return (
-    <FormGroupWrapper
-      label={label}
-      fieldId={label}
-      propertyValidation={propertyValidation}
-    >
-      <rawComponents.Select
-        id={label}
-        value={value || ''}
-        options={options.map((option) => ({ value: option, label: option }))}
-        onChange={(value) => onChange(value)}
-      />
-    </FormGroupWrapper>
-  );
+PropertySelect.propTypes = {
+  label: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fieldId: PropTypes.string.isRequired,
+  innerProps: PropTypes.shape({
+    propertyValidation: PropTypes.shape({ message: PropTypes.string })
+  }).isRequired
 };
 
-const PropertyOptions = ({ value = [], label, onChange, restricted }) => {
+PropertySelect.defaultProps = {
+  onChange: () => {}
+};
+
+const PropertyOptions = ({
+  value = [],
+  label,
+  onChange,
+  innerProps: { restricted }
+}) => {
   const handleOptionChange = (option, index, optionKey) =>
     onChange(
       value.map((item, itemIndex) =>
@@ -187,18 +225,41 @@ const PropertyOptions = ({ value = [], label, onChange, restricted }) => {
   );
 };
 
-const Textarea = ({ label, onChange, value, autoFocus, propertyValidation }) => {
+PropertyOptions.propTypes = {
+  value: PropTypes.array,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  innerProps: PropTypes.shape({ restricted: PropTypes.bool }).isRequired
+};
+
+const Textarea = ({
+  value,
+  fieldId,
+  innerProps: { propertyValidation },
+  ...rest
+}) => {
   return (
-    <FormGroupWrapper fieldId={label} propertyValidation={propertyValidation}>
+    <FormGroupWrapper fieldId={fieldId} propertyValidation={propertyValidation}>
       <TextArea
-        multiline
-        autoFocus={autoFocus}
-        label={label}
-        onChange={(value) => onChange(value)}
-        value={value || ''}
+        id={fieldId}
+        value={typeof value === undefined ? '' : value}
+        {...rest}
       />
     </FormGroupWrapper>
   );
+};
+
+Textarea.propTypes = {
+  value: PropTypes.string,
+  fieldId: PropTypes.string.isRequired,
+  innerProps: PropTypes.shape({
+    propertyValidation: PropTypes.shape({ message: PropTypes.string })
+  }).isRequired
+};
+
+Textarea.defaultProps = {
+  onChange: () => {},
+  value: ''
 };
 
 const propertiesMapper = {

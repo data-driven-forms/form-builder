@@ -220,7 +220,7 @@ const RadioField = ({
   }
   return (
     <ComponentWrapper hideField={hideField}>
-      <Component {...props} input={{ ...props.input, onChange: console.log }} />
+      <Component {...props} />
     </ComponentWrapper>
   );
 };
@@ -265,6 +265,7 @@ const TextAreaField = ({
   snapshot,
   hideField,
   propertyValidation,
+  hasPropertyError,
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.TEXTAREA];

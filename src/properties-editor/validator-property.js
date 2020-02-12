@@ -25,7 +25,7 @@ const validatorChangeValue = (property, value) => {
 const ValidatorProperty = ({ property, onChange, value, index, restricted }) => {
   const { propertiesMapper } = useContext(ComponentsContext);
   const Component = propertiesMapper[property.component];
-  const restrictionProperty =
+  const { isDisabled, restrictionProperty } =
     property.restriction && property.original
       ? {
           isDisabled: property.restriction.lock,
@@ -34,10 +34,15 @@ const ValidatorProperty = ({ property, onChange, value, index, restricted }) => 
         }
       : {};
 
+  const innerProps = {
+    property: restrictionProperty,
+    restricted
+  };
   return (
     <Component
       value={value}
       type={property.type}
+      isDisabled={isDisabled}
       onBlur={() =>
         property.propertyName !== 'message' &&
         restricted &&
@@ -55,7 +60,7 @@ const ValidatorProperty = ({ property, onChange, value, index, restricted }) => 
         )
       }
       label={property.label}
-      {...restrictionProperty}
+      innerProps={innerProps}
     />
   );
 };
@@ -69,8 +74,8 @@ ValidatorProperty.propTypes = {
     type: PropTypes.string,
     label: PropTypes.string.isRequired,
     restriction: PropTypes.shape({
-      inputAttribute: PropTypes.string.isRequired,
-      validatorAttribute: PropTypes.string.isRequired,
+      inputAttribute: PropTypes.string,
+      validatorAttribute: PropTypes.string,
       lock: PropTypes.bool
     })
   }),

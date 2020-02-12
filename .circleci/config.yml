@@ -1,0 +1,24 @@
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.4
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - run:
+          name: install-deps
+          command: yarn
+      - run:
+          name: build-packages
+          command: yarn build
+      - run:
+          name: test
+          command: yarn test
+      - codecov/upload:
+          file: coverage/*.json
+          token: aa1b6b4d-79a1-49f6-bcb2-d6069134a772

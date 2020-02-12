@@ -71,7 +71,7 @@ const Field = memo(
                     {...field}
                     component={FieldComponent}
                     snapshot={snapshot}
-                    FieldProvider={FieldComponent}
+                    FieldProvider={FinalFormField}
                     formOptions={formOptions}
                     hasPropertyError={!!hasPropertyError}
                   />

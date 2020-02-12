@@ -215,9 +215,6 @@ const RadioField = ({
   ...props
 }) => {
   const Component = formFieldsMapper[componentTypes.RADIO];
-  if (!props.options) {
-    return <p>Radio field does not have any options.</p>;
-  }
   return (
     <ComponentWrapper hideField={hideField}>
       <Component {...props} />
@@ -230,6 +227,11 @@ RadioField.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({ label: PropTypes.string, value: PropTypes.any })
   )
+};
+
+RadioField.defaultProps = {
+  options: [],
+  label: 'Please pick label and options'
 };
 
 const SwitchField = ({

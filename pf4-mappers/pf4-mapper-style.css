@@ -55,11 +55,13 @@ button:hover>svg.pf4-danger-color {
   margin-left: auto
 }
 .pf4-validators-validator-title {
-  text-transform: capitalize;
   font-weight: 600;
-  display: flex;
+  display: block;
   justify-content: space-between;
   align-items: center;
+}
+.pf4-validators-validator-title:first-letter {
+  text-transform: uppercase;
 }
 .pf4-tabs-container {
   padding: 0 !important;

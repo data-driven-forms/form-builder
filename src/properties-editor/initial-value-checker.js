@@ -6,25 +6,17 @@ const propertyStrings = {
 };
 
 const initialValueCheckMessage = ({ isDisabled, isReadOnly, hideField }) => {
-  return `Initial value must be set if field is required and at the same time ${Object.entries(
-    {
-      isDisabled,
-      isReadOnly,
-      hideField
-    }
-  )
+  return `Initial value must be set if field is required and at the same time ${Object.entries({
+    isDisabled,
+    isReadOnly,
+    hideField
+  })
     .filter(([, value]) => value)
     .map(([key]) => propertyStrings[key])
     .join(' or ')}.`;
 };
 
-const initialValueCheck = ({
-  initialValue,
-  isRequired,
-  isDisabled,
-  isReadOnly,
-  hideField
-}) =>
+const initialValueCheck = ({ initialValue, isRequired, isDisabled, isReadOnly, hideField }) =>
   !initialValue && isRequired && (isDisabled || isReadOnly || hideField)
     ? {
         initialValue: {

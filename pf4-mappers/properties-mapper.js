@@ -11,11 +11,7 @@ import PlusIcon from '@patternfly/react-icons/dist/js/icons/plus-icon';
 import TrashRestoreIcon from '@patternfly/react-icons/dist/js/icons/trash-restore-icon';
 import { rawComponents } from '@data-driven-forms/pf4-component-mapper';
 
-const FormGroupWrapper = ({
-  propertyValidation: { message },
-  children,
-  ...props
-}) => (
+const FormGroupWrapper = ({ propertyValidation: { message }, children, ...props }) => (
   <FormGroup helperTextInvalid={message} isValid={!message} {...props}>
     {children}
   </FormGroup>
@@ -30,25 +26,11 @@ FormGroupWrapper.defaultProps = {
   propertyValidation: {}
 };
 
-const Input = ({
-  label,
-  value,
-  fieldId,
-  innerProps: { propertyValidation },
-  ...rest
-}) => {
+const Input = ({ label, value, fieldId, innerProps: { propertyValidation }, ...rest }) => {
   return (
     <Fragment>
-      <FormGroupWrapper
-        label={label}
-        fieldId={fieldId}
-        propertyValidation={propertyValidation}
-      >
-        <TextInput
-          id={fieldId}
-          value={typeof value === undefined ? '' : value.toString()}
-          {...rest}
-        />
+      <FormGroupWrapper label={label} fieldId={fieldId} propertyValidation={propertyValidation}>
+        <TextInput id={fieldId} value={typeof value === undefined ? '' : value.toString()} {...rest} />
       </FormGroupWrapper>
     </Fragment>
   );
@@ -68,12 +50,7 @@ Input.defaultProps = {
   value: ''
 };
 
-const PropertySwitch = ({
-  value,
-  fieldId,
-  innerProps: { propertyValidation },
-  ...rest
-}) => (
+const PropertySwitch = ({ value, fieldId, innerProps: { propertyValidation }, ...rest }) => (
   <FormGroupWrapper fieldId={fieldId} propertyValidation={propertyValidation}>
     <Switch isChecked={Boolean(value)} id={fieldId} {...rest} />
   </FormGroupWrapper>
@@ -92,23 +69,9 @@ PropertySwitch.defaultProps = {
   value: false
 };
 
-const PropertySelect = ({
-  label,
-  options,
-  fieldId,
-  innerProps: { propertyValidation },
-  ...rest
-}) => (
-  <FormGroupWrapper
-    label={label}
-    fieldId={fieldId}
-    propertyValidation={propertyValidation}
-  >
-    <rawComponents.Select
-      id={fieldId}
-      options={options.map((option) => ({ value: option, label: option }))}
-      {...rest}
-    />
+const PropertySelect = ({ label, options, fieldId, innerProps: { propertyValidation }, ...rest }) => (
+  <FormGroupWrapper label={label} fieldId={fieldId} propertyValidation={propertyValidation}>
+    <rawComponents.Select id={fieldId} options={options.map((option) => ({ value: option, label: option }))} {...rest} />
   </FormGroupWrapper>
 );
 
@@ -125,18 +88,9 @@ PropertySelect.defaultProps = {
   onChange: () => {}
 };
 
-const PropertyOptions = ({
-  value = [],
-  label,
-  onChange,
-  innerProps: { restricted }
-}) => {
+const PropertyOptions = ({ value = [], label, onChange, innerProps: { restricted } }) => {
   const handleOptionChange = (option, index, optionKey) =>
-    onChange(
-      value.map((item, itemIndex) =>
-        index === itemIndex ? { ...item, [optionKey]: option } : item
-      )
-    );
+    onChange(value.map((item, itemIndex) => (index === itemIndex ? { ...item, [optionKey]: option } : item)));
   const handleRemove = (index, restoreable) => {
     let options;
     if (restoreable) {
@@ -164,11 +118,7 @@ const PropertyOptions = ({
       >
         <span>{label}</span>
         {!restricted && (
-          <Button
-            onClick={() => onChange([...value, { value: '', label: '' }])}
-            variant="plain"
-            aria-label="add option"
-          >
+          <Button onClick={() => onChange([...value, { value: '', label: '' }])} variant="plain" aria-label="add option">
             <PlusIcon />
           </Button>
         )}
@@ -203,16 +153,8 @@ const PropertyOptions = ({
                 />
               </td>
               <td>
-                <Button
-                  onClick={() => handleRemove(index, restoreable)}
-                  variant="plain"
-                  aria-label="delete option"
-                >
-                  {deleted ? (
-                    <TrashRestoreIcon className="pf4-success-color" />
-                  ) : (
-                    <TrashIcon className="pf4-danger-color" />
-                  )}
+                <Button onClick={() => handleRemove(index, restoreable)} variant="plain" aria-label="delete option">
+                  {deleted ? <TrashRestoreIcon className="pf4-success-color" /> : <TrashIcon className="pf4-danger-color" />}
                 </Button>
               </td>
             </tr>
@@ -230,19 +172,10 @@ PropertyOptions.propTypes = {
   innerProps: PropTypes.shape({ restricted: PropTypes.bool }).isRequired
 };
 
-const Textarea = ({
-  value,
-  fieldId,
-  innerProps: { propertyValidation },
-  ...rest
-}) => {
+const Textarea = ({ value, fieldId, innerProps: { propertyValidation }, ...rest }) => {
   return (
     <FormGroupWrapper fieldId={fieldId} propertyValidation={propertyValidation}>
-      <TextArea
-        id={fieldId}
-        value={typeof value === undefined ? '' : value}
-        {...rest}
-      />
+      <TextArea id={fieldId} value={typeof value === undefined ? '' : value} {...rest} />
     </FormGroupWrapper>
   );
 };

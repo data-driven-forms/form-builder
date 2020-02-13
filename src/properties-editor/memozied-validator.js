@@ -34,10 +34,7 @@ ValidatorComponent.propTypes = {
 };
 
 const MemoizedValidator = (props) => {
-  const restricted = useSelector(
-    ({ fields, selectedComponent }) => fields[selectedComponent].restricted,
-    shallowEqual
-  );
+  const restricted = useSelector(({ fields, selectedComponent }) => fields[selectedComponent].restricted, shallowEqual);
   return <ValidatorComponent {...props} restricted={restricted} />;
 };
 

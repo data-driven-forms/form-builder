@@ -3,14 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
 const PropertyComponent = memo(
-  ({
-    Component,
-    property: { label, value, options, ...property },
-    handlePropertyChange,
-    restricted,
-    propertyValidation,
-    ...props
-  }) => {
+  ({ Component, property: { label, value, options, ...property }, handlePropertyChange, restricted, propertyValidation, ...props }) => {
     const innerProps = {
       property,
       restricted,
@@ -35,8 +28,7 @@ const PropertyComponent = memo(
 );
 
 PropertyComponent.propTypes = {
-  Component: PropTypes.oneOfType([PropTypes.node, PropTypes.func, PropTypes.element])
-    .isRequired,
+  Component: PropTypes.oneOfType([PropTypes.node, PropTypes.func, PropTypes.element]).isRequired,
   field: PropTypes.shape({
     restricted: PropTypes.bool
   }),
@@ -54,27 +46,15 @@ PropertyComponent.propTypes = {
 };
 
 const MemoizedProperty = (props) => {
-  const { value, restricted, propertyValidation } = useSelector(
-    ({ fields, selectedComponent }) => {
-      const field = fields[selectedComponent];
-      return {
-        value: field[props.property.propertyName],
-        restricted: field.restricted,
-        propertyValidation:
-          field.propertyValidation &&
-          field.propertyValidation[props.property.propertyName]
-      };
-    },
-    shallowEqual
-  );
-  return (
-    <PropertyComponent
-      {...props}
-      value={value}
-      restricted={restricted}
-      propertyValidation={propertyValidation}
-    />
-  );
+  const { value, restricted, propertyValidation } = useSelector(({ fields, selectedComponent }) => {
+    const field = fields[selectedComponent];
+    return {
+      value: field[props.property.propertyName],
+      restricted: field.restricted,
+      propertyValidation: field.propertyValidation && field.propertyValidation[props.property.propertyName]
+    };
+  }, shallowEqual);
+  return <PropertyComponent {...props} value={value} restricted={restricted} propertyValidation={propertyValidation} />;
 };
 
 MemoizedProperty.propTypes = {

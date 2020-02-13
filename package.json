@@ -38,6 +38,7 @@
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "html-loader": "^0.5.5",
+    "identity-obj-proxy": "^3.0.0",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^25.1.0",
     "prettier": "1.19.1",
@@ -92,6 +93,9 @@
     ],
     "setupFiles": [
       "<rootDir>/setupTests.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "identity-obj-proxy"
+    }
   }
 }

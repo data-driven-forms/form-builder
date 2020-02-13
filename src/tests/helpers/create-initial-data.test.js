@@ -1,9 +1,5 @@
 import createInitialData from '../../helpers/create-initial-data';
-import {
-  initialBuilderFields,
-  initialDDFSchema,
-  initialDDFSchemaTemplate
-} from '../__mocks__/builder-fields';
+import { initialBuilderFields, initialDDFSchema, initialDDFSchemaTemplate } from '../__mocks__/builder-fields';
 
 describe('create unitial data', () => {
   jest.spyOn(Date, 'now').mockImplementation(() => 123);
@@ -79,9 +75,7 @@ describe('create unitial data', () => {
       selectedComponent: undefined
     };
 
-    expect(createInitialData(initialBuilderFields, initialDDFSchema)).toEqual(
-      expectedState
-    );
+    expect(createInitialData(initialBuilderFields, initialDDFSchema)).toEqual(expectedState);
   });
 
   it('should create initial schema in subset mode without template', () => {
@@ -109,9 +103,7 @@ describe('create unitial data', () => {
         }
       })
     });
-    expect(createInitialData(initialBuilderFields, initialDDFSchema, true)).toEqual(
-      expectedState
-    );
+    expect(createInitialData(initialBuilderFields, initialDDFSchema, true)).toEqual(expectedState);
   });
   it('should create initial schema in subset mode with template', () => {
     const expectedState = expect.objectContaining({
@@ -188,13 +180,6 @@ describe('create unitial data', () => {
         }
       }
     });
-    expect(
-      createInitialData(
-        initialBuilderFields,
-        initialDDFSchema,
-        true,
-        initialDDFSchemaTemplate
-      )
-    ).toEqual(expectedState);
+    expect(createInitialData(initialBuilderFields, initialDDFSchema, true, initialDDFSchemaTemplate)).toEqual(expectedState);
   });
 });

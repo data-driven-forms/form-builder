@@ -25,7 +25,7 @@ const PropertiesEditor = () => {
     debug,
     classnamePrefix
   } = useContext(ComponentsContext);
-  const [requiredDisabled, setRequiredDisabled] = useState(false);
+  const [requiredDisabled, setRequiredDisabled] = useState(true);
   useEffect(() => {
     setRequiredDisabled(() => checkRequiredDisabled(field));
   }, [field]);

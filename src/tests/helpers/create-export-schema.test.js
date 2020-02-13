@@ -1,9 +1,5 @@
 import createSchema, { validateOutput } from '../../helpers/create-export-schema';
-import {
-  fields,
-  invalidSchema,
-  schemaWithDeletedOption
-} from '../__mocks__/builder-fields';
+import { fields, invalidSchema, schemaWithDeletedOption } from '../__mocks__/builder-fields';
 
 describe('create export schema', () => {
   it('should create data driven from schema from flat object', () => {

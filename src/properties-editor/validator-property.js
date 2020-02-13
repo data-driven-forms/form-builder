@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import ComponentsContext from '../components-context';
 
 const restrictionHandler = {
-  min: (value, defaultValue) => (!value ? defaultValue : value < defaultValue ? defaultValue : value),
-  max: (value, defaultValue) => (!value ? defaultValue : value > defaultValue ? defaultValue : value)
+  min: (value, defaultValue) => (isNaN(value) ? defaultValue : value < defaultValue ? defaultValue : value),
+  max: (value, defaultValue) => (isNaN(value) ? defaultValue : value > defaultValue ? defaultValue : value)
 };
 
 const validatorChangeValue = (property, value) => {

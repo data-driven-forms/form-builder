@@ -2,10 +2,7 @@ import { validatorTypes } from '@data-driven-forms/react-form-renderer';
 import propertiesValidation from '../properties-editor/initial-value-checker';
 import { FORM_LAYOUT } from '../helpers/create-initial-data';
 
-const isInContainer = (index, containers) => {
-  const containerKey = Object.keys(containers).filter((c) => index > containers[c].boundaries[0] && index <= containers[c].boundaries[1]);
-  return containerKey ? containers[containerKey] : false;
-};
+const isInContainer = (index, containers) => containers.find((c) => index > c.boundaries[0] && index <= c.boundaries[1]);
 
 const mutateColumns = (result, state) => {
   const { destination, source, draggableId } = result;
@@ -25,10 +22,8 @@ const mutateColumns = (result, state) => {
   const isMovingInColumn = start === finish;
 
   if (isMovingInColumn) {
-    if (template.isContainer && isInContainer(destination.index, containers)) {
-      /**
-       * No container nesting just now
-       */
+    const noContainerNesting = template.isContainer && isInContainer(destination.index, containers);
+    if (noContainerNesting) {
       return;
     }
     if (template.isContainer) {

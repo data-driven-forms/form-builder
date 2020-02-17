@@ -887,33 +887,33 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@data-driven-forms/mui-component-mapper@^1.23.1":
-  version "1.23.6"
-  resolved "https://registry.yarnpkg.com/@data-driven-forms/mui-component-mapper/-/mui-component-mapper-1.23.6.tgz#6948a1da437eeae18ff088d1268531e1864dae6b"
-  integrity sha512-Q/xp4okIv7RLl1m/HyJiK8DepzwsJrkmd9wDShNBnpR04mjDGXee2BixNSv9G6Pn7ufr/UYYvfqoZ8OeiVsMAQ==
+"@data-driven-forms/mui-component-mapper@^1.27.6":
+  version "1.27.6"
+  resolved "https://registry.yarnpkg.com/@data-driven-forms/mui-component-mapper/-/mui-component-mapper-1.27.6.tgz#5b52eba45ffab3623d84fc73467fb35cf16eca67"
+  integrity sha512-kWCBRQSYpRW9eO1GL+rt6Dwk8BhUyeoN/7jhAEwTEMAoY54QdcQ/rJoPEF8abtfopyS78veIlMPBfLlobw2ipw==
   dependencies:
     "@date-io/date-fns" "^1.0.1"
     "@date-io/moment" "^1.0.1"
     classnames "^2.2.6"
     clsx "^1.0.4"
     date-fns "^1.30.1"
-    material-ui-pickers "^2.1.1"
+    material-ui-pickers "^2.2.4"
     moment "^2.23.0"
     react-select "^2.2.0"
 
-"@data-driven-forms/pf4-component-mapper@^1.27.3":
-  version "1.27.3"
-  resolved "https://registry.yarnpkg.com/@data-driven-forms/pf4-component-mapper/-/pf4-component-mapper-1.27.3.tgz#0ecf879e83b1468945777ba8b78253e3a34c61af"
-  integrity sha512-jvSgitjc++ROFvtZhcKUuf5Hh4oIOzyFBWQW0INF6yDc5RJ7DQ96GV98Vg2oygQDNBVuIONW3Z3X08hUluAkTw==
+"@data-driven-forms/pf4-component-mapper@^1.27.6":
+  version "1.27.6"
+  resolved "https://registry.yarnpkg.com/@data-driven-forms/pf4-component-mapper/-/pf4-component-mapper-1.27.6.tgz#df6077ab63bdf6d9347123d8c7dca4714b096454"
+  integrity sha512-MEuJ54+0r5aGOKvqTEvjP54FZ4CH0BNpiRxepjUBsJEQxNNTGGVSmH9QVr09e3NmXJwUM7wNgDGX02AGUAhksA==
   dependencies:
     "@patternfly/patternfly-next" "^1.0.175"
     react-final-form-arrays "2.0.3"
     react-select "^3.0.4"
 
-"@data-driven-forms/react-form-renderer@^1.23.0":
-  version "1.23.6"
-  resolved "https://registry.yarnpkg.com/@data-driven-forms/react-form-renderer/-/react-form-renderer-1.23.6.tgz#302aa4ea29cfa2a865123f682b96f6caf412a513"
-  integrity sha512-FtEOkvcY03j5GUOIfUkC66R2YPHyDKM6Mvez7whG2K9cTPMvJ562v/NpJANigGlE2W7Ezqe5PIB/1y9STApRhg==
+"@data-driven-forms/react-form-renderer@^1.27.6":
+  version "1.27.6"
+  resolved "https://registry.yarnpkg.com/@data-driven-forms/react-form-renderer/-/react-form-renderer-1.27.6.tgz#11a50746239c5360d1750d860bf5172482389682"
+  integrity sha512-s7O91WpHjzFmjb2aw+edEwXS0Rdajw8Ne244dZFhy0gd+KNTt1Dpp/TzLW7u1BplvqIZSAKh6jzvxIAfRoGN+Q==
   dependencies:
     final-form "^4.12.0"
     final-form-arrays "^3.0.1"
@@ -7226,7 +7226,7 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-material-ui-pickers@^2.1.1:
+material-ui-pickers@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/material-ui-pickers/-/material-ui-pickers-2.2.4.tgz#8b33cfc55cbc5b2d520db45abf4b3dc94090dd3c"
   integrity sha512-QCQh08Ylmnt+o4laW+rPs92QRAcESv3sPXl50YadLm++rAZAXAOh3K8lreGdynCMYFgZfdyu81Oz9xzTlAZNfw==

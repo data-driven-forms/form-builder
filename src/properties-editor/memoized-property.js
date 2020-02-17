@@ -3,11 +3,20 @@ import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
 const PropertyComponent = memo(
-  ({ Component, property: { label, value, options, ...property }, handlePropertyChange, restricted, propertyValidation, ...props }) => {
+  ({
+    Component,
+    property: { label, value, options, ...property },
+    selectedComponent,
+    handlePropertyChange,
+    restricted,
+    propertyValidation,
+    ...props
+  }) => {
     const innerProps = {
       property,
       restricted,
-      propertyValidation
+      propertyValidation,
+      selectedComponent
     };
     return (
       <Component
@@ -24,6 +33,7 @@ const PropertyComponent = memo(
   (prevProps, nextProps) =>
     prevProps.value === nextProps.value &&
     prevProps.restricted === nextProps.restricted &&
+    prevProps.selectedComponent === nextProps.selectedComponent &&
     shallowEqual(prevProps.propertyValidation, nextProps.propertyValidation)
 );
 

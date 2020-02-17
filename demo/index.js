@@ -1,9 +1,6 @@
 import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
-import {
-  componentTypes,
-  validatorTypes
-} from '@data-driven-forms/react-form-renderer';
+import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
@@ -11,7 +8,7 @@ import FormBuilder from '../src/index';
 // import pickerMapper from './picker-mapper';
 // import propertiesMapper from './properties-mapper';
 
-import { builderMapper, pickerMapper, propertiesMapper } from '../pf4-mappers';
+import { pickerMapper, propertiesMapper, builderMapper } from '../mui-mappers';
 
 import {
   LABEL,
@@ -33,15 +30,7 @@ import {
 
 const componentProperties = {
   [componentTypes.TEXT_FIELD]: {
-    attributes: [
-      LABEL,
-      HELPER_TEXT,
-      PLACEHOLDER,
-      INPUT_TYPE,
-      IS_DISABLED,
-      IS_READ_ONLY,
-      HIDE_FIELD
-    ]
+    attributes: [LABEL, HELPER_TEXT, PLACEHOLDER, INPUT_TYPE, IS_DISABLED, IS_READ_ONLY, HIDE_FIELD]
   },
   [componentTypes.CHECKBOX]: {
     attributes: [LABEL, IS_DISABLED, OPTIONS, HIDE_FIELD]
@@ -50,14 +39,7 @@ const componentProperties = {
     attributes: [OPTIONS, LABEL, IS_DISABLED, PLACEHOLDER, HELPER_TEXT, HIDE_FIELD]
   },
   [componentTypes.DATE_PICKER]: {
-    attributes: [
-      LABEL,
-      TODAY_BUTTON_LABEL,
-      IS_CLEARABLE,
-      CLOSE_ON_DAY_SELECT,
-      SHOW_TODAY_BUTTON,
-      HIDE_FIELD
-    ]
+    attributes: [LABEL, TODAY_BUTTON_LABEL, IS_CLEARABLE, CLOSE_ON_DAY_SELECT, SHOW_TODAY_BUTTON, HIDE_FIELD]
   },
   [componentTypes.PLAIN_TEXT]: { attributes: [MULTI_LINE_LABEL] },
   [componentTypes.RADIO]: { attributes: [LABEL, IS_DISABLED, OPTIONS, HIDE_FIELD] },
@@ -231,10 +213,8 @@ const Demo = () => (
         mode="subset"
         debug={false}
         controlPanel={({ getSchema, isValid, className }) => (
-          <div className={className}>
-            <button onClick={() => console.log('schema', getSchema())}>
-              Save, {JSON.stringify({ isValid }, null, 2)}
-            </button>
+          <div className={className} hidden={true}>
+            <button onClick={() => console.log('schema', getSchema())}>Save, {JSON.stringify({ isValid }, null, 2)}</button>
           </div>
         )}
       />

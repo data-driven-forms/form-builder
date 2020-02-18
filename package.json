@@ -18,7 +18,9 @@
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
-    "@data-driven-forms/pf4-component-mapper": "^1.27.3",
+    "@data-driven-forms/pf4-component-mapper": "^1.27.6",
+    "@material-ui/core": "^4.9.3",
+    "@material-ui/icons": "^4.9.1",
     "@patternfly/react-core": "^3.134.2",
     "@patternfly/react-icons": "^3.14.39",
     "babel-eslint": "^10.0.3",
@@ -60,10 +62,8 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "@data-driven-forms/mui-component-mapper": "^1.23.1",
-    "@data-driven-forms/react-form-renderer": "^1.23.0",
-    "@material-ui/core": "^4.7.0",
-    "@material-ui/icons": "^4.5.1",
+    "@data-driven-forms/mui-component-mapper": "^1.27.6",
+    "@data-driven-forms/react-form-renderer": "^1.27.6",
     "clsx": "^1.0.4",
     "final-form": "^4.18.7",
     "lodash": "^4.17.15",
@@ -76,10 +76,12 @@
     "redux": "^4.0.5"
   },
   "peerDependencies": {
-    "@data-driven-forms/pf4-component-mapper": "^1.27.3",
-    "@data-driven-forms/react-form-renderer": "^1.27.3",
+    "@data-driven-forms/pf4-component-mapper": "^1.27.6",
+    "@data-driven-forms/react-form-renderer": "^1.27.6",
     "@patternfly/react-core": "^3.134.2",
-    "@patternfly/react-icons": "^3.14.39"
+    "@patternfly/react-icons": "^3.14.39",
+    "@material-ui/core": "^4.9.3",
+    "@material-ui/icons": "^4.9.1"
   },
   "jest": {
     "snapshotSerializers": [

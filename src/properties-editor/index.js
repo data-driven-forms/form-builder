@@ -98,7 +98,13 @@ const PropertiesEditor = () => {
             {properties.map((property) => {
               const Component = propertiesMapper[property.component];
               return (
-                <MemoizedProperty key={property.propertyName} Component={Component} property={property} handlePropertyChange={handlePropertyChange} />
+                <MemoizedProperty
+                  selectedComponent={field.id}
+                  key={property.propertyName}
+                  Component={Component}
+                  property={property}
+                  handlePropertyChange={handlePropertyChange}
+                />
               );
             })}
           </Fragment>

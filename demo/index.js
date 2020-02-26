@@ -8,7 +8,7 @@ import FormBuilder from '../src/index';
 // import pickerMapper from './picker-mapper';
 // import propertiesMapper from './properties-mapper';
 
-import { pickerMapper, propertiesMapper, builderMapper } from '../mui-mappers';
+import { pickerMapper, propertiesMapper, builderMapper } from '../pf4-mappers';
 
 import {
   LABEL,

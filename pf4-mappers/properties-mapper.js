@@ -146,7 +146,7 @@ const PropertyOptions = ({ value = [], label, onChange, innerProps: { restricted
                     }
                   }}
                   placeholder="Value"
-                  isDisabled={deleted}
+                  isDisabled={deleted || restricted}
                   onChange={(value) => handleOptionChange(value, index, 'value')}
                   value={value || ''}
                   type="text"

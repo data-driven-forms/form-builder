@@ -1,6 +1,6 @@
 {
   "name": "@data-driven-forms/form-builder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Interactive drang and drop editor for creating data driven forms schema",
   "main": "dist/index.js",
   "files": [
@@ -62,10 +62,9 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "@data-driven-forms/mui-component-mapper": "^1.27.6",
     "@data-driven-forms/react-form-renderer": "^1.27.6",
     "clsx": "^1.0.4",
-    "final-form": "^4.18.7",
+    "final-form": "4.18.5",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
@@ -76,6 +75,7 @@
     "redux": "^4.0.5"
   },
   "peerDependencies": {
+    "@data-driven-forms/mui-component-mapper": "^1.27.6",
     "@data-driven-forms/pf4-component-mapper": "^1.27.6",
     "@data-driven-forms/react-form-renderer": "^1.27.6",
     "@patternfly/react-core": "^3.134.2",

@@ -1,10 +1,11 @@
 import React, { useContext, memo } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { Field as FinalFormField } from 'react-final-form';
+import { Field as FinalFormField, useField } from 'react-final-form';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import ComponentsContext from './components-context';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import isEqual from 'lodash/isEqual';
 
 const Field = memo(({ field: { clone, isContainer, validate, ...field }, index, shouldClone, disableDrag, selectedComponent, draggingContainer }) => {
   const {
@@ -33,6 +34,7 @@ const Field = memo(({ field: { clone, isContainer, validate, ...field }, index, 
     );
   }
   const { hideField, initialized, preview, restricted, ...cleanField } = field;
+  const { input, meta } = useField(field.name, { initialValue: field.initialValue });
   return (
     <Draggable isDragDisabled={disableDrag} draggableId={field.id} index={index}>
       {(provided, snapshot) => {
@@ -64,9 +66,10 @@ const Field = memo(({ field: { clone, isContainer, validate, ...field }, index, 
                 {field.preview ? (
                   <div>{field.content}</div>
                 ) : (
-                  <FinalFormField
+                  <FieldComponent
+                    input={input}
+                    meta={meta}
                     {...cleanField}
-                    component={FieldComponent}
                     FieldProvider={FinalFormField}
                     formOptions={formOptions}
                     innerProps={innerProps}
@@ -104,7 +107,7 @@ const MemoizedField = (props) => {
       selectedComponent,
       draggingContainer
     }),
-    shallowEqual
+    isEqual
   );
   return <Field {...props} selectedComponent={selectedComponent} draggingContainer={draggingContainer} />;
 };

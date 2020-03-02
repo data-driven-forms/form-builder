@@ -333,12 +333,12 @@ const DragHandle = ({ dragHandleProps, hasPropertyError, disableDrag }) => {
 
 DragHandle.propTypes = {
   dragHandleProps: PropTypes.shape({
-    'data-rbd-drag-handle-draggable-id': PropTypes.string.isRequired,
-    'data-rbd-drag-handle-context-id': PropTypes.string.isRequired,
+    'data-rbd-drag-handle-draggable-id': PropTypes.string,
+    'data-rbd-drag-handle-context-id': PropTypes.string,
     'aria-labelledby': PropTypes.string,
     tabIndex: PropTypes.number,
     draggable: PropTypes.bool,
-    onDragStart: PropTypes.func.isRequired
+    onDragStart: PropTypes.func
   }),
   disableDrag: PropTypes.bool,
   hasPropertyError: PropTypes.bool

@@ -8,7 +8,7 @@ import FormBuilder from '../src/index';
 // import pickerMapper from './picker-mapper';
 // import propertiesMapper from './properties-mapper';
 
-import { pickerMapper, propertiesMapper, builderMapper } from '../pf4-mappers';
+import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../pf4-mappers';
 
 import {
   LABEL,
@@ -213,25 +213,14 @@ const Demo = () => (
         disableAdd={false}
         mode="subset"
         debug={false}
-        controlPanel={({ getSchema, isValid, className }) => (
-          <div className={className} hidden={true}>
-            <button onClick={() => console.log('schema', getSchema())}>Save, {JSON.stringify({ isValid }, null, 2)}</button>
-          </div>
-        )}
-      >
-        {({ ComponentPicker, PropertiesEditor, DropTarget, getSchema, isValid }) => (
-          <div>
+        render={({ isValid, getSchema, ...props }) => (
+          <BuilderTemplate {...props}>
             <div>
-              <button onClick={() => console.log('schema', getSchema())}>Save, {JSON.stringify({ isValid }, null, 2)}</button>
+              <button onClick={() => console.log(getSchema())}>Click to get state</button>
             </div>
-            <div style={{ display: 'flex' }}>
-              <ComponentPicker />
-              <DropTarget key="drop-target" />
-              <PropertiesEditor />
-            </div>
-          </div>
+          </BuilderTemplate>
         )}
-      </FormBuilder>
+      />
     </ThemeProvider>
   </Fragment>
 );

@@ -80,15 +80,9 @@ const FormBuilderLayout = ({ initialFields, disableDrag, mode, disableAdd, child
 };
 
 FormBuilderLayout.propTypes = {
-  controlPanel: PropTypes.oneOfType([PropTypes.node, PropTypes.element, PropTypes.func]).isRequired,
-  controlPanelPosition: PropTypes.oneOf(['top', 'bottom']),
   initialFields: PropTypes.object,
   disableDrag: PropTypes.bool,
   mode: PropTypes.string.isRequired
-};
-
-FormBuilderLayout.defaultProps = {
-  controlPanelPosition: 'top'
 };
 
 export default FormBuilderLayout;

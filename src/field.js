@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { useContext, memo, Fragment } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Field as FinalFormField, useField } from 'react-final-form';
 import PropTypes from 'prop-types';
@@ -82,19 +82,21 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
               {field.preview ? (
                 <div>{field.content}</div>
               ) : (
-                <FieldComponent
-                  input={input}
-                  meta={meta}
-                  {...cleanField}
-                  FieldProvider={FinalFormField}
-                  formOptions={formOptions}
-                  innerProps={innerProps}
-                />
+                <Fragment>
+                  <FieldComponent
+                    input={input}
+                    meta={meta}
+                    {...cleanField}
+                    FieldProvider={FinalFormField}
+                    formOptions={formOptions}
+                    innerProps={innerProps}
+                  />
+                  {!shouldClone && (
+                    <DragHandle disableDrag={disableDrag} hasPropertyError={!!hasPropertyError} dragHandleProps={{ ...provided.dragHandleProps }} />
+                  )}
+                </Fragment>
               )}
             </FieldLayout>
-            {!shouldClone && (
-              <DragHandle disableDrag={disableDrag} hasPropertyError={!!hasPropertyError} dragHandleProps={{ ...provided.dragHandleProps }} />
-            )}
           </div>
         );
       }}

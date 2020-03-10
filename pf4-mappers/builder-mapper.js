@@ -95,24 +95,28 @@ SelectField.defaultProps = {
   onChange: () => {}
 };
 
-const FieldLayout = ({ children, disableDrag }) => (
-  <div
-    className={clsx('pf4-field-layout', {
-      'drag-disabled': disableDrag
-    })}
-  >
-    {children}
+const FieldLayout = ({ children, disableDrag, selected }) => (
+  <div style={{ paddingBottom: 8 }}>
+    <div
+      className={clsx('pf4-field-layout', {
+        'drag-disabled': disableDrag,
+        selected
+      })}
+    >
+      {children}
+    </div>
   </div>
 );
 
 FieldLayout.propTypes = {
   children: childrenPropType,
-  disableDrag: PropTypes.bool
+  disableDrag: PropTypes.bool,
+  selected: PropTypes.bool
 };
 
-const BuilderColumn = ({ children, className, ...props }) => {
+const BuilderColumn = ({ children, isDraggingOver, ...props }) => {
   return (
-    <Card {...props} className={clsx('pf4-builder-column', className)}>
+    <Card {...props} className={'pf4-builder-column'}>
       <CardBody className="pf-c-form">{children}</CardBody>
     </Card>
   );
@@ -283,7 +287,7 @@ PropertiesEditor.propTypes = {
   fieldName: PropTypes.string,
   handleClose: PropTypes.func.isRequired,
   handleDelete: PropTypes.func,
-  hasPropertyError: PropTypes.bool
+  hasPropertyError: PropTypes.array
 };
 
 SubFormField.propTypes = {

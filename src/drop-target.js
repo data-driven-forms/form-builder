@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import clsx from 'clsx';
 import { Form } from 'react-final-form';
 import PropTypes from 'prop-types';
 import Field from './field';
@@ -11,8 +10,7 @@ import { DropTargetContext } from './layout-context';
 
 const DropTarget = () => {
   const {
-    componentMapper: { FormContainer },
-    classNamePrefix
+    componentMapper: { FormContainer }
   } = useContext(ComponentsContext);
   const { disableDrag } = useContext(DropTargetContext);
   const dropTargets = useSelector(({ dropTargets }) => dropTargets);
@@ -24,14 +22,8 @@ const DropTarget = () => {
         return (
           <Form onSubmit={() => {}}>
             {() => (
-              <FormContainer className={`${classNamePrefix}__form-preview`}>
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className={clsx(`${classNamePrefix}__drop-list`, {
-                    dragging: snapshot.isDraggingOver
-                  })}
-                >
+              <FormContainer isDraggingOver={snapshot.isDraggingOver}>
+                <div ref={provided.innerRef} {...provided.droppableProps}>
                   {fields.map((fieldId, index) => (
                     <Field disableDrag={disableDrag} key={fieldId} fieldId={fieldId} index={index} />
                   ))}

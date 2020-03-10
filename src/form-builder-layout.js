@@ -8,7 +8,6 @@ import ComponentPicker from './component-picker';
 import { INITIALIZE } from './builder-state/builder-reducer';
 import createSchema, { validateOutput } from './helpers/create-export-schema';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import './style.css';
 import { DropTargetContext, ComponentPickerContext } from './layout-context';
 import { COMPONENTS_LIST } from './helpers/create-initial-data';
 

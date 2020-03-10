@@ -1,7 +1,6 @@
 import React, { useContext, memo } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Field as FinalFormField, useField } from 'react-final-form';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import ComponentsContext from './components-context';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,8 +8,7 @@ import isEqual from 'lodash/isEqual';
 
 const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContainer }) => {
   const {
-    componentMapper: { FieldActions, FieldLayout, DragHandle, ...rest },
-    classNamePrefix
+    componentMapper: { FieldActions, FieldLayout, DragHandle, ...rest }
   } = useContext(ComponentsContext);
   const { clone, isContainer, validate, ...field } = useSelector(({ fields }) => fields[fieldId]);
   const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent);
@@ -26,9 +24,17 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
       <Draggable isDragDisabled draggableId={field.id} index={index}>
         {(provided) => (
           <div
-            className={clsx('container-end', {
-              hide: !!field.id.match(new RegExp(`^${draggingContainer}-end`))
-            })}
+            style={
+              field.id.match(new RegExp(`^${draggingContainer}-end`))
+                ? {
+                    visibility: 'hidden',
+                    height: 0,
+                    padding: 0,
+                    border: 0,
+                    margin: 0
+                  }
+                : {}
+            }
             ref={provided.innerRef}
             {...provided.draggableProps}
           ></div>
@@ -51,38 +57,44 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
         };
         return (
           <div
+            style={
+              field.container !== undefined && field.container === draggingContainer
+                ? {
+                    visibility: 'hidden',
+                    height: 0,
+                    padding: 0,
+                    border: 0,
+                    margin: 0
+                  }
+                : {}
+            }
             ref={provided.innerRef}
             {...provided.draggableProps}
             onClick={() => dispatch({ type: 'setSelectedComponent', payload: field.id })}
-            className={`${classNamePrefix}__draggable-container`}
           >
-            <div
-              className={clsx(`${classNamePrefix}__field-container`, {
-                dragging: snapshot.isDragging,
-                selected: selectedComponent === field.id,
-                'is-container': isContainer,
-                'in-container': field.container,
-                hide: field.container !== undefined && field.container === draggingContainer
-              })}
+            <FieldLayout
+              disableDrag={disableDrag}
+              dragging={snapshot.isDragging}
+              selected={selectedComponent === field.id}
+              isContainer={isContainer}
+              inContainer={field.container}
             >
-              <FieldLayout disableDrag={disableDrag}>
-                {field.preview ? (
-                  <div>{field.content}</div>
-                ) : (
-                  <FieldComponent
-                    input={input}
-                    meta={meta}
-                    {...cleanField}
-                    FieldProvider={FinalFormField}
-                    formOptions={formOptions}
-                    innerProps={innerProps}
-                  />
-                )}
-              </FieldLayout>
-              {!shouldClone && (
-                <DragHandle disableDrag={disableDrag} hasPropertyError={!!hasPropertyError} dragHandleProps={{ ...provided.dragHandleProps }} />
+              {field.preview ? (
+                <div>{field.content}</div>
+              ) : (
+                <FieldComponent
+                  input={input}
+                  meta={meta}
+                  {...cleanField}
+                  FieldProvider={FinalFormField}
+                  formOptions={formOptions}
+                  innerProps={innerProps}
+                />
               )}
-            </div>
+            </FieldLayout>
+            {!shouldClone && (
+              <DragHandle disableDrag={disableDrag} hasPropertyError={!!hasPropertyError} dragHandleProps={{ ...provided.dragHandleProps }} />
+            )}
           </div>
         );
       }}

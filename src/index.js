@@ -22,7 +22,6 @@ const FormBuilder = ({
   schemaTemplate,
   mode,
   debug,
-  classNamePrefix,
   children,
   ...props
 }) => {
@@ -46,17 +45,11 @@ const FormBuilder = ({
         componentProperties,
         pickerMapper,
         propertiesMapper,
-        debug,
-        classNamePrefix
+        debug
       }}
     >
       <Provider store={builderStore}>
-        <FormBuilderLayout
-          initialFields={createInitialData(initialFields, schema, mode === 'subset', schemaTemplate)}
-          classNamePrefix={classNamePrefix}
-          mode={mode}
-          {...props}
-        >
+        <FormBuilderLayout initialFields={createInitialData(initialFields, schema, mode === 'subset', schemaTemplate)} mode={mode} {...props}>
           {children}
         </FormBuilderLayout>
       </Provider>
@@ -81,14 +74,12 @@ FormBuilder.propTypes = {
   propertiesMapper: PropTypes.object,
   cloneWhileDragging: PropTypes.bool,
   schema: PropTypes.object,
-  schemaTemplate: PropTypes.object,
-  classNamePrefix: PropTypes.string
+  schemaTemplate: PropTypes.object
 };
 
 FormBuilder.defaultProps = {
   mode: 'default',
-  debug: false,
-  classNamePrefix: 'ddorg__form-builder'
+  debug: false
 };
 
 export default FormBuilder;

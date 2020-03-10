@@ -19,7 +19,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import WarningIcon from '@material-ui/icons/Warning';
+import ErrorIcon from '@material-ui/icons/Error';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
 import Badge from '@material-ui/core/Badge';
 import grey from '@material-ui/core/colors/grey';
@@ -45,10 +45,6 @@ const useStyles = makeStyles(() => ({
     display: 'grid',
     'grid-gap': 16
   },
-  column: {
-    'flex-grow': 1,
-    'max-width': '20%'
-  },
   formContainer: {
     'flex-grow': 1,
     padding: 16
@@ -61,7 +57,8 @@ const useStyles = makeStyles(() => ({
     height: '100vh'
   },
   componentWrapper: {
-    padding: 8
+    position: 'relative',
+    display: 'flex'
   },
   tabs: {
     marginBottom: 8
@@ -73,10 +70,27 @@ const useStyles = makeStyles(() => ({
     background: grey[200],
     'text-align': 'right',
     padding: 2,
-    lineHeight: 0
+    lineHeight: 0,
+    width: 'calc(100% + 16px)',
+    position: 'relative',
+    left: -8
   },
   warning: {
     fill: red[500]
+  },
+  fieldLayout: {
+    paddingBottom: 8,
+    cursor: 'pointer',
+    position: 'relative'
+  },
+  fieldContent: {
+    padding: 0,
+    paddingBottom: 0
+  },
+  fieldCard: {
+    overflow: 'unset',
+    padding: 8,
+    paddingBottom: 0
   }
 }));
 
@@ -84,22 +98,24 @@ const ComponentWrapper = ({ hideField, children }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.componentWrapper}>
-      {hideField ? (
-        <Badge
-          color="primary"
-          className={classes.badge}
-          badgeContent={<VisibilityOffIcon aria-label="hidden" titleAccess="hidden field" />}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
-          }}
-        >
-          {children}
-        </Badge>
-      ) : (
-        children
-      )}
+    <div>
+      <div className={classes.componentWrapper}>
+        {hideField ? (
+          <Badge
+            color="default"
+            className={classes.badge}
+            badgeContent={<VisibilityOffIcon color="primary" aria-label="hidden" titleAccess="hidden field" />}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+          >
+            {children}
+          </Badge>
+        ) : (
+          children
+        )}
+      </div>
     </div>
   );
 };
@@ -153,36 +169,36 @@ SelectField.defaultProps = {
   onChange: () => {}
 };
 
-const FieldLayout = ({ children, disableDrag }) => (
-  <div
-    className={clsx({
-      'drag-disabled': disableDrag
-    })}
-  >
-    {children}
-  </div>
-);
+const FieldLayout = ({ children, disableDrag }) => {
+  const classes = useStyles();
+  return (
+    <div
+      className={clsx(classes.fieldLayout, {
+        'drag-disabled': disableDrag
+      })}
+    >
+      <Card square className={classes.fieldCard}>
+        {children}
+      </Card>
+    </div>
+  );
+};
 
 FieldLayout.propTypes = {
   children: childrenPropType,
   disableDrag: PropTypes.bool
 };
 
-const BuilderColumn = ({ children, className, ...props }) => {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.column}>
-      <Card {...props} className={className} raised>
-        <CardContent>{children}</CardContent>
-      </Card>
-    </div>
-  );
-};
+const BuilderColumn = ({ children, isDraggingOver, ...props }) => (
+  <Card {...props} raised>
+    <CardContent>{children}</CardContent>
+  </Card>
+);
 
 BuilderColumn.propTypes = {
   className: PropTypes.string,
-  children: childrenPropType
+  children: childrenPropType,
+  isDraggingOver: PropTypes.bool
 };
 
 const DatePickerField = ({ innerProps: { hideField }, propertyValidation, ...props }) => {
@@ -302,7 +318,14 @@ const PropertiesEditor = ({
           Properties editor
         </CardHeader>
         <Tabs className={classes.tabs} variant="fullWidth" value={activeTab} onChange={(_e, tabIndex) => setActiveTab(tabIndex)}>
-          <Tab tabIndex="-1" label={<span>Properties {hasPropertyError && <WarningIcon className={classes.warning} />}</span>} />
+          <Tab
+            tabIndex="-1"
+            label={
+              <Badge color="default" badgeContent={hasPropertyError && <ErrorIcon className={classes.warning} />}>
+                Properties
+              </Badge>
+            }
+          />
           <Tab tabIndex="-1" label="Validation" />
         </Tabs>
         <div hidden={activeTab !== 0}>
@@ -339,7 +362,7 @@ PropertiesEditor.propTypes = {
   fieldName: PropTypes.string,
   handleClose: PropTypes.func.isRequired,
   handleDelete: PropTypes.func,
-  hasPropertyError: PropTypes.bool
+  hasPropertyError: PropTypes.array
 };
 
 SubFormField.propTypes = {
@@ -385,7 +408,7 @@ const DragHandle = ({ dragHandleProps, hasPropertyError, disableDrag }) => {
 
   return (
     <div {...dragHandleProps} className={classes.handle}>
-      {hasPropertyError && <WarningIcon className={classes.warning} />}
+      {hasPropertyError && <ErrorIcon className={classes.warning} />}
       {!disableDrag && <DragHandleIcon />}
     </div>
   );
@@ -404,16 +427,10 @@ DragHandle.propTypes = {
   hasPropertyError: PropTypes.bool
 };
 
-const FormContainer = ({ children, className }) => {
+const FormContainer = ({ children }) => {
   const classes = useStyles();
 
-  return (
-    <div className={classes.formContainer}>
-      <Card raised className={className}>
-        <CardContent>{children}</CardContent>
-      </Card>
-    </div>
-  );
+  return <div className={classes.formContainer}>{children}</div>;
 };
 
 FormContainer.propTypes = {

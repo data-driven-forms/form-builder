@@ -4,11 +4,9 @@ import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-re
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
-// import builderMapper from './builder-mapper';
-// import pickerMapper from './picker-mapper';
-// import propertiesMapper from './properties-mapper';
 
-import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../pf4-mappers';
+import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../mui-mappers';
+// import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../pf4-mappers';
 
 import {
   LABEL,

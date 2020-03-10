@@ -1,20 +1,29 @@
 import React, { useContext } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import ComponentsContext from './components-context';
 import PickerField from './picker-field';
+import { COMPONENTS_LIST } from './helpers/create-initial-data';
+import { useSelector } from 'react-redux';
+import { ComponentPickerContext } from './layout-context';
 
-const ComponentPicker = ({ dropTarget, fields }) => {
+const ComponentPicker = () => {
   const {
     componentMapper: { BuilderColumn },
     classNamePrefix
   } = useContext(ComponentsContext);
+  const { fields, disableAdd } = useContext(ComponentPickerContext);
+  const dropTargetId = useSelector(({ dropTargets }) => dropTargets[COMPONENTS_LIST].id);
+  const dropTargetTitle = useSelector(({ dropTargets }) => dropTargets[COMPONENTS_LIST].title);
+
+  if (disableAdd) {
+    return null;
+  }
   return (
-    <Droppable droppableId={dropTarget.id} isDropDisabled>
+    <Droppable droppableId={dropTargetId} isDropDisabled>
       {(provided, snapshot) => (
         <BuilderColumn className={`${classNamePrefix}__component-picker-container`}>
-          <h3 className="title">{dropTarget.title}</h3>
+          <h3 className="title">{dropTargetTitle}</h3>
           <div
             ref={provided.innerRef}
             className={clsx(`${classNamePrefix}__picker-list`, {
@@ -30,18 +39,6 @@ const ComponentPicker = ({ dropTarget, fields }) => {
       )}
     </Droppable>
   );
-};
-
-ComponentPicker.propTypes = {
-  fields: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  dropTarget: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
-  }).isRequired
 };
 
 export default ComponentPicker;

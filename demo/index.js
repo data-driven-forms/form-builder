@@ -210,6 +210,7 @@ const Demo = () => (
         propertiesMapper={propertiesMapper}
         cloneWhileDragging
         disableDrag={false}
+        disableAdd={false}
         mode="subset"
         debug={false}
         controlPanel={({ getSchema, isValid, className }) => (
@@ -217,7 +218,20 @@ const Demo = () => (
             <button onClick={() => console.log('schema', getSchema())}>Save, {JSON.stringify({ isValid }, null, 2)}</button>
           </div>
         )}
-      />
+      >
+        {({ ComponentPicker, PropertiesEditor, DropTarget, getSchema, isValid }) => (
+          <div>
+            <div>
+              <button onClick={() => console.log('schema', getSchema())}>Save, {JSON.stringify({ isValid }, null, 2)}</button>
+            </div>
+            <div style={{ display: 'flex' }}>
+              <ComponentPicker />
+              <DropTarget key="drop-target" />
+              <PropertiesEditor />
+            </div>
+          </div>
+        )}
+      </FormBuilder>
     </ThemeProvider>
   </Fragment>
 );

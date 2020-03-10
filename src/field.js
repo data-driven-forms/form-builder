@@ -7,16 +7,19 @@ import ComponentsContext from './components-context';
 import { useDispatch, useSelector } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 
-const Field = memo(({ field: { clone, isContainer, validate, ...field }, index, shouldClone, disableDrag, selectedComponent, draggingContainer }) => {
+const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContainer }) => {
   const {
     componentMapper: { FieldActions, FieldLayout, DragHandle, ...rest },
     classNamePrefix
   } = useContext(ComponentsContext);
+  const { clone, isContainer, validate, ...field } = useSelector(({ fields }) => fields[fieldId]);
+  const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent);
   const dispatch = useDispatch();
   const FieldComponent = rest[field.component];
   const formOptions = {
     renderForm: () => null
   };
+
   const hasPropertyError = field.propertyValidation && Object.entries(field.propertyValidation).find(([, value]) => value);
   if (field.component === 'container-end') {
     return (
@@ -91,14 +94,9 @@ Field.propTypes = {
   index: PropTypes.number.isRequired,
   shouldClone: PropTypes.bool,
   disableDrag: PropTypes.bool,
-  field: PropTypes.shape({
-    clone: PropTypes.bool,
-    isContainer: PropTypes.bool,
-    preview: PropTypes.bool,
-    validate: PropTypes.any
-  }).isRequired,
   selectedComponent: PropTypes.string,
-  draggingContainer: PropTypes.string
+  draggingContainer: PropTypes.string,
+  fieldId: PropTypes.string.isRequired
 };
 
 const MemoizedField = (props) => {

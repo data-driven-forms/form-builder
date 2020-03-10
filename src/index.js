@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FormBuilder from './form-builder';
+import FormBuilderLayout from './form-builder-layout';
 import ComponentsContext from './components-context';
 import createInitialData from './helpers/create-initial-data';
 import { Provider } from 'react-redux';
@@ -12,7 +12,7 @@ ContainerEnd.propTypes = {
   id: PropTypes.string
 };
 
-const App = ({
+const FormBuilder = ({
   componentMapper,
   componentProperties,
   pickerMapper,
@@ -22,7 +22,7 @@ const App = ({
   schemaTemplate,
   mode,
   debug,
-  classNamePrefix,
+  children,
   ...props
 }) => {
   const initialFields = Object.keys(componentProperties).reduce(
@@ -45,23 +45,19 @@ const App = ({
         componentProperties,
         pickerMapper,
         propertiesMapper,
-        debug,
-        classNamePrefix
+        debug
       }}
     >
       <Provider store={builderStore}>
-        <FormBuilder
-          initialFields={createInitialData(initialFields, schema, mode === 'subset', schemaTemplate)}
-          classNamePrefix={classNamePrefix}
-          mode={mode}
-          {...props}
-        />
+        <FormBuilderLayout initialFields={createInitialData(initialFields, schema, mode === 'subset', schemaTemplate)} mode={mode} {...props}>
+          {children}
+        </FormBuilderLayout>
       </Provider>
     </ComponentsContext.Provider>
   );
 };
 
-App.propTypes = {
+FormBuilder.propTypes = {
   mode: PropTypes.oneOf(['default', 'subset']),
   debug: PropTypes.bool,
   componentMapper: PropTypes.object,
@@ -78,14 +74,12 @@ App.propTypes = {
   propertiesMapper: PropTypes.object,
   cloneWhileDragging: PropTypes.bool,
   schema: PropTypes.object,
-  schemaTemplate: PropTypes.object,
-  classNamePrefix: PropTypes.string
+  schemaTemplate: PropTypes.object
 };
 
-App.defaultProps = {
+FormBuilder.defaultProps = {
   mode: 'default',
-  debug: false,
-  classNamePrefix: 'ddorg__form-builder'
+  debug: false
 };
 
-export default App;
+export default FormBuilder;

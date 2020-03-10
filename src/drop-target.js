@@ -1,39 +1,31 @@
 import React, { useContext } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import clsx from 'clsx';
 import { Form } from 'react-final-form';
 import PropTypes from 'prop-types';
 import Field from './field';
 import ComponentsContext from './components-context';
+import { useSelector } from 'react-redux';
+import { FORM_LAYOUT } from './helpers/create-initial-data';
+import { DropTargetContext } from './layout-context';
 
-const DropTarget = ({ dropTarget, fields, isDropDisabled, shouldClone, disableDrag, disableDelete }) => {
+const DropTarget = () => {
   const {
-    componentMapper: { FormContainer },
-    classNamePrefix
+    componentMapper: { FormContainer }
   } = useContext(ComponentsContext);
+  const { disableDrag } = useContext(DropTargetContext);
+  const dropTargets = useSelector(({ dropTargets }) => dropTargets);
+  const dropTargetId = useSelector(({ dropTargets }) => dropTargets[FORM_LAYOUT].id);
+  const fields = dropTargets[FORM_LAYOUT].fieldsIds;
   return (
-    <Droppable droppableId={dropTarget.id} isDropDisabled={isDropDisabled}>
+    <Droppable droppableId={dropTargetId}>
       {(provided, snapshot) => {
         return (
           <Form onSubmit={() => {}}>
             {() => (
-              <FormContainer className={`${classNamePrefix}__form-preview`}>
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className={clsx(`${classNamePrefix}__drop-list`, {
-                    dragging: snapshot.isDraggingOver
-                  })}
-                >
-                  {fields.map((field, index) => (
-                    <Field
-                      disableDrag={disableDrag}
-                      disableDelete={disableDelete && field.restricted}
-                      shouldClone={shouldClone}
-                      key={field.id}
-                      field={field}
-                      index={index}
-                    />
+              <FormContainer isDraggingOver={snapshot.isDraggingOver}>
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  {fields.map((fieldId, index) => (
+                    <Field disableDrag={disableDrag} key={fieldId} fieldId={fieldId} index={index} />
                   ))}
                   {provided.placeholder}
                 </div>
@@ -47,12 +39,6 @@ const DropTarget = ({ dropTarget, fields, isDropDisabled, shouldClone, disableDr
 };
 
 DropTarget.propTypes = {
-  dropTarget: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired,
-  fields: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired
-    })
-  ).isRequired,
   isDropDisabled: PropTypes.bool,
   shouldClone: PropTypes.bool,
   disableDrag: PropTypes.bool,

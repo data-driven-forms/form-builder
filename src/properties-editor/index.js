@@ -17,18 +17,24 @@ const checkRequiredDisabled = (field) => {
 
 const PropertiesEditor = () => {
   const dispatch = useDispatch();
+  const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent, shallowEqual);
   const field = useSelector(({ selectedComponent, fields }) => fields[selectedComponent], shallowEqual);
   const {
     componentMapper: { PropertiesEditor, PropertyGroup },
     componentProperties,
     propertiesMapper,
-    debug,
-    classnamePrefix
+    debug
   } = useContext(ComponentsContext);
   const [requiredDisabled, setRequiredDisabled] = useState(true);
   useEffect(() => {
-    setRequiredDisabled(() => checkRequiredDisabled(field));
-  }, [field]);
+    if (selectedComponent) {
+      setRequiredDisabled(() => checkRequiredDisabled(field));
+    }
+  }, [selectedComponent, field]);
+
+  if (!selectedComponent) {
+    return null;
+  }
   const properties = componentProperties[field.component].attributes;
   const validate = field.validate || [];
   const NameComponent = propertiesMapper.input;
@@ -111,7 +117,7 @@ const PropertiesEditor = () => {
         }
         validationChildren={
           <Fragment>
-            <PropertyGroup title="required validator" className={`${classnamePrefix}__validators-validator-group`}>
+            <PropertyGroup title="required validator">
               <IsRequiredComponent
                 value={field.isRequired}
                 label="Required"
@@ -152,7 +158,6 @@ const PropertiesEditor = () => {
                   title={type.split('-').join(' ')}
                   handleDelete={!original ? () => handleValidatorChange({}, 'remove', index) : undefined}
                   key={`${type}-${index}`}
-                  className={`${classnamePrefix}__validators-validator-group`}
                 >
                   {validatorsProperties[type].map((property, propertyIndex) => (
                     <MemoizedValidator

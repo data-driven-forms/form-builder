@@ -4,11 +4,9 @@ import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-re
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
-// import builderMapper from './builder-mapper';
-// import pickerMapper from './picker-mapper';
-// import propertiesMapper from './properties-mapper';
 
-import { pickerMapper, propertiesMapper, builderMapper } from '../pf4-mappers';
+import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../mui-mappers';
+// import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../pf4-mappers';
 
 import {
   LABEL,
@@ -210,12 +208,15 @@ const Demo = () => (
         propertiesMapper={propertiesMapper}
         cloneWhileDragging
         disableDrag={false}
+        disableAdd={false}
         mode="subset"
         debug={false}
-        controlPanel={({ getSchema, isValid, className }) => (
-          <div className={className} hidden={true}>
-            <button onClick={() => console.log('schema', getSchema())}>Save, {JSON.stringify({ isValid }, null, 2)}</button>
-          </div>
+        render={({ isValid, getSchema, ...props }) => (
+          <BuilderTemplate {...props}>
+            <div>
+              <button onClick={() => console.log(getSchema())}>Click to get state</button>
+            </div>
+          </BuilderTemplate>
         )}
       />
     </ThemeProvider>

@@ -9,28 +9,17 @@
 .pf4-picker-root:hover > button {
   background-color: var(--pf-c-button--m-primary--hover--BackgroundColor);
 }
-
-.pf4-builder-column {
-  margin: 16px
-}
-.pf4-builder-column:nth-child(1) > .pf-c-form {
-  display: block;
-}
 .pf4-builder-form-container {
   flex-grow: 1;
   width: 30%;
-}
-.pf4-builder-column:nth-child(3) {
-  flex-grow: 0.75;
-  background: transparent;
-  box-shadow: none;
-}
-.pf4-builder-column:nth-child(3) > .pf-c-card__body{
-  padding: 0
+  margin-top: 16px;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 .pf4-component-wrapper {
   flex-grow: 1;
   position: relative;
+  padding: 8px;
 }
 
 .pf4-field-actions {
@@ -66,23 +55,19 @@ button:hover>svg.pf4-danger-color {
 .pf4-tabs-container {
   padding: 0 !important;
 }
-.ddorg__form-builder__field-container.selected .pf4-field-layout, .ddorg__form-builder__field-container.selected .pf4-drag-handle {
+.pf4-field-layout.selected {
   border-bottom: 3px solid var(--pf-global--primary-color--100);
   transition: border-color .3s linear;
 }
 .pf4-validators-property-group:not(:last-child) {
   border-bottom: 2px solid #ebebeb;
 }
-.ddorg__form-builder__field-container {
-  display: flex;
-  border: 0;
-  border-radius: 0;
-}
 .pf4-field-layout {
-  padding: 8px;
+  cursor: pointer;
+  background-color: #fff;
   flex-grow: 1;
-  border: 1px solid lightgray;
-  border-right: none;
+  box-shadow: var(--pf-global--BoxShadow--sm);
+  display: flex;
 }
 .pf4-field-layout.drag-disabled {
   border-right: 1px solid lightgray;
@@ -91,7 +76,6 @@ button:hover>svg.pf4-danger-color {
   position: relative;
   padding: 4px;
   padding-top: 8px;
-  border: 1px solid lightgray;
   border-left: none;
   background-color: var(--pf-global--disabled-color--300);
   display: flex;
@@ -102,7 +86,7 @@ button:hover>svg.pf4-danger-color {
   fill: #B9B9B9;
   transition: fill .3s linear;
 }
-.ddorg__form-builder__field-container.selected .pf4-drag-handle .pf4-drag-handle-icon, .ddorg__form-builder__field-container:hover .pf4-drag-handle .pf4-drag-handle-icon {
+.pf4-field-layout.selected .pf4-drag-handle .pf4-drag-handle-icon, .pf4-field-layout:hover .pf4-drag-handle .pf4-drag-handle-icon {
   fill: var(--pf-global--primary-color--100);
 }
 .pf4-properties-editor-container {
@@ -133,10 +117,10 @@ button:hover>svg.pf4-success-color{
 .pf4-hidefield-overlay::before {
   position: absolute;
   content: "";
-  width: calc(100% + 18px);
-  height: calc(100% + 17.3px);
-  top: -9px;
-  left: -9px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
   transition: background-color linear .3s;
   background-color: transparent;
   pointer-events: none;
@@ -167,4 +151,14 @@ button:hover>svg.pf4-success-color{
 
 .icon-spacer-bottom {
   margin-bottom: 8px;
+}
+
+.pf4-form-builder-layout-template {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.pf4-form-builder-components {
+  display: flex;
+  flex-grow: 1;
 }

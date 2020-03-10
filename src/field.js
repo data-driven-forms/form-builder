@@ -1,31 +1,40 @@
-import React, { useContext, memo } from 'react';
+import React, { useContext, memo, Fragment } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Field as FinalFormField, useField } from 'react-final-form';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import ComponentsContext from './components-context';
 import { useDispatch, useSelector } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 
-const Field = memo(({ field: { clone, isContainer, validate, ...field }, index, shouldClone, disableDrag, selectedComponent, draggingContainer }) => {
+const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContainer }) => {
   const {
-    componentMapper: { FieldActions, FieldLayout, DragHandle, ...rest },
-    classNamePrefix
+    componentMapper: { FieldActions, FieldLayout, DragHandle, ...rest }
   } = useContext(ComponentsContext);
+  const { clone, isContainer, validate, ...field } = useSelector(({ fields }) => fields[fieldId]);
+  const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent);
   const dispatch = useDispatch();
   const FieldComponent = rest[field.component];
   const formOptions = {
     renderForm: () => null
   };
+
   const hasPropertyError = field.propertyValidation && Object.entries(field.propertyValidation).find(([, value]) => value);
   if (field.component === 'container-end') {
     return (
       <Draggable isDragDisabled draggableId={field.id} index={index}>
         {(provided) => (
           <div
-            className={clsx('container-end', {
-              hide: !!field.id.match(new RegExp(`^${draggingContainer}-end`))
-            })}
+            style={
+              field.id.match(new RegExp(`^${draggingContainer}-end`))
+                ? {
+                    visibility: 'hidden',
+                    height: 0,
+                    padding: 0,
+                    border: 0,
+                    margin: 0
+                  }
+                : {}
+            }
             ref={provided.innerRef}
             {...provided.draggableProps}
           ></div>
@@ -48,24 +57,32 @@ const Field = memo(({ field: { clone, isContainer, validate, ...field }, index, 
         };
         return (
           <div
+            style={
+              field.container !== undefined && field.container === draggingContainer
+                ? {
+                    visibility: 'hidden',
+                    height: 0,
+                    padding: 0,
+                    border: 0,
+                    margin: 0
+                  }
+                : {}
+            }
             ref={provided.innerRef}
             {...provided.draggableProps}
             onClick={() => dispatch({ type: 'setSelectedComponent', payload: field.id })}
-            className={`${classNamePrefix}__draggable-container`}
           >
-            <div
-              className={clsx(`${classNamePrefix}__field-container`, {
-                dragging: snapshot.isDragging,
-                selected: selectedComponent === field.id,
-                'is-container': isContainer,
-                'in-container': field.container,
-                hide: field.container !== undefined && field.container === draggingContainer
-              })}
+            <FieldLayout
+              disableDrag={disableDrag}
+              dragging={snapshot.isDragging}
+              selected={selectedComponent === field.id}
+              isContainer={isContainer}
+              inContainer={field.container}
             >
-              <FieldLayout disableDrag={disableDrag}>
-                {field.preview ? (
-                  <div>{field.content}</div>
-                ) : (
+              {field.preview ? (
+                <div>{field.content}</div>
+              ) : (
+                <Fragment>
                   <FieldComponent
                     input={input}
                     meta={meta}
@@ -74,12 +91,12 @@ const Field = memo(({ field: { clone, isContainer, validate, ...field }, index, 
                     formOptions={formOptions}
                     innerProps={innerProps}
                   />
-                )}
-              </FieldLayout>
-              {!shouldClone && (
-                <DragHandle disableDrag={disableDrag} hasPropertyError={!!hasPropertyError} dragHandleProps={{ ...provided.dragHandleProps }} />
+                  {!shouldClone && (
+                    <DragHandle disableDrag={disableDrag} hasPropertyError={!!hasPropertyError} dragHandleProps={{ ...provided.dragHandleProps }} />
+                  )}
+                </Fragment>
               )}
-            </div>
+            </FieldLayout>
           </div>
         );
       }}
@@ -91,14 +108,9 @@ Field.propTypes = {
   index: PropTypes.number.isRequired,
   shouldClone: PropTypes.bool,
   disableDrag: PropTypes.bool,
-  field: PropTypes.shape({
-    clone: PropTypes.bool,
-    isContainer: PropTypes.bool,
-    preview: PropTypes.bool,
-    validate: PropTypes.any
-  }).isRequired,
   selectedComponent: PropTypes.string,
-  draggingContainer: PropTypes.string
+  draggingContainer: PropTypes.string,
+  fieldId: PropTypes.string.isRequired
 };
 
 const MemoizedField = (props) => {

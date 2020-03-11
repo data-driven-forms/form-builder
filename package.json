@@ -1,7 +1,7 @@
 {
   "name": "@data-driven-forms/form-builder",
-  "version": "0.0.5",
-  "description": "Interactive drang and drop editor for creating data driven forms schema",
+  "version": "0.0.6",
+  "description": "Interactive drag and drop editor for creating data driven forms schema",
   "main": "dist/index.js",
   "files": [
     "dist/*"
@@ -20,8 +20,8 @@
     "@babel/preset-react": "^7.7.4",
     "@data-driven-forms/mui-component-mapper": "^1.29.1",
     "@data-driven-forms/pf4-component-mapper": "^1.29.1",
-    "@material-ui/core": "4.6.0",
-    "@material-ui/icons": "^4.9.1",
+    "@material-ui/core": "4.5.2",
+    "@material-ui/icons": "^4.5.2",
     "@patternfly/react-core": "^3.134.2",
     "@patternfly/react-icons": "^3.14.39",
     "babel-eslint": "^10.0.3",
@@ -79,8 +79,8 @@
     "@data-driven-forms/mui-component-mapper": "^1.29.1",
     "@data-driven-forms/pf4-component-mapper": "^1.29.1",
     "@data-driven-forms/react-form-renderer": "^1.29.1",
-    "@material-ui/core": "^4.9.3",
-    "@material-ui/icons": "^4.9.1",
+    "@material-ui/core": "^4.5.2",
+    "@material-ui/icons": "^4.5.2",
     "@patternfly/react-core": "^3.134.2",
     "@patternfly/react-icons": "^3.14.39"
   },

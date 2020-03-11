@@ -15,7 +15,11 @@ const externals = createFilter(
     'prop-types',
     '@data-driven-forms/react-form-renderer',
     '@patternfly/react-core/**',
-    '@patternfly/react-icons/**'
+    '@patternfly/react-icons/**',
+    '@material-ui/core/**',
+    '@material-ui/styles/**',
+    '@material-ui/icons/**',
+    '@data-driven-forms/*'
   ],
   null,
   { resolve: false }
@@ -28,8 +32,10 @@ const globals = {
   '@patternfly/react-core': 'PatternflyReact',
   '@patternfly/react-icons': 'ReactIcons',
   '@data-driven-forms/react-form-renderer': '@data-driven-forms/react-form-renderer',
-  '@data-driven-forms/pf4-component-mapper':
-    '@data-driven-forms/pf4-component-mapper'
+  '@data-driven-forms/pf4-component-mapper': '@data-driven-forms/pf4-component-mapper',
+  '@data-driven-forms/mui-component-mapper': '@data-driven-forms/mui-component-mapper',
+  '@material-ui/core': '@material-ui/core',
+  '@material-ui/utils': '@material-ui/utils'
 };
 
 const babelOptions = {
@@ -42,10 +48,7 @@ const commonjsOptions = {
   ignoreGlobal: true,
   namedExports: {
     'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer'],
-    'node_modules/@data-driven-forms/pf4-component-mapper/dist/index.js': [
-      'formFieldsMapper',
-      'rawComponents'
-    ]
+    'node_modules/@data-driven-forms/pf4-component-mapper/dist/index.js': ['formFieldsMapper', 'rawComponents']
   }
 };
 
@@ -88,6 +91,33 @@ export default [
       file: './dist/pf4-builder-mappers.js',
       format: 'umd',
       name: '@data-driven-forms/form-builder-pf4-mappers',
+      exports: 'named',
+      globals
+    },
+    external: Object.keys(globals),
+    plugins: [
+      nodeResolve(),
+      babel(babelOptions),
+      commonjs(commonjsOptions),
+      nodeGlobals(), // Wait for https://github.com/cssinjs/jss/pull/893
+      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+      terser({
+        keep_classnames: true,
+        keep_fnames: true
+      }),
+      postcss({
+        inject: true
+      }),
+      sizeSnapshot()
+    ]
+  },
+  {
+    onwarn,
+    input: './mui-mappers/index.js',
+    output: {
+      file: './dist/mui-builder-mappers.js',
+      format: 'umd',
+      name: '@data-driven-forms/form-builder-mui-mappers',
       exports: 'named',
       globals
     },

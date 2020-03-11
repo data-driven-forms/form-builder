@@ -7,6 +7,7 @@ import { terser } from 'rollup-plugin-terser';
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 import { createFilter } from 'rollup-pluginutils';
 import postcss from 'rollup-plugin-postcss';
+import sourcemaps from 'rollup-plugin-sourcemaps';
 
 const externals = createFilter(
   [
@@ -19,7 +20,7 @@ const externals = createFilter(
     '@material-ui/core/**',
     '@material-ui/styles/**',
     '@material-ui/icons/**',
-    '@data-driven-forms/*'
+    '@data-driven-forms/**'
   ],
   null,
   { resolve: false }
@@ -65,10 +66,12 @@ export default [
       format: 'umd',
       name: '@data-driven-forms/form-builder',
       exports: 'named',
-      globals
+      globals,
+      sourcemap: true
     },
     external: externals,
     plugins: [
+      sourcemaps(),
       nodeResolve(),
       babel(babelOptions),
       commonjs(commonjsOptions),
@@ -92,10 +95,12 @@ export default [
       format: 'umd',
       name: '@data-driven-forms/form-builder-pf4-mappers',
       exports: 'named',
-      globals
+      globals,
+      sourcemap: true
     },
     external: Object.keys(globals),
     plugins: [
+      sourcemaps(),
       nodeResolve(),
       babel(babelOptions),
       commonjs(commonjsOptions),
@@ -119,10 +124,12 @@ export default [
       format: 'umd',
       name: '@data-driven-forms/form-builder-mui-mappers',
       exports: 'named',
-      globals
+      globals,
+      sourcemap: true
     },
     external: Object.keys(globals),
     plugins: [
+      sourcemaps(),
       nodeResolve(),
       babel(babelOptions),
       commonjs(commonjsOptions),

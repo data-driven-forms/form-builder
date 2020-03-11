@@ -196,7 +196,7 @@ const PropertyOptions = ({ value = [], label, onChange, innerProps: { restricted
                   value={value || ''}
                   onChange={(e) => handleOptionChange(e.target.value, index, 'value')}
                   disabled={deleted}
-                  placeholder="Label"
+                  placeholder="Value"
                   aria-label={`option-value-${index}`}
                 />
               </td>

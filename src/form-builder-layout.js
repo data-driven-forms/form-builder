@@ -39,7 +39,6 @@ const FormBuilderLayout = ({ initialFields, disableDrag, mode, disableAdd, child
   const state = useSelector((state) => state, shallowEqual);
   useEffect(() => {
     dispatch({ type: INITIALIZE, payload: initialFields });
-    console.log('FormBuilderLayout mount');
   }, []);
   const getSchema = () => createSchema(state.fields);
 

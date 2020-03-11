@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { formFieldsMapper } from '@data-driven-forms/mui-component-mapper';
@@ -20,7 +20,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ErrorIcon from '@material-ui/icons/Error';
-import DragHandleIcon from '@material-ui/icons/DragHandle';
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import Badge from '@material-ui/core/Badge';
 import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
@@ -40,82 +40,148 @@ const commonPropTypes = {
   initialized: PropTypes.bool
 };
 
-const useStyles = makeStyles(() => ({
-  form: {
-    display: 'grid',
-    'grid-gap': 16
-  },
-  formContainer: {
-    'flex-grow': 1,
-    padding: 16
-  },
-  propertiesContainer: {
-    'padding-left': 8,
-    'flex-grow': 1,
-    'max-width': '30%',
-    width: '30%',
-    height: '100vh'
-  },
-  componentWrapper: {
-    position: 'relative',
-    display: 'flex'
-  },
-  tabs: {
-    marginBottom: 8
-  },
-  badge: {
-    width: '100%'
-  },
-  handle: {
-    background: grey[200],
-    'text-align': 'right',
-    padding: 2,
-    lineHeight: 0,
-    width: 'calc(100% + 16px)',
-    position: 'relative',
-    left: -8
-  },
-  warning: {
-    fill: red[500]
-  },
-  fieldLayout: {
-    paddingBottom: 8,
-    cursor: 'pointer',
-    position: 'relative'
-  },
-  fieldContent: {
-    padding: 0,
-    paddingBottom: 0
-  },
-  fieldCard: {
-    overflow: 'unset',
-    padding: 8,
-    paddingBottom: 0
-  }
-}));
+const useStyles = makeStyles((theme) => {
+  console.log('theme', theme);
+  return {
+    form: {
+      display: 'grid',
+      'grid-gap': 16
+    },
+    formContainer: {
+      'flex-grow': 1,
+      padding: 16
+    },
+    propertiesContainer: {
+      'padding-left': 8,
+      'flex-grow': 1,
+      'max-width': '30%',
+      width: '30%',
+      height: '100vh'
+    },
+    componentWrapper: {
+      position: 'relative',
+      display: 'flex',
+      flexGrow: 1,
+      padding: 8
+    },
+    tabs: {
+      marginBottom: 8
+    },
+    badge: {
+      width: '100%'
+    },
+    handle: {
+      background: grey[300],
+      textAlign: 'right',
+      padding: 2,
+      lineHeight: 0,
+      display: 'flex',
+      flexDirection: 'column',
+      '&:hover svg:last-child': {
+        fill: theme.palette.primary.main
+      }
+    },
+    warning: {
+      fill: red[500]
+    },
+    fieldLayout: {
+      paddingBottom: 8,
+      cursor: 'pointer',
+      position: 'relative',
+      '&:after': {
+        display: 'block',
+        content: '""',
+        position: 'absolute',
+        bottom: 8,
+        top: 0,
+        left: 0,
+        right: 0,
+        borderBottomStyle: 'solid',
+        borderBottomWidth: 3,
+        borderBottomColor: theme.palette.primary.main,
+        transform: 'scaleX(0)',
+        transitionProperty: 'transform',
+        transitionDuration: theme.transitions.duration.standard,
+        transitionTimingFunction: theme.transitions.easing.easeInOut
+      }
+    },
+    fieldLayoutDragging: {
+      '& .mui-builder-drag-handle-icon': {
+        fill: theme.palette.primary.main
+      }
+    },
+    fieldLayoutSelected: {
+      '&:after': {
+        transform: 'scaleX(1)'
+      }
+    },
+    fieldContent: {
+      padding: 0,
+      paddingBottom: 0
+    },
+    fieldCard: {
+      overflow: 'unset',
+      paddingBottom: 0,
+      display: 'flex'
+    },
+    builderColumn: {
+      margin: 16
+    },
+    componentWrapperOverlay: {
+      '&:after': {
+        zIndex: 0,
+        display: 'block',
+        content: '""',
+        position: 'absolute',
+        transitionProperty: 'all',
+        transitionDuration: theme.transitions.duration.standard,
+        transitionTimingFunction: theme.transitions.easing.easeInOut,
+        opacity: 0,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+      }
+    },
+    componentWrapperHidden: {
+      pointerEvents: 'none',
+      '&:after': {
+        background: grey[200],
+        opacity: 0.8
+      }
+    },
+    hiddenIconIndicator: {
+      zIndex: 1,
+      position: 'absolute',
+      left: '50%',
+      fontSize: '3rem',
+      top: 'calc(50% - 3rem / 2)',
+      opacity: 0,
+      transitionProperty: 'opacity',
+      transitionDuration: theme.transitions.duration.standard,
+      transitionTimingFunction: theme.transitions.easing.easeInOut
+    },
+    showHiddenIndicator: {
+      opacity: 1
+    }
+  };
+});
 
 const ComponentWrapper = ({ hideField, children }) => {
   const classes = useStyles();
 
   return (
-    <div>
-      <div className={classes.componentWrapper}>
-        {hideField ? (
-          <Badge
-            color="default"
-            className={classes.badge}
-            badgeContent={<VisibilityOffIcon color="primary" aria-label="hidden" titleAccess="hidden field" />}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-          >
-            {children}
-          </Badge>
-        ) : (
-          children
-        )}
-      </div>
+    <div
+      className={clsx(classes.componentWrapper, classes.componentWrapperOverlay, {
+        [classes.componentWrapperHidden]: hideField
+      })}
+    >
+      <VisibilityOffIcon
+        className={clsx(classes.hiddenIconIndicator, {
+          [classes.showHiddenIndicator]: hideField
+        })}
+      />
+      {children}
     </div>
   );
 };
@@ -169,11 +235,13 @@ SelectField.defaultProps = {
   onChange: () => {}
 };
 
-const FieldLayout = ({ children, disableDrag }) => {
+const FieldLayout = ({ children, disableDrag, dragging, selected }) => {
   const classes = useStyles();
   return (
     <div
       className={clsx(classes.fieldLayout, {
+        [classes.fieldLayoutDragging]: dragging,
+        [classes.fieldLayoutSelected]: selected,
         'drag-disabled': disableDrag
       })}
     >
@@ -186,14 +254,19 @@ const FieldLayout = ({ children, disableDrag }) => {
 
 FieldLayout.propTypes = {
   children: childrenPropType,
-  disableDrag: PropTypes.bool
+  disableDrag: PropTypes.bool,
+  dragging: PropTypes.bool,
+  selected: PropTypes.bool
 };
 
-const BuilderColumn = ({ children, isDraggingOver, ...props }) => (
-  <Card {...props} raised>
-    <CardContent>{children}</CardContent>
-  </Card>
-);
+const BuilderColumn = ({ children, isDraggingOver, ...props }) => {
+  const classes = useStyles();
+  return (
+    <div {...props} className={classes.builderColumn}>
+      {children}
+    </div>
+  );
+};
 
 BuilderColumn.propTypes = {
   className: PropTypes.string,
@@ -317,7 +390,13 @@ const PropertiesEditor = ({
         >
           Properties editor
         </CardHeader>
-        <Tabs className={classes.tabs} variant="fullWidth" value={activeTab} onChange={(_e, tabIndex) => setActiveTab(tabIndex)}>
+        <Tabs
+          indicatorColor="primary"
+          className={classes.tabs}
+          variant="fullWidth"
+          value={activeTab}
+          onChange={(_e, tabIndex) => setActiveTab(tabIndex)}
+        >
           <Tab
             tabIndex="-1"
             label={
@@ -409,7 +488,7 @@ const DragHandle = ({ dragHandleProps, hasPropertyError, disableDrag }) => {
   return (
     <div {...dragHandleProps} className={classes.handle}>
       {hasPropertyError && <ErrorIcon className={classes.warning} />}
-      {!disableDrag && <DragHandleIcon />}
+      {!disableDrag && <DragIndicatorIcon className="mui-builder-drag-handle-icon" />}
     </div>
   );
 };

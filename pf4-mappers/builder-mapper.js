@@ -355,6 +355,10 @@ FormContainer.propTypes = {
   className: PropTypes.string
 };
 
+const EmptyTarget = () => {
+  return <h1>Pick components from the component picker</h1>;
+};
+
 const builderMapper = {
   FieldLayout,
   PropertiesEditor,
@@ -370,7 +374,8 @@ const builderMapper = {
   [componentTypes.SUB_FORM]: SubFormField,
   BuilderColumn,
   PropertyGroup,
-  DragHandle
+  DragHandle,
+  EmptyTarget
 };
 
 export default builderMapper;

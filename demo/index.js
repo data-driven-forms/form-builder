@@ -34,7 +34,7 @@ const componentProperties = {
     attributes: [LABEL, IS_DISABLED, OPTIONS, HIDE_FIELD]
   },
   [componentTypes.SELECT]: {
-    attributes: [OPTIONS, LABEL, IS_DISABLED, PLACEHOLDER, HELPER_TEXT, HIDE_FIELD]
+    attributes: [LABEL, OPTIONS, IS_DISABLED, PLACEHOLDER, HELPER_TEXT, HIDE_FIELD]
   },
   [componentTypes.DATE_PICKER]: {
     attributes: [LABEL, TODAY_BUTTON_LABEL, IS_CLEARABLE, CLOSE_ON_DAY_SELECT, SHOW_TODAY_BUTTON, HIDE_FIELD]
@@ -81,6 +81,8 @@ const schema = {
       component: componentTypes.TEXT_FIELD,
       name: 'my-number-field',
       label: 'Number field',
+      dataType: 'integer',
+      initialValue: 5,
       validate: [
         {
           type: validatorTypes.MAX_NUMBER_VALUE,
@@ -150,6 +152,8 @@ const schemaTemplate = {
       name: 'my-number-field',
       label: 'Number field',
       type: 'number',
+      dataType: 'integer',
+      initialValue: 5,
       validate: [
         {
           type: validatorTypes.MAX_NUMBER_VALUE,

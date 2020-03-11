@@ -6,6 +6,7 @@ import MemoizedProperty from './memoized-property';
 import MemoizedValidator from './memozied-validator';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { SET_FIELD_VALIDATOR, SET_FIELD_PROPERTY, SET_SELECTED_COMPONENT, REMOVE_COMPONENT } from '../builder-state/builder-reducer';
+import convertInitialValue from './convert-initial-value';
 
 const validatorOptions = Object.keys(validatorTypes)
   .filter((key) => validatorTypes[key] !== validatorTypes.REQUIRED)
@@ -46,7 +47,7 @@ const PropertiesEditor = () => {
     dispatch({
       type: SET_FIELD_PROPERTY,
       payload: {
-        value,
+        value: convertInitialValue(value, field.dataType),
         propertyName,
         fieldId: field.id
       }

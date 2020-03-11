@@ -24,7 +24,10 @@ import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import Badge from '@material-ui/core/Badge';
 import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
+import blue from '@material-ui/core/colors/blue';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Box from '@material-ui/core/Box';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
 const childrenPropType = PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]);
@@ -40,132 +43,141 @@ const commonPropTypes = {
   initialized: PropTypes.bool
 };
 
-const useStyles = makeStyles((theme) => {
-  console.log('theme', theme);
-  return {
-    form: {
-      display: 'grid',
-      'grid-gap': 16
-    },
-    formContainer: {
-      'flex-grow': 1,
-      padding: 16
-    },
-    propertiesContainer: {
-      'padding-left': 8,
-      'flex-grow': 1,
-      'max-width': '30%',
-      width: '30%',
-      height: '100vh'
-    },
-    componentWrapper: {
-      position: 'relative',
-      display: 'flex',
-      flexGrow: 1,
-      padding: 8
-    },
-    tabs: {
-      marginBottom: 8
-    },
-    badge: {
-      width: '100%'
-    },
-    handle: {
-      background: grey[300],
-      textAlign: 'right',
-      padding: 2,
-      lineHeight: 0,
-      display: 'flex',
-      flexDirection: 'column',
-      '&:hover svg:last-child': {
-        fill: theme.palette.primary.main
-      }
-    },
-    warning: {
-      fill: red[500]
-    },
-    fieldLayout: {
-      paddingBottom: 8,
-      cursor: 'pointer',
-      position: 'relative',
-      '&:after': {
-        display: 'block',
-        content: '""',
-        position: 'absolute',
-        bottom: 8,
-        top: 0,
-        left: 0,
-        right: 0,
-        borderBottomStyle: 'solid',
-        borderBottomWidth: 3,
-        borderBottomColor: theme.palette.primary.main,
-        transform: 'scaleX(0)',
-        transitionProperty: 'transform',
-        transitionDuration: theme.transitions.duration.standard,
-        transitionTimingFunction: theme.transitions.easing.easeInOut
-      }
-    },
-    fieldLayoutDragging: {
-      '& .mui-builder-drag-handle-icon': {
-        fill: theme.palette.primary.main
-      }
-    },
-    fieldLayoutSelected: {
-      '&:after': {
-        transform: 'scaleX(1)'
-      }
-    },
-    fieldContent: {
-      padding: 0,
-      paddingBottom: 0
-    },
-    fieldCard: {
-      overflow: 'unset',
-      paddingBottom: 0,
-      display: 'flex'
-    },
-    builderColumn: {
-      margin: 16
-    },
-    componentWrapperOverlay: {
-      '&:after': {
-        zIndex: 0,
-        display: 'block',
-        content: '""',
-        position: 'absolute',
-        transitionProperty: 'all',
-        transitionDuration: theme.transitions.duration.standard,
-        transitionTimingFunction: theme.transitions.easing.easeInOut,
-        opacity: 0,
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-      }
-    },
-    componentWrapperHidden: {
-      pointerEvents: 'none',
-      '&:after': {
-        background: grey[200],
-        opacity: 0.8
-      }
-    },
-    hiddenIconIndicator: {
-      zIndex: 1,
+const useStyles = makeStyles((theme) => ({
+  form: {
+    display: 'grid',
+    'grid-gap': 16
+  },
+  formContainer: {
+    'flex-grow': 1,
+    padding: 16,
+    backgroundColor: 'transparent',
+    transitionProperty: 'background-color',
+    transitionDuration: theme.transitions.duration.standard,
+    transitionTimingFunction: theme.transitions.easing.easeInOut
+  },
+  propertiesContainer: {
+    'padding-left': 8,
+    'flex-grow': 1,
+    'max-width': '30%',
+    width: '30%',
+    height: '100vh'
+  },
+  componentWrapper: {
+    position: 'relative',
+    display: 'flex',
+    flexGrow: 1,
+    padding: 8
+  },
+  tabs: {
+    marginBottom: 8
+  },
+  badge: {
+    width: '100%'
+  },
+  handle: {
+    background: grey[300],
+    textAlign: 'right',
+    padding: 2,
+    lineHeight: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    '&:hover svg:last-child': {
+      fill: theme.palette.primary.main
+    }
+  },
+  warning: {
+    fill: red[500]
+  },
+  fieldLayout: {
+    paddingBottom: 8,
+    cursor: 'pointer',
+    position: 'relative',
+    '&:after': {
+      display: 'block',
+      content: '""',
       position: 'absolute',
-      left: '50%',
-      fontSize: '3rem',
-      top: 'calc(50% - 3rem / 2)',
-      opacity: 0,
-      transitionProperty: 'opacity',
+      bottom: 8,
+      top: 0,
+      left: 0,
+      right: 0,
+      borderBottomStyle: 'solid',
+      borderBottomWidth: 3,
+      borderBottomColor: theme.palette.primary.main,
+      transform: 'scaleX(0)',
+      transitionProperty: 'transform',
       transitionDuration: theme.transitions.duration.standard,
       transitionTimingFunction: theme.transitions.easing.easeInOut
-    },
-    showHiddenIndicator: {
-      opacity: 1
     }
-  };
-});
+  },
+  fieldLayoutDragging: {
+    '& .mui-builder-drag-handle-icon': {
+      fill: theme.palette.primary.main
+    }
+  },
+  fieldLayoutSelected: {
+    '&:after': {
+      pointerEvents: 'none',
+      transform: 'scaleX(1)'
+    }
+  },
+  fieldContent: {
+    padding: 0,
+    paddingBottom: 0
+  },
+  fieldCard: {
+    overflow: 'unset',
+    paddingBottom: 0,
+    display: 'flex'
+  },
+  builderColumn: {
+    margin: 16
+  },
+  componentWrapperOverlay: {
+    '&:after': {
+      pointerEvents: 'none',
+      zIndex: 0,
+      display: 'block',
+      content: '""',
+      position: 'absolute',
+      transitionProperty: 'all',
+      transitionDuration: theme.transitions.duration.standard,
+      transitionTimingFunction: theme.transitions.easing.easeInOut,
+      opacity: 0,
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0
+    }
+  },
+  componentWrapperHidden: {
+    pointerEvents: 'none',
+    '&:after': {
+      background: grey[200],
+      opacity: 0.8
+    }
+  },
+  hiddenIconIndicator: {
+    zIndex: 1,
+    position: 'absolute',
+    left: '50%',
+    fontSize: '3rem',
+    top: 'calc(50% - 3rem / 2)',
+    opacity: 0,
+    transitionProperty: 'opacity',
+    transitionDuration: theme.transitions.duration.standard,
+    transitionTimingFunction: theme.transitions.easing.easeInOut
+  },
+  showHiddenIndicator: {
+    opacity: 1
+  },
+  emptyTarget: {
+    height: '100%'
+  },
+  formContainerOver: {
+    backgroundColor: blue[100]
+  }
+}));
 
 const ComponentWrapper = ({ hideField, children }) => {
   const classes = useStyles();
@@ -229,10 +241,6 @@ const SelectField = ({ innerProps: { hideField }, options = [], propertyValidati
 SelectField.propTypes = {
   ...commonPropTypes,
   options: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.any, label: PropTypes.string }))
-};
-
-SelectField.defaultProps = {
-  onChange: () => {}
 };
 
 const FieldLayout = ({ children, disableDrag, dragging, selected }) => {
@@ -318,12 +326,19 @@ RadioField.defaultProps = {
   options: [],
   label: 'Please pick label and options'
 };
+const FieldProviderMock = ({ name, type, render, input, meta, ...props }) => {
+  return render({
+    ...props,
+    input,
+    meta
+  });
+};
 
-const SwitchField = ({ innerProps: { snapshot, hideField }, propertyValidation, ...props }) => {
+const SwitchField = ({ innerProps: { hideField }, propertyValidation, FieldProvider, component, ...props }) => {
   const Component = formFieldsMapper[componentTypes.SWITCH];
   return (
     <ComponentWrapper hideField={hideField}>
-      <Component {...props} label={snapshot.isDragging ? 'Switch field' : props.label} />
+      <Component {...props} FieldProvider={FieldProvider || FieldProviderMock} label={props.label} />
     </ComponentWrapper>
   );
 };
@@ -398,14 +413,13 @@ const PropertiesEditor = ({
           onChange={(_e, tabIndex) => setActiveTab(tabIndex)}
         >
           <Tab
-            tabIndex="-1"
             label={
               <Badge color="default" badgeContent={hasPropertyError && <ErrorIcon className={classes.warning} />}>
                 Properties
               </Badge>
             }
           />
-          <Tab tabIndex="-1" label="Validation" />
+          <Tab label="Validation" />
         </Tabs>
         <div hidden={activeTab !== 0}>
           <form className={classes.form}>{propertiesChildren}</form>
@@ -506,15 +520,33 @@ DragHandle.propTypes = {
   hasPropertyError: PropTypes.bool
 };
 
-const FormContainer = ({ children }) => {
+const FormContainer = ({ children, isDraggingOver }) => {
   const classes = useStyles();
 
-  return <div className={classes.formContainer}>{children}</div>;
+  return (
+    <div
+      className={clsx(classes.formContainer, {
+        [classes.formContainerOver]: isDraggingOver
+      })}
+    >
+      {children}
+    </div>
+  );
+};
+
+const EmptyTarget = () => {
+  const classes = useStyles();
+  return (
+    <Box className={classes.emptyTarget} display="flex" alignItems="center">
+      <ArrowBackIcon fontSize="large" />
+    </Box>
+  );
 };
 
 FormContainer.propTypes = {
   children: childrenPropType,
-  className: PropTypes.string
+  className: PropTypes.string,
+  isDraggingOver: PropTypes.bool
 };
 
 const builderMapper = {
@@ -532,7 +564,8 @@ const builderMapper = {
   [componentTypes.SUB_FORM]: SubFormField,
   BuilderColumn,
   PropertyGroup,
-  DragHandle
+  DragHandle,
+  EmptyTarget
 };
 
 export default builderMapper;

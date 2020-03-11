@@ -10,7 +10,7 @@ import { DropTargetContext } from './layout-context';
 
 const DropTarget = () => {
   const {
-    componentMapper: { FormContainer }
+    componentMapper: { FormContainer, EmptyTarget }
   } = useContext(ComponentsContext);
   const { disableDrag } = useContext(DropTargetContext);
   const dropTargets = useSelector(({ dropTargets }) => dropTargets);
@@ -23,7 +23,8 @@ const DropTarget = () => {
           <Form onSubmit={() => {}}>
             {() => (
               <FormContainer isDraggingOver={snapshot.isDraggingOver}>
-                <div ref={provided.innerRef} {...provided.droppableProps}>
+                <div ref={provided.innerRef} {...provided.droppableProps} style={{ height: '100%' }}>
+                  {fields.length === 0 && <EmptyTarget />}
                   {fields.map((fieldId, index) => (
                     <Field disableDrag={disableDrag} key={fieldId} fieldId={fieldId} index={index} />
                   ))}

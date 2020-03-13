@@ -16,7 +16,7 @@ describe('create export schema', () => {
         }
       ]
     };
-    expect(createSchema(fields)).toEqual(expectedSchema);
+    expect(createSchema(['should-remove-all-attributes', '123-text-field'], fields)).toEqual(expectedSchema);
   });
 
   it('should check for builder validation errors', () => {
@@ -38,6 +38,6 @@ describe('create export schema', () => {
         }
       ]
     };
-    expect(createSchema(schemaWithDeletedOption)).toEqual(expectedSchema);
+    expect(createSchema(['deleted-option-field'], schemaWithDeletedOption)).toEqual(expectedSchema);
   });
 });

@@ -9,7 +9,7 @@ import { INITIALIZE } from './builder-state/builder-reducer';
 import createSchema, { validateOutput } from './helpers/create-export-schema';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { DropTargetContext, ComponentPickerContext } from './layout-context';
-import { COMPONENTS_LIST } from './helpers/create-initial-data';
+import { COMPONENTS_LIST, FORM_LAYOUT } from './helpers/create-initial-data';
 
 const throttleValidator = throttle(validateOutput, 250);
 
@@ -40,7 +40,7 @@ const FormBuilderLayout = ({ initialFields, disableDrag, mode, disableAdd, child
   useEffect(() => {
     dispatch({ type: INITIALIZE, payload: initialFields });
   }, []);
-  const getSchema = () => createSchema(state.fields);
+  const getSchema = () => createSchema(state.dropTargets[FORM_LAYOUT].fieldsIds, state.fields);
 
   const onDragEnd = (result) => dispatch({ type: 'setColumns', payload: result });
   const onDragStart = (draggable) => dispatch({ type: 'dragStart', payload: draggable });

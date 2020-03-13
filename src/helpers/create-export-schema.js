@@ -21,11 +21,8 @@ export const validateOutput = (fields) => {
   return !valid;
 };
 
-const createSchema = (fields) => {
-  const keys = Object.keys(fields).filter((key) => !key.match(/^initial-/));
-  return {
-    fields: keys.map((key) => sanitizeField(fields[key]))
-  };
-};
+const createSchema = (fieldsIds = [], fields) => ({
+  fields: fieldsIds.map((key) => sanitizeField(fields[key]))
+});
 
 export default createSchema;

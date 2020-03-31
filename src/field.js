@@ -1,6 +1,5 @@
 import React, { useContext, memo, Fragment } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { Field as FinalFormField, useField } from 'react-final-form';
 import PropTypes from 'prop-types';
 import ComponentsContext from './components-context';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,9 +13,6 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
   const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent);
   const dispatch = useDispatch();
   const FieldComponent = rest[field.component];
-  const formOptions = {
-    renderForm: () => null
-  };
 
   const hasPropertyError = field.propertyValidation && Object.entries(field.propertyValidation).find(([, value]) => value);
   if (field.component === 'container-end') {
@@ -43,7 +39,6 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
     );
   }
   const { hideField, initialized, preview, restricted, ...cleanField } = field;
-  const { input, meta } = useField(field.name, { initialValue: field.initialValue });
   return (
     <Draggable isDragDisabled={disableDrag} draggableId={field.id} index={index}>
       {(provided, snapshot) => {
@@ -83,14 +78,7 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
                 <div>{field.content}</div>
               ) : (
                 <Fragment>
-                  <FieldComponent
-                    input={input}
-                    meta={meta}
-                    {...cleanField}
-                    FieldProvider={FinalFormField}
-                    formOptions={formOptions}
-                    innerProps={innerProps}
-                  />
+                  <FieldComponent {...cleanField} innerProps={innerProps} />
                   {!shouldClone && (
                     <DragHandle disableDrag={disableDrag} hasPropertyError={!!hasPropertyError} dragHandleProps={{ ...provided.dragHandleProps }} />
                   )}

@@ -92,7 +92,7 @@ export default {
     },
     messageType
   ],
-  [validatorTypes.MIN_ITEMS_VALIDATOR]: [{ ...thresholdType, label: 'Minimum number of items' }, messageType],
-  [validatorTypes.PATTERN_VALIDATOR]: [{ ...patternType, restriction: { lock: true } }, messageType],
+  [validatorTypes.MIN_ITEMS]: [{ ...thresholdType, label: 'Minimum number of items' }, messageType],
+  [validatorTypes.PATTERN]: [{ ...patternType, restriction: { lock: true } }, messageType],
   [validatorTypes.URL]: [messageType, ...urlTypes]
 };

@@ -49,7 +49,7 @@ const commonjsOptions = {
   ignoreGlobal: true,
   namedExports: {
     'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer'],
-    'node_modules/@data-driven-forms/pf4-component-mapper/dist/index.js': ['formFieldsMapper', 'rawComponents']
+    'node_modules/@data-driven-forms/pf4-component-mapper/dist/index.js': ['componentMapper', 'rawComponents']
   }
 };
 

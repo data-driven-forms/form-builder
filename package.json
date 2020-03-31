@@ -1,6 +1,6 @@
 {
   "name": "@data-driven-forms/form-builder",
-  "version": "0.0.9",
+  "version": "0.0.10-rc1",
   "description": "Interactive drag and drop editor for creating data driven forms schema",
   "main": "dist/index.js",
   "files": [
@@ -18,8 +18,8 @@
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
-    "@data-driven-forms/mui-component-mapper": "^1.29.1",
-    "@data-driven-forms/pf4-component-mapper": "^1.29.1",
+    "@data-driven-forms/mui-component-mapper": "^2.0.4",
+    "@data-driven-forms/pf4-component-mapper": "^2.0.4",
     "@material-ui/core": "4.6.0",
     "@material-ui/icons": "^4.9.1",
     "@patternfly/react-core": "^3.134.2",
@@ -64,15 +64,13 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "@data-driven-forms/react-form-renderer": "^1.29.1",
+    "@data-driven-forms/react-form-renderer": "^2.0.4",
     "clsx": "^1.0.4",
-    "final-form": "4.18.5",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-beautiful-dnd": "^12.1.1",
     "react-dom": "^16.12.0",
-    "react-final-form": "^6.3.5",
     "react-redux": "^7.1.3",
     "redux": "^4.0.5"
   },

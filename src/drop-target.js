@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import { Form } from 'react-final-form';
 import PropTypes from 'prop-types';
 import Field from './field';
 import ComponentsContext from './components-context';
@@ -20,19 +19,15 @@ const DropTarget = () => {
     <Droppable droppableId={dropTargetId}>
       {(provided, snapshot) => {
         return (
-          <Form onSubmit={() => {}}>
-            {() => (
-              <FormContainer isDraggingOver={snapshot.isDraggingOver}>
-                <div ref={provided.innerRef} {...provided.droppableProps} style={{ height: '100%' }}>
-                  {fields.length === 0 && <EmptyTarget />}
-                  {fields.map((fieldId, index) => (
-                    <Field disableDrag={disableDrag} key={fieldId} fieldId={fieldId} index={index} />
-                  ))}
-                  {provided.placeholder}
-                </div>
-              </FormContainer>
-            )}
-          </Form>
+          <FormContainer isDraggingOver={snapshot.isDraggingOver}>
+            <div ref={provided.innerRef} {...provided.droppableProps} style={{ height: '100%' }}>
+              {fields.length === 0 && <EmptyTarget />}
+              {fields.map((fieldId, index) => (
+                <Field disableDrag={disableDrag} key={fieldId} fieldId={fieldId} index={index} />
+              ))}
+              {provided.placeholder}
+            </div>
+          </FormContainer>
         );
       }}
     </Droppable>

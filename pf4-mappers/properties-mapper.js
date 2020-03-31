@@ -71,7 +71,7 @@ PropertySwitch.defaultProps = {
 
 const PropertySelect = ({ label, options, fieldId, innerProps: { propertyValidation }, ...rest }) => (
   <FormGroupWrapper label={label} fieldId={fieldId} propertyValidation={propertyValidation}>
-    <rawComponents.Select id={fieldId} options={options.map((option) => ({ value: option, label: option }))} {...rest} />
+    <rawComponents.RawSelect id={fieldId} options={options.map((option) => ({ value: option, label: option }))} {...rest} />
   </FormGroupWrapper>
 );
 

@@ -894,10 +894,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@data-driven-forms/mui-component-mapper@^1.29.1":
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/@data-driven-forms/mui-component-mapper/-/mui-component-mapper-1.29.1.tgz#7c6ecc7138a09cde04a26755a95d2682d179afca"
-  integrity sha512-2+m+I23cbHDSl7zjbIQ+9AAuReYo9w1+1SgBeoaUCFqtUGbyrF685mX5dK4mOT9fLAgTJvJmYnzJKQF5ACkDSg==
+"@data-driven-forms/mui-component-mapper@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@data-driven-forms/mui-component-mapper/-/mui-component-mapper-2.0.4.tgz#6bbf91df39d34c1a87a39a6ce60f44c967521036"
+  integrity sha512-YhPo57zzFUNKgd4Ia7KElPugnPbM/gdemjBIKQNNIiRrSf66OUCmhNFv9eThMMMTsjadFi11Sc9R10QMLk3jNQ==
   dependencies:
     "@date-io/date-fns" "^1.0.1"
     "@date-io/moment" "^1.0.1"
@@ -908,26 +908,26 @@
     moment "^2.23.0"
     react-select "^2.2.0"
 
-"@data-driven-forms/pf4-component-mapper@^1.29.1":
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/@data-driven-forms/pf4-component-mapper/-/pf4-component-mapper-1.29.1.tgz#239b03deb4641cb078372ba82eced2c67b820d17"
-  integrity sha512-XuUnTyqjNY/XSfsLQPKDXKR/B5FzNk2V58GBa+dYbWU17FnRbhWlBgQw7gNpgs2pKpZ67x0Js8Wf2MxXmdPaVA==
+"@data-driven-forms/pf4-component-mapper@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@data-driven-forms/pf4-component-mapper/-/pf4-component-mapper-2.0.4.tgz#1644b8a49399a583578009d7dca49ec9fb745ea3"
+  integrity sha512-sq/th1VjZ1E1P3IvMybAhLtbVlfxrg2/VQXTLLCCJWAgPpxEsQMMJAwt1EB8w+SX5MeWHRhX0yiRRNZDAlY2Bw==
   dependencies:
     "@patternfly/patternfly-next" "^1.0.175"
     react-final-form-arrays "2.0.3"
     react-select "^3.0.4"
 
-"@data-driven-forms/react-form-renderer@^1.29.1":
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/@data-driven-forms/react-form-renderer/-/react-form-renderer-1.29.1.tgz#5a1635b4323df86d94215db66f813572f4193582"
-  integrity sha512-tCHD4QmyZWoEN0fk3WQgEPgA+abe2MsL3qZyY8fUp0IDBrKI3P0EHRrn14AUOYIugH0R2wicaMbqdnhdXaOI4Q==
+"@data-driven-forms/react-form-renderer@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@data-driven-forms/react-form-renderer/-/react-form-renderer-2.0.4.tgz#f42f1560a27474b00290a85a1df87f2a3a8384ee"
+  integrity sha512-Cn+eogrodnGrl8+rg6k+z/AWRJ6KHYFbx0ZXkjIgnN8szbBd+xDBju7AaEi9ZCnEKs/gmjUG7GIMy8GYHNAQ2A==
   dependencies:
-    final-form "^4.12.0"
-    final-form-arrays "^3.0.1"
+    final-form "^4.18.7"
+    final-form-arrays "^3.0.2"
     final-form-focus "^1.1.2"
     lodash "^4.17.15"
-    react-final-form "^4.1.0"
-    react-final-form-arrays "^2.0.1"
+    react-final-form "^6.3.5"
+    react-final-form-arrays "^3.1.1"
 
 "@date-io/core@^1.3.13":
   version "1.3.13"
@@ -5020,7 +5020,7 @@ fill-range@^7.0.1:
   dependencies:
     to-regex-range "^5.0.1"
 
-final-form-arrays@^3.0.1:
+final-form-arrays@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/final-form-arrays/-/final-form-arrays-3.0.2.tgz#9f3bef778dec61432357744eb6f3abef7e7f3847"
   integrity sha512-TfO8aZNz3RrsZCDx8GHMQcyztDNpGxSSi9w4wpSNKlmv2PfFWVVM8P7Yj5tj4n0OWax+x5YwTLhT5BnqSlCi+w==
@@ -5030,19 +5030,12 @@ final-form-focus@^1.1.2:
   resolved "https://registry.yarnpkg.com/final-form-focus/-/final-form-focus-1.1.2.tgz#8ea5c4bd802e220cebaa47a587bb0be164eb6806"
   integrity sha512-Gd+Bd2Ll7ijo3/sd6kJ/bwLkhc2bUJPxTON6fIqee/008EJpACWhT+zoWCm9q6NcfMcWRS+Sp5ikRX8iqdXeGQ==
 
-final-form@4.18.5:
-  version "4.18.5"
-  resolved "https://registry.yarnpkg.com/final-form/-/final-form-4.18.5.tgz#e359cfaf2892ef135d92fcf22e06b475dda3a885"
-  integrity sha512-DH/I2W7fWxU8J8ZsbYJ5jLvUbhbatCvLhIKlsU17MvY6W3QnetPEyuX5mcxXgIGFNFKxfvqsG3pDy/1/VwOiTw==
+final-form@^4.18.7:
+  version "4.18.7"
+  resolved "https://registry.yarnpkg.com/final-form/-/final-form-4.18.7.tgz#c30239ac9154cbfbf4f6d19e831f5fc9cbc1ba78"
+  integrity sha512-XdlYYGDcoUcKKVzRJxLg8N/ZG3wVLZvhO7K7PKQWVMjCiIUWdmtBwApw2NFS4P7RJvg8OdF73qGXhhE3K5PuDQ==
   dependencies:
-    "@babel/runtime" "^7.3.1"
-
-final-form@^4.12.0:
-  version "4.18.6"
-  resolved "https://registry.yarnpkg.com/final-form/-/final-form-4.18.6.tgz#3539c53d04e6603a0cc11c78dc830755add986d4"
-  integrity sha512-LssWTXTGkoNv5WxowFTTUyC86oLYlEHH2glARBxOq8RpjiQdOyUyVG7qfPaCeOwoOw7Y5wrhSWdePyOydqSrCw==
-  dependencies:
-    "@babel/runtime" "^7.3.1"
+    "@babel/runtime" "^7.8.3"
 
 finalhandler@~1.1.2:
   version "1.1.2"
@@ -9082,7 +9075,7 @@ react-event-listener@^0.6.6:
     prop-types "^15.6.0"
     warning "^4.0.1"
 
-react-final-form-arrays@2.0.3, react-final-form-arrays@^2.0.1:
+react-final-form-arrays@2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/react-final-form-arrays/-/react-final-form-arrays-2.0.3.tgz#938bd0d62741ab59c6a680968f79eac029e37333"
   integrity sha512-iHGGAbOVsTlp/lhE6EUsqzhjPZSvcExLWE91Qx0remHOJvQ2wkxHe8HTA9KBlId8YJ1fkz6g417GTq/1IFnL9w==
@@ -9090,12 +9083,12 @@ react-final-form-arrays@2.0.3, react-final-form-arrays@^2.0.1:
     "@babel/runtime" "^7.3.4"
     react-lifecycles-compat "^3.0.4"
 
-react-final-form@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/react-final-form/-/react-final-form-4.1.0.tgz#4e1b513de164771b2b824f3fb9c0548014255971"
-  integrity sha512-O8p1EPQ/PFWNcX3bYGsLzuo/KnGeNfGfFi2UAX8jXLXrGcGdTfZMnyo/DFHdEKA9aKso61d/PHekQ9sst0cOmw==
+react-final-form-arrays@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-final-form-arrays/-/react-final-form-arrays-3.1.1.tgz#39d23e7ede966e418cad209e8fde46da1d603e99"
+  integrity sha512-e6S1x9597cvI4QPniOPmllXXandDAqCCuBo4AvXstZYgcV8whsqzk8aCrmQEy6eEfy2tEhvn6f4VI1GY+JBRsg==
   dependencies:
-    "@babel/runtime" "^7.3.4"
+    "@babel/runtime" "^7.4.5"
 
 react-final-form@^6.3.5:
   version "6.3.5"

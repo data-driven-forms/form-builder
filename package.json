@@ -1,8 +1,9 @@
 {
   "name": "@data-driven-forms/form-builder",
-  "version": "0.0.10-rc2",
+  "version": "0.0.10-rc4",
   "description": "Interactive drag and drop editor for creating data driven forms schema",
-  "main": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "files": [
     "dist/*"
   ],
@@ -23,6 +24,7 @@
     "@babel/preset-react": "^7.7.4",
     "@data-driven-forms/mui-component-mapper": "^2.0.4",
     "@data-driven-forms/pf4-component-mapper": "^2.0.4",
+    "@data-driven-forms/react-form-renderer": "^2.0.4",
     "@material-ui/core": "4.6.0",
     "@material-ui/icons": "^4.9.1",
     "@patternfly/react-core": "^3.134.2",
@@ -69,7 +71,6 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "@data-driven-forms/react-form-renderer": "^2.0.4",
     "clsx": "^1.0.4",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
@@ -80,9 +81,9 @@
     "redux": "^4.0.5"
   },
   "peerDependencies": {
-    "@data-driven-forms/mui-component-mapper": "^1.29.1",
-    "@data-driven-forms/pf4-component-mapper": "^1.29.1",
-    "@data-driven-forms/react-form-renderer": "^1.29.1",
+    "@data-driven-forms/mui-component-mapper": "^2.0.4",
+    "@data-driven-forms/react-form-renderer": "^2.0.4",
+    "@data-driven-forms/pf4-component-mapper": "^2.0.4",
     "@material-ui/core": "4.6.0",
     "@material-ui/icons": "^4.9.1",
     "@patternfly/react-core": "^3.134.2",

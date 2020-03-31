@@ -106,6 +106,26 @@ module.exports = {
             }
           },
           'MUI-CJS'
+        ],
+        [
+          'transform-imports',
+          {
+            '@data-driven-forms/pf4-component-mapper': {
+              transform: (importName) => `@data-driven-forms/pf4-component-mapper/dist/cjs/${camelToSnake(importName)}`,
+              preventFullImport: true
+            }
+          },
+          '@data-driven-forms/pf4-component-mapper-CJS'
+        ],
+        [
+          'transform-imports',
+          {
+            '@data-driven-forms/mui-component-mapper': {
+              transform: (importName) => `@data-driven-forms/mui-component-mapper/dist/cjs/${camelToSnake(importName)}`,
+              preventFullImport: true
+            }
+          },
+          '@data-driven-forms/mui-component-mapper-CJS'
         ]
       ]
     },
@@ -194,6 +214,26 @@ module.exports = {
             }
           },
           'MUI-ESM'
+        ],
+        [
+          'transform-imports',
+          {
+            '@data-driven-forms/pf4-component-mapper': {
+              transform: (importName) => `@data-driven-forms/pf4-component-mapper/dist/esm/${camelToSnake(importName)}`,
+              preventFullImport: true
+            }
+          },
+          '@data-driven-forms/pf4-component-mapper-ESM'
+        ],
+        [
+          'transform-imports',
+          {
+            '@data-driven-forms/mui-component-mapper': {
+              transform: (importName) => `@data-driven-forms/mui-component-mapper/dist/esm/${camelToSnake(importName)}`,
+              preventFullImport: true
+            }
+          },
+          '@data-driven-forms/mui-component-mapper-ESm'
         ]
       ]
     }

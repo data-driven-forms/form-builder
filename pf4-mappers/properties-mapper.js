@@ -1,14 +1,8 @@
 /* eslint react/no-array-index-key: "off" */
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Switch } from '@patternfly/react-core/dist/js/components/Switch/Switch';
-import { Button } from '@patternfly/react-core/dist/js/components/Button/Button';
-import { FormGroup } from '@patternfly/react-core/dist/js/components/Form/FormGroup';
-import { TextArea } from '@patternfly/react-core/dist/js/components/TextArea/TextArea';
-import { TextInput } from '@patternfly/react-core/dist/js/components/TextInput/TextInput';
-import TrashIcon from '@patternfly/react-icons/dist/js/icons/trash-icon';
-import PlusIcon from '@patternfly/react-icons/dist/js/icons/plus-icon';
-import TrashRestoreIcon from '@patternfly/react-icons/dist/js/icons/trash-restore-icon';
+import { Switch, Button, FormGroup, TextArea, TextInput } from '@patternfly/react-core';
+import { TrashIcon, PlusIcon, TrashRestoreIcon } from '@patternfly/react-icons';
 import { rawComponents } from '@data-driven-forms/pf4-component-mapper';
 
 const FormGroupWrapper = ({ propertyValidation: { message }, children, ...props }) => (

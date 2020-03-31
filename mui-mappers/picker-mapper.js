@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';

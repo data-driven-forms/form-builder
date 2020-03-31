@@ -7,27 +7,29 @@ import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextFieldMUI from '@material-ui/core/TextField';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import CardHeader from '@material-ui/core/CardHeader';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ErrorIcon from '@material-ui/icons/Error';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
-import Badge from '@material-ui/core/Badge';
+import {
+  Card,
+  CardContent,
+  MenuItem,
+  TextField as TextFieldMUI,
+  Tabs,
+  Tab,
+  CardHeader,
+  Typography,
+  Divider,
+  Box,
+  Badge,
+  IconButton
+} from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
+import ErrorIcon from '@material-ui/icons/Error';
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import Box from '@material-ui/core/Box';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
 const childrenPropType = PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]);

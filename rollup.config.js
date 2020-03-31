@@ -4,7 +4,6 @@ import babel from 'rollup-plugin-babel';
 import replace from 'rollup-plugin-replace';
 import nodeGlobals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
-import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 import { createFilter } from 'rollup-pluginutils';
 import postcss from 'rollup-plugin-postcss';
 import sourcemaps from 'rollup-plugin-sourcemaps';
@@ -15,6 +14,7 @@ const externals = createFilter(
     'react-dom',
     'prop-types',
     '@data-driven-forms/react-form-renderer',
+    '@data-driven-forms/react-form-renderer/**',
     '@patternfly/react-core/**',
     '@patternfly/react-icons/**',
     '@material-ui/core/**',
@@ -42,107 +42,36 @@ const globals = {
 const babelOptions = {
   exclude: /node_modules/,
   runtimeHelpers: true,
-  configFile: './.babelrc'
+  configFile: './babel.config.js'
 };
 
 const commonjsOptions = {
   ignoreGlobal: true,
   namedExports: {
-    'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer'],
-    'node_modules/@data-driven-forms/pf4-component-mapper/dist/index.js': ['componentMapper', 'rawComponents']
+    'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer']
   }
 };
 
-function onwarn(warning) {
-  throw Error(warning.message);
-}
-
-export default [
-  {
-    onwarn,
-    input: './src/index.js',
-    output: {
-      file: './dist/index.js',
-      format: 'umd',
-      name: '@data-driven-forms/form-builder',
-      exports: 'named',
-      globals,
-      sourcemap: true
-    },
-    external: externals,
-    plugins: [
-      sourcemaps(),
-      nodeResolve(),
-      babel(babelOptions),
-      commonjs(commonjsOptions),
-      nodeGlobals(), // Wait for https://github.com/cssinjs/jss/pull/893
-      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-      terser({
-        keep_classnames: true,
-        keep_fnames: true
-      }),
-      postcss({
-        inject: true
-      }),
-      sizeSnapshot()
-    ]
-  },
-  {
-    onwarn,
-    input: './pf4-mappers/index.js',
-    output: {
-      file: './dist/pf4-builder-mappers.js',
-      format: 'umd',
-      name: '@data-driven-forms/form-builder-pf4-mappers',
-      exports: 'named',
-      globals,
-      sourcemap: true
-    },
-    external: Object.keys(globals),
-    plugins: [
-      sourcemaps(),
-      nodeResolve(),
-      babel(babelOptions),
-      commonjs(commonjsOptions),
-      nodeGlobals(), // Wait for https://github.com/cssinjs/jss/pull/893
-      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-      terser({
-        keep_classnames: true,
-        keep_fnames: true
-      }),
-      postcss({
-        inject: true
-      }),
-      sizeSnapshot()
-    ]
-  },
-  {
-    onwarn,
-    input: './mui-mappers/index.js',
-    output: {
-      file: './dist/mui-builder-mappers.js',
-      format: 'umd',
-      name: '@data-driven-forms/form-builder-mui-mappers',
-      exports: 'named',
-      globals,
-      sourcemap: true
-    },
-    external: Object.keys(globals),
-    plugins: [
-      sourcemaps(),
-      nodeResolve(),
-      babel(babelOptions),
-      commonjs(commonjsOptions),
-      nodeGlobals(), // Wait for https://github.com/cssinjs/jss/pull/893
-      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-      terser({
-        keep_classnames: true,
-        keep_fnames: true
-      }),
-      postcss({
-        inject: true
-      }),
-      sizeSnapshot()
-    ]
-  }
+const plugins = [
+  sourcemaps(),
+  nodeResolve(),
+  babel(babelOptions),
+  commonjs(commonjsOptions),
+  nodeGlobals(), // Wait for https://github.com/cssinjs/jss/pull/893
+  replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+  terser({
+    keep_classnames: true,
+    keep_fnames: true
+  }),
+  postcss({
+    inject: true
+  })
 ];
+
+const outputPaths = ['./mui-mappers/mui-builder-mappers.js', './pf4-mappers/pf4-builder-mappers.js', './src/index.js'];
+export default {
+  input: outputPaths,
+  output: { dir: `./dist/${process.env.FORMAT}`, name: '@data-driven-forms/form-builder', exports: 'named', globals, sourcemap: true },
+  external: externals,
+  plugins
+};

@@ -1,6 +1,6 @@
 {
   "name": "@data-driven-forms/form-builder",
-  "version": "0.0.10-rc1",
+  "version": "0.0.10-rc2",
   "description": "Interactive drag and drop editor for creating data driven forms schema",
   "main": "dist/index.js",
   "files": [
@@ -9,13 +9,16 @@
   "scripts": {
     "test": "jest --coverage",
     "start": "webpack-dev-server --hot --open --mode development",
-    "build": "rollup -c ./rollup.config.js",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "BABEL_ENV=cjs rollup -c ./rollup.config.js --format=cjs --environment FORMAT:cjs",
+    "build:esm": "BABEL_ENV=esm rollup -c ./rollup.config.js --format=esm --environment FORMAT:esm",
     "lint": "eslint ./src; eslint ./pf4-mappers"
   },
   "author": "Martin Marosi",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
     "@data-driven-forms/mui-component-mapper": "^2.0.4",
@@ -27,6 +30,8 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-lodash": "^3.3.4",
+    "babel-plugin-transform-imports": "^2.0.0",
     "css-loader": "^3.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",

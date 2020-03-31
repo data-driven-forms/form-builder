@@ -3,20 +3,8 @@ import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { componentMapper, rawComponents } from '@data-driven-forms/pf4-component-mapper';
 
-import { Button } from '@patternfly/react-core/dist/js/components/Button/Button';
-import { Card } from '@patternfly/react-core/dist/js/components/Card/Card';
-import { CardBody } from '@patternfly/react-core/dist/js/components/Card/CardBody';
-import { CardHeader } from '@patternfly/react-core/dist/js/components/Card/CardHeader';
-import { Form } from '@patternfly/react-core/dist/js/components/Form/Form';
-import { FormGroup } from '@patternfly/react-core/dist/js/components/Form/FormGroup';
-import { Title } from '@patternfly/react-core/dist/js/components/Title/Title';
-import { Tab } from '@patternfly/react-core/dist/js/components/Tabs/Tab';
-import { Tabs } from '@patternfly/react-core/dist/js/components/Tabs/Tabs';
-import TrashIcon from '@patternfly/react-icons/dist/js/icons/trash-icon';
-import TimesIcon from '@patternfly/react-icons/dist/js/icons/times-icon';
-import GripVerticalIcon from '@patternfly/react-icons/dist/js/icons/grip-vertical-icon';
-import EyeSlashIcon from '@patternfly/react-icons/dist/js/icons/eye-slash-icon';
-import ExclamationCircleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-circle-icon';
+import { Button, Card, CardBody, CardHeader, Form, FormGroup, Title, Tab, Tabs } from '@patternfly/react-core';
+import { TrashIcon, TimesIcon, GripVerticalIcon, EyeSlashIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 import clsx from 'clsx';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;

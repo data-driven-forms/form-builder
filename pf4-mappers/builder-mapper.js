@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
-import { componentMapper, rawComponents } from '@data-driven-forms/pf4-component-mapper';
+import { componentMapper } from '@data-driven-forms/pf4-component-mapper';
 
 import { Button, Card, CardBody, CardHeader, Form, FormGroup, Title, Tab, Tabs } from '@patternfly/react-core';
 import { TrashIcon, TimesIcon, GripVerticalIcon, EyeSlashIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 import clsx from 'clsx';
+import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/dist/cjs/select';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
 const childrenPropType = PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]);
@@ -80,7 +81,7 @@ SelectField.propTypes = {
 };
 
 SelectField.defaultProps = {
-  onChange: () => { }
+  onChange: () => {}
 };
 
 const FieldLayout = ({ children, disableDrag, selected }) => (
@@ -209,7 +210,7 @@ const PropertiesEditor = ({
   hasPropertyError
 }) => {
   const [activeTab, setActiveTab] = useState(0);
-  const Select = rawComponents.RawSelect;
+  const Select = InternalSelect;
   return (
     <div className="pf4-properties-editor-container">
       <Card className="pf4-properties-editor-header">

@@ -233,7 +233,17 @@ module.exports = {
               preventFullImport: true
             }
           },
-          '@data-driven-forms/mui-component-mapper-ESm'
+          '@data-driven-forms/mui-component-mapper-ESM'
+        ],
+        [
+          'transform-imports',
+          {
+            '@data-driven-forms/pf4-component-mapper/dist/cjs/select': {
+              transform: () => `@data-driven-forms/pf4-component-mapper/dist/esm/select`,
+              preventFullImport: true
+            }
+          },
+          'PF4-internal-select-ESM'
         ]
       ]
     }

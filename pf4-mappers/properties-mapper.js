@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Button, FormGroup, TextArea, TextInput } from '@patternfly/react-core';
 import { TrashIcon, PlusIcon, TrashRestoreIcon } from '@patternfly/react-icons';
-import { rawComponents } from '@data-driven-forms/pf4-component-mapper';
+import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/dist/cjs/select';
 
 const FormGroupWrapper = ({ propertyValidation: { message }, children, ...props }) => (
   <FormGroup helperTextInvalid={message} isValid={!message} {...props}>
@@ -65,7 +65,7 @@ PropertySwitch.defaultProps = {
 
 const PropertySelect = ({ label, options, fieldId, innerProps: { propertyValidation }, ...rest }) => (
   <FormGroupWrapper label={label} fieldId={fieldId} propertyValidation={propertyValidation}>
-    <rawComponents.RawSelect id={fieldId} options={options.map((option) => ({ value: option, label: option }))} {...rest} />
+    <InternalSelect id={fieldId} options={options.map((option) => ({ value: option, label: option }))} {...rest} />
   </FormGroupWrapper>
 );
 

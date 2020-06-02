@@ -1,12 +1,22 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import ReactDom from 'react-dom';
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
 
-//import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../mui-mappers/mui-builder-mappers';
-import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../pf4-mappers/pf4-builder-mappers';
+import {
+  pickerMapper as muiPickerMapper,
+  propertiesMapper as muiPropertiesMapper,
+  builderMapper as muiPBuilderMapper,
+  BuilderTemplate as muiBuilderTemplate
+} from '../mui-mappers/mui-builder-mappers';
+import {
+  pickerMapper as pf4PickerMapper,
+  propertiesMapper as pf4PropertiesMapper,
+  builderMapper as pf4PBuilderMapper,
+  BuilderTemplate as pf4BuilderTemplate
+} from '../pf4-mappers/pf4-builder-mappers';
 
 import {
   LABEL,
@@ -23,7 +33,25 @@ import {
   MULTI_LINE_LABEL,
   TITLE,
   DESCRIPTION,
-  HIDE_FIELD
+  HIDE_FIELD,
+  LEFT_TITLE,
+  RIGHT_TITLE,
+  MOVE_LEFT_TITLE,
+  MOVE_RIGHT_TITLE,
+  MOVE_ALL_LEFT_TITLE,
+  MOVE_ALL_RIGHT_TITLE,
+  ALL_TO_LEFT,
+  ALL_TO_RIGHT,
+  NO_VALUE_TITLE,
+  NO_OPTIONS_TITLE,
+  FILTER_OPTIONS_TITLE,
+  FILTER_VALUE_TITLE,
+  FILTER_VALUE_TEXT,
+  FILTER_OPTIONS_TEXT,
+  CHECKBOX_VARIANT,
+  STEP,
+  MIN,
+  MAX
 } from './field-properties';
 
 const componentProperties = {
@@ -50,6 +78,33 @@ const componentProperties = {
   [componentTypes.SUB_FORM]: {
     isContainer: true,
     attributes: [TITLE, DESCRIPTION]
+  },
+  [componentTypes.DUAL_LIST_SELECT]: {
+    attributes: [
+      LABEL,
+      HELPER_TEXT,
+      DESCRIPTION,
+      OPTIONS,
+      HIDE_FIELD,
+      LEFT_TITLE,
+      RIGHT_TITLE,
+      MOVE_LEFT_TITLE,
+      MOVE_RIGHT_TITLE,
+      MOVE_ALL_LEFT_TITLE,
+      MOVE_ALL_RIGHT_TITLE,
+      ALL_TO_LEFT,
+      ALL_TO_RIGHT,
+      NO_VALUE_TITLE,
+      NO_OPTIONS_TITLE,
+      FILTER_OPTIONS_TITLE,
+      FILTER_VALUE_TITLE,
+      FILTER_VALUE_TEXT,
+      FILTER_OPTIONS_TEXT,
+      CHECKBOX_VARIANT
+    ]
+  },
+  [componentTypes.SLIDER]: {
+    attributes: [LABEL, HELPER_TEXT, DESCRIPTION, HIDE_FIELD, MIN, MAX, STEP]
   }
 };
 
@@ -199,32 +254,52 @@ const schemaTemplate = {
   ]
 };
 
-const Demo = () => (
-  <Fragment>
-    <CssBaseline />
-    <ThemeProvider theme={createMuiTheme({})}>
-      <FormBuilder
-        schema={schema}
-        schemaTemplate={schemaTemplate}
-        pickerMapper={pickerMapper}
-        componentProperties={componentProperties}
-        componentMapper={builderMapper}
-        propertiesMapper={propertiesMapper}
-        cloneWhileDragging
-        disableDrag={false}
-        disableAdd={false}
-        mode="subset"
-        debug={false}
-        render={({ isValid, getSchema, ...props }) => (
-          <BuilderTemplate {...props}>
-            <div>
-              <button onClick={() => console.log(getSchema())}>Click to get state</button>
-            </div>
-          </BuilderTemplate>
-        )}
-      />
-    </ThemeProvider>
-  </Fragment>
-);
+const pf4State = {
+  pickerMapper: pf4PickerMapper,
+  propertiesMapper: pf4PropertiesMapper,
+  builderMapper: pf4PBuilderMapper,
+  BuilderTemplate: pf4BuilderTemplate
+};
+
+const muiState = {
+  pickerMapper: muiPickerMapper,
+  propertiesMapper: muiPropertiesMapper,
+  builderMapper: muiPBuilderMapper,
+  BuilderTemplate: muiBuilderTemplate
+};
+
+const Demo = () => {
+  const [state, setState] = useState(pf4State);
+
+  return (
+    <Fragment>
+      <button onClick={() => setState(pf4State)}>PF4 demo</button>
+      <button onClick={() => setState(muiState)}>MUI demo</button>
+      <CssBaseline />
+      <ThemeProvider theme={createMuiTheme({})}>
+        <FormBuilder
+          schema={schema}
+          schemaTemplate={schemaTemplate}
+          pickerMapper={state.pickerMapper}
+          componentProperties={componentProperties}
+          componentMapper={state.builderMapper}
+          propertiesMapper={state.propertiesMapper}
+          cloneWhileDragging
+          disableDrag={false}
+          disableAdd={false}
+          mode="subset"
+          debug={false}
+          render={({ isValid, getSchema, ...props }) => (
+            <state.BuilderTemplate {...props}>
+              <div>
+                <button onClick={() => console.log(getSchema())}>Click to get state</button>
+              </div>
+            </state.BuilderTemplate>
+          )}
+        />
+      </ThemeProvider>
+    </Fragment>
+  );
+};
 
 ReactDom.render(<Demo />, document.getElementById('root'));

@@ -8,22 +8,13 @@ const PickerField = memo(
     const { pickerMapper, componentMapper } = useContext(ComponentsContext);
     const Component = pickerMapper[field.component];
     const Clone = componentMapper[field.component];
-    const formOptions = {
-      renderForm: () => null
-    };
     return (
       <Draggable draggableId={field.id} index={index}>
         {(provided, snapshot) => (
           <Fragment>
             <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
               {snapshot.isDragging && field.clone ? (
-                <Clone
-                  formOptions={formOptions}
-                  input={{ name: 'template-clone' }}
-                  meta={{}}
-                  name="template-clone"
-                  innerProps={{ snapshot, isClone: true }}
-                />
+                <Clone input={{ name: 'template-clone' }} meta={{}} name="template-clone" innerProps={{ snapshot, isClone: true }} />
               ) : (
                 <Component innerProps={{ snapshot, isClone: true }} />
               )}

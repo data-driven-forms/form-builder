@@ -5,8 +5,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
 
-import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../mui-mappers';
-// import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../pf4-mappers';
+//import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../mui-mappers/mui-builder-mappers';
+import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../pf4-mappers/pf4-builder-mappers';
 
 import {
   LABEL,
@@ -100,7 +100,7 @@ const schema = {
       label: 'Pattern field',
       validate: [
         {
-          type: validatorTypes.PATTERN_VALIDATOR,
+          type: validatorTypes.PATTERN,
           pattern: /^Foo$/
         }
       ]
@@ -171,7 +171,7 @@ const schemaTemplate = {
       label: 'Pattern field',
       validate: [
         {
-          type: validatorTypes.PATTERN_VALIDATOR,
+          type: validatorTypes.PATTERN,
           pattern: /^Foo$/
         }
       ]

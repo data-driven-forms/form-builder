@@ -4,6 +4,12 @@ const path = require('path');
 module.exports = {
   entry: path.resolve(__dirname, './demo/index.js'),
   devtool: 'sourcemap',
+  resolve: {
+    alias: {
+      react: path.resolve(__dirname, './node_modules/react'),
+      'react-dom': path.resolve(__dirname, './node_modules/react-dom')
+    }
+  },
   module: {
     rules: [
       {

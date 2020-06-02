@@ -1,33 +1,35 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
-import { formFieldsMapper } from '@data-driven-forms/mui-component-mapper';
+import { componentMapper } from '@data-driven-forms/mui-component-mapper';
 
 import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextFieldMUI from '@material-ui/core/TextField';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import CardHeader from '@material-ui/core/CardHeader';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ErrorIcon from '@material-ui/icons/Error';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
-import Badge from '@material-ui/core/Badge';
+import {
+  Card,
+  CardContent,
+  MenuItem,
+  TextField as TextFieldMUI,
+  Tabs,
+  Tab,
+  CardHeader,
+  Typography,
+  Divider,
+  Box,
+  Badge,
+  IconButton
+} from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
+import ErrorIcon from '@material-ui/icons/Error';
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import Box from '@material-ui/core/Box';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
 
 const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequired;
 const childrenPropType = PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]);
@@ -204,7 +206,7 @@ ComponentWrapper.propTypes = {
 };
 
 const TextField = ({ innerProps: { snapshot, hideField }, propertyName, fieldId, propertyValidation, hasPropertyError, ...props }) => {
-  const Component = formFieldsMapper[componentTypes.TEXT_FIELD];
+  const Component = componentMapper[componentTypes.TEXT_FIELD];
   return (
     <ComponentWrapper hideField={hideField}>
       <Component {...props} label={snapshot.isDragging ? props.label || 'Text input' : props.label} />
@@ -217,7 +219,7 @@ TextField.propTypes = {
 };
 
 const CheckBoxField = ({ innerProps: { hideField }, id, propertyValidation, ...props }) => {
-  const Component = formFieldsMapper[componentTypes.CHECKBOX];
+  const Component = componentMapper[componentTypes.CHECKBOX];
   return (
     <ComponentWrapper hideField={hideField}>
       <Component {...props} label={props.label || 'Please provide label'} />
@@ -230,7 +232,7 @@ CheckBoxField.propTypes = {
 };
 
 const SelectField = ({ innerProps: { hideField }, options = [], propertyValidation, ...props }) => {
-  const Component = formFieldsMapper[componentTypes.SELECT];
+  const Component = componentMapper[componentTypes.SELECT];
   return (
     <ComponentWrapper hideField={hideField}>
       <Component {...props} options={options && options.filter(({ deleted }) => !deleted)} />
@@ -283,7 +285,7 @@ BuilderColumn.propTypes = {
 };
 
 const DatePickerField = ({ innerProps: { hideField }, propertyValidation, ...props }) => {
-  const Component = formFieldsMapper[componentTypes.DATE_PICKER];
+  const Component = componentMapper[componentTypes.DATE_PICKER];
   return (
     <ComponentWrapper hideField={hideField}>
       <Component {...props} />
@@ -296,7 +298,7 @@ DatePickerField.propTypes = {
 };
 
 const PlainTextField = ({ innerProps: { hideField }, label, propertyValidation, ...props }) => {
-  const Component = formFieldsMapper[componentTypes.PLAIN_TEXT];
+  const Component = componentMapper[componentTypes.PLAIN_TEXT];
   return (
     <ComponentWrapper hideField={hideField}>
       <Component {...props} label={label || 'Please provide a label to plain text component'} />
@@ -309,7 +311,7 @@ PlainTextField.propTypes = {
 };
 
 const RadioField = ({ innerProps: { hideField }, propertyValidation, innerProps, ...props }) => {
-  const Component = formFieldsMapper[componentTypes.RADIO];
+  const Component = componentMapper[componentTypes.RADIO];
   return (
     <ComponentWrapper hideField={hideField}>
       <Component {...props} />
@@ -326,19 +328,12 @@ RadioField.defaultProps = {
   options: [],
   label: 'Please pick label and options'
 };
-const FieldProviderMock = ({ name, type, render, input, meta, ...props }) => {
-  return render({
-    ...props,
-    input,
-    meta
-  });
-};
 
-const SwitchField = ({ innerProps: { hideField }, propertyValidation, FieldProvider, component, ...props }) => {
-  const Component = formFieldsMapper[componentTypes.SWITCH];
+const SwitchField = ({ innerProps: { hideField }, propertyValidation, component, ...props }) => {
+  const Component = componentMapper[componentTypes.SWITCH];
   return (
     <ComponentWrapper hideField={hideField}>
-      <Component {...props} FieldProvider={FieldProvider || FieldProviderMock} label={props.label} />
+      <Component {...props} label={props.label} />
     </ComponentWrapper>
   );
 };
@@ -348,7 +343,7 @@ SwitchField.propTypes = {
 };
 
 const TextAreaField = ({ innerProps: { snapshot, hideField }, propertyValidation, hasPropertyError, ...props }) => {
-  const Component = formFieldsMapper[componentTypes.TEXTAREA];
+  const Component = componentMapper[componentTypes.TEXTAREA];
   return (
     <ComponentWrapper hideField={hideField}>
       <Component {...props} label={snapshot.isDragging ? 'Texarea' : props.label} />
@@ -360,11 +355,11 @@ TextAreaField.propTypes = {
   ...commonPropTypes
 };
 
-const SubFormField = ({ title, description, formOptions, innerProps: { hideField } }) => {
-  const Component = formFieldsMapper[componentTypes.SUB_FORM];
+const SubFormField = ({ title, description, innerProps: { hideField } }) => {
+  const Component = componentMapper[componentTypes.SUB_FORM];
   return (
     <ComponentWrapper hideField={hideField}>
-      <Component fields={[]} title={title || 'Subform'} description={description} formOptions={formOptions} />
+      <Component fields={[]} title={title || 'Subform'} description={description} />
     </ComponentWrapper>
   );
 };
@@ -460,8 +455,7 @@ PropertiesEditor.propTypes = {
 
 SubFormField.propTypes = {
   title: PropTypes.string,
-  description: PropTypes.string,
-  formOptions: PropTypes.object
+  description: PropTypes.string
 };
 
 const PropertyGroup = ({ className, children, title, handleDelete, ...props }) => {

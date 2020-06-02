@@ -1,15 +1,9 @@
 /* eslint react/no-array-index-key: "off" */
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Switch } from '@patternfly/react-core/dist/js/components/Switch/Switch';
-import { Button } from '@patternfly/react-core/dist/js/components/Button/Button';
-import { FormGroup } from '@patternfly/react-core/dist/js/components/Form/FormGroup';
-import { TextArea } from '@patternfly/react-core/dist/js/components/TextArea/TextArea';
-import { TextInput } from '@patternfly/react-core/dist/js/components/TextInput/TextInput';
-import TrashIcon from '@patternfly/react-icons/dist/js/icons/trash-icon';
-import PlusIcon from '@patternfly/react-icons/dist/js/icons/plus-icon';
-import TrashRestoreIcon from '@patternfly/react-icons/dist/js/icons/trash-restore-icon';
-import { rawComponents } from '@data-driven-forms/pf4-component-mapper';
+import { Switch, Button, FormGroup, TextArea, TextInput } from '@patternfly/react-core';
+import { TrashIcon, PlusIcon, TrashRestoreIcon } from '@patternfly/react-icons';
+import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/dist/cjs/select';
 
 const FormGroupWrapper = ({ propertyValidation: { message }, children, ...props }) => (
   <FormGroup helperTextInvalid={message} isValid={!message} {...props}>
@@ -71,7 +65,7 @@ PropertySwitch.defaultProps = {
 
 const PropertySelect = ({ label, options, fieldId, innerProps: { propertyValidation }, ...rest }) => (
   <FormGroupWrapper label={label} fieldId={fieldId} propertyValidation={propertyValidation}>
-    <rawComponents.Select id={fieldId} options={options.map((option) => ({ value: option, label: option }))} {...rest} />
+    <InternalSelect id={fieldId} options={options.map((option) => ({ value: option, label: option }))} {...rest} />
   </FormGroupWrapper>
 );
 

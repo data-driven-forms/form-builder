@@ -4,18 +4,10 @@ import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import TextField from '@material-ui/core/TextField';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Switch from '@material-ui/core/Switch';
-import MenuItem from '@material-ui/core/MenuItem';
+import { TextField, FormLabel, FormControl, FormGroup, FormControlLabel, FormHelperText, Switch, MenuItem, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import AddIcon from '@material-ui/icons/Add';
-import IconButton from '@material-ui/core/IconButton';
 import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
 

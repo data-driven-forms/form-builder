@@ -5,8 +5,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
 
-//import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../mui-mappers/mui-builder-mappers';
-import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../pf4-mappers/pf4-builder-mappers';
+import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../mui-mappers/mui-builder-mappers';
+//import { pickerMapper, propertiesMapper, builderMapper, BuilderTemplate } from '../pf4-mappers/pf4-builder-mappers';
 
 import {
   LABEL,
@@ -23,7 +23,22 @@ import {
   MULTI_LINE_LABEL,
   TITLE,
   DESCRIPTION,
-  HIDE_FIELD
+  HIDE_FIELD,
+  LEFT_TITLE,
+  RIGHT_TITLE,
+  MOVE_LEFT_TITLE,
+  MOVE_RIGHT_TITLE,
+  MOVE_ALL_LEFT_TITLE,
+  MOVE_ALL_RIGHT_TITLE,
+  ALL_TO_LEFT,
+  ALL_TO_RIGHT,
+  NO_VALUE_TITLE,
+  NO_OPTIONS_TITLE,
+  FILTER_OPTIONS_TITLE,
+  FILTER_VALUE_TITLE,
+  FILTER_VALUE_TEXT,
+  FILTER_OPTIONS_TEXT,
+  CHECKBOX_VARIANT
 } from './field-properties';
 
 const componentProperties = {
@@ -50,6 +65,30 @@ const componentProperties = {
   [componentTypes.SUB_FORM]: {
     isContainer: true,
     attributes: [TITLE, DESCRIPTION]
+  },
+  [componentTypes.DUAL_LIST_SELECT]: {
+    attributes: [
+      LABEL,
+      HELPER_TEXT,
+      DESCRIPTION,
+      OPTIONS,
+      HIDE_FIELD,
+      LEFT_TITLE,
+      RIGHT_TITLE,
+      MOVE_LEFT_TITLE,
+      MOVE_RIGHT_TITLE,
+      MOVE_ALL_LEFT_TITLE,
+      MOVE_ALL_RIGHT_TITLE,
+      ALL_TO_LEFT,
+      ALL_TO_RIGHT,
+      NO_VALUE_TITLE,
+      NO_OPTIONS_TITLE,
+      FILTER_OPTIONS_TITLE,
+      FILTER_VALUE_TITLE,
+      FILTER_VALUE_TEXT,
+      FILTER_OPTIONS_TEXT,
+      CHECKBOX_VARIANT
+    ]
   }
 };
 

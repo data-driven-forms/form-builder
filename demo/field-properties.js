@@ -88,3 +88,93 @@ export const HIDE_FIELD = {
   label: 'Hidden',
   component: 'switch'
 };
+
+export const LEFT_TITLE = {
+  propertyName: 'leftTitle',
+  label: 'Left title',
+  component: 'input'
+};
+
+export const RIGHT_TITLE = {
+  propertyName: 'rightTitle',
+  label: 'Right title',
+  component: 'input'
+};
+
+export const MOVE_LEFT_TITLE = {
+  propertyName: 'moveLeftTitle',
+  label: 'Move left button title',
+  component: 'input'
+};
+
+export const MOVE_RIGHT_TITLE = {
+  propertyName: 'moveRightTitle',
+  label: 'Move right button title',
+  component: 'input'
+};
+
+export const MOVE_ALL_LEFT_TITLE = {
+  propertyName: 'moveAllLeftTitle',
+  label: 'Move all left button title',
+  component: 'input'
+};
+
+export const MOVE_ALL_RIGHT_TITLE = {
+  propertyName: 'moveAllRightTitle',
+  label: 'Move alll right button title',
+  component: 'input'
+};
+
+export const ALL_TO_LEFT = {
+  propertyName: 'allToLeft',
+  label: 'Allow to move all to left',
+  component: 'switch'
+};
+
+export const ALL_TO_RIGHT = {
+  propertyName: 'allToRight',
+  label: 'Allow to move all to right',
+  component: 'switch'
+};
+
+export const NO_VALUE_TITLE = {
+  propertyName: 'noValueTitle',
+  label: 'Placeholder for empty value',
+  component: 'input'
+};
+
+export const NO_OPTIONS_TITLE = {
+  propertyName: 'noOptionsTitle',
+  label: 'Placeholder for empty options',
+  component: 'input'
+};
+
+export const FILTER_OPTIONS_TITLE = {
+  propertyName: 'filterOptionsTitle',
+  label: 'Placeholder for options filter input',
+  component: 'input'
+};
+
+export const FILTER_VALUE_TITLE = {
+  propertyName: 'filterValueTitle',
+  label: 'Placeholder for value filter input',
+  component: 'input'
+};
+
+export const FILTER_VALUE_TEXT = {
+  propertyName: 'filterValueText',
+  label: 'Placeholder for value when there is no filtered value',
+  component: 'input'
+};
+
+export const FILTER_OPTIONS_TEXT = {
+  propertyName: 'filterOptionsText',
+  label: 'Placeholder for options when there is no filtered option',
+  component: 'input'
+};
+
+export const CHECKBOX_VARIANT = {
+  propertyName: 'checkboxVariant',
+  label: 'Checkbox variant',
+  component: 'switch'
+};

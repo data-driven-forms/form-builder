@@ -35,6 +35,8 @@ const TextAreaOption = () => <PickerRoot label="Textarea" />;
 
 const SubFormOption = () => <PickerRoot label="Sub form" />;
 
+const DualListSelectOption = () => <PickerRoot label="Dual list select" />;
+
 const pickerMapper = {
   [componentTypes.TEXT_FIELD]: TextFieldOption,
   [componentTypes.CHECKBOX]: CheckboxOptions,
@@ -44,7 +46,8 @@ const pickerMapper = {
   [componentTypes.RADIO]: RadioOption,
   [componentTypes.SWITCH]: SwitchOption,
   [componentTypes.TEXTAREA]: TextAreaOption,
-  [componentTypes.SUB_FORM]: SubFormOption
+  [componentTypes.SUB_FORM]: SubFormOption,
+  [componentTypes.DUAL_LIST_SELECT]: DualListSelectOption
 };
 
 export default pickerMapper;

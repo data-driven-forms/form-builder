@@ -200,6 +200,25 @@ SubFormField.propTypes = {
   innerProps: PropTypes.shape({ hideField: PropTypes.bool }).isRequired
 };
 
+const DualListSelectField = ({ innerProps: { hideField }, propertyValidation, innerProps, ...props }) => {
+  const Component = componentMapper[componentTypes.DUAL_LIST_SELECT];
+  return (
+    <ComponentWrapper hideField={hideField}>
+      <Component {...props} />
+    </ComponentWrapper>
+  );
+};
+
+DualListSelectField.propTypes = {
+  ...commonPropTypes,
+  options: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, value: PropTypes.any }))
+};
+
+DualListSelectField.defaultProps = {
+  options: [],
+  label: 'Please pick label and options'
+};
+
 const PropertiesEditor = ({
   propertiesChildren,
   validationChildren,
@@ -360,6 +379,7 @@ const builderMapper = {
   [componentTypes.SWITCH]: SwitchField,
   [componentTypes.TEXTAREA]: TextAreaField,
   [componentTypes.SUB_FORM]: SubFormField,
+  [componentTypes.DUAL_LIST_SELECT]: DualListSelectField,
   BuilderColumn,
   PropertyGroup,
   DragHandle,

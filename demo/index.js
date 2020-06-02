@@ -48,7 +48,10 @@ import {
   FILTER_VALUE_TITLE,
   FILTER_VALUE_TEXT,
   FILTER_OPTIONS_TEXT,
-  CHECKBOX_VARIANT
+  CHECKBOX_VARIANT,
+  STEP,
+  MIN,
+  MAX
 } from './field-properties';
 
 const componentProperties = {
@@ -99,6 +102,9 @@ const componentProperties = {
       FILTER_OPTIONS_TEXT,
       CHECKBOX_VARIANT
     ]
+  },
+  [componentTypes.SLIDER]: {
+    attributes: [LABEL, HELPER_TEXT, DESCRIPTION, HIDE_FIELD, MIN, MAX, STEP]
   }
 };
 

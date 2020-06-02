@@ -219,6 +219,19 @@ DualListSelectField.defaultProps = {
   label: 'Please pick label and options'
 };
 
+const SliderField = ({ innerProps: { hideField }, ...props }) => {
+  const Component = componentMapper[componentTypes.SLIDER];
+  return (
+    <ComponentWrapper hideField={hideField}>
+      <Component {...props} />
+    </ComponentWrapper>
+  );
+};
+
+SliderField.propTypes = {
+  ...commonPropTypes
+};
+
 const PropertiesEditor = ({
   propertiesChildren,
   validationChildren,
@@ -380,6 +393,7 @@ const builderMapper = {
   [componentTypes.TEXTAREA]: TextAreaField,
   [componentTypes.SUB_FORM]: SubFormField,
   [componentTypes.DUAL_LIST_SELECT]: DualListSelectField,
+  [componentTypes.SLIDER]: SliderField,
   BuilderColumn,
   PropertyGroup,
   DragHandle,

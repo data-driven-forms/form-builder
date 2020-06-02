@@ -178,3 +178,21 @@ export const CHECKBOX_VARIANT = {
   label: 'Checkbox variant',
   component: 'switch'
 };
+
+export const MIN = {
+  propertyName: 'min',
+  label: 'Minimum of range',
+  component: 'input'
+};
+
+export const MAX = {
+  propertyName: 'max',
+  label: 'Maximum of range',
+  component: 'input'
+};
+
+export const STEP = {
+  propertyName: 'step',
+  label: 'Step size',
+  component: 'input'
+};

@@ -10,6 +10,7 @@ import ChromeReaderModeIcon from '@material-ui/icons/ChromeReaderMode';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import ToggleOffIcon from '@material-ui/icons/ToggleOff';
 import LowPriorityIcon from '@material-ui/icons/LowPriority';
+import TuneIcon from '@material-ui/icons/Tune';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
@@ -75,6 +76,8 @@ const TextAreaOption = () => <PickerRoot icon={<TextFieldsIcon />} label="Textar
 
 const SubFormOption = () => <PickerRoot label="Sub form" />;
 
+const SliderOption = () => <PickerRoot icon={<TuneIcon />} label="Slider" />;
+
 const pickerMapper = {
   [componentTypes.TEXT_FIELD]: TextFieldOption,
   [componentTypes.CHECKBOX]: CheckboxOptions,
@@ -85,7 +88,8 @@ const pickerMapper = {
   [componentTypes.RADIO]: RadioOption,
   [componentTypes.SWITCH]: SwitchOption,
   [componentTypes.TEXTAREA]: TextAreaOption,
-  [componentTypes.SUB_FORM]: SubFormOption
+  [componentTypes.SUB_FORM]: SubFormOption,
+  [componentTypes.SLIDER]: SliderOption
 };
 
 export default pickerMapper;

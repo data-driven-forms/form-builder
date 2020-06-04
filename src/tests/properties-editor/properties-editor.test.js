@@ -9,7 +9,7 @@ import ComponentsContext from '../../components-context';
 import { SET_SELECTED_COMPONENT, REMOVE_COMPONENT } from '../../builder-state/builder-reducer';
 
 const AddValidatorComponent = ({ addValidator }) => (
-  <button id="add-validator" onClick={() => addValidator(validatorTypes.MIN_LENGTH)}>
+  <button id="add" onClick={() => addValidator(validatorTypes.MIN_LENGTH)}>
     Add MIN_LENGTH
   </button>
 );
@@ -32,7 +32,7 @@ const PropertiesEditorWrapper = ({ propertiesChildren, validationChildren, addVa
 const PropertyGroup = ({ children, handleDelete }) => (
   <div>
     <h2>Property group</h2>
-    <button onClick={handleDelete} className="delete-validator">
+    <button onClick={handleDelete} className="delete">
       Delete validator
     </button>
     <div>{children}</div>
@@ -85,7 +85,7 @@ describe('<PropertiesEditor />', () => {
         id: 'selected-component-id',
         component: 'text-field',
         isRequired: true,
-        validate: [{ type: 'required-validator' }]
+        validate: [{ type: 'required' }]
       }
     },
     selectedComponent: 'selected-component'
@@ -139,13 +139,13 @@ describe('<PropertiesEditor />', () => {
         payload: {
           action: 'add',
           fieldId: 'selected-component-id',
-          type: 'min-length-validator'
+          type: 'min-length'
         }
       }
     ];
     const store = mockStore(initialState);
     const wrapper = mount(<ComponentWrapper store={store} />);
-    wrapper.find('#add-validator').simulate('click');
+    wrapper.find('#add').simulate('click');
     expect(store.getActions()).toEqual(expectedActions);
   });
 
@@ -158,7 +158,7 @@ describe('<PropertiesEditor />', () => {
           action: 'remove',
           fieldId: 'selected-component-id',
           index: 0,
-          type: 'required-validator'
+          type: 'required'
         }
       },
       {
@@ -167,7 +167,7 @@ describe('<PropertiesEditor />', () => {
           action: 'add',
           fieldId: 'selected-component-id',
           index: 0,
-          type: 'required-validator'
+          type: 'required'
         }
       }
     ];
@@ -184,7 +184,7 @@ describe('<PropertiesEditor />', () => {
         'selected-component': {
           ...initialState.fields['selected-component'],
           restricted: true,
-          validate: [{ type: 'required-validator', original: {} }]
+          validate: [{ type: 'required', original: {} }]
         }
       }
     });
@@ -289,7 +289,7 @@ describe('<PropertiesEditor />', () => {
     ];
     const wrapper = mount(<ComponentWrapper store={store} />);
     wrapper
-      .find('button.delete-validator')
+      .find('button.delete')
       .last()
       .simulate('click');
     expect(store.getActions()).toEqual(expectedActions);
@@ -308,7 +308,7 @@ describe('<PropertiesEditor />', () => {
     const expectedActions = [];
     const wrapper = mount(<ComponentWrapper store={store} />);
     wrapper
-      .find('button.delete-validator')
+      .find('button.delete')
       .last()
       .simulate('click');
     expect(store.getActions()).toEqual(expectedActions);

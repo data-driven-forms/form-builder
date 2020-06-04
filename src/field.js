@@ -7,7 +7,8 @@ import isEqual from 'lodash/isEqual';
 
 const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContainer }) => {
   const {
-    componentMapper: { FieldActions, FieldLayout, DragHandle, ...rest }
+    builderMapper: { FieldActions, FieldLayout, DragHandle, ...rest },
+    componentMapper
   } = useContext(ComponentsContext);
   const { clone, isContainer, validate, ...field } = useSelector(({ fields }) => fields[fieldId]);
   const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent);
@@ -78,7 +79,7 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
                 <div>{field.content}</div>
               ) : (
                 <Fragment>
-                  <FieldComponent {...cleanField} innerProps={innerProps} />
+                  <FieldComponent {...cleanField} innerProps={innerProps} Component={componentMapper[field.component]} />
                   {!shouldClone && (
                     <DragHandle disableDrag={disableDrag} hasPropertyError={!!hasPropertyError} dragHandleProps={{ ...provided.dragHandleProps }} />
                   )}

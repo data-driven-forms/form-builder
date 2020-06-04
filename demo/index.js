@@ -5,6 +5,9 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/index';
 
+import { componentMapper as pf4ComponentMapper } from '@data-driven-forms/pf4-component-mapper';
+import { componentMapper as muiComponentMapper } from '@data-driven-forms/mui-component-mapper';
+
 import {
   pickerMapper as muiPickerMapper,
   propertiesMapper as muiPropertiesMapper,
@@ -258,14 +261,16 @@ const pf4State = {
   pickerMapper: pf4PickerMapper,
   propertiesMapper: pf4PropertiesMapper,
   builderMapper: pf4PBuilderMapper,
-  BuilderTemplate: pf4BuilderTemplate
+  BuilderTemplate: pf4BuilderTemplate,
+  componentMapper: pf4ComponentMapper
 };
 
 const muiState = {
   pickerMapper: muiPickerMapper,
   propertiesMapper: muiPropertiesMapper,
   builderMapper: muiPBuilderMapper,
-  BuilderTemplate: muiBuilderTemplate
+  BuilderTemplate: muiBuilderTemplate,
+  componentMapper: muiComponentMapper
 };
 
 const Demo = () => {
@@ -282,8 +287,9 @@ const Demo = () => {
           schemaTemplate={schemaTemplate}
           pickerMapper={state.pickerMapper}
           componentProperties={componentProperties}
-          componentMapper={state.builderMapper}
+          builderMapper={state.builderMapper}
           propertiesMapper={state.propertiesMapper}
+          componentMapper={state.componentMapper}
           cloneWhileDragging
           disableDrag={false}
           disableAdd={false}

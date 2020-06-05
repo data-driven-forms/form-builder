@@ -11,7 +11,7 @@ const snapshotPropType = PropTypes.shape({ isDragging: PropTypes.bool }).isRequi
 const childrenPropType = PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]);
 
 const commonPropTypes = {
-  Component: PropTypes.func,
+  Component: PropTypes.elementType,
   component: PropTypes.string,
   innerProps: PropTypes.shape({
     snapshot: snapshotPropType

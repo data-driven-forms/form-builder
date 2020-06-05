@@ -2,12 +2,13 @@ import React, { useContext, Fragment, memo } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 import ComponentsContext from './components-context';
+import { builderComponentTypes } from './constants';
 
 const PickerField = memo(
   ({ field, index }) => {
     const { pickerMapper, builderMapper, componentMapper } = useContext(ComponentsContext);
-    const Component = pickerMapper[field.component];
-    const Clone = builderMapper[field.component];
+    const Component = pickerMapper[field.component] || pickerMapper[builderComponentTypes.PICKER_FIELD];
+    const Clone = builderMapper[field.component] || builderMapper[builderComponentTypes.BUILDER_FIELD];
     return (
       <Draggable draggableId={field.id} index={index}>
         {(provided, snapshot) => (
@@ -23,10 +24,10 @@ const PickerField = memo(
                   Component={componentMapper[field.component]}
                 />
               ) : (
-                <Component innerProps={{ snapshot, isClone: true }} />
+                <Component innerProps={{ snapshot, isClone: true }} component={field.component} />
               )}
             </div>
-            {snapshot.isDragging && <Component {...snapshot} />}
+            {snapshot.isDragging && <Component {...snapshot} component={field.component} />}
           </Fragment>
         )}
       </Draggable>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ComponentsContext from './components-context';
 import { useDispatch, useSelector } from 'react-redux';
 import isEqual from 'lodash/isEqual';
+import { builderComponentTypes } from './constants';
 
 const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContainer }) => {
   const {
@@ -13,7 +14,7 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
   const { clone, isContainer, validate, ...field } = useSelector(({ fields }) => fields[fieldId]);
   const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent);
   const dispatch = useDispatch();
-  const FieldComponent = rest[field.component];
+  const FieldComponent = rest[field.component] || rest[builderComponentTypes.BUILDER_FIELD];
 
   const hasPropertyError = field.propertyValidation && Object.entries(field.propertyValidation).find(([, value]) => value);
   if (field.component === 'container-end') {

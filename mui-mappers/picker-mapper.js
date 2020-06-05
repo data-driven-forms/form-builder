@@ -12,6 +12,7 @@ import ToggleOffIcon from '@material-ui/icons/ToggleOff';
 import LowPriorityIcon from '@material-ui/icons/LowPriority';
 import TuneIcon from '@material-ui/icons/Tune';
 import { makeStyles } from '@material-ui/core/styles';
+import { builderComponentTypes } from '../src/constants';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,14 +30,42 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const PickerRoot = ({ label, icon }) => {
+const labels = {
+  [componentTypes.TEXT_FIELD]: 'Text field',
+  [componentTypes.CHECKBOX]: 'Checkbox',
+  [componentTypes.SELECT]: 'Select',
+  [componentTypes.DATE_PICKER]: 'Date picker',
+  [componentTypes.PLAIN_TEXT]: 'Plain text',
+  [componentTypes.RADIO]: 'Radio',
+  [componentTypes.SWITCH]: 'Switch',
+  [componentTypes.TEXTAREA]: 'Textarea',
+  [componentTypes.SUB_FORM]: 'Sub form',
+  [componentTypes.DUAL_LIST_SELECT]: 'Dual list select',
+  [componentTypes.SLIDER]: 'Slider'
+};
+
+const icons = {
+  [componentTypes.TEXT_FIELD]: <TextFieldsIcon />,
+  [componentTypes.CHECKBOX]: <CheckBoxIcon />,
+  [componentTypes.SELECT]: <FormatListBulletedIcon />,
+  [componentTypes.DATE_PICKER]: <TodayIcon />,
+  [componentTypes.DUAL_LIST_SELECT]: <LowPriorityIcon />,
+  [componentTypes.PLAIN_TEXT]: <ChromeReaderModeIcon />,
+  [componentTypes.RADIO]: <RadioButtonCheckedIcon />,
+  [componentTypes.SWITCH]: <ToggleOffIcon />,
+  [componentTypes.TEXTAREA]: <TextFieldsIcon />,
+  [componentTypes.SUB_FORM]: null,
+  [componentTypes.SLIDER]: <TuneIcon />
+};
+
+const PickerRoot = ({ component }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <Button
         variant="contained"
-        startIcon={icon}
+        startIcon={icons[component]}
         tabIndex={-1}
         classes={{
           label: classes.label,
@@ -45,51 +74,18 @@ const PickerRoot = ({ label, icon }) => {
         color="primary"
         fullWidth
       >
-        {label}
+        {labels[component] || component}
       </Button>
     </div>
   );
 };
 
 PickerRoot.propTypes = {
-  label: PropTypes.string.isRequired,
-  icon: PropTypes.node
+  component: PropTypes.string.isRequired
 };
 
-const TextFieldOption = () => <PickerRoot icon={<TextFieldsIcon />} label="Text field" />;
-
-const CheckboxOptions = () => <PickerRoot icon={<CheckBoxIcon />} label="Checkbox" />;
-
-const SelectOptions = () => <PickerRoot icon={<FormatListBulletedIcon />} label="Select" />;
-
-const DatePickerOption = () => <PickerRoot icon={<TodayIcon />} label="Date picker" />;
-
-const DualListOption = () => <PickerRoot icon={<LowPriorityIcon />} label="Dual list select" />;
-
-const PlainTextOption = () => <PickerRoot icon={<ChromeReaderModeIcon />} label="Plain text" />;
-
-const RadioOption = () => <PickerRoot icon={<RadioButtonCheckedIcon />} label="Radio" />;
-
-const SwitchOption = () => <PickerRoot icon={<ToggleOffIcon />} label="Switch" />;
-
-const TextAreaOption = () => <PickerRoot icon={<TextFieldsIcon />} label="Textarea" />;
-
-const SubFormOption = () => <PickerRoot label="Sub form" />;
-
-const SliderOption = () => <PickerRoot icon={<TuneIcon />} label="Slider" />;
-
 const pickerMapper = {
-  [componentTypes.TEXT_FIELD]: TextFieldOption,
-  [componentTypes.CHECKBOX]: CheckboxOptions,
-  [componentTypes.SELECT]: SelectOptions,
-  [componentTypes.DATE_PICKER]: DatePickerOption,
-  [componentTypes.DUAL_LIST_SELECT]: DualListOption,
-  [componentTypes.PLAIN_TEXT]: PlainTextOption,
-  [componentTypes.RADIO]: RadioOption,
-  [componentTypes.SWITCH]: SwitchOption,
-  [componentTypes.TEXTAREA]: TextAreaOption,
-  [componentTypes.SUB_FORM]: SubFormOption,
-  [componentTypes.SLIDER]: SliderOption
+  [builderComponentTypes.PICKER_FIELD]: PickerRoot
 };
 
 export default pickerMapper;

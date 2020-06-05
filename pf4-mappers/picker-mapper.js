@@ -4,53 +4,36 @@ import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { Button } from '@patternfly/react-core';
 
 import './pf4-mapper-style.css';
+import { builderComponentTypes } from '../src/constants';
 
-const PickerRoot = ({ label }) => (
+const labels = {
+  [componentTypes.TEXT_FIELD]: 'Text field',
+  [componentTypes.CHECKBOX]: 'Checkbox',
+  [componentTypes.SELECT]: 'Select',
+  [componentTypes.DATE_PICKER]: 'Date picker',
+  [componentTypes.PLAIN_TEXT]: 'Plain text',
+  [componentTypes.RADIO]: 'Radio',
+  [componentTypes.SWITCH]: 'Switch',
+  [componentTypes.TEXTAREA]: 'Textarea',
+  [componentTypes.SUB_FORM]: 'Sub form',
+  [componentTypes.DUAL_LIST_SELECT]: 'Dual list select',
+  [componentTypes.SLIDER]: 'Slider'
+};
+
+const PickerRoot = ({ component }) => (
   <div className="pf4-picker-root">
     <Button tabIndex={-1} variant="primary" color="primary">
-      {label}
+      {labels[component] || component}
     </Button>
   </div>
 );
 
 PickerRoot.propTypes = {
-  label: PropTypes.string.isRequired
+  component: PropTypes.string.isRequired
 };
 
-const TextFieldOption = () => <PickerRoot label="Text field" />;
-
-const CheckboxOptions = () => <PickerRoot label="Checkbox" />;
-
-const SelectOptions = () => <PickerRoot label="Select" />;
-
-const DatePickerOption = () => <PickerRoot label="Date picker" />;
-
-const PlainTextOption = () => <PickerRoot label="Plain text" />;
-
-const RadioOption = () => <PickerRoot label="Radio" />;
-
-const SwitchOption = () => <PickerRoot label="Switch" />;
-
-const TextAreaOption = () => <PickerRoot label="Textarea" />;
-
-const SubFormOption = () => <PickerRoot label="Sub form" />;
-
-const DualListSelectOption = () => <PickerRoot label="Dual list select" />;
-
-const SliderOption = () => <PickerRoot label="Slider" />;
-
 const pickerMapper = {
-  [componentTypes.TEXT_FIELD]: TextFieldOption,
-  [componentTypes.CHECKBOX]: CheckboxOptions,
-  [componentTypes.SELECT]: SelectOptions,
-  [componentTypes.DATE_PICKER]: DatePickerOption,
-  [componentTypes.PLAIN_TEXT]: PlainTextOption,
-  [componentTypes.RADIO]: RadioOption,
-  [componentTypes.SWITCH]: SwitchOption,
-  [componentTypes.TEXTAREA]: TextAreaOption,
-  [componentTypes.SUB_FORM]: SubFormOption,
-  [componentTypes.DUAL_LIST_SELECT]: DualListSelectOption,
-  [componentTypes.SLIDER]: SliderOption
+  [builderComponentTypes.PICKER_FIELD]: PickerRoot
 };
 
 export default pickerMapper;

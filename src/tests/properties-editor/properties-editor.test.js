@@ -61,7 +61,7 @@ const ComponentWrapper = ({ store, ...props }) => (
             ]
           }
         },
-        componentMapper: {
+        builderMapper: {
           PropertiesEditor: PropertiesEditorWrapper,
           PropertyGroup
         },

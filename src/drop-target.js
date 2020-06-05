@@ -9,7 +9,7 @@ import { DropTargetContext } from './layout-context';
 
 const DropTarget = () => {
   const {
-    componentMapper: { FormContainer, EmptyTarget }
+    builderMapper: { FormContainer, EmptyTarget }
   } = useContext(ComponentsContext);
   const { disableDrag } = useContext(DropTargetContext);
   const dropTargets = useSelector(({ dropTargets }) => dropTargets);

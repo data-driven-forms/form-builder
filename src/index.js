@@ -14,7 +14,7 @@ ContainerEnd.propTypes = {
 };
 
 const FormBuilder = ({
-  componentMapper,
+  builderMapper,
   componentProperties,
   pickerMapper,
   propertiesMapper,
@@ -24,6 +24,7 @@ const FormBuilder = ({
   mode,
   debug,
   children,
+  componentMapper,
   ...props
 }) => {
   const initialFields = Object.keys(componentProperties).reduce(
@@ -42,11 +43,12 @@ const FormBuilder = ({
   return (
     <ComponentsContext.Provider
       value={{
-        componentMapper: { ...componentMapper, 'container-end': ContainerEnd },
+        builderMapper: { ...builderMapper, 'container-end': ContainerEnd },
         componentProperties,
         pickerMapper,
         propertiesMapper,
-        debug
+        debug,
+        componentMapper
       }}
     >
       <Form onSubmit={() => {}}>
@@ -67,7 +69,7 @@ const FormBuilder = ({
 FormBuilder.propTypes = {
   mode: PropTypes.oneOf(['default', 'subset']),
   debug: PropTypes.bool,
-  componentMapper: PropTypes.object,
+  builderMapper: PropTypes.object,
   componentProperties: PropTypes.shape({
     attributes: PropTypes.arrayOf(
       PropTypes.shape({
@@ -81,7 +83,8 @@ FormBuilder.propTypes = {
   propertiesMapper: PropTypes.object,
   cloneWhileDragging: PropTypes.bool,
   schema: PropTypes.object,
-  schemaTemplate: PropTypes.object
+  schemaTemplate: PropTypes.object,
+  componentMapper: PropTypes.object
 };
 
 FormBuilder.defaultProps = {

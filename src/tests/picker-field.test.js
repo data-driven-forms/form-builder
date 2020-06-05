@@ -26,7 +26,7 @@ describe('PickerField', () => {
     const wrapper = mount(
       <ComponentsContext.Provider
         value={{
-          componentMapper: { pokus: pokusComponent },
+          builderMapper: { pokus: pokusComponent },
           componentProperties: {},
           pickerMapper: { pokus: pokusPicker },
           propertiesMapper: {}

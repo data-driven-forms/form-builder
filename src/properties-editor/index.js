@@ -21,7 +21,7 @@ const PropertiesEditor = () => {
   const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent, shallowEqual);
   const field = useSelector(({ selectedComponent, fields }) => fields[selectedComponent], shallowEqual);
   const {
-    componentMapper: { PropertiesEditor, PropertyGroup },
+    builderMapper: { PropertiesEditor, PropertyGroup },
     componentProperties,
     propertiesMapper,
     debug

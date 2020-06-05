@@ -8,7 +8,7 @@ import { ComponentPickerContext } from './layout-context';
 
 const ComponentPicker = () => {
   const {
-    componentMapper: { BuilderColumn }
+    builderMapper: { BuilderColumn }
   } = useContext(ComponentsContext);
   const { fields, disableAdd } = useContext(ComponentPickerContext);
   const dropTargetId = useSelector(({ dropTargets }) => dropTargets[COMPONENTS_LIST].id);

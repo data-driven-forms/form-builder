@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import FormBuilderLayout from './form-builder-layout';
 import ComponentsContext from './components-context';
@@ -6,11 +6,47 @@ import createInitialData from './helpers/create-initial-data';
 import { Provider } from 'react-redux';
 import builderStore from './builder-state/builder-store';
 import { Form, RendererContext } from '@data-driven-forms/react-form-renderer';
+import { Droppable } from 'react-beautiful-dnd';
+import Field from './field';
+import { FieldContext, DropTargetContext } from './layout-context';
 
 const ContainerEnd = ({ id }) => <div>{id}</div>;
 
 ContainerEnd.propTypes = {
   id: PropTypes.string
+};
+
+const DroppableSubform = ({ fields = [] }) => {
+  const {
+    builderMapper: { FormContainer, EmptyTarget }
+  } = useContext(ComponentsContext);
+  const { disableDrag } = useContext(DropTargetContext);
+
+  const { isDragging, id } = useContext(FieldContext);
+
+  if (isDragging) {
+    return null;
+  }
+
+  console.log(fields);
+
+  return (
+    <Droppable droppableId={id}>
+      {(provided, snapshot) => {
+        return (
+          <FormContainer isDraggingOver={snapshot.isDraggingOver} style={{ width: 'initial', gridColumn: '1/13' }}>
+            <div ref={provided.innerRef} {...provided.droppableProps} style={{ background: '#f0f0f0', padding: 16 }}>
+              {fields.length === 0 && <EmptyTarget />}
+              {fields.map((id, index) => (
+                <Field disableDrag={disableDrag} key={id} fieldId={id} index={index} />
+              ))}
+              {provided.placeholder}
+            </div>
+          </FormContainer>
+        );
+      }}
+    </Droppable>
+  );
 };
 
 const FormBuilder = ({
@@ -53,7 +89,13 @@ const FormBuilder = ({
     >
       <Form onSubmit={() => {}}>
         {() => (
-          <RendererContext.Provider value={{ formOptions: {} }}>
+          <RendererContext.Provider
+            value={{
+              formOptions: {
+                renderForm: (fields) => <DroppableSubform fields={fields} />
+              }
+            }}
+          >
             <Provider store={builderStore}>
               <FormBuilderLayout initialFields={createInitialData(initialFields, schema, mode === 'subset', schemaTemplate)} mode={mode} {...props}>
                 {children}

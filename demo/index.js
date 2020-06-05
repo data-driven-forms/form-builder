@@ -79,7 +79,6 @@ const componentProperties = {
     attributes: [LABEL, HELPER_TEXT, IS_READ_ONLY, IS_DISABLED, HIDE_FIELD]
   },
   [componentTypes.SUB_FORM]: {
-    isContainer: true,
     attributes: [TITLE, DESCRIPTION]
   },
   [componentTypes.DUAL_LIST_SELECT]: {
@@ -283,8 +282,8 @@ const Demo = () => {
       <CssBaseline />
       <ThemeProvider theme={createMuiTheme({})}>
         <FormBuilder
-          schema={schema}
-          schemaTemplate={schemaTemplate}
+          //schema={schema}
+          //schemaTemplate={schemaTemplate}
           pickerMapper={state.pickerMapper}
           componentProperties={componentProperties}
           builderMapper={state.builderMapper}

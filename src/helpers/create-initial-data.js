@@ -66,8 +66,7 @@ const createInitialData = (initialFields, schema, isSubset, schemaTemplate) => {
         fieldsIds
       }
     },
-    selectedComponent: undefined,
-    containers: []
+    selectedComponent: undefined
   };
 };
 

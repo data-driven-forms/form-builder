@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { componentTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes, RendererContext } from '@data-driven-forms/react-form-renderer';
 
 import { Button, Card, CardBody, CardHeader, Form, FormGroup, Title, Tab, Tabs } from '@patternfly/react-core';
 import { TrashIcon, TimesIcon, GripVerticalIcon, EyeSlashIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 import clsx from 'clsx';
 import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/dist/cjs/select';
 import { builderComponentTypes } from '../src/constants';
+import { FieldContext } from '../src/layout-context';
 
 const prepareLabel = (component, isDragging) =>
   ({
@@ -39,11 +40,21 @@ const ComponentWrapper = ({
   >
     <div className="pf4-hidefield-overlay">
       <EyeSlashIcon size="xl" className="hide-indicator" />
-      <Component
-        {...props}
-        label={props.label || prepareLabel(props.component, snapshot.isDragging)}
-        {...prepareOptions(props.component, props.options)}
-      />
+      <FieldContext.Provider
+        value={{
+          isDragging: snapshot.isDragging,
+          name: props.name,
+          id: props.id
+        }}
+      >
+        <Component
+          {...props}
+          label={props.label || prepareLabel(props.component, snapshot.isDragging)}
+          {...prepareOptions(props.component, props.options)}
+          {...(componentTypes.SUB_FORM === props.component && !props.title && { title: 'subform' })}
+          {...(componentTypes.SUB_FORM === props.component && !props.fields && { fields: [] })}
+        />
+      </FieldContext.Provider>
     </div>
   </div>
 );
@@ -231,11 +242,16 @@ DragHandle.propTypes = {
   hasPropertyError: PropTypes.bool
 };
 
-const FormContainer = ({ children, className }) => <div className={clsx(className, 'pf-c-form', 'pf4-builder-form-container')}>{children}</div>;
+const FormContainer = ({ children, className, isDraggingOver, ...props }) => (
+  <div className={clsx(className, 'pf-c-form', 'pf4-builder-form-container')} {...props}>
+    {children}
+  </div>
+);
 
 FormContainer.propTypes = {
   children: childrenPropType,
-  className: PropTypes.string
+  className: PropTypes.string,
+  isDraggingOver: PropTypes.bool
 };
 
 const EmptyTarget = () => <h1>Pick components from the component picker</h1>;

@@ -1,12 +1,13 @@
 import { validatorTypes } from '@data-driven-forms/react-form-renderer';
 import propertiesValidation from '../properties-editor/initial-value-checker';
-import { FORM_LAYOUT } from '../helpers/create-initial-data';
-
-const isInContainer = (index, containers) => containers.find((c) => index > c.boundaries[0] && index <= c.boundaries[1]);
+import { FORM_LAYOUT, COMPONENTS_LIST } from '../helpers/create-initial-data';
 
 const mutateColumns = (result, state) => {
   const { destination, source, draggableId } = result;
-  const { dropTargets, fields, containers } = state;
+  const { dropTargets, fields, selectedComponent } = state;
+
+  console.log({ result, state });
+
   if (!destination) {
     return {};
   }
@@ -22,69 +23,72 @@ const mutateColumns = (result, state) => {
   const isMovingInColumn = start === finish;
 
   if (isMovingInColumn) {
-    const noContainerNesting = template.isContainer && isInContainer(destination.index, containers);
-    if (noContainerNesting) {
-      return;
-    }
-    if (template.isContainer) {
-      const newFieldsIds = [...start.fieldsIds];
-      newFieldsIds.splice(source.index, template.children.length + 2);
-      newFieldsIds.splice(destination.index, 0, draggableId, ...template.children, `${draggableId}-end`);
-      return {
-        dropTargets: {
-          ...dropTargets,
-          [source.droppableId]: { ...start, fieldsIds: newFieldsIds }
-        }
-      };
-    } else {
-      const newFieldsIds = [...start.fieldsIds];
-      const moveContainer = isInContainer(destination.index, containers);
-      const newFields = { ...fields };
-      /**
-       * Move into from root
-       * filed was not in container before
-       */
-      if (moveContainer && !fields[draggableId].container) {
-        newFields[moveContainer.id].children = [...newFields[moveContainer.id].children, draggableId];
-        newFields[draggableId].container = moveContainer.id;
+    const newFieldsIds = [...start.fieldsIds];
+    const newFields = { ...fields };
+
+    newFieldsIds.splice(source.index, 1);
+    newFieldsIds.splice(destination.index, 0, draggableId);
+    return {
+      fields: newFields,
+      dropTargets: {
+        ...dropTargets,
+        [source.droppableId]: { ...start, fieldsIds: newFieldsIds }
       }
-      /**
-       * Move field outside of a container to root
-       */
-      if (fields[draggableId].container && !moveContainer) {
-        newFields[fields[draggableId].container].children = newFields[fields[draggableId].container].children.filter(
-          (child) => child !== draggableId
-        );
-        delete newFields[draggableId].container;
-      }
-      /**
-       * Move field between containers
-       */
-      if (moveContainer && fields[draggableId].container && fields[draggableId].container !== moveContainer.id) {
-        newFields[moveContainer.id].children = [...newFields[moveContainer.id].children, draggableId];
-        newFields[fields[draggableId].container].children = newFields[fields[draggableId].container].children.filter(
-          (child) => child !== draggableId
-        );
-        newFields[draggableId].container = moveContainer.id;
-      }
-      newFieldsIds.splice(source.index, 1);
-      newFieldsIds.splice(destination.index, 0, draggableId);
-      return {
-        fields: newFields,
-        dropTargets: {
-          ...dropTargets,
-          [source.droppableId]: { ...start, fieldsIds: newFieldsIds }
-        }
-      };
-    }
+    };
   }
-  /**
-   * Copy to column
-   */
+
+  const isMovingBetweenContainers =
+    ![FORM_LAYOUT, COMPONENTS_LIST].includes(destination.droppableId) && source.droppableId !== destination.droppableId;
+
+  if (isMovingBetweenContainers) {
+    return {
+      dropTargets: {
+        ...dropTargets,
+        [FORM_LAYOUT]: {
+          ...dropTargets[FORM_LAYOUT],
+          fieldsIds: dropTargets[FORM_LAYOUT]['fieldsIds'].filter((id) => id !== draggableId)
+        }
+      },
+      fields: {
+        ...fields,
+        [destination.droppableId]: {
+          ...fields[destination.droppableId],
+          fields: fields[destination.droppableId]['fields'] ? [...fields[destination.droppableId]['fields'], draggableId] : [draggableId]
+        },
+        ...(fields[source.droppableId] &&
+          fields[source.droppableId]['fields'] && {
+            [source.droppableId]: {
+              ...fields[source.droppableId],
+              fields: fields[source.droppableId]['fields'].filter((id) => id !== draggableId)
+            }
+          })
+      }
+    };
+  }
+
+  const movingOutsideNest = ![COMPONENTS_LIST, FORM_LAYOUT].includes(source.droppableId) && destination.droppableId === FORM_LAYOUT;
+
+  if (movingOutsideNest) {
+    return {
+      dropTargets: {
+        ...dropTargets,
+        [FORM_LAYOUT]: {
+          ...dropTargets[FORM_LAYOUT],
+          fieldsIds: [...dropTargets[FORM_LAYOUT]['fieldsIds'], draggableId]
+        }
+      },
+      fields: {
+        ...fields,
+        [source.droppableId]: {
+          ...fields[source.droppableId],
+          fields: fields[source.droppableId]['fields'].filter((id) => id !== draggableId)
+        }
+      }
+    };
+  }
 
   const newId = Date.now().toString();
   const finishFieldsIds = [...finish.fieldsIds];
-  const container = isInContainer(destination.index, containers);
 
   const newFields = {
     ...fields,
@@ -94,31 +98,12 @@ const mutateColumns = (result, state) => {
       preview: false,
       id: newId,
       initialized: false,
-      container: container && container.id,
-      children: template.isContainer && []
+      children: null
     }
   };
-  let newContainers = [...containers];
-  if (container) {
-    newFields[container.id] = {
-      ...newFields[container.id],
-      children: [...newFields[container.id].children, newId]
-    };
-    newContainers = newContainers.map((c) => (c.id === container.id ? { ...c, boundaries: [c.boundaries[0], c.boundaries[1] + 1] } : c));
-  }
-  if (template.isContainer) {
-    finishFieldsIds.splice(destination.index, 0, newId, `${newId}-end`);
-    newFields[`${newId}-end`] = {
-      component: 'container-end',
-      id: `${newId}-end`
-    };
-    newContainers.push({
-      id: newId,
-      boundaries: [destination.index, destination.index + 1]
-    });
-  } else {
-    finishFieldsIds.splice(destination.index, 0, newId);
-  }
+
+  finishFieldsIds.splice(destination.index, 0, newId);
+
   const newFinish = {
     ...finish,
     fieldsIds: finishFieldsIds
@@ -126,34 +111,34 @@ const mutateColumns = (result, state) => {
   return {
     dropTargets: { ...dropTargets, [newFinish.id]: newFinish },
     fields: newFields,
-    selectedComponent: newId,
-    containers: newContainers
+    selectedComponent: newId
   };
 };
 
 const removeComponent = (componentId, state) => {
   const { fields } = state;
-  const field = { ...fields[componentId] };
-  let containers = [...state.containers];
-  if (field.container) {
-    /**
-     * adjust container size if field was in container
-     */
-    containers = containers.map((c) => (c.id === field.container ? { ...c, boundaries: [c.boundaries[0], c.boundaries[1] - 1] } : c));
-  }
+
   delete fields[componentId];
-  delete fields[`${componentId}-end`];
+
   return {
     selectedComponent: undefined,
     dropTargets: {
       ...state.dropTargets,
       [FORM_LAYOUT]: {
         ...state.dropTargets[FORM_LAYOUT],
-        fieldsIds: state.dropTargets[FORM_LAYOUT].fieldsIds.filter((id) => id !== componentId && id !== `${componentId}-end`)
+        fieldsIds: state.dropTargets[FORM_LAYOUT].fieldsIds.filter((id) => id !== componentId)
       }
     },
-    fields: { ...state.fields },
-    containers
+    fields: Object.keys(fields).reduce(
+      (acc, curr) => ({
+        ...acc,
+        [curr]: {
+          ...fields[curr],
+          ...(fields[curr].fields && { fields: fields[curr].fields.filter((id) => id !== componentId) })
+        }
+      }),
+      {}
+    )
   };
 };
 
@@ -209,6 +194,7 @@ export const SET_FIELD_VALIDATOR = 'setFieldValidator';
 export const INITIALIZE = 'initialize';
 
 const builderReducer = (state, action) => {
+  console.log(state, action);
   switch (action.type) {
     case INITIALIZE:
       return { ...state, ...action.payload, initialized: true };

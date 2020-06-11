@@ -6,7 +6,7 @@ import { TrashIcon, PlusIcon, TrashRestoreIcon } from '@patternfly/react-icons';
 import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/dist/cjs/select';
 
 const FormGroupWrapper = ({ propertyValidation: { message }, children, ...props }) => (
-  <FormGroup helperTextInvalid={message} isValid={!message} {...props}>
+  <FormGroup helperTextInvalid={message} validated={message ? 'error' : 'default'} {...props}>
     {children}
   </FormGroup>
 );

@@ -7,6 +7,7 @@ import MemoizedValidator from './memozied-validator';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { SET_FIELD_VALIDATOR, SET_FIELD_PROPERTY, SET_SELECTED_COMPONENT, REMOVE_COMPONENT } from '../builder-state/builder-reducer';
 import convertInitialValue from './convert-initial-value';
+import { FORM_LAYOUT } from '../helpers/create-initial-data';
 
 const validatorOptions = Object.keys(validatorTypes)
   .filter((key) => validatorTypes[key] !== validatorTypes.REQUIRED)
@@ -19,12 +20,16 @@ const checkRequiredDisabled = (field) => {
 const PropertiesEditor = () => {
   const dispatch = useDispatch();
   const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent, shallowEqual);
-  const field = useSelector(({ selectedComponent, fields }) => fields[selectedComponent], shallowEqual);
+  const { field, dropTargets } = useSelector(
+    ({ selectedComponent, fields, dropTargets }) => ({ field: fields[selectedComponent], dropTargets }),
+    shallowEqual
+  );
   const {
     builderMapper: { PropertiesEditor, PropertyGroup },
     componentProperties,
     propertiesMapper,
-    debug
+    debug,
+    openEditor
   } = useContext(ComponentsContext);
   const [requiredDisabled, setRequiredDisabled] = useState(true);
   useEffect(() => {
@@ -32,6 +37,12 @@ const PropertiesEditor = () => {
       setRequiredDisabled(() => checkRequiredDisabled(field));
     }
   }, [selectedComponent, field]);
+
+  useEffect(() => {
+    if (!selectedComponent && openEditor && dropTargets[FORM_LAYOUT].fieldsIds[0]) {
+      dispatch({ type: SET_SELECTED_COMPONENT, payload: dropTargets[FORM_LAYOUT].fieldsIds[0] });
+    }
+  }, []);
 
   if (!selectedComponent) {
     return null;

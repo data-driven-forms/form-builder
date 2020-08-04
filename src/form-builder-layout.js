@@ -50,7 +50,7 @@ const FormBuilderLayout = ({ initialFields, disableDrag, mode, disableAdd, child
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+    <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart} onDragUpdate={console.log}>
       <DropTargetContext.Provider
         value={{
           disableDrag

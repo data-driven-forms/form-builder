@@ -12,6 +12,10 @@ const mutateColumns = (result, state) => {
     return {};
   }
 
+  if (destination.droppableId === draggableId) {
+    return {};
+  }
+
   if (destination.droppableId === source.droppableId && destination.index === source.index) {
     return {};
   }
@@ -157,11 +161,13 @@ const setFieldproperty = (field, payload) => {
   };
 };
 
-const dragStart = (field, state) => {
-  if (field.draggableId.match(/^initial-/) || !state.fields[field.draggableId].isContainer) {
+const dragStart = (field) => {
+  if (field.draggableId.match(/^initial-/)) {
     return {};
   }
-  return { draggingContainer: field.draggableId };
+  return {
+    dragging: field.draggableId
+  };
 };
 
 const changeValidator = (field, { index, action, fieldId, ...validator }) => {
@@ -201,8 +207,7 @@ const builderReducer = (state, action) => {
     case SET_COLUMNS:
       return {
         ...state,
-        ...mutateColumns(action.payload, state),
-        draggingContainer: undefined
+        ...mutateColumns(action.payload, state)
       };
     case SET_SELECTED_COMPONENT:
       return { ...state, selectedComponent: action.payload };

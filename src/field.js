@@ -11,35 +11,13 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
     builderMapper: { FieldActions, FieldLayout, DragHandle, ...rest },
     componentMapper
   } = useContext(ComponentsContext);
-  const { clone, isContainer, validate, ...field } = useSelector(({ fields }) => fields[fieldId]);
+  const { clone, validate, ...field } = useSelector(({ fields }) => fields[fieldId]);
   const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent);
   const dispatch = useDispatch();
   const FieldComponent = rest[field.component] || rest[builderComponentTypes.BUILDER_FIELD];
 
   const hasPropertyError = field.propertyValidation && Object.entries(field.propertyValidation).find(([, value]) => value);
-  if (field.component === 'container-end') {
-    return (
-      <Draggable isDragDisabled draggableId={field.id} index={index}>
-        {(provided) => (
-          <div
-            style={
-              field.id.match(new RegExp(`^${draggingContainer}-end`))
-                ? {
-                    visibility: 'hidden',
-                    height: 0,
-                    padding: 0,
-                    border: 0,
-                    margin: 0
-                  }
-                : {}
-            }
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-          ></div>
-        )}
-      </Draggable>
-    );
-  }
+
   const { hideField, initialized, preview, restricted, ...cleanField } = field;
   return (
     <Draggable isDragDisabled={disableDrag} draggableId={field.id} index={index}>
@@ -69,13 +47,7 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
             {...provided.draggableProps}
             onClick={() => dispatch({ type: 'setSelectedComponent', payload: field.id })}
           >
-            <FieldLayout
-              disableDrag={disableDrag}
-              dragging={snapshot.isDragging}
-              selected={selectedComponent === field.id}
-              isContainer={isContainer}
-              inContainer={field.container}
-            >
+            <FieldLayout disableDrag={disableDrag} dragging={snapshot.isDragging} selected={selectedComponent === field.id}>
               {field.preview ? (
                 <div>{field.content}</div>
               ) : (

@@ -22,17 +22,32 @@ const DroppableSubform = ({ fields = [] }) => {
   } = useContext(ComponentsContext);
   const { disableDrag } = useContext(DropTargetContext);
 
-  const { isDragging, id } = useContext(FieldContext);
+  const { isDragging, id = 'new' } = useContext(FieldContext);
 
   if (isDragging) {
-    return null;
+    return (
+      <Droppable droppableId={id} type="disabled" isDropDisabled={true}>
+        {(provided, snapshot) => {
+          return (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              style={{ background: '#f0f0f0', padding: 16, display: 'hidden', pointerEvents: 'none' }}
+            >
+              disabled
+            </div>
+          );
+        }}
+      </Droppable>
+    );
   }
 
-  console.log(fields);
+  console.log(fields, id);
 
   return (
-    <Droppable droppableId={id}>
+    <Droppable droppableId={id} isDropDisabled={isDragging} onDrop={(...ags) => console.log('args', args)}>
       {(provided, snapshot) => {
+        console.log(provided.innerRef, provided.droppableProps);
         return (
           <FormContainer isDraggingOver={snapshot.isDraggingOver} style={{ width: 'initial', gridColumn: '1/13' }}>
             <div ref={provided.innerRef} {...provided.droppableProps} style={{ background: '#f0f0f0', padding: 16 }}>
@@ -70,8 +85,7 @@ const FormBuilder = ({
         preview: true,
         id: `initial-${curr}`,
         component: curr,
-        clone: cloneWhileDragging,
-        isContainer: componentProperties[curr].isContainer
+        clone: cloneWhileDragging
       }
     }),
     {}

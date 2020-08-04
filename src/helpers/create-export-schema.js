@@ -1,4 +1,4 @@
-const ARTIFICIAL_KEYS = ['preview', 'clone', 'initialized', 'id', 'isContainer', 'children', 'container', 'restricted', 'propertyValidation'];
+const ARTIFICIAL_KEYS = ['preview', 'clone', 'initialized', 'id', 'children', 'restricted', 'propertyValidation'];
 
 const sanitizeField = (field) => {
   const result = { ...field };

@@ -1,6 +1,6 @@
 {
   "name": "@data-driven-forms/form-builder",
-  "version": "0.0.10-rc8",
+  "version": "0.0.10-rc9",
   "description": "Interactive drag and drop editor for creating data driven forms schema",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

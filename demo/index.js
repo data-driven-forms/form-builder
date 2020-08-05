@@ -293,6 +293,7 @@ const Demo = () => {
           cloneWhileDragging
           disableDrag={false}
           disableAdd={false}
+          openEditor
           mode="subset"
           debug={false}
           render={({ isValid, getSchema, ...props }) => (

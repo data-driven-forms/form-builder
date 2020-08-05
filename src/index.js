@@ -25,6 +25,7 @@ const FormBuilder = ({
   debug,
   children,
   componentMapper,
+  openEditor,
   ...props
 }) => {
   const initialFields = Object.keys(componentProperties).reduce(
@@ -48,7 +49,8 @@ const FormBuilder = ({
         pickerMapper,
         propertiesMapper,
         debug,
-        componentMapper
+        componentMapper,
+        openEditor
       }}
     >
       <Form onSubmit={() => {}}>
@@ -84,7 +86,8 @@ FormBuilder.propTypes = {
   cloneWhileDragging: PropTypes.bool,
   schema: PropTypes.object,
   schemaTemplate: PropTypes.object,
-  componentMapper: PropTypes.object
+  componentMapper: PropTypes.object,
+  openEditor: PropTypes.bool
 };
 
 FormBuilder.defaultProps = {

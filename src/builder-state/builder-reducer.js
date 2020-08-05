@@ -207,11 +207,14 @@ export const DRAG_START = 'dragStart';
 export const SET_FIELD_PROPERTY = 'setFieldProperty';
 export const SET_FIELD_VALIDATOR = 'setFieldValidator';
 export const INITIALIZE = 'initialize';
+export const UNINITIALIZE = 'uninitialize';
 
 const builderReducer = (state, action) => {
   switch (action.type) {
     case INITIALIZE:
       return { ...state, ...action.payload, initialized: true };
+    case UNINITIALIZE:
+      return { initialized: false };
     case SET_COLUMNS:
       return {
         ...state,

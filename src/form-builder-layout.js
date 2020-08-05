@@ -5,7 +5,7 @@ import throttle from 'lodash/throttle';
 import DropTarget from './drop-target';
 import PropertiesEditor from './properties-editor';
 import ComponentPicker from './component-picker';
-import { INITIALIZE } from './builder-state/builder-reducer';
+import { INITIALIZE, UNINITIALIZE } from './builder-state/builder-reducer';
 import createSchema, { validateOutput } from './helpers/create-export-schema';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { DropTargetContext, ComponentPickerContext } from './layout-context';
@@ -39,6 +39,8 @@ const FormBuilderLayout = ({ initialFields, disableDrag, mode, disableAdd, child
   const state = useSelector((state) => state, shallowEqual);
   useEffect(() => {
     dispatch({ type: INITIALIZE, payload: initialFields });
+
+    return () => dispatch({ type: UNINITIALIZE });
   }, []);
   const getSchema = () => createSchema(state.dropTargets[FORM_LAYOUT].fieldsIds, state.fields);
 

@@ -5,7 +5,8 @@ import builderReducer, {
   DRAG_START,
   SET_FIELD_PROPERTY,
   SET_FIELD_VALIDATOR,
-  INITIALIZE
+  INITIALIZE,
+  UNINITIALIZE
 } from '../../builder-state/builder-reducer';
 import propertiesValidation from '../../properties-editor/initial-value-checker';
 import { FORM_LAYOUT } from '../../helpers/create-initial-data';
@@ -34,6 +35,19 @@ describe('builderReducer', () => {
       ).toEqual({
         custom: 'custom_1',
         initialized: true
+      });
+    });
+  });
+
+  describe(UNINITIALIZE, () => {
+    it('sets initialized to false', () => {
+      initialState = { initialized: true, fields: ['A'] };
+      expect(
+        builderReducer(initialState, {
+          type: UNINITIALIZE
+        })
+      ).toEqual({
+        initialized: false
       });
     });
   });

@@ -13,7 +13,7 @@ const convertType = (dataType, value) =>
     [dataTypes.INTEGER]: !isNaN(Number(value)) && parseInt(value),
     [dataTypes.FLOAT]: !isNaN(Number(value)) && parseFloat(value),
     [dataTypes.NUMBER]: Number(value),
-    [dataTypes.BOOLEAN]: castToBoolean(value)
+    [dataTypes.BOOLEAN]: castToBoolean(value),
   }[dataType] || value);
 
 const convertInitialValue = (initialValue, dataType) => {
@@ -26,7 +26,7 @@ const convertInitialValue = (initialValue, dataType) => {
       typeof value === 'object'
         ? {
             ...value,
-            value: Object.prototype.hasOwnProperty.call(value, 'value') ? convertType(dataType, value.value) : value
+            value: Object.prototype.hasOwnProperty.call(value, 'value') ? convertType(dataType, value.value) : value,
           }
         : convertType(dataType, value)
     );

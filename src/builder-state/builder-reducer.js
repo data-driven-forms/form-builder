@@ -33,8 +33,8 @@ const mutateColumns = (result, state) => {
       return {
         dropTargets: {
           ...dropTargets,
-          [source.droppableId]: { ...start, fieldsIds: newFieldsIds }
-        }
+          [source.droppableId]: { ...start, fieldsIds: newFieldsIds },
+        },
       };
     } else {
       const newFieldsIds = [...start.fieldsIds];
@@ -73,8 +73,8 @@ const mutateColumns = (result, state) => {
         fields: newFields,
         dropTargets: {
           ...dropTargets,
-          [source.droppableId]: { ...start, fieldsIds: newFieldsIds }
-        }
+          [source.droppableId]: { ...start, fieldsIds: newFieldsIds },
+        },
       };
     }
   }
@@ -95,14 +95,14 @@ const mutateColumns = (result, state) => {
       id: newId,
       initialized: false,
       container: container && container.id,
-      children: template.isContainer && []
-    }
+      children: template.isContainer && [],
+    },
   };
   let newContainers = [...containers];
   if (container) {
     newFields[container.id] = {
       ...newFields[container.id],
-      children: [...newFields[container.id].children, newId]
+      children: [...newFields[container.id].children, newId],
     };
     newContainers = newContainers.map((c) => (c.id === container.id ? { ...c, boundaries: [c.boundaries[0], c.boundaries[1] + 1] } : c));
   }
@@ -110,24 +110,24 @@ const mutateColumns = (result, state) => {
     finishFieldsIds.splice(destination.index, 0, newId, `${newId}-end`);
     newFields[`${newId}-end`] = {
       component: 'container-end',
-      id: `${newId}-end`
+      id: `${newId}-end`,
     };
     newContainers.push({
       id: newId,
-      boundaries: [destination.index, destination.index + 1]
+      boundaries: [destination.index, destination.index + 1],
     });
   } else {
     finishFieldsIds.splice(destination.index, 0, newId);
   }
   const newFinish = {
     ...finish,
-    fieldsIds: finishFieldsIds
+    fieldsIds: finishFieldsIds,
   };
   return {
     dropTargets: { ...dropTargets, [newFinish.id]: newFinish },
     fields: newFields,
     selectedComponent: newId,
-    containers: newContainers
+    containers: newContainers,
   };
 };
 
@@ -149,11 +149,11 @@ const removeComponent = (componentId, state) => {
       ...state.dropTargets,
       [FORM_LAYOUT]: {
         ...state.dropTargets[FORM_LAYOUT],
-        fieldsIds: state.dropTargets[FORM_LAYOUT].fieldsIds.filter((id) => id !== componentId && id !== `${componentId}-end`)
-      }
+        fieldsIds: state.dropTargets[FORM_LAYOUT].fieldsIds.filter((id) => id !== componentId && id !== `${componentId}-end`),
+      },
     },
     fields: { ...state.fields },
-    containers
+    containers,
   };
 };
 
@@ -161,14 +161,14 @@ const setFieldproperty = (field, payload) => {
   const modifiedField = {
     ...field,
     initialized: true,
-    [payload.propertyName]: payload.value
+    [payload.propertyName]: payload.value,
   };
   return {
     ...modifiedField,
     propertyValidation: {
       ...modifiedField.propertyValidation,
-      ...propertiesValidation(payload.propertyName)(modifiedField)
-    }
+      ...propertiesValidation(payload.propertyName)(modifiedField),
+    },
   };
 };
 
@@ -219,7 +219,7 @@ const builderReducer = (state, action) => {
       return {
         ...state,
         ...mutateColumns(action.payload, state),
-        draggingContainer: undefined
+        draggingContainer: undefined,
       };
     case SET_SELECTED_COMPONENT:
       return { ...state, selectedComponent: action.payload };
@@ -232,16 +232,16 @@ const builderReducer = (state, action) => {
         ...state,
         fields: {
           ...state.fields,
-          [action.payload.fieldId]: setFieldproperty(state.fields[action.payload.fieldId], action.payload)
-        }
+          [action.payload.fieldId]: setFieldproperty(state.fields[action.payload.fieldId], action.payload),
+        },
       };
     case SET_FIELD_VALIDATOR:
       return {
         ...state,
         fields: {
           ...state.fields,
-          [action.payload.fieldId]: changeValidator(state.fields[action.payload.fieldId], action.payload)
-        }
+          [action.payload.fieldId]: changeValidator(state.fields[action.payload.fieldId], action.payload),
+        },
       };
     default:
       return state;

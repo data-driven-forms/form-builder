@@ -10,7 +10,7 @@ import { Form, RendererContext } from '@data-driven-forms/react-form-renderer';
 const ContainerEnd = ({ id }) => <div>{id}</div>;
 
 ContainerEnd.propTypes = {
-  id: PropTypes.string
+  id: PropTypes.string,
 };
 
 const FormBuilder = ({
@@ -36,8 +36,8 @@ const FormBuilder = ({
         id: `initial-${curr}`,
         component: curr,
         clone: cloneWhileDragging,
-        isContainer: componentProperties[curr].isContainer
-      }
+        isContainer: componentProperties[curr].isContainer,
+      },
     }),
     {}
   );
@@ -50,7 +50,7 @@ const FormBuilder = ({
         propertiesMapper,
         debug,
         componentMapper,
-        openEditor
+        openEditor,
       }}
     >
       <Form onSubmit={() => {}}>
@@ -77,9 +77,9 @@ FormBuilder.propTypes = {
       PropTypes.shape({
         component: PropTypes.string.isRequired,
         label: PropTypes.string.isRequired,
-        propertyName: PropTypes.string.isRequired
+        propertyName: PropTypes.string.isRequired,
       })
-    )
+    ),
   }),
   pickerMapper: PropTypes.object,
   propertiesMapper: PropTypes.object,
@@ -87,12 +87,13 @@ FormBuilder.propTypes = {
   schema: PropTypes.object,
   schemaTemplate: PropTypes.object,
   componentMapper: PropTypes.object,
-  openEditor: PropTypes.bool
+  openEditor: PropTypes.bool,
+  children: PropTypes.node,
 };
 
 FormBuilder.defaultProps = {
   mode: 'default',
-  debug: false
+  debug: false,
 };
 
 export default FormBuilder;

@@ -9,7 +9,7 @@ import { builderComponentTypes } from './constants';
 const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContainer }) => {
   const {
     builderMapper: { FieldActions, FieldLayout, DragHandle, ...rest },
-    componentMapper
+    componentMapper,
   } = useContext(ComponentsContext);
   const { clone, isContainer, validate, ...field } = useSelector(({ fields }) => fields[fieldId]);
   const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent);
@@ -29,7 +29,7 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
                     height: 0,
                     padding: 0,
                     border: 0,
-                    margin: 0
+                    margin: 0,
                   }
                 : {}
             }
@@ -50,7 +50,7 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
           hideField,
           initialized,
           preview,
-          restricted
+          restricted,
         };
         return (
           <div
@@ -61,7 +61,7 @@ const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContaine
                     height: 0,
                     padding: 0,
                     border: 0,
-                    margin: 0
+                    margin: 0,
                   }
                 : {}
             }
@@ -100,14 +100,14 @@ Field.propTypes = {
   disableDrag: PropTypes.bool,
   selectedComponent: PropTypes.string,
   draggingContainer: PropTypes.string,
-  fieldId: PropTypes.string.isRequired
+  fieldId: PropTypes.string.isRequired,
 };
 
 const MemoizedField = (props) => {
   const { selectedComponent, draggingContainer } = useSelector(
     ({ selectedComponent, draggingContainer }) => ({
       selectedComponent,
-      draggingContainer
+      draggingContainer,
     }),
     isEqual
   );

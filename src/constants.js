@@ -1,4 +1,4 @@
 export const builderComponentTypes = {
   BUILDER_FIELD: 'builder-field',
-  PICKER_FIELD: 'picker-field'
+  PICKER_FIELD: 'picker-field',
 };

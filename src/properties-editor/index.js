@@ -29,7 +29,7 @@ const PropertiesEditor = () => {
     componentProperties,
     propertiesMapper,
     debug,
-    openEditor
+    openEditor,
   } = useContext(ComponentsContext);
   const [requiredDisabled, setRequiredDisabled] = useState(true);
   useEffect(() => {
@@ -60,8 +60,8 @@ const PropertiesEditor = () => {
       payload: {
         value: convertInitialValue(value, field.dataType),
         propertyName,
-        fieldId: field.id
-      }
+        fieldId: field.id,
+      },
     });
 
   const handleValidatorChange = (value = {}, action, index) =>
@@ -71,8 +71,8 @@ const PropertiesEditor = () => {
         ...value,
         fieldId: field.id,
         index,
-        action
-      }
+        action,
+      },
     });
 
   const requiredIndex = validate.reduce((acc, curr, index) => (curr.type === validatorTypes.REQUIRED ? index : acc), 0);
@@ -92,7 +92,7 @@ const PropertiesEditor = () => {
             ? () =>
                 dispatch({
                   type: REMOVE_COMPONENT,
-                  payload: field.id
+                  payload: field.id,
                 })
             : undefined
         }
@@ -139,7 +139,7 @@ const PropertiesEditor = () => {
                 onChange={(value) =>
                   handleValidatorChange(
                     {
-                      type: validatorTypes.REQUIRED
+                      type: validatorTypes.REQUIRED,
                     },
                     value ? 'add' : 'remove',
                     requiredIndex
@@ -155,7 +155,7 @@ const PropertiesEditor = () => {
                   onChange={(value) =>
                     handleValidatorChange(
                       {
-                        message: value
+                        message: value,
                       },
                       'modify',
                       requiredIndex

@@ -2,14 +2,14 @@ const propertyStrings = {
   isRequired: 'required',
   isDisabled: 'disabled',
   isReadOnly: 'read only',
-  hideField: 'hidden'
+  hideField: 'hidden',
 };
 
 const initialValueCheckMessage = ({ isDisabled, isReadOnly, hideField }) => {
   return `Initial value must be set if field is required and at the same time ${Object.entries({
     isDisabled,
     isReadOnly,
-    hideField
+    hideField,
   })
     .filter(([, value]) => value)
     .map(([key]) => propertyStrings[key])
@@ -23,26 +23,26 @@ const initialValueCheck = ({ initialValue, isRequired, isDisabled, isReadOnly, h
           message: initialValueCheckMessage({
             isDisabled,
             isReadOnly,
-            hideField
+            hideField,
           }),
           code: 'errors.initialValue',
           codeDependencies: {
             isRequired,
             isDisabled,
             isReadOnly,
-            hideField
-          }
-        }
+            hideField,
+          },
+        },
       }
     : {
-        initialValue: undefined
+        initialValue: undefined,
       };
 
 const propertyValidationMapper = {
   isDisabled: initialValueCheck,
   isReadOnly: initialValueCheck,
   hideField: initialValueCheck,
-  initialValue: initialValueCheck
+  initialValue: initialValueCheck,
 };
 
 const propertiesValidation = (type) => {

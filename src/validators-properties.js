@@ -3,26 +3,26 @@ import { validatorTypes } from '@data-driven-forms/react-form-renderer';
 const messageType = {
   label: 'Message',
   component: 'input',
-  propertyName: 'message'
+  propertyName: 'message',
 };
 
 const thresholdType = {
   propertyName: 'threshold',
   label: 'Threshold',
   component: 'input',
-  type: 'number'
+  type: 'number',
 };
 
 const includeThresholdType = {
   propertyName: 'includeThreshold',
   label: 'Include threshold',
-  component: 'switch'
+  component: 'switch',
 };
 
 const patternType = {
   label: 'Pattern',
   component: 'input',
-  propertyName: 'pattern'
+  propertyName: 'pattern',
 };
 
 const urlOptions = ['emptyProtocol', 'protocolIdentifier', 'basicAuth', 'local', 'ipv4', 'ipv6', 'host', 'port', 'path', 'search', 'hash'];
@@ -33,7 +33,7 @@ const urlTypes = urlOptions.map((option) => ({
     .split(/(?=[A-Z])/)
     .join(' ')
     .replace(/^./, option[0].toUpperCase()),
-  component: 'switch'
+  component: 'switch',
 }));
 
 export default {
@@ -43,10 +43,10 @@ export default {
       label: 'Max length',
       restriction: {
         inputAttribute: 'max',
-        validatorAttribute: thresholdType.propertyName
-      }
+        validatorAttribute: thresholdType.propertyName,
+      },
     },
-    messageType
+    messageType,
   ],
   [validatorTypes.MIN_LENGTH]: [
     {
@@ -54,10 +54,10 @@ export default {
       label: 'Min length',
       restriction: {
         inputAttribute: 'min',
-        validatorAttribute: thresholdType.propertyName
-      }
+        validatorAttribute: thresholdType.propertyName,
+      },
     },
-    messageType
+    messageType,
   ],
   [validatorTypes.EXACT_LENGTH]: [{ ...thresholdType, label: 'Exact length' }, messageType],
   [validatorTypes.MAX_NUMBER_VALUE]: [
@@ -67,14 +67,14 @@ export default {
       propertyName: 'value',
       restriction: {
         inputAttribute: 'max',
-        validatorAttribute: 'value'
-      }
+        validatorAttribute: 'value',
+      },
     },
     {
       ...includeThresholdType,
-      label: 'Include value'
+      label: 'Include value',
     },
-    messageType
+    messageType,
   ],
   [validatorTypes.MIN_NUMBER_VALUE]: [
     {
@@ -83,16 +83,16 @@ export default {
       propertyName: 'value',
       restriction: {
         inputAttribute: 'min',
-        validatorAttribute: 'value'
-      }
+        validatorAttribute: 'value',
+      },
     },
     {
       ...includeThresholdType,
-      label: 'Include value'
+      label: 'Include value',
     },
-    messageType
+    messageType,
   ],
   [validatorTypes.MIN_ITEMS]: [{ ...thresholdType, label: 'Minimum number of items' }, messageType],
   [validatorTypes.PATTERN]: [{ ...patternType, restriction: { lock: true } }, messageType],
-  [validatorTypes.URL]: [messageType, ...urlTypes]
+  [validatorTypes.URL]: [messageType, ...urlTypes],
 };

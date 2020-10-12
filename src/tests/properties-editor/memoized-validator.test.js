@@ -13,8 +13,8 @@ const ComponentWrapper = ({ store, ...props }) => (
     <ComponentsContext.Provider
       value={{
         propertiesMapper: {
-          component: ContextComponent
-        }
+          component: ContextComponent,
+        },
       }}
     >
       <MemoizedValidator {...props} />
@@ -26,9 +26,9 @@ describe('<MemoizedValidator />', () => {
   const mockStore = configureStore();
   const initialState = {
     fields: {
-      'selected-field': {}
+      'selected-field': {},
     },
-    selectedComponent: 'selected-field'
+    selectedComponent: 'selected-field',
   };
 
   it('should mount MemoizedValidator and pick component from context', () => {
@@ -37,12 +37,12 @@ describe('<MemoizedValidator />', () => {
       <ComponentWrapper
         store={store}
         validator={{
-          'validate-me': 'Yay'
+          'validate-me': 'Yay',
         }}
         property={{
           propertyName: 'validate-me',
           component: 'component',
-          label: 'Validate me'
+          label: 'Validate me',
         }}
         handleValidatorChange={jest.fn()}
         index={0}
@@ -57,12 +57,12 @@ describe('<MemoizedValidator />', () => {
       <ComponentWrapper
         store={store}
         validator={{
-          'validate-me': 'Yay'
+          'validate-me': 'Yay',
         }}
         property={{
           propertyName: 'validate-me',
           component: 'component',
-          label: 'Validate me'
+          label: 'Validate me',
         }}
         handleValidatorChange={jest.fn()}
         index={0}

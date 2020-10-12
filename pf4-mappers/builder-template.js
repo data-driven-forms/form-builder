@@ -16,7 +16,7 @@ BuilderTemplate.propTypes = {
   ComponentPicker: PropTypes.func.isRequired,
   PropertiesEditor: PropTypes.func.isRequired,
   DropTarget: PropTypes.func.isRequired,
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)])
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
 };
 
 export default BuilderTemplate;

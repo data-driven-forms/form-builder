@@ -41,8 +41,8 @@ PickerField.propTypes = {
   field: PropTypes.shape({
     id: PropTypes.string.isRequired,
     component: PropTypes.string.isRequired,
-    clone: PropTypes.bool
-  }).isRequired
+    clone: PropTypes.bool,
+  }).isRequired,
 };
 
 export default PickerField;

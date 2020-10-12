@@ -6,15 +6,15 @@ describe('create export schema', () => {
     const expectedSchema = {
       fields: [
         {
-          name: 'only-name'
+          name: 'only-name',
         },
         {
           name: 'foo',
           label: 'Text field',
           isRequired: true,
-          validate: [{ type: 'required-validator' }]
-        }
-      ]
+          validate: [{ type: 'required-validator' }],
+        },
+      ],
     };
     expect(createSchema(['should-remove-all-attributes', '123-text-field'], fields)).toEqual(expectedSchema);
   });
@@ -32,11 +32,11 @@ describe('create export schema', () => {
           options: [
             {
               value: 'bar',
-              label: 'bar'
-            }
-          ]
-        }
-      ]
+              label: 'bar',
+            },
+          ],
+        },
+      ],
     };
     expect(createSchema(['deleted-option-field'], schemaWithDeletedOption)).toEqual(expectedSchema);
   });

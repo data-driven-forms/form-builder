@@ -10,7 +10,7 @@ export const FORM_LAYOUT = 'form-layout';
  */
 const createInitialData = (initialFields, schema, isSubset, schemaTemplate) => {
   const fields = {
-    ...initialFields
+    ...initialFields,
   };
   const fieldsIds = [];
   if (schema && schema.fields) {
@@ -22,7 +22,7 @@ const createInitialData = (initialFields, schema, isSubset, schemaTemplate) => {
         id,
         clone: true,
         preview: false,
-        initialized: true
+        initialized: true,
       };
       if (isSubset) {
         let template;
@@ -44,9 +44,9 @@ const createInitialData = (initialFields, schema, isSubset, schemaTemplate) => {
           validate: fields[id].validate
             ? fields[id].validate.map((validator, index) => ({
                 ...validator,
-                original: template ? { ...template.validate[index] } : { ...validator }
+                original: template ? { ...template.validate[index] } : { ...validator },
               }))
-            : undefined
+            : undefined,
         };
       }
     });
@@ -58,16 +58,16 @@ const createInitialData = (initialFields, schema, isSubset, schemaTemplate) => {
       [COMPONENTS_LIST]: {
         id: COMPONENTS_LIST,
         title: 'Component picker',
-        fieldsIds: Object.keys(initialFields)
+        fieldsIds: Object.keys(initialFields),
       },
       [FORM_LAYOUT]: {
         id: FORM_LAYOUT,
         title: 'Form',
-        fieldsIds
-      }
+        fieldsIds,
+      },
     },
     selectedComponent: undefined,
-    containers: []
+    containers: [],
   };
 };
 

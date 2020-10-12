@@ -7,7 +7,7 @@ describe('builderStore', () => {
         dispatch: expect.any(Function),
         getState: expect.any(Function),
         replaceReducer: expect.any(Function),
-        subscribe: expect.any(Function)
+        subscribe: expect.any(Function),
       })
     );
     expect(builderStore.getState()).toEqual({ initialized: false });

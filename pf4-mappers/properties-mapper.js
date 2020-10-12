@@ -13,11 +13,11 @@ const FormGroupWrapper = ({ propertyValidation: { message }, children, ...props 
 
 FormGroupWrapper.propTypes = {
   propertyValidation: PropTypes.shape({ message: PropTypes.string }),
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)])
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
 };
 
 FormGroupWrapper.defaultProps = {
-  propertyValidation: {}
+  propertyValidation: {},
 };
 
 const Input = ({ label, value, fieldId, innerProps: { propertyValidation }, ...rest }) => {
@@ -35,13 +35,13 @@ Input.propTypes = {
   value: PropTypes.any,
   fieldId: PropTypes.string.isRequired,
   innerProps: PropTypes.shape({
-    propertyValidation: PropTypes.shape({ message: PropTypes.string })
-  }).isRequired
+    propertyValidation: PropTypes.shape({ message: PropTypes.string }),
+  }).isRequired,
 };
 
 Input.defaultProps = {
   onChange: () => {},
-  value: ''
+  value: '',
 };
 
 const PropertySwitch = ({ value, fieldId, innerProps: { propertyValidation }, ...rest }) => (
@@ -55,12 +55,12 @@ PropertySwitch.propTypes = {
   value: PropTypes.any,
   fieldId: PropTypes.string.isRequired,
   innerProps: PropTypes.shape({
-    propertyValidation: PropTypes.shape({ message: PropTypes.string })
-  }).isRequired
+    propertyValidation: PropTypes.shape({ message: PropTypes.string }),
+  }).isRequired,
 };
 
 PropertySwitch.defaultProps = {
-  value: false
+  value: false,
 };
 
 const PropertySelect = ({ label, options, fieldId, innerProps: { propertyValidation }, ...rest }) => (
@@ -74,12 +74,12 @@ PropertySelect.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   fieldId: PropTypes.string.isRequired,
   innerProps: PropTypes.shape({
-    propertyValidation: PropTypes.shape({ message: PropTypes.string })
-  }).isRequired
+    propertyValidation: PropTypes.shape({ message: PropTypes.string }),
+  }).isRequired,
 };
 
 PropertySelect.defaultProps = {
-  onChange: () => {}
+  onChange: () => {},
 };
 
 const PropertyOptions = ({ value = [], label, onChange, innerProps: { restricted } }) => {
@@ -92,7 +92,7 @@ const PropertyOptions = ({ value = [], label, onChange, innerProps: { restricted
         itemIndex === index
           ? {
               ...item,
-              deleted: !item.deleted
+              deleted: !item.deleted,
             }
           : item
       );
@@ -107,7 +107,7 @@ const PropertyOptions = ({ value = [], label, onChange, innerProps: { restricted
         style={{
           display: 'flex',
           justifyContent: 'flex-start',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <span>{label}</span>
@@ -163,7 +163,7 @@ PropertyOptions.propTypes = {
   value: PropTypes.array,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  innerProps: PropTypes.shape({ restricted: PropTypes.bool }).isRequired
+  innerProps: PropTypes.shape({ restricted: PropTypes.bool }).isRequired,
 };
 
 const Textarea = ({ value, fieldId, innerProps: { propertyValidation }, ...rest }) => {
@@ -178,13 +178,13 @@ Textarea.propTypes = {
   value: PropTypes.string,
   fieldId: PropTypes.string.isRequired,
   innerProps: PropTypes.shape({
-    propertyValidation: PropTypes.shape({ message: PropTypes.string })
-  }).isRequired
+    propertyValidation: PropTypes.shape({ message: PropTypes.string }),
+  }).isRequired,
 };
 
 Textarea.defaultProps = {
   onChange: () => {},
-  value: ''
+  value: '',
 };
 
 const propertiesMapper = {
@@ -192,7 +192,7 @@ const propertiesMapper = {
   switch: PropertySwitch,
   select: PropertySelect,
   options: PropertyOptions,
-  textarea: Textarea
+  textarea: Textarea,
 };
 
 export default propertiesMapper;

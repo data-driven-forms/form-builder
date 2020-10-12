@@ -13,12 +13,12 @@ describe('PickerField', () => {
     initialProps = {
       field: {
         id: 'draggable-id',
-        component: 'pokus'
+        component: 'pokus',
       },
-      index: 0
+      index: 0,
     };
 
-    pokusPicker = (props) => <button {...props}>drag me</button>;
+    pokusPicker = ({ innerProps, ...props }) => <button {...props}>drag me</button>;
     pokusComponent = (props) => <h1 {...props}>This is pokus</h1>;
   });
 
@@ -29,7 +29,7 @@ describe('PickerField', () => {
           builderMapper: { pokus: pokusComponent },
           componentProperties: {},
           pickerMapper: { pokus: pokusPicker },
-          propertiesMapper: {}
+          propertiesMapper: {},
         }}
       >
         <DragDropContext onDragStart={() => console.log('draguji')} onDragEnd={jest.fn()}>

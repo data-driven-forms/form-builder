@@ -6,7 +6,7 @@ import builderReducer, {
   SET_FIELD_PROPERTY,
   SET_FIELD_VALIDATOR,
   INITIALIZE,
-  UNINITIALIZE
+  UNINITIALIZE,
 } from '../../builder-state/builder-reducer';
 import propertiesValidation from '../../properties-editor/initial-value-checker';
 import { FORM_LAYOUT } from '../../helpers/create-initial-data';
@@ -30,11 +30,11 @@ describe('builderReducer', () => {
       expect(
         builderReducer(initialState, {
           type: INITIALIZE,
-          payload: { custom: 'custom_1' }
+          payload: { custom: 'custom_1' },
         })
       ).toEqual({
         custom: 'custom_1',
-        initialized: true
+        initialized: true,
       });
     });
   });
@@ -44,10 +44,10 @@ describe('builderReducer', () => {
       initialState = { initialized: true, fields: ['A'] };
       expect(
         builderReducer(initialState, {
-          type: UNINITIALIZE
+          type: UNINITIALIZE,
         })
       ).toEqual({
-        initialized: false
+        initialized: false,
       });
     });
   });
@@ -57,15 +57,15 @@ describe('builderReducer', () => {
       const payload = {
         destination: undefined,
         source: {
-          droppableId: 'dropId'
+          droppableId: 'dropId',
         },
-        draggableId: 'dragId'
+        draggableId: 'dragId',
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_COLUMNS,
-          payload
+          payload,
         })
       ).toEqual(initialState);
     });
@@ -74,19 +74,19 @@ describe('builderReducer', () => {
       const payload = {
         destination: {
           droppableId: 'dropId',
-          index: 2
+          index: 2,
         },
         source: {
           droppableId: 'dropId',
-          index: 2
+          index: 2,
         },
-        draggableId: 'dropId'
+        draggableId: 'dropId',
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_COLUMNS,
-          payload
+          payload,
         })
       ).toEqual(initialState);
     });
@@ -94,30 +94,30 @@ describe('builderReducer', () => {
     it('when nesting containers do nothing', () => {
       initialState = {
         fields: {
-          'draggable-field': { isContainer: true }
+          'draggable-field': { isContainer: true },
         },
         containers: [{ id: containerId, boundaries: [15, 22] }],
         dropTargets: {
-          dropId: []
-        }
+          dropId: [],
+        },
       };
 
       const payload = {
         destination: {
           droppableId: 'dropId',
-          index: 16
+          index: 16,
         },
         source: {
           droppableId: 'dropId',
-          index: 3
+          index: 3,
         },
-        draggableId: 'draggable-field'
+        draggableId: 'draggable-field',
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_COLUMNS,
-          payload
+          payload,
         })
       ).toEqual(initialState);
     });
@@ -126,36 +126,36 @@ describe('builderReducer', () => {
       initialState = {
         fields: {
           'draggable-field': {},
-          field2: {}
+          field2: {},
         },
         containers: [],
         dropTargets: {
-          dropId: { fieldsIds: ['draggable-field', 'field2'] }
-        }
+          dropId: { fieldsIds: ['draggable-field', 'field2'] },
+        },
       };
 
       const payload = {
         destination: {
           droppableId: 'dropId',
-          index: 1
+          index: 1,
         },
         source: {
           droppableId: 'dropId',
-          index: 0
+          index: 0,
         },
-        draggableId: 'draggable-field'
+        draggableId: 'draggable-field',
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_COLUMNS,
-          payload
+          payload,
         })
       ).toEqual({
         ...initialState,
         dropTargets: {
-          dropId: { fieldsIds: ['field2', 'draggable-field'] }
-        }
+          dropId: { fieldsIds: ['field2', 'draggable-field'] },
+        },
       });
     });
 
@@ -163,36 +163,36 @@ describe('builderReducer', () => {
       initialState = {
         fields: {
           'draggable-field': { container: 'container' },
-          field2: { container: 'container' }
+          field2: { container: 'container' },
         },
         containers: [{ id: 'container', boundaries: [0, 3] }],
         dropTargets: {
-          dropId: { fieldsIds: ['container', 'draggable-field', 'field2', 'container-end'] }
-        }
+          dropId: { fieldsIds: ['container', 'draggable-field', 'field2', 'container-end'] },
+        },
       };
 
       const payload = {
         destination: {
           droppableId: 'dropId',
-          index: 2
+          index: 2,
         },
         source: {
           droppableId: 'dropId',
-          index: 1
+          index: 1,
         },
-        draggableId: 'draggable-field'
+        draggableId: 'draggable-field',
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_COLUMNS,
-          payload
+          payload,
         })
       ).toEqual({
         ...initialState,
         dropTargets: {
-          dropId: { fieldsIds: ['container', 'field2', 'draggable-field', 'container-end'] }
-        }
+          dropId: { fieldsIds: ['container', 'field2', 'draggable-field', 'container-end'] },
+        },
       });
     });
 
@@ -201,30 +201,30 @@ describe('builderReducer', () => {
       initialState = {
         fields: {
           'draggable-field': { container: undefined },
-          container: { children: [], isContainer: true }
+          container: { children: [], isContainer: true },
         },
         containers: [{ id: 'container', boundaries: [1, 2] }],
         dropTargets: {
-          dropId: { fieldsIds: ['draggable-field', 'container', 'container-end'] }
-        }
+          dropId: { fieldsIds: ['draggable-field', 'container', 'container-end'] },
+        },
       };
 
       const payload = {
         destination: {
           droppableId: 'dropId',
-          index: 1
+          index: 1,
         },
         source: {
           droppableId: 'dropId',
-          index: 0
+          index: 0,
         },
-        draggableId: 'draggable-field'
+        draggableId: 'draggable-field',
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_COLUMNS,
-          payload
+          payload,
         })
       ).toEqual({
         ...initialState,
@@ -232,10 +232,10 @@ describe('builderReducer', () => {
           dropId: { fieldsIds: ['container', 'draggable-field', 'container-end'] },
           fields: {
             'draggable-field': { container: 'container' },
-            container: { children: ['draggable-field'], isContainer: true }
+            container: { children: ['draggable-field'], isContainer: true },
           },
-          containers: [{ id: 'container', boundaries: [0, 2] }]
-        }
+          containers: [{ id: 'container', boundaries: [0, 2] }],
+        },
       });
     });
 
@@ -244,42 +244,42 @@ describe('builderReducer', () => {
       initialState = {
         fields: {
           'draggable-field': { container: 'container' },
-          container: { children: ['draggable-field'], isContainer: true }
+          container: { children: ['draggable-field'], isContainer: true },
         },
         containers: [{ id: 'container', boundaries: [0, 2] }],
         dropTargets: {
-          dropId: { fieldsIds: ['container', 'draggable-field', 'container-end'] }
-        }
+          dropId: { fieldsIds: ['container', 'draggable-field', 'container-end'] },
+        },
       };
 
       const payload = {
         destination: {
           droppableId: 'dropId',
-          index: 0
+          index: 0,
         },
         source: {
           droppableId: 'dropId',
-          index: 1
+          index: 1,
         },
-        draggableId: 'draggable-field'
+        draggableId: 'draggable-field',
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_COLUMNS,
-          payload
+          payload,
         })
       ).toEqual({
         ...initialState,
         dropTargets: {
-          dropId: { fieldsIds: ['draggable-field', 'container', 'container-end'] }
+          dropId: { fieldsIds: ['draggable-field', 'container', 'container-end'] },
         },
         fields: {
           'draggable-field': {},
-          container: { children: [], isContainer: true }
+          container: { children: [], isContainer: true },
         },
         containers: [{ id: 'container', boundaries: [1, 2] }],
-        draggingContainer: undefined
+        draggingContainer: undefined,
       });
     });
 
@@ -289,49 +289,49 @@ describe('builderReducer', () => {
         fields: {
           'draggable-field': { container: 'container1' },
           container1: { children: ['draggable-field'], isContainer: true },
-          container2: { children: [], isContainer: true }
+          container2: { children: [], isContainer: true },
         },
         containers: [
           { id: 'container1', boundaries: [0, 2] },
-          { id: 'container2', boundaries: [3, 4] }
+          { id: 'container2', boundaries: [3, 4] },
         ],
         dropTargets: {
-          dropId: { id: 'dropId', fieldsIds: ['container1', 'draggable-field', 'container1-end', 'container2', 'container2-end'] }
-        }
+          dropId: { id: 'dropId', fieldsIds: ['container1', 'draggable-field', 'container1-end', 'container2', 'container2-end'] },
+        },
       };
 
       const payload = {
         destination: {
           droppableId: 'dropId',
-          index: 3
+          index: 3,
         },
         source: {
           droppableId: 'dropId',
-          index: 1
+          index: 1,
         },
-        draggableId: 'draggable-field'
+        draggableId: 'draggable-field',
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_COLUMNS,
-          payload
+          payload,
         })
       ).toEqual({
         ...initialState,
         draggingContainer: undefined,
         dropTargets: {
-          dropId: { id: 'dropId', fieldsIds: ['container1', 'container1-end', 'container2', 'draggable-field', 'container2-end'] }
+          dropId: { id: 'dropId', fieldsIds: ['container1', 'container1-end', 'container2', 'draggable-field', 'container2-end'] },
         },
         fields: {
           'draggable-field': { container: 'container2' },
           container1: { children: [], isContainer: true },
-          container2: { children: ['draggable-field'], isContainer: true }
+          container2: { children: ['draggable-field'], isContainer: true },
         },
         containers: [
           { id: 'container1', boundaries: [0, 1] },
-          { id: 'container2', boundaries: [2, 4] }
-        ]
+          { id: 'container2', boundaries: [2, 4] },
+        ],
       });
     });
 
@@ -340,36 +340,36 @@ describe('builderReducer', () => {
 
       const newId = '876786646465980968';
       Date.now = () => ({
-        toString: () => newId
+        toString: () => newId,
       });
 
       initialState = {
         fields: {
-          'draggable-field': {}
+          'draggable-field': {},
         },
         containers: [],
         dropTargets: {
           dropId: { id: 'dropId', fieldsIds: [] },
-          templates: { id: 'templates', fieldsIds: [] }
-        }
+          templates: { id: 'templates', fieldsIds: [] },
+        },
       };
 
       const payload = {
         destination: {
           droppableId: 'dropId',
-          index: 0
+          index: 0,
         },
         source: {
           droppableId: 'templates',
-          index: 3
+          index: 3,
         },
-        draggableId: 'draggable-field'
+        draggableId: 'draggable-field',
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_COLUMNS,
-          payload
+          payload,
         })
       ).toEqual({
         ...initialState,
@@ -383,13 +383,13 @@ describe('builderReducer', () => {
             id: newId,
             initialized: false,
             name: undefined,
-            preview: false
-          }
+            preview: false,
+          },
         },
         dropTargets: {
           dropId: { id: 'dropId', fieldsIds: [newId] },
-          templates: { id: 'templates', fieldsIds: [] }
-        }
+          templates: { id: 'templates', fieldsIds: [] },
+        },
       });
 
       Date.now = _Date;
@@ -400,36 +400,36 @@ describe('builderReducer', () => {
 
       const newId = '876786646465980968';
       Date.now = () => ({
-        toString: () => newId
+        toString: () => newId,
       });
 
       initialState = {
         fields: {
-          'draggable-field': { isContainer: true }
+          'draggable-field': { isContainer: true },
         },
         containers: [],
         dropTargets: {
           dropId: { id: 'dropId', fieldsIds: [] },
-          templates: { id: 'templates', fieldsIds: [] }
-        }
+          templates: { id: 'templates', fieldsIds: [] },
+        },
       };
 
       const payload = {
         destination: {
           droppableId: 'dropId',
-          index: 0
+          index: 0,
         },
         source: {
           droppableId: 'templates',
-          index: 3
+          index: 3,
         },
-        draggableId: 'draggable-field'
+        draggableId: 'draggable-field',
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_COLUMNS,
-          payload
+          payload,
         })
       ).toEqual({
         ...initialState,
@@ -444,18 +444,18 @@ describe('builderReducer', () => {
             initialized: false,
             name: undefined,
             preview: false,
-            isContainer: true
+            isContainer: true,
           },
           [`${newId}-end`]: {
             component: 'container-end',
-            id: `${newId}-end`
-          }
+            id: `${newId}-end`,
+          },
         },
         dropTargets: {
           dropId: { id: 'dropId', fieldsIds: [newId, `${newId}-end`] },
-          templates: { id: 'templates', fieldsIds: [] }
+          templates: { id: 'templates', fieldsIds: [] },
         },
-        containers: [{ id: newId, boundaries: [payload.destination.index, payload.destination.index + 1] }]
+        containers: [{ id: newId, boundaries: [payload.destination.index, payload.destination.index + 1] }],
       });
 
       Date.now = _Date;
@@ -466,37 +466,37 @@ describe('builderReducer', () => {
 
       const newId = '876786646465980968';
       Date.now = () => ({
-        toString: () => newId
+        toString: () => newId,
       });
 
       initialState = {
         fields: {
           'draggable-field': {},
-          container1: { children: [] }
+          container1: { children: [] },
         },
         containers: [{ id: 'container1', boundaries: [0, 1] }],
         dropTargets: {
           dropId: { id: 'dropId', fieldsIds: ['container1', 'container1-end'] },
-          templates: { id: 'templates', fieldsIds: [] }
-        }
+          templates: { id: 'templates', fieldsIds: [] },
+        },
       };
 
       const payload = {
         destination: {
           droppableId: 'dropId',
-          index: 1
+          index: 1,
         },
         source: {
           droppableId: 'templates',
-          index: 3
+          index: 3,
         },
-        draggableId: 'draggable-field'
+        draggableId: 'draggable-field',
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_COLUMNS,
-          payload
+          payload,
         })
       ).toEqual({
         ...initialState,
@@ -510,15 +510,15 @@ describe('builderReducer', () => {
             id: newId,
             initialized: false,
             name: undefined,
-            preview: false
+            preview: false,
           },
-          container1: { children: [newId] }
+          container1: { children: [newId] },
         },
         dropTargets: {
           dropId: { id: 'dropId', fieldsIds: ['container1', newId, 'container1-end'] },
-          templates: { id: 'templates', fieldsIds: [] }
+          templates: { id: 'templates', fieldsIds: [] },
         },
-        containers: [{ id: 'container1', boundaries: [0, 2] }]
+        containers: [{ id: 'container1', boundaries: [0, 2] }],
       });
 
       Date.now = _Date;
@@ -532,11 +532,11 @@ describe('builderReducer', () => {
       expect(
         builderReducer(initialState, {
           type: SET_SELECTED_COMPONENT,
-          payload: selectedComponent
+          payload: selectedComponent,
         })
       ).toEqual({
         ...initialState,
-        selectedComponent
+        selectedComponent,
       });
     });
   });
@@ -549,24 +549,24 @@ describe('builderReducer', () => {
         ...initialState,
         fields: {
           [selectedComponent]: { name: 'delete me' },
-          7989854: { name: 'do not remove me' }
+          7989854: { name: 'do not remove me' },
         },
         containers: [],
         dropTargets: {
-          [FORM_LAYOUT]: { fieldsIds: [] }
-        }
+          [FORM_LAYOUT]: { fieldsIds: [] },
+        },
       };
 
       expect(
         builderReducer(initialState, {
           type: REMOVE_COMPONENT,
-          payload: selectedComponent
+          payload: selectedComponent,
         })
       ).toEqual({
         ...initialState,
         fields: {
-          7989854: { name: 'do not remove me' }
-        }
+          7989854: { name: 'do not remove me' },
+        },
       });
     });
 
@@ -576,18 +576,18 @@ describe('builderReducer', () => {
       initialState = {
         ...initialState,
         fields: {
-          [selectedComponent]: { name: 'delete me', container: containerId }
+          [selectedComponent]: { name: 'delete me', container: containerId },
         },
         containers: [{ id: containerId, boundaries: [15, 22] }],
         dropTargets: {
-          [FORM_LAYOUT]: { fieldsIds: [selectedComponent, '234'] }
-        }
+          [FORM_LAYOUT]: { fieldsIds: [selectedComponent, '234'] },
+        },
       };
 
       expect(
         builderReducer(initialState, {
           type: REMOVE_COMPONENT,
-          payload: selectedComponent
+          payload: selectedComponent,
         })
       ).toEqual({
         ...initialState,
@@ -595,8 +595,8 @@ describe('builderReducer', () => {
         fields: {},
         containers: [{ id: containerId, boundaries: [15, 21] }],
         dropTargets: {
-          [FORM_LAYOUT]: { fieldsIds: ['234'] }
-        }
+          [FORM_LAYOUT]: { fieldsIds: ['234'] },
+        },
       });
     });
   });
@@ -606,18 +606,18 @@ describe('builderReducer', () => {
       initialState = {
         initialized: true,
         fields: {
-          125: { name: 'cosi', isContainer: true }
-        }
+          125: { name: 'cosi', isContainer: true },
+        },
       };
 
       expect(
         builderReducer(initialState, {
           type: DRAG_START,
-          payload: { draggableId: '125' }
+          payload: { draggableId: '125' },
         })
       ).toEqual({
         ...initialState,
-        draggingContainer: '125'
+        draggingContainer: '125',
       });
     });
 
@@ -625,14 +625,14 @@ describe('builderReducer', () => {
       initialState = {
         initialized: true,
         fields: {
-          125: { name: 'cosi', isContainer: false }
-        }
+          125: { name: 'cosi', isContainer: false },
+        },
       };
 
       expect(
         builderReducer(initialState, {
           type: DRAG_START,
-          payload: { draggableId: '125' }
+          payload: { draggableId: '125' },
         })
       ).toEqual(initialState);
     });
@@ -641,14 +641,14 @@ describe('builderReducer', () => {
       initialState = {
         initialized: true,
         fields: {
-          'initial-151': { name: 'cosi', isContainer: true }
-        }
+          'initial-151': { name: 'cosi', isContainer: true },
+        },
       };
 
       expect(
         builderReducer(initialState, {
           type: DRAG_START,
-          payload: { draggableId: 'initial-151' }
+          payload: { draggableId: 'initial-151' },
         })
       ).toEqual(initialState);
     });
@@ -660,14 +660,14 @@ describe('builderReducer', () => {
         initialized: true,
         fields: {
           125: { name: 'do not change me 1' },
-          1515: { name: 'change me' }
-        }
+          1515: { name: 'change me' },
+        },
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_FIELD_PROPERTY,
-          payload: { fieldId: 1515, propertyName: 'custom', value: 'customValue' }
+          payload: { fieldId: 1515, propertyName: 'custom', value: 'customValue' },
         })
       ).toEqual({
         ...initialState,
@@ -677,9 +677,9 @@ describe('builderReducer', () => {
             name: 'change me',
             initialized: true,
             custom: 'customValue',
-            propertyValidation: {}
-          }
-        }
+            propertyValidation: {},
+          },
+        },
       });
     });
 
@@ -688,14 +688,14 @@ describe('builderReducer', () => {
         initialized: true,
         fields: {
           125: { name: 'do not change me 1' },
-          1515: { name: 'change me' }
-        }
+          1515: { name: 'change me' },
+        },
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_FIELD_PROPERTY,
-          payload: { fieldId: 1515, propertyName: 'isDisabled', value: true }
+          payload: { fieldId: 1515, propertyName: 'isDisabled', value: true },
         })
       ).toEqual({
         ...initialState,
@@ -706,10 +706,10 @@ describe('builderReducer', () => {
             initialized: true,
             isDisabled: true,
             propertyValidation: propertiesValidation('isDisabled')({
-              name: 'change me'
-            })
-          }
-        }
+              name: 'change me',
+            }),
+          },
+        },
       });
     });
   });
@@ -721,22 +721,22 @@ describe('builderReducer', () => {
         fields: {
           125: { name: 'do not change me 1' },
           1515: { name: 'change me' },
-          1: { name: 'do not change me 2' }
-        }
+          1: { name: 'do not change me 2' },
+        },
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_FIELD_VALIDATOR,
-          payload: { fieldId: 1515, action: 'add', type: 'length' }
+          payload: { fieldId: 1515, action: 'add', type: 'length' },
         })
       ).toEqual({
         ...initialState,
         fields: {
           125: { name: 'do not change me 1' },
           1515: { name: 'change me', validate: [{ type: 'length' }] },
-          1: { name: 'do not change me 2' }
-        }
+          1: { name: 'do not change me 2' },
+        },
       });
     });
 
@@ -746,22 +746,22 @@ describe('builderReducer', () => {
         fields: {
           125: { name: 'do not change me 1' },
           1515: { name: 'change me' },
-          1: { name: 'do not change me 2' }
-        }
+          1: { name: 'do not change me 2' },
+        },
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_FIELD_VALIDATOR,
-          payload: { fieldId: 1515, action: 'add', type: validatorTypes.REQUIRED }
+          payload: { fieldId: 1515, action: 'add', type: validatorTypes.REQUIRED },
         })
       ).toEqual({
         ...initialState,
         fields: {
           125: { name: 'do not change me 1' },
           1515: { name: 'change me', validate: [{ type: validatorTypes.REQUIRED }], isRequired: true },
-          1: { name: 'do not change me 2' }
-        }
+          1: { name: 'do not change me 2' },
+        },
       });
     });
 
@@ -773,15 +773,15 @@ describe('builderReducer', () => {
           1: { name: 'do not change me 2' },
           1515: {
             name: 'change me',
-            validate: [{ type: 'required' }, { type: 'remove me' }, { type: 'leave me alone' }]
-          }
-        }
+            validate: [{ type: 'required' }, { type: 'remove me' }, { type: 'leave me alone' }],
+          },
+        },
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_FIELD_VALIDATOR,
-          payload: { fieldId: 1515, action: 'remove', index: 1 }
+          payload: { fieldId: 1515, action: 'remove', index: 1 },
         })
       ).toEqual({
         ...initialState,
@@ -790,9 +790,9 @@ describe('builderReducer', () => {
           1: { name: 'do not change me 2' },
           1515: {
             name: 'change me',
-            validate: [{ type: 'required' }, { type: 'leave me alone' }]
-          }
-        }
+            validate: [{ type: 'required' }, { type: 'leave me alone' }],
+          },
+        },
       });
     });
 
@@ -804,15 +804,15 @@ describe('builderReducer', () => {
           1: { name: 'do not change me 2' },
           1515: {
             name: 'change me',
-            validate: [{ type: 'please i want to be changed' }, { type: 'i am not here' }, { type: 'leave me alone' }]
-          }
-        }
+            validate: [{ type: 'please i want to be changed' }, { type: 'i am not here' }, { type: 'leave me alone' }],
+          },
+        },
       };
 
       expect(
         builderReducer(initialState, {
           type: SET_FIELD_VALIDATOR,
-          payload: { fieldId: 1515, action: 'modify', index: 0, asYouWish: true }
+          payload: { fieldId: 1515, action: 'modify', index: 0, asYouWish: true },
         })
       ).toEqual({
         ...initialState,
@@ -821,9 +821,9 @@ describe('builderReducer', () => {
           1: { name: 'do not change me 2' },
           1515: {
             name: 'change me',
-            validate: [{ type: 'please i want to be changed', asYouWish: true }, { type: 'i am not here' }, { type: 'leave me alone' }]
-          }
-        }
+            validate: [{ type: 'please i want to be changed', asYouWish: true }, { type: 'i am not here' }, { type: 'leave me alone' }],
+          },
+        },
       });
     });
   });

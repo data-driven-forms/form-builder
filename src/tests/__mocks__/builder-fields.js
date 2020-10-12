@@ -1,6 +1,6 @@
 export const fields = {
   'initial-should-not-be-in-output': {
-    key: 'value'
+    key: 'value',
   },
   'should-remove-all-attributes': {
     name: 'only-name',
@@ -11,14 +11,14 @@ export const fields = {
     isContainer: 'value',
     children: 'value',
     container: 'value',
-    restricted: 'value'
+    restricted: 'value',
   },
   '123-text-field': {
     name: 'foo',
     label: 'Text field',
     isRequired: true,
-    validate: [{ type: 'required-validator' }]
-  }
+    validate: [{ type: 'required-validator' }],
+  },
 };
 
 export const schemaWithDeletedOption = {
@@ -28,14 +28,14 @@ export const schemaWithDeletedOption = {
       {
         value: 'foo',
         label: 'foo',
-        deleted: true
+        deleted: true,
       },
       {
         value: 'bar',
-        label: 'bar'
-      }
-    ]
-  }
+        label: 'bar',
+      },
+    ],
+  },
 };
 
 export const invalidSchema = {
@@ -43,10 +43,10 @@ export const invalidSchema = {
     name: 'invalid-field',
     propertyValidation: {
       invalidProperty: {
-        message: 'this field is invalid'
-      }
-    }
-  }
+        message: 'this field is invalid',
+      },
+    },
+  },
 };
 
 export const initialBuilderFields = {
@@ -55,19 +55,19 @@ export const initialBuilderFields = {
       {
         component: 'input',
         label: 'Label',
-        propertyName: 'label'
-      }
-    ]
+        propertyName: 'label',
+      },
+    ],
   },
   'options-component': {
     attributes: [
       {
         component: 'options',
         label: 'Options',
-        propertyName: 'options'
-      }
-    ]
-  }
+        propertyName: 'options',
+      },
+    ],
+  },
 };
 
 export const initialDDFSchema = {
@@ -78,9 +78,9 @@ export const initialDDFSchema = {
       validate: [
         {
           type: 'required-validator',
-          message: 'I am required'
-        }
-      ]
+          message: 'I am required',
+        },
+      ],
     },
     {
       name: 'options-select',
@@ -88,17 +88,17 @@ export const initialDDFSchema = {
       validate: [
         {
           type: 'required-validator',
-          message: 'I am required'
-        }
+          message: 'I am required',
+        },
       ],
       options: [
         {
           label: 'First option',
-          value: 1
-        }
-      ]
-    }
-  ]
+          value: 1,
+        },
+      ],
+    },
+  ],
 };
 
 export const initialDDFSchemaTemplate = {
@@ -109,19 +109,19 @@ export const initialDDFSchemaTemplate = {
       validate: [
         {
           type: 'required-validator',
-          message: 'I am required'
-        }
+          message: 'I am required',
+        },
       ],
       options: [
         {
           label: 'First option',
-          value: 1
+          value: 1,
         },
         {
           label: 'Second deleted option',
-          value: 2
-        }
-      ]
-    }
-  ]
+          value: 2,
+        },
+      ],
+    },
+  ],
 };

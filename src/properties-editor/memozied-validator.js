@@ -9,7 +9,7 @@ const ValidatorComponent = memo(
       onChange={handleValidatorChange}
       property={{
         ...property,
-        original
+        original,
       }}
       restricted={restricted}
       value={validator[property.propertyName]}
@@ -25,12 +25,12 @@ const ValidatorComponent = memo(
 ValidatorComponent.propTypes = {
   handleValidatorChange: PropTypes.func.isRequired,
   property: PropTypes.shape({
-    propertyName: PropTypes.string.isRequired
+    propertyName: PropTypes.string.isRequired,
   }).isRequired,
   original: PropTypes.object,
   validator: PropTypes.object,
   index: PropTypes.number.isRequired,
-  restricted: PropTypes.bool
+  restricted: PropTypes.bool,
 };
 
 const MemoizedValidator = (props) => {

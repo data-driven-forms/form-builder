@@ -19,7 +19,7 @@ const Layout = ({ getSchema, state, render, children }) => {
     isValid: throttleValidator(state.fields),
     ComponentPicker,
     DropTarget,
-    PropertiesEditor
+    PropertiesEditor,
   };
   if (render) {
     return render(layoutProps);
@@ -55,25 +55,18 @@ const FormBuilderLayout = ({ initialFields, disableDrag, mode, disableAdd, child
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
       <DropTargetContext.Provider
         value={{
-          disableDrag
+          disableDrag,
         }}
       >
         <ComponentPickerContext.Provider
           value={{
             fields: dropTargets[COMPONENTS_LIST].fieldsIds.map((taskId) => fields[taskId]),
-            disableAdd
+            disableAdd,
           }}
         >
-          <Layout
-            getSchema={getSchema}
-            state={state}
-            dropTargets={dropTargets}
-            fields={fields}
-            mode={mode}
-            disableDrag={disableDrag}
-            render={render}
-            children={children}
-          />
+          <Layout getSchema={getSchema} state={state} dropTargets={dropTargets} fields={fields} mode={mode} disableDrag={disableDrag} render={render}>
+            {children}
+          </Layout>
         </ComponentPickerContext.Provider>
       </DropTargetContext.Provider>
     </DragDropContext>
@@ -83,7 +76,10 @@ const FormBuilderLayout = ({ initialFields, disableDrag, mode, disableAdd, child
 FormBuilderLayout.propTypes = {
   initialFields: PropTypes.object,
   disableDrag: PropTypes.bool,
-  mode: PropTypes.string.isRequired
+  mode: PropTypes.string.isRequired,
+  children: PropTypes.node,
+  render: PropTypes.func,
+  disableAdd: PropTypes.bool,
 };
 
 export default FormBuilderLayout;

@@ -9,7 +9,7 @@ import { DropTargetContext } from './layout-context';
 
 const DropTarget = () => {
   const {
-    builderMapper: { FormContainer, EmptyTarget }
+    builderMapper: { FormContainer, EmptyTarget },
   } = useContext(ComponentsContext);
   const { disableDrag } = useContext(DropTargetContext);
   const dropTargets = useSelector(({ dropTargets }) => dropTargets);
@@ -38,7 +38,7 @@ DropTarget.propTypes = {
   isDropDisabled: PropTypes.bool,
   shouldClone: PropTypes.bool,
   disableDrag: PropTypes.bool,
-  disableDelete: PropTypes.bool
+  disableDelete: PropTypes.bool,
 };
 
 export default DropTarget;

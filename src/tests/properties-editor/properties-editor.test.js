@@ -56,20 +56,20 @@ const ComponentWrapper = ({ store, ...props }) => (
               {
                 propertyName: 'label',
                 component: 'input',
-                label: 'Label'
-              }
-            ]
-          }
+                label: 'Label',
+              },
+            ],
+          },
         },
         builderMapper: {
           PropertiesEditor: PropertiesEditorWrapper,
-          PropertyGroup
+          PropertyGroup,
         },
         propertiesMapper: {
           input: TextField,
-          switch: Switch
+          switch: Switch,
         },
-        debug: true
+        debug: true,
       }}
     >
       <PropertiesEditor {...props} />
@@ -85,10 +85,10 @@ describe('<PropertiesEditor />', () => {
         id: 'selected-component-id',
         component: 'text-field',
         isRequired: true,
-        validate: [{ type: 'required' }]
-      }
+        validate: [{ type: 'required' }],
+      },
     },
-    selectedComponent: 'selected-component'
+    selectedComponent: 'selected-component',
   };
   it('should mount and render PropertiesEditor and PropertyGroup', () => {
     const store = mockStore(initialState);
@@ -106,30 +106,10 @@ describe('<PropertiesEditor />', () => {
      * render 3 fields, name, initialValue are mandatory and label and required-message are from attributes
      */
     expect(wrapper.find(TextField)).toHaveLength(4);
-    expect(
-      wrapper
-        .find(TextField)
-        .at(0)
-        .props().fieldId
-    ).toEqual('name');
-    expect(
-      wrapper
-        .find(TextField)
-        .at(1)
-        .props().fieldId
-    ).toEqual('initialValue');
-    expect(
-      wrapper
-        .find(TextField)
-        .at(2)
-        .props().fieldId
-    ).toEqual('label');
-    expect(
-      wrapper
-        .find(TextField)
-        .at(3)
-        .props().fieldId
-    ).toEqual('required-message');
+    expect(wrapper.find(TextField).at(0).props().fieldId).toEqual('name');
+    expect(wrapper.find(TextField).at(1).props().fieldId).toEqual('initialValue');
+    expect(wrapper.find(TextField).at(2).props().fieldId).toEqual('label');
+    expect(wrapper.find(TextField).at(3).props().fieldId).toEqual('required-message');
   });
 
   it('should add new validator to a list', () => {
@@ -139,9 +119,9 @@ describe('<PropertiesEditor />', () => {
         payload: {
           action: 'add',
           fieldId: 'selected-component-id',
-          type: 'min-length'
-        }
-      }
+          type: 'min-length',
+        },
+      },
     ];
     const store = mockStore(initialState);
     const wrapper = mount(<ComponentWrapper store={store} />);
@@ -158,8 +138,8 @@ describe('<PropertiesEditor />', () => {
           action: 'remove',
           fieldId: 'selected-component-id',
           index: 0,
-          type: 'required'
-        }
+          type: 'required',
+        },
       },
       {
         type: 'setFieldValidator',
@@ -167,9 +147,9 @@ describe('<PropertiesEditor />', () => {
           action: 'add',
           fieldId: 'selected-component-id',
           index: 0,
-          type: 'required'
-        }
-      }
+          type: 'required',
+        },
+      },
     ];
     const wrapper = mount(<ComponentWrapper store={store} />);
     wrapper.find('#required-validator').simulate('change', { target: { checked: false } });
@@ -184,9 +164,9 @@ describe('<PropertiesEditor />', () => {
         'selected-component': {
           ...initialState.fields['selected-component'],
           restricted: true,
-          validate: [{ type: 'required', original: {} }]
-        }
-      }
+          validate: [{ type: 'required', original: {} }],
+        },
+      },
     });
     const wrapper = mount(<ComponentWrapper store={store} />);
     expect(wrapper.find('input#required-validator').props().disabled).toEqual(true);
@@ -201,9 +181,9 @@ describe('<PropertiesEditor />', () => {
           action: 'modify',
           fieldId: 'selected-component-id',
           index: 0,
-          message: 'New required message'
-        }
-      }
+          message: 'New required message',
+        },
+      },
     ];
     const wrapper = mount(<ComponentWrapper store={store} />);
     wrapper.find('#required-message').simulate('change', { target: { value: 'New required message' } });
@@ -218,9 +198,9 @@ describe('<PropertiesEditor />', () => {
         payload: {
           fieldId: 'selected-component-id',
           propertyName: 'label',
-          value: 'New label'
-        }
-      }
+          value: 'New label',
+        },
+      },
     ];
     const wrapper = mount(<ComponentWrapper store={store} />);
     wrapper.find('#label').simulate('change', { target: { value: 'New label' } });
@@ -233,9 +213,9 @@ describe('<PropertiesEditor />', () => {
       fields: {
         'selected-component': {
           ...initialState.fields['selected-component'],
-          validate: [...initialState.fields['selected-component'].validate, { type: validatorTypes.MIN_LENGTH, threshold: 5 }]
-        }
-      }
+          validate: [...initialState.fields['selected-component'].validate, { type: validatorTypes.MIN_LENGTH, threshold: 5 }],
+        },
+      },
     });
     const expectedActions = [
       {
@@ -243,26 +223,26 @@ describe('<PropertiesEditor />', () => {
           action: 'modify',
           fieldId: 'selected-component-id',
           index: 1,
-          threshold: 10
+          threshold: 10,
         },
-        type: 'setFieldValidator'
+        type: 'setFieldValidator',
       },
       {
         payload: {
           action: 'modify',
           fieldId: 'selected-component-id',
           index: 1,
-          message: 'Field must have atleast 10 characters'
+          message: 'Field must have atleast 10 characters',
         },
-        type: 'setFieldValidator'
-      }
+        type: 'setFieldValidator',
+      },
     ];
     const wrapper = mount(<ComponentWrapper store={store} />);
     expect(wrapper.find('input[type="number"]#threshold-1')).toHaveLength(1);
     expect(wrapper.find('input#message-1')).toHaveLength(1);
     wrapper.find('input[type="number"]#threshold-1').simulate('change', { target: { value: '10' } });
     wrapper.find('input#message-1').simulate('change', {
-      target: { value: 'Field must have atleast 10 characters' }
+      target: { value: 'Field must have atleast 10 characters' },
     });
     expect(store.getActions()).toEqual(expectedActions);
   });
@@ -273,25 +253,22 @@ describe('<PropertiesEditor />', () => {
       fields: {
         'selected-component': {
           ...initialState.fields['selected-component'],
-          validate: [...initialState.fields['selected-component'].validate, { type: validatorTypes.MIN_LENGTH, threshold: 5 }]
-        }
-      }
+          validate: [...initialState.fields['selected-component'].validate, { type: validatorTypes.MIN_LENGTH, threshold: 5 }],
+        },
+      },
     });
     const expectedActions = [
       {
         payload: {
           action: 'remove',
           fieldId: 'selected-component-id',
-          index: 1
+          index: 1,
         },
-        type: 'setFieldValidator'
-      }
+        type: 'setFieldValidator',
+      },
     ];
     const wrapper = mount(<ComponentWrapper store={store} />);
-    wrapper
-      .find('button.delete')
-      .last()
-      .simulate('click');
+    wrapper.find('button.delete').last().simulate('click');
     expect(store.getActions()).toEqual(expectedActions);
   });
 
@@ -301,16 +278,13 @@ describe('<PropertiesEditor />', () => {
       fields: {
         'selected-component': {
           ...initialState.fields['selected-component'],
-          validate: [...initialState.fields['selected-component'].validate, { type: validatorTypes.MIN_LENGTH, threshold: 5, original: {} }]
-        }
-      }
+          validate: [...initialState.fields['selected-component'].validate, { type: validatorTypes.MIN_LENGTH, threshold: 5, original: {} }],
+        },
+      },
     });
     const expectedActions = [];
     const wrapper = mount(<ComponentWrapper store={store} />);
-    wrapper
-      .find('button.delete')
-      .last()
-      .simulate('click');
+    wrapper.find('button.delete').last().simulate('click');
     expect(store.getActions()).toEqual(expectedActions);
   });
 
@@ -318,8 +292,8 @@ describe('<PropertiesEditor />', () => {
     const store = mockStore(initialState);
     const expectedActions = [
       {
-        type: SET_SELECTED_COMPONENT
-      }
+        type: SET_SELECTED_COMPONENT,
+      },
     ];
     const wrapper = mount(<ComponentWrapper store={store} />);
     wrapper.find('button#close-properties-editor').simulate('click');
@@ -331,8 +305,8 @@ describe('<PropertiesEditor />', () => {
     const expectedActions = [
       {
         type: REMOVE_COMPONENT,
-        payload: 'selected-component-id'
-      }
+        payload: 'selected-component-id',
+      },
     ];
     const wrapper = mount(<ComponentWrapper store={store} />);
     wrapper.find('button#delete-field').simulate('click');
@@ -345,9 +319,9 @@ describe('<PropertiesEditor />', () => {
       fields: {
         'selected-component': {
           ...initialState.fields['selected-component'],
-          restricted: true
-        }
-      }
+          restricted: true,
+        },
+      },
     });
     const expectedActions = [];
     const wrapper = mount(<ComponentWrapper store={store} />);
@@ -361,9 +335,9 @@ describe('<PropertiesEditor />', () => {
       fields: {
         'selected-component': {
           ...initialState.fields['selected-component'],
-          propertyValidation: { prop: 'Error on prop' }
-        }
-      }
+          propertyValidation: { prop: 'Error on prop' },
+        },
+      },
     });
     const wrapper = mount(<ComponentWrapper store={store} />);
     expect(wrapper.find(PropertiesEditorWrapper).props().hasPropertyError).toBeTruthy();

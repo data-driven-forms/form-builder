@@ -17,7 +17,7 @@ const labels = {
   [componentTypes.TEXTAREA]: 'Textarea',
   [componentTypes.SUB_FORM]: 'Sub form',
   [componentTypes.DUAL_LIST_SELECT]: 'Dual list select',
-  [componentTypes.SLIDER]: 'Slider'
+  [componentTypes.SLIDER]: 'Slider',
 };
 
 const PickerRoot = ({ component }) => (
@@ -29,11 +29,11 @@ const PickerRoot = ({ component }) => (
 );
 
 PickerRoot.propTypes = {
-  component: PropTypes.string.isRequired
+  component: PropTypes.string.isRequired,
 };
 
 const pickerMapper = {
-  [builderComponentTypes.PICKER_FIELD]: PickerRoot
+  [builderComponentTypes.PICKER_FIELD]: PickerRoot,
 };
 
 export default pickerMapper;

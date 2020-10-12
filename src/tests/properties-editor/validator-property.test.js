@@ -13,7 +13,7 @@ describe('<ValidatorProperty />', () => {
   const property = {
     component: 'some-property-component',
     propertyName: 'some-property-name',
-    label: 'Some property label'
+    label: 'Some property label',
   };
 
   afterEach(() => {});
@@ -23,8 +23,8 @@ describe('<ValidatorProperty />', () => {
       <ComponentsContext.Provider
         value={{
           propertiesMapper: {
-            'some-property-component': PropertyComponent
-          }
+            'some-property-component': PropertyComponent,
+          },
         }}
       >
         <ValidatorProperty property={property} onChange={jest.fn()} index={0} />
@@ -38,21 +38,21 @@ describe('<ValidatorProperty />', () => {
       <ComponentsContext.Provider
         value={{
           propertiesMapper: {
-            'some-property-component': PropertyComponent
-          }
+            'some-property-component': PropertyComponent,
+          },
         }}
       >
         <ValidatorProperty
           property={{
             ...property,
             original: {
-              isRequired: true
+              isRequired: true,
             },
             restriction: {
               lock: true,
               inputAttribute: 'isRequired',
-              validatorAttribute: 'isRequired'
-            }
+              validatorAttribute: 'isRequired',
+            },
           }}
           onChange={jest.fn()}
           index={0}
@@ -68,8 +68,8 @@ describe('<ValidatorProperty />', () => {
       <ComponentsContext.Provider
         value={{
           propertiesMapper: {
-            'some-property-component': PropertyComponent
-          }
+            'some-property-component': PropertyComponent,
+          },
         }}
       >
         <ValidatorProperty
@@ -79,13 +79,13 @@ describe('<ValidatorProperty />', () => {
             type: 'number',
             original: {
               isRequired: true,
-              'max-value': 10
+              'max-value': 10,
             },
             restriction: {
               lock: true,
               inputAttribute: 'max',
-              validatorAttribute: 'max-value'
-            }
+              validatorAttribute: 'max-value',
+            },
           }}
           restricted
           onChange={onChange}
@@ -106,8 +106,8 @@ describe('<ValidatorProperty />', () => {
       <ComponentsContext.Provider
         value={{
           propertiesMapper: {
-            'some-property-component': PropertyComponent
-          }
+            'some-property-component': PropertyComponent,
+          },
         }}
       >
         <ValidatorProperty
@@ -117,13 +117,13 @@ describe('<ValidatorProperty />', () => {
             type: 'number',
             original: {
               isRequired: true,
-              'min-value': 55
+              'min-value': 55,
             },
             restriction: {
               lock: true,
               inputAttribute: 'min',
-              validatorAttribute: 'min-value'
-            }
+              validatorAttribute: 'min-value',
+            },
           }}
           restricted
           onChange={onChange}
@@ -144,8 +144,8 @@ describe('<ValidatorProperty />', () => {
       <ComponentsContext.Provider
         value={{
           propertiesMapper: {
-            'some-property-component': PropertyComponent
-          }
+            'some-property-component': PropertyComponent,
+          },
         }}
       >
         <ValidatorProperty
@@ -154,13 +154,13 @@ describe('<ValidatorProperty />', () => {
             ...property,
             type: 'number',
             original: {
-              isRequired: true
+              isRequired: true,
             },
             restriction: {
               lock: true,
               inputAttribute: 'min',
-              validatorAttribute: 'min-value'
-            }
+              validatorAttribute: 'min-value',
+            },
           }}
           restricted
           onChange={onChange}
@@ -181,8 +181,8 @@ describe('<ValidatorProperty />', () => {
       <ComponentsContext.Provider
         value={{
           propertiesMapper: {
-            'some-property-component': PropertyComponent
-          }
+            'some-property-component': PropertyComponent,
+          },
         }}
       >
         <ValidatorProperty
@@ -192,13 +192,13 @@ describe('<ValidatorProperty />', () => {
             type: 'number',
             original: {
               isRequired: true,
-              'min-value': 55
+              'min-value': 55,
             },
             restriction: {
               lock: true,
               inputAttribute: 'max',
-              validatorAttribute: 'max-value'
-            }
+              validatorAttribute: 'max-value',
+            },
           }}
           restricted
           onChange={onChange}
@@ -219,8 +219,8 @@ describe('<ValidatorProperty />', () => {
       <ComponentsContext.Provider
         value={{
           propertiesMapper: {
-            'some-property-component': PropertyComponent
-          }
+            'some-property-component': PropertyComponent,
+          },
         }}
       >
         <ValidatorProperty property={property} onChange={onChange} index={0} />
@@ -230,8 +230,8 @@ describe('<ValidatorProperty />', () => {
     expect(onChange).toHaveBeenCalledWith(
       {
         'some-property-name': expect.objectContaining({
-          target: expect.objectContaining({ value: 'Yay' })
-        })
+          target: expect.objectContaining({ value: 'Yay' }),
+        }),
       },
       'modify',
       0

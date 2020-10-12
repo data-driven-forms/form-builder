@@ -19,10 +19,10 @@ describe('<MemoizedProperty />', () => {
     fields: {
       'selected-field': {
         label: 'Label',
-        restricted: false
-      }
+        restricted: false,
+      },
     },
-    selectedComponent: 'selected-field'
+    selectedComponent: 'selected-field',
   };
   it('should mount and render correct component', () => {
     const store = mockStore(initialState);
@@ -42,7 +42,7 @@ describe('<MemoizedProperty />', () => {
     wrapper.find('input').simulate('change', { target: { value: 'New label' } });
     expect(handlePropertyChange).toHaveBeenCalledWith(
       expect.objectContaining({
-        target: expect.objectContaining({ value: 'New label' })
+        target: expect.objectContaining({ value: 'New label' }),
       }),
       'label'
     );
@@ -56,9 +56,9 @@ describe('<MemoizedProperty />', () => {
         'selected-field': {
           label: 'Label',
           restricted: false,
-          propertyValidation: { label: { message: 'Foo' } }
-        }
-      }
+          propertyValidation: { label: { message: 'Foo' } },
+        },
+      },
     };
     const wrapper = mount(
       <ComponentWrapper property={{ propertyName: 'label' }} store={store} Component={Component} handlePropertyChange={jest.fn()} />
@@ -67,7 +67,7 @@ describe('<MemoizedProperty />', () => {
     wrapper.setProps({ store: mockStore(newState) });
     wrapper.update();
     expect(wrapper.find(Component).props().innerProps.propertyValidation).toEqual({
-      message: 'Foo'
+      message: 'Foo',
     });
   });
 });

@@ -13,14 +13,14 @@ const prepareLabel = (component, isDragging) =>
     [componentTypes.CHECKBOX]: 'Please, provide label',
     [componentTypes.PLAIN_TEXT]: 'Please provide a label to plain text component',
     [componentTypes.DUAL_LIST_SELECT]: 'Please pick label and options',
-    [componentTypes.RADIO]: 'Please pick label and options'
+    [componentTypes.RADIO]: 'Please pick label and options',
   }[component] || (isDragging ? component : ''));
 
 const prepareOptions = (component, options = []) =>
   ({
     [componentTypes.SELECT]: { options: options.filter(({ deleted }) => !deleted) },
     [componentTypes.DUAL_LIST_SELECT]: { options },
-    [componentTypes.RADIO]: { options }
+    [componentTypes.RADIO]: { options },
   }[component] || {});
 
 const ComponentWrapper = ({
@@ -34,7 +34,7 @@ const ComponentWrapper = ({
 }) => (
   <div
     className={clsx('pf4-component-wrapper', {
-      hidden: hideField
+      hidden: hideField,
     })}
   >
     <div className="pf4-hidefield-overlay">
@@ -56,7 +56,7 @@ ComponentWrapper.propTypes = {
   component: PropTypes.string,
   innerProps: PropTypes.shape({
     snapshot: snapshotPropType,
-    hideField: PropTypes.bool
+    hideField: PropTypes.bool,
   }).isRequired,
   label: PropTypes.string,
   preview: PropTypes.bool,
@@ -66,7 +66,7 @@ ComponentWrapper.propTypes = {
   propertyName: PropTypes.string,
   fieldId: PropTypes.string,
   propertyValidation: PropTypes.any,
-  hasPropertyError: PropTypes.bool
+  hasPropertyError: PropTypes.bool,
 };
 
 const FieldLayout = ({ children, disableDrag, selected }) => (
@@ -74,7 +74,7 @@ const FieldLayout = ({ children, disableDrag, selected }) => (
     <div
       className={clsx('pf4-field-layout', {
         'drag-disabled': disableDrag,
-        selected
+        selected,
       })}
     >
       {children}
@@ -85,7 +85,7 @@ const FieldLayout = ({ children, disableDrag, selected }) => (
 FieldLayout.propTypes = {
   children: childrenPropType,
   disableDrag: PropTypes.bool,
-  selected: PropTypes.bool
+  selected: PropTypes.bool,
 };
 
 const BuilderColumn = ({ children, isDraggingOver, ...props }) => (
@@ -97,7 +97,7 @@ const BuilderColumn = ({ children, isDraggingOver, ...props }) => (
 BuilderColumn.propTypes = {
   className: PropTypes.string,
   children: childrenPropType,
-  isDraggingOver: PropTypes.bool
+  isDraggingOver: PropTypes.bool,
 };
 
 const PropertiesEditor = ({
@@ -107,7 +107,7 @@ const PropertiesEditor = ({
   avaiableValidators,
   handleClose,
   handleDelete,
-  hasPropertyError
+  hasPropertyError,
 }) => {
   const [activeTab, setActiveTab] = useState(0);
   const Select = InternalSelect;
@@ -176,7 +176,7 @@ PropertiesEditor.propTypes = {
   fieldName: PropTypes.string,
   handleClose: PropTypes.func.isRequired,
   handleDelete: PropTypes.func,
-  hasPropertyError: PropTypes.array
+  hasPropertyError: PropTypes.array,
 };
 
 const PropertyGroup = ({ className, children, title, handleDelete, ...props }) => (
@@ -203,7 +203,7 @@ PropertyGroup.propTypes = {
   className: PropTypes.string,
   children: childrenPropType,
   title: PropTypes.string.isRequired,
-  handleDelete: PropTypes.func
+  handleDelete: PropTypes.func,
 };
 
 const DragHandle = ({ dragHandleProps, hasPropertyError, disableDrag }) => {
@@ -225,17 +225,17 @@ DragHandle.propTypes = {
     'aria-labelledby': PropTypes.string,
     tabIndex: PropTypes.number,
     draggable: PropTypes.bool,
-    onDragStart: PropTypes.func
+    onDragStart: PropTypes.func,
   }),
   disableDrag: PropTypes.bool,
-  hasPropertyError: PropTypes.bool
+  hasPropertyError: PropTypes.bool,
 };
 
 const FormContainer = ({ children, className }) => <div className={clsx(className, 'pf-c-form', 'pf4-builder-form-container')}>{children}</div>;
 
 FormContainer.propTypes = {
   children: childrenPropType,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 const EmptyTarget = () => <h1>Pick components from the component picker</h1>;
@@ -248,7 +248,7 @@ const builderMapper = {
   BuilderColumn,
   PropertyGroup,
   DragHandle,
-  EmptyTarget
+  EmptyTarget,
 };
 
 export default builderMapper;

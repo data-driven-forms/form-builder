@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/data-driven-forms/form-builder/branch/master/graph/badge.svg)](https://codecov.io/gh/data-driven-forms/form-builder)
 [![CircleCI](https://circleci.com/gh/data-driven-forms/react-forms/tree/master.svg?style=svg)](https://circleci.com/gh/data-driven-forms/form-builder/tree/master)
 [![npm version](https://badge.fury.io/js/%40data-driven-forms%2Fform-builder.svg)](https://badge.fury.io/js/%40data-driven-forms%2Fform-builder)
 [![Tweet](https://img.shields.io/twitter/url/https/github.com/tterb/hyde.svg?style=social)](https://twitter.com/intent/tweet?text=Check%20DataDrivenForms%20React%20library%21%20https%3A%2F%2Fdata-driven-forms.org%2F&hashtags=react,opensource,datadrivenforms)
@@ -43,6 +44,10 @@ This component allows to build [Data Driven Forms](https://github.com/data-drive
   - [openEditor](#openeditor)
   - [disabledAdd](#disabledadd)
   - [disableDrag](#disabledrag)
+- [Mappers](#mappers)
+  - [Material UI](#material-ui)
+  - [PatternFly 4](#patternfly-4)
+  - [Example](#example-1)
 
 # Installation
 
@@ -277,3 +282,41 @@ Disables adding new fields.
 *boolean* optional
 
 Disables dragging.
+
+# Mappers
+
+Form builder contains two mappers of components: **PatternFly 4** and **Material UI** versions.
+
+## Material UI
+
+```jsx
+import {
+  pickerMapper,
+  propertiesMapper,
+  builderMapper,
+  BuilderTemplate,
+  fieldProperties
+} from '@data-driven-forms/form-builder/dist/cjs/mui-builder-mappers';
+```
+
+## PatternFly 4
+
+```jsx
+import {
+  pickerMapper,
+  propertiesMapper,
+  builderMapper,
+  BuilderTemplate,
+  fieldProperties
+} from '@data-driven-forms/form-builder/dist/cjs/pf4-builder-mappers';
+```
+
+## Example
+
+```jsx
+render={({ isValid, getSchema, ...props }) => (
+  <BuilderTemplate {...props} className={classes.builderWrapper}>
+    <CodeEditor value={JSON.stringify(getSchema(), null, 2)} />
+  </BuilderTemplate>
+)}
+```

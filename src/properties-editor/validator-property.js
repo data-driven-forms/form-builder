@@ -4,7 +4,7 @@ import ComponentsContext from '../components-context';
 
 const restrictionHandler = {
   min: (value, defaultValue) => (isNaN(value) ? defaultValue : value < defaultValue ? defaultValue : value),
-  max: (value, defaultValue) => (isNaN(value) ? defaultValue : value > defaultValue ? defaultValue : value)
+  max: (value, defaultValue) => (isNaN(value) ? defaultValue : value > defaultValue ? defaultValue : value),
 };
 
 const validatorChangeValue = (property, value) => {
@@ -13,7 +13,7 @@ const validatorChangeValue = (property, value) => {
     result = restrictionHandler[property.restriction.inputAttribute](value, property.original[property.restriction.validatorAttribute]);
   }
   return {
-    [property.propertyName]: result
+    [property.propertyName]: result,
   };
 };
 
@@ -24,13 +24,13 @@ const ValidatorProperty = ({ property, onChange, value, index, restricted }) => 
     property.restriction && property.original
       ? {
           isDisabled: property.restriction.lock,
-          [property.restriction.inputAttribute]: property.original[property.restriction.validatorAttribute]
+          [property.restriction.inputAttribute]: property.original[property.restriction.validatorAttribute],
         }
       : {};
 
   const innerProps = {
     property: restrictionProperty,
-    restricted
+    restricted,
   };
   return (
     <Component
@@ -42,7 +42,7 @@ const ValidatorProperty = ({ property, onChange, value, index, restricted }) => 
       onChange={(value) =>
         onChange(
           {
-            [property.propertyName]: property.type === 'number' ? Number(value) : value
+            [property.propertyName]: property.type === 'number' ? Number(value) : value,
           },
           'modify',
           index
@@ -65,12 +65,12 @@ ValidatorProperty.propTypes = {
     restriction: PropTypes.shape({
       inputAttribute: PropTypes.string,
       validatorAttribute: PropTypes.string,
-      lock: PropTypes.bool
-    })
+      lock: PropTypes.bool,
+    }),
   }),
   onChange: PropTypes.func.isRequired,
   value: PropTypes.any,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
 };
 
 export default ValidatorProperty;

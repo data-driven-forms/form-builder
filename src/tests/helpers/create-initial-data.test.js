@@ -10,13 +10,13 @@ describe('create unitial data', () => {
         'components-list': {
           fieldsIds: ['text-field', 'options-component'],
           id: 'components-list',
-          title: 'Component picker'
+          title: 'Component picker',
         },
         'form-layout': {
           fieldsIds: ['first-name-123', 'options-select-123'],
           id: 'form-layout',
-          title: 'Form'
-        }
+          title: 'Form',
+        },
       },
       fields: {
         'first-name-123': {
@@ -29,27 +29,27 @@ describe('create unitial data', () => {
           validate: [
             {
               type: 'required-validator',
-              message: 'I am required'
-            }
-          ]
+              message: 'I am required',
+            },
+          ],
         },
         'text-field': {
           attributes: [
             {
               component: 'input',
               label: 'Label',
-              propertyName: 'label'
-            }
-          ]
+              propertyName: 'label',
+            },
+          ],
         },
         'options-component': {
           attributes: [
             {
               component: 'options',
               label: 'Options',
-              propertyName: 'options'
-            }
-          ]
+              propertyName: 'options',
+            },
+          ],
         },
         'options-select-123': {
           clone: true,
@@ -60,19 +60,19 @@ describe('create unitial data', () => {
           validate: [
             {
               message: 'I am required',
-              type: 'required-validator'
-            }
+              type: 'required-validator',
+            },
           ],
           options: [
             {
               label: 'First option',
-              value: 1
-            }
+              value: 1,
+            },
           ],
-          preview: false
-        }
+          preview: false,
+        },
       },
-      selectedComponent: undefined
+      selectedComponent: undefined,
     };
 
     expect(createInitialData(initialBuilderFields, initialDDFSchema)).toEqual(expectedState);
@@ -96,12 +96,12 @@ describe('create unitial data', () => {
               message: 'I am required',
               original: {
                 type: 'required-validator',
-                message: 'I am required'
-              }
-            }
-          ]
-        }
-      })
+                message: 'I am required',
+              },
+            },
+          ],
+        },
+      }),
     });
     expect(createInitialData(initialBuilderFields, initialDDFSchema, true)).toEqual(expectedState);
   });
@@ -122,20 +122,20 @@ describe('create unitial data', () => {
               message: 'I am required',
               original: {
                 message: 'I am required',
-                type: 'required-validator'
+                type: 'required-validator',
               },
-              type: 'required-validator'
-            }
-          ]
+              type: 'required-validator',
+            },
+          ],
         },
         'options-component': {
           attributes: [
             {
               component: 'options',
               label: 'Options',
-              propertyName: 'options'
-            }
-          ]
+              propertyName: 'options',
+            },
+          ],
         },
         'options-select-123': {
           clone: true,
@@ -149,36 +149,36 @@ describe('create unitial data', () => {
               message: 'I am required',
               original: {
                 type: 'required-validator',
-                message: 'I am required'
-              }
-            }
+                message: 'I am required',
+              },
+            },
           ],
           options: [
             {
               label: 'First option',
               restoreable: true,
-              value: 1
+              value: 1,
             },
             {
               deleted: true,
               label: 'Second deleted option',
               restoreable: true,
-              value: 2
-            }
+              value: 2,
+            },
           ],
           preview: false,
-          restricted: true
+          restricted: true,
         },
         'text-field': {
           attributes: [
             {
               component: 'input',
               label: 'Label',
-              propertyName: 'label'
-            }
-          ]
-        }
-      }
+              propertyName: 'label',
+            },
+          ],
+        },
+      },
     });
     expect(createInitialData(initialBuilderFields, initialDDFSchema, true, initialDDFSchemaTemplate)).toEqual(expectedState);
   });

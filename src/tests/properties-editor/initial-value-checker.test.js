@@ -18,22 +18,22 @@ describe('initial value checker', () => {
       isRequired: 'required',
       isDisabled: 'disabled',
       isReadOnly: 'read only',
-      hideField: 'hidden'
+      hideField: 'hidden',
     };
     conflictingAttributes.forEach((attribute) => {
       const field = {
         isRequired: true,
-        [attribute]: true
+        [attribute]: true,
       };
       const expectedError = {
         initialValue: {
           code: 'errors.initialValue',
           codeDependencies: {
             [attribute]: true,
-            isRequired: true
+            isRequired: true,
           },
-          message: `Initial value must be set if field is required and at the same time ${propertyStrings[attribute]}.`
-        }
+          message: `Initial value must be set if field is required and at the same time ${propertyStrings[attribute]}.`,
+        },
       };
       const validator = propertiesValidation(attribute);
       expect(validator(field)).toEqual(expectedError);

@@ -22,7 +22,7 @@ export const validateOutput = (fields) => {
 };
 
 const createSchema = (fieldsIds = [], fields) => ({
-  fields: fieldsIds.map((key) => sanitizeField(fields[key]))
+  fields: fieldsIds.map((key) => sanitizeField(fields[key])),
 });
 
 export default createSchema;

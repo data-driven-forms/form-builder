@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Button, FormGroup, TextArea, TextInput } from '@patternfly/react-core';
 import { TrashIcon, PlusIcon, TrashRestoreIcon } from '@patternfly/react-icons';
-import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/dist/cjs/select';
+import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/select';
 
 const FormGroupWrapper = ({ propertyValidation: { message }, children, ...props }) => (
   <FormGroup helperTextInvalid={message} validated={message ? 'error' : 'default'} {...props}>

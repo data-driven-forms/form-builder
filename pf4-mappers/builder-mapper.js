@@ -5,7 +5,7 @@ import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { Button, Card, CardBody, CardHeader, Form, FormGroup, Title, Tab, Tabs } from '@patternfly/react-core';
 import { TrashIcon, TimesIcon, GripVerticalIcon, EyeSlashIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 import clsx from 'clsx';
-import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/dist/cjs/select';
+import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/select';
 import { builderComponentTypes } from '../src/constants';
 
 const prepareLabel = (component, isDragging) =>

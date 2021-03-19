@@ -28,7 +28,7 @@ module.exports = {
           'transform-imports',
           {
             '@data-driven-forms/react-form-renderer': {
-              transform: (importName) => `@data-driven-forms/react-form-renderer/dist/cjs/${camelToSnake(importName)}`,
+              transform: (importName) => `@data-driven-forms/react-form-renderer/${camelToSnake(importName)}`,
               preventFullImport: true
             }
           },
@@ -111,7 +111,7 @@ module.exports = {
           'transform-imports',
           {
             '@data-driven-forms/pf4-component-mapper': {
-              transform: (importName) => `@data-driven-forms/pf4-component-mapper/dist/cjs/${camelToSnake(importName)}`,
+              transform: (importName) => `@data-driven-forms/pf4-component-mapper/${camelToSnake(importName)}`,
               preventFullImport: true
             }
           },
@@ -121,7 +121,7 @@ module.exports = {
           'transform-imports',
           {
             '@data-driven-forms/mui-component-mapper': {
-              transform: (importName) => `@data-driven-forms/mui-component-mapper/dist/cjs/${camelToSnake(importName)}`,
+              transform: (importName) => `@data-driven-forms/mui-component-mapper/${camelToSnake(importName)}`,
               preventFullImport: true
             }
           },
@@ -135,7 +135,7 @@ module.exports = {
           'transform-imports',
           {
             '@data-driven-forms/react-form-renderer': {
-              transform: (importName) => `@data-driven-forms/react-form-renderer/dist/esm/${camelToSnake(importName)}`,
+              transform: (importName) => `@data-driven-forms/react-form-renderer/${camelToSnake(importName)}`,
               preventFullImport: true
             }
           },
@@ -219,7 +219,7 @@ module.exports = {
           'transform-imports',
           {
             '@data-driven-forms/pf4-component-mapper': {
-              transform: (importName) => `@data-driven-forms/pf4-component-mapper/dist/esm/${camelToSnake(importName)}`,
+              transform: (importName) => `@data-driven-forms/pf4-component-mapper/${camelToSnake(importName)}`,
               preventFullImport: true
             }
           },
@@ -229,22 +229,12 @@ module.exports = {
           'transform-imports',
           {
             '@data-driven-forms/mui-component-mapper': {
-              transform: (importName) => `@data-driven-forms/mui-component-mapper/dist/esm/${camelToSnake(importName)}`,
+              transform: (importName) => `@data-driven-forms/mui-component-mapper/${camelToSnake(importName)}`,
               preventFullImport: true
             }
           },
           '@data-driven-forms/mui-component-mapper-ESM'
         ],
-        [
-          'transform-imports',
-          {
-            '@data-driven-forms/pf4-component-mapper/dist/cjs/select': {
-              transform: () => `@data-driven-forms/pf4-component-mapper/dist/esm/select`,
-              preventFullImport: true
-            }
-          },
-          'PF4-internal-select-ESM'
-        ]
       ]
     }
   }

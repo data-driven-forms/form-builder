@@ -64,3 +64,21 @@ typings/
 .size-snapshot.json
 
 dist
+
+/*
+
+!src
+!src/
+!demo/
+!demo
+!src/*
+!demo/*
+!config
+!.npmignore
+!.gitignore
+!babel.config.js
+!LICENSE
+!package.json
+!README.md
+!tsconfig.json
+!scripts

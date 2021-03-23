@@ -1,3 +1,10 @@
-*
-
-!dist
+demo
+src
+babel.config.js
+.gitignore
+webpack.config.js
+.circleci
+scripts
+.eslintrc.json
+.prettierrc.json
+setupTests.js

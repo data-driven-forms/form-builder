@@ -19,7 +19,6 @@ async function generatePackages() {
   });
 
   return Promise.all(cmds);
-  // return fse.writeFileSync(`${src}/index.js`, content);
 }
 
 async function run() {

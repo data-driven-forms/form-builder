@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import FormBuilder from '../src/index';
+import FormBuilder from '../src/form-builder';
 
 import { componentMapper as pf4ComponentMapper } from '@data-driven-forms/pf4-component-mapper';
 import { componentMapper as muiComponentMapper } from '@data-driven-forms/mui-component-mapper';
@@ -13,13 +13,13 @@ import {
   propertiesMapper as muiPropertiesMapper,
   builderMapper as muiPBuilderMapper,
   BuilderTemplate as muiBuilderTemplate
-} from '../mui-mappers/mui-builder-mappers';
+} from '../src/mui-builder-mappers';
 import {
   pickerMapper as pf4PickerMapper,
   propertiesMapper as pf4PropertiesMapper,
   builderMapper as pf4PBuilderMapper,
   BuilderTemplate as pf4BuilderTemplate
-} from '../pf4-mappers/pf4-builder-mappers';
+} from '../src/pf4-builder-mappers';
 
 import {
   LABEL,

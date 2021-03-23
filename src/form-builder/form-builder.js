@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FormBuilderLayout from './form-builder-layout';
-import ComponentsContext from './components-context';
-import createInitialData from './helpers/create-initial-data';
+import FormBuilderLayout from '../form-builder-layout';
+import ComponentsContext from '../components-context';
+import helpers from '../helpers';
 import { Provider } from 'react-redux';
-import builderStore from './builder-state/builder-store';
+import builderStore from '../builder-store';
 import { Form, RendererContext } from '@data-driven-forms/react-form-renderer';
 
 const ContainerEnd = ({ id }) => <div>{id}</div>;
@@ -57,7 +57,11 @@ const FormBuilder = ({
         {() => (
           <RendererContext.Provider value={{ formOptions: {} }}>
             <Provider store={builderStore}>
-              <FormBuilderLayout initialFields={createInitialData(initialFields, schema, mode === 'subset', schemaTemplate)} mode={mode} {...props}>
+              <FormBuilderLayout
+                initialFields={helpers.createInitialData(initialFields, schema, mode === 'subset', schemaTemplate)}
+                mode={mode}
+                {...props}
+              >
                 {children}
               </FormBuilderLayout>
             </Provider>

@@ -5,9 +5,9 @@ import validatorsProperties from '../validators-properties';
 import MemoizedProperty from './memoized-property';
 import MemoizedValidator from './memozied-validator';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { SET_FIELD_VALIDATOR, SET_FIELD_PROPERTY, SET_SELECTED_COMPONENT, REMOVE_COMPONENT } from '../builder-state/builder-reducer';
+import { SET_FIELD_VALIDATOR, SET_FIELD_PROPERTY, SET_SELECTED_COMPONENT, REMOVE_COMPONENT } from '../builder-store';
 import convertInitialValue from './convert-initial-value';
-import { FORM_LAYOUT } from '../helpers/create-initial-data';
+import { FORM_LAYOUT } from '../helpers';
 
 const validatorOptions = Object.keys(validatorTypes)
   .filter((key) => validatorTypes[key] !== validatorTypes.REQUIRED)

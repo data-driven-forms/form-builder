@@ -7,7 +7,7 @@ import builderReducer, {
   SET_FIELD_VALIDATOR,
   INITIALIZE,
   UNINITIALIZE,
-} from '../../builder-state/builder-reducer';
+} from '../../builder-store/builder-reducer';
 import propertiesValidation from '../../properties-editor/initial-value-checker';
 import { FORM_LAYOUT } from '../../helpers/create-initial-data';
 import { validatorTypes } from '@data-driven-forms/react-form-renderer';

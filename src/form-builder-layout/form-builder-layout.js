@@ -2,14 +2,13 @@ import React, { useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 import throttle from 'lodash/throttle';
-import DropTarget from './drop-target';
-import PropertiesEditor from './properties-editor';
-import ComponentPicker from './component-picker';
-import { INITIALIZE, UNINITIALIZE } from './builder-state/builder-reducer';
-import createSchema, { validateOutput } from './helpers/create-export-schema';
+import DropTarget from '../drop-target';
+import PropertiesEditor from '../properties-editor';
+import ComponentPicker from '../component-picker';
+import { INITIALIZE, UNINITIALIZE } from '../builder-store';
+import helpers, { validateOutput, COMPONENTS_LIST, FORM_LAYOUT } from '../helpers';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { DropTargetContext, ComponentPickerContext } from './layout-context';
-import { COMPONENTS_LIST, FORM_LAYOUT } from './helpers/create-initial-data';
+import { DropTargetContext, ComponentPickerContext } from '../layout-context';
 
 const throttleValidator = throttle(validateOutput, 250);
 
@@ -42,7 +41,7 @@ const FormBuilderLayout = ({ initialFields, disableDrag, mode, disableAdd, child
 
     return () => dispatch({ type: UNINITIALIZE });
   }, []);
-  const getSchema = () => createSchema(state.dropTargets[FORM_LAYOUT].fieldsIds, state.fields);
+  const getSchema = () => helpers.createSchema(state.dropTargets[FORM_LAYOUT].fieldsIds, state.fields);
 
   const onDragEnd = (result) => dispatch({ type: 'setColumns', payload: result });
   const onDragStart = (draggable) => dispatch({ type: 'dragStart', payload: draggable });

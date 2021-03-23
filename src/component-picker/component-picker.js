@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import ComponentsContext from './components-context';
-import PickerField from './picker-field';
-import { COMPONENTS_LIST } from './helpers/create-initial-data';
+import ComponentsContext from '../components-context';
+import PickerField from '../picker-field';
+import { COMPONENTS_LIST } from '../helpers';
 import { useSelector } from 'react-redux';
-import { ComponentPickerContext } from './layout-context';
+import { ComponentPickerContext } from '../layout-context';
 
 const ComponentPicker = () => {
   const {

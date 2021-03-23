@@ -12,7 +12,7 @@ import ToggleOffIcon from '@material-ui/icons/ToggleOff';
 import LowPriorityIcon from '@material-ui/icons/LowPriority';
 import TuneIcon from '@material-ui/icons/Tune';
 import { makeStyles } from '@material-ui/core/styles';
-import { builderComponentTypes } from '../src/constants';
+import { builderComponentTypes } from '../constants';
 
 const useStyles = makeStyles(() => ({
   root: {

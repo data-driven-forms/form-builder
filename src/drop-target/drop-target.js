@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
-import Field from './field';
-import ComponentsContext from './components-context';
+import Field from '../field';
+import ComponentsContext from '../components-context';
 import { useSelector } from 'react-redux';
-import { FORM_LAYOUT } from './helpers/create-initial-data';
-import { DropTargetContext } from './layout-context';
+import { FORM_LAYOUT } from '../helpers';
+import { DropTargetContext } from '../layout-context';
 
 const DropTarget = () => {
   const {

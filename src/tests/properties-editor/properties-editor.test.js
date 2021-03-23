@@ -6,7 +6,7 @@ import { validatorTypes } from '@data-driven-forms/react-form-renderer';
 
 import PropertiesEditor from '../../properties-editor';
 import ComponentsContext from '../../components-context';
-import { SET_SELECTED_COMPONENT, REMOVE_COMPONENT } from '../../builder-state/builder-reducer';
+import { SET_SELECTED_COMPONENT, REMOVE_COMPONENT } from '../../builder-store/builder-reducer';
 
 const AddValidatorComponent = ({ addValidator }) => (
   <button id="add" onClick={() => addValidator(validatorTypes.MIN_LENGTH)}>

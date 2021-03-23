@@ -4,7 +4,7 @@ import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { Button } from '@patternfly/react-core';
 
 import './pf4-mapper-style.css';
-import { builderComponentTypes } from '../src/constants';
+import { builderComponentTypes } from '../constants';
 
 const labels = {
   [componentTypes.TEXT_FIELD]: 'Text field',

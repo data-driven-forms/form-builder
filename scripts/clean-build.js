@@ -7,10 +7,9 @@ const fse = require('fs-extra');
 const glob = require('glob');
 
 const root = path.resolve(__dirname, '../');
-const x = glob.sync(path.resolve(root, './*'));
 
-function cleanPackage(p) {
-  const ignore = fse.readFileSync(path.resolve(p, './.gitignore'), 'utf8');
+function cleanPackage() {
+  const ignore = fse.readFileSync(path.resolve(root, '.gitignore'), 'utf8');
   const ignores = ignore
     .split('\n')
     .filter((line) => !(line.length === 0 || line[0] === '#'))
@@ -25,7 +24,9 @@ function cleanPackage(p) {
     }
   });
   const pattern = `{${positive.join(',')}}`;
-  const files = glob.sync(path.resolve(p, `./${pattern}`)).filter((item) => !negative.find((n) => item.endsWith(n) || item.includes('node_modules')));
+  const files = glob
+    .sync(path.resolve(root, `./${pattern}`))
+    .filter((item) => !negative.find((n) => item.endsWith(n) || item.includes('node_modules')));
   files.forEach((file) => {
     fse.removeSync(file);
   });
@@ -33,9 +34,7 @@ function cleanPackage(p) {
 
 function run() {
   try {
-    x.forEach((p) => {
-      cleanPackage(p);
-    });
+    cleanPackage();
   } catch (err) {
     console.error(err);
     process.exit(1);

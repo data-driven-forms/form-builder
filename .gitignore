@@ -82,3 +82,6 @@ dist
 !README.md
 !tsconfig.json
 !scripts
+!setupTests.js
+!webpack.config.js
+!yarn.lock

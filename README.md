@@ -59,12 +59,10 @@ or
 
 # Usage
 
-Select on of modules:
+Import form builder:
 
 ```jsx
-import FormBuilder from '@data-driven-forms/form-builder/dist/cjs';
-import FormBuilder from '@data-driven-forms/form-builder/dist/esm';
-import FormBuilder from '@data-driven-forms/form-builder';
+import FormBuilder from '@data-driven-forms/form-builder/form-builder';
 ```
 
 and render the component with following props:
@@ -296,7 +294,7 @@ import {
   builderMapper,
   BuilderTemplate,
   fieldProperties
-} from '@data-driven-forms/form-builder/dist/cjs/mui-builder-mappers';
+} from '@data-driven-forms/form-builder/mui-builder-mappers';
 ```
 
 ## PatternFly 4
@@ -308,7 +306,7 @@ import {
   builderMapper,
   BuilderTemplate,
   fieldProperties
-} from '@data-driven-forms/form-builder/dist/cjs/pf4-builder-mappers';
+} from '@data-driven-forms/form-builder/pf4-builder-mappers';
 ```
 
 ## Example

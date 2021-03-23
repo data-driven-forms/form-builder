@@ -14,7 +14,6 @@ async function generatePackages() {
     const pckg = {
       main: 'index.js',
       module: `../esm/${dir}`,
-      typings: 'index.d.ts',
     };
     return fse.writeJSON(path.resolve(packagePath, dir, 'package.json'), pckg);
   });

@@ -1,8 +1,8 @@
 import React, { useContext, Fragment, memo } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
-import ComponentsContext from './components-context';
-import { builderComponentTypes } from './constants';
+import ComponentsContext from '../components-context';
+import { builderComponentTypes } from '../constants';
 
 const PickerField = memo(
   ({ field, index }) => {

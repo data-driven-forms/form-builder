@@ -7,12 +7,12 @@ const mapper = {
   ButtonVariant: 'Button',
   DropdownPosition: 'dropdownConstants',
   TextListVariants: 'TextList',
-  TextListItemVariants: 'TextListItem'
+  TextListItemVariants: 'TextListItem',
 };
 
 const camelToSnake = (string) => {
   return string
-    .replace(/[\w]([A-Z])/g, function(m) {
+    .replace(/[\w]([A-Z])/g, function (m) {
       return m[0] + '-' + m[1];
     })
     .toLowerCase();
@@ -20,20 +20,26 @@ const camelToSnake = (string) => {
 
 module.exports = {
   presets: ['@babel/preset-env', '@babel/preset-react'],
-  plugins: ['@babel/plugin-syntax-dynamic-import', 'lodash', '@babel/plugin-proposal-class-properties'],
+  plugins: [
+    '@babel/plugin-transform-runtime',
+    '@babel/plugin-syntax-dynamic-import',
+    'lodash',
+    '@babel/plugin-proposal-class-properties',
+    [
+      'transform-imports',
+      {
+        '@data-driven-forms/react-form-renderer': {
+          transform: (importName) => `@data-driven-forms/react-form-renderer/${camelToSnake(importName)}`,
+          preventFullImport: true,
+        },
+      },
+      '@data-driven-forms/react-form-renderer',
+    ],
+  ],
   env: {
     cjs: {
+      presets: [['@babel/preset-env', { modules: 'commonjs' }]],
       plugins: [
-        [
-          'transform-imports',
-          {
-            '@data-driven-forms/react-form-renderer': {
-              transform: (importName) => `@data-driven-forms/react-form-renderer/${camelToSnake(importName)}`,
-              preventFullImport: true
-            }
-          },
-          '@data-driven-forms/react-form-renderer-CJS'
-        ],
         [
           'transform-imports',
           {
@@ -54,10 +60,10 @@ module.exports = {
                 return res;
               },
               preventFullImport: false,
-              skipDefaultConversion: true
-            }
+              skipDefaultConversion: true,
+            },
           },
-          'react-core-CJS'
+          'react-core-CJS',
         ],
         [
           'transform-imports',
@@ -68,10 +74,10 @@ module.exports = {
                   .split(/(?=[A-Z])/)
                   .join('-')
                   .toLowerCase()}`,
-              preventFullImport: true
-            }
+              preventFullImport: true,
+            },
           },
-          'react-icons-CJS'
+          'react-icons-CJS',
         ],
         [
           'transform-imports',
@@ -91,10 +97,10 @@ module.exports = {
                 return res;
               },
               preventFullImport: false,
-              skipDefaultConversion: false
-            }
+              skipDefaultConversion: false,
+            },
           },
-          'pf3-react-CJS'
+          'pf3-react-CJS',
         ],
         [
           'transform-imports',
@@ -102,45 +108,36 @@ module.exports = {
             '@material-ui/core': {
               transform: (importName) => `@material-ui/core/${importName}`,
               preventFullImport: false,
-              skipDefaultConversion: false
-            }
+              skipDefaultConversion: false,
+            },
           },
-          'MUI-CJS'
+          'MUI-CJS',
         ],
         [
           'transform-imports',
           {
             '@data-driven-forms/pf4-component-mapper': {
               transform: (importName) => `@data-driven-forms/pf4-component-mapper/${camelToSnake(importName)}`,
-              preventFullImport: true
-            }
+              preventFullImport: true,
+            },
           },
-          '@data-driven-forms/pf4-component-mapper-CJS'
+          '@data-driven-forms/pf4-component-mapper-CJS',
         ],
         [
           'transform-imports',
           {
             '@data-driven-forms/mui-component-mapper': {
               transform: (importName) => `@data-driven-forms/mui-component-mapper/${camelToSnake(importName)}`,
-              preventFullImport: true
-            }
+              preventFullImport: true,
+            },
           },
-          '@data-driven-forms/mui-component-mapper-CJS'
-        ]
-      ]
+          '@data-driven-forms/mui-component-mapper-CJS',
+        ],
+      ],
     },
     esm: {
+      presets: [['@babel/preset-env', { modules: false }]],
       plugins: [
-        [
-          'transform-imports',
-          {
-            '@data-driven-forms/react-form-renderer': {
-              transform: (importName) => `@data-driven-forms/react-form-renderer/${camelToSnake(importName)}`,
-              preventFullImport: true
-            }
-          },
-          '@data-driven-forms/react-form-renderer-ESM'
-        ],
         [
           'transform-imports',
           {
@@ -161,10 +158,10 @@ module.exports = {
                 return res;
               },
               preventFullImport: false,
-              skipDefaultConversion: true
-            }
+              skipDefaultConversion: true,
+            },
           },
-          'react-core-ESM'
+          'react-core-ESM',
         ],
 
         [
@@ -176,10 +173,10 @@ module.exports = {
                   .split(/(?=[A-Z])/)
                   .join('-')
                   .toLowerCase()}`,
-              preventFullImport: true
-            }
+              preventFullImport: true,
+            },
           },
-          'react-icons-ESM'
+          'react-icons-ESM',
         ],
         [
           'transform-imports',
@@ -199,10 +196,10 @@ module.exports = {
                 return res;
               },
               preventFullImport: false,
-              skipDefaultConversion: false
-            }
+              skipDefaultConversion: false,
+            },
           },
-          'pf3-react-ESM'
+          'pf3-react-ESM',
         ],
         [
           'transform-imports',
@@ -210,32 +207,32 @@ module.exports = {
             '@material-ui/core': {
               transform: (importName) => `@material-ui/core/esm/${importName}`,
               preventFullImport: false,
-              skipDefaultConversion: false
-            }
+              skipDefaultConversion: false,
+            },
           },
-          'MUI-ESM'
+          'MUI-ESM',
         ],
         [
           'transform-imports',
           {
             '@data-driven-forms/pf4-component-mapper': {
               transform: (importName) => `@data-driven-forms/pf4-component-mapper/${camelToSnake(importName)}`,
-              preventFullImport: true
-            }
+              preventFullImport: true,
+            },
           },
-          '@data-driven-forms/pf4-component-mapper-ESM'
+          '@data-driven-forms/pf4-component-mapper-ESM',
         ],
         [
           'transform-imports',
           {
             '@data-driven-forms/mui-component-mapper': {
               transform: (importName) => `@data-driven-forms/mui-component-mapper/${camelToSnake(importName)}`,
-              preventFullImport: true
-            }
+              preventFullImport: true,
+            },
           },
-          '@data-driven-forms/mui-component-mapper-ESM'
+          '@data-driven-forms/mui-component-mapper-ESM',
         ],
-      ]
-    }
-  }
+      ],
+    },
+  },
 };

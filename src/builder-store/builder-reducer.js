@@ -1,6 +1,6 @@
 import { validatorTypes } from '@data-driven-forms/react-form-renderer';
 import propertiesValidation from '../properties-editor/initial-value-checker';
-import { FORM_LAYOUT } from '../helpers/create-initial-data';
+import { FORM_LAYOUT } from '../helpers';
 
 const isInContainer = (index, containers) => containers.find((c) => index > c.boundaries[0] && index <= c.boundaries[1]);
 

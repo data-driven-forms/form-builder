@@ -1,10 +1,10 @@
 import React, { useContext, memo, Fragment } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
-import ComponentsContext from './components-context';
+import ComponentsContext from '../components-context';
 import { useDispatch, useSelector } from 'react-redux';
 import isEqual from 'lodash/isEqual';
-import { builderComponentTypes } from './constants';
+import { builderComponentTypes } from '../constants';
 
 const Field = memo(({ fieldId, index, shouldClone, disableDrag, draggingContainer }) => {
   const {

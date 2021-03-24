@@ -1,4 +1,4 @@
-import builderStore from '../../builder-state/builder-store';
+import builderStore from '../../builder-store/builder-store';
 
 describe('builderStore', () => {
   it('creates store', () => {

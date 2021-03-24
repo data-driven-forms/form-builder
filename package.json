@@ -2,11 +2,8 @@
   "name": "@data-driven-forms/form-builder",
   "version": "0.0.10-rc10",
   "description": "Interactive drag and drop editor for creating data driven forms schema",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "files": [
-    "dist/*"
-  ],
+  "main": "index.js",
+  "module": "esm/index.js",
   "scripts": {
     "test": "jest --coverage",
     "start": "webpack-dev-server --hot --open --mode development",

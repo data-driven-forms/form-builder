@@ -1,6 +1,6 @@
 {
   "name": "@data-driven-forms/form-builder",
-  "version": "0.0.11-rc1",
+  "version": "0.0.11-rc3",
   "description": "Interactive drag and drop editor for creating data driven forms schema",
   "main": "index.js",
   "module": "esm/index.js",
@@ -25,9 +25,9 @@
     "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
-    "@data-driven-forms/mui-component-mapper": "^3.2.0",
-    "@data-driven-forms/react-form-renderer": "^3.2.0",
-    "@data-driven-forms/pf4-component-mapper": "^3.2.0",
+    "@data-driven-forms/mui-component-mapper": "^3.4.1",
+    "@data-driven-forms/react-form-renderer": "^3.4.1",
+    "@data-driven-forms/pf4-component-mapper": "^3.4.1",
     "@material-ui/core": "4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@patternfly/react-core": "^4.101.3",
@@ -75,7 +75,7 @@
     "redux": "^4.0.5"
   },
   "peerDependencies": {
-    "@data-driven-forms/react-form-renderer": ">=3.2.0"
+    "@data-driven-forms/react-form-renderer": ">=3.4.1"
   },
   "jest": {
     "snapshotSerializers": [

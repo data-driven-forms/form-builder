@@ -55,7 +55,9 @@ const FormBuilder = ({
     >
       <Form onSubmit={() => {}}>
         {() => (
-          <RendererContext.Provider value={{ formOptions: {} }}>
+          <RendererContext.Provider
+            value={{ formOptions: { internalRegisterField: () => null, renderForm: () => null, internalUnRegisterField: () => null } }}
+          >
             <Provider store={builderStore}>
               <FormBuilderLayout
                 initialFields={helpers.createInitialData(initialFields, schema, mode === 'subset', schemaTemplate)}
@@ -75,7 +77,7 @@ const FormBuilder = ({
 FormBuilder.propTypes = {
   mode: PropTypes.oneOf(['default', 'subset']),
   debug: PropTypes.bool,
-  builderMapper: PropTypes.object,
+  builderMapper: PropTypes.object.isRequired,
   componentProperties: PropTypes.shape({
     attributes: PropTypes.arrayOf(
       PropTypes.shape({
@@ -84,13 +86,13 @@ FormBuilder.propTypes = {
         propertyName: PropTypes.string.isRequired,
       })
     ),
-  }),
-  pickerMapper: PropTypes.object,
-  propertiesMapper: PropTypes.object,
+  }).isRequired,
+  pickerMapper: PropTypes.object.isRequired,
+  propertiesMapper: PropTypes.object.isRequired,
   cloneWhileDragging: PropTypes.bool,
   schema: PropTypes.object,
   schemaTemplate: PropTypes.object,
-  componentMapper: PropTypes.object,
+  componentMapper: PropTypes.object.isRequired,
   openEditor: PropTypes.bool,
   children: PropTypes.node,
 };

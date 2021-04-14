@@ -1191,10 +1191,10 @@
     prop-types "^15.7.2"
     react-select "^3.0.8"
 
-"@data-driven-forms/mui-component-mapper@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@data-driven-forms/mui-component-mapper/-/mui-component-mapper-3.2.0.tgz#e7e09e96070e448005e693d6432c7b6b7e4764f2"
-  integrity sha512-u1VmeVL8cG0/HS3d28ntDPRNM8nF5uiaLPOoVL9waoCk1hAECZANXU/xY1oGkJTfEypc+6Fo1y5Sk7u0RC9dGA==
+"@data-driven-forms/mui-component-mapper@^3.4.1":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@data-driven-forms/mui-component-mapper/-/mui-component-mapper-3.4.1.tgz#a7ca6657bc9b5b5b5c49a24aafac125233048e2d"
+  integrity sha512-i79ZbyPsa6BOaRfo4fT5P1N6cTv0xf19b3ljTJhYFGzDrfi8AwVhnNON3YnoSKSVb4aIyZpmOjAsHVGhKR+q3Q==
   dependencies:
     "@data-driven-forms/common" "*"
     "@date-io/date-fns" "^1.0.1"
@@ -1203,21 +1203,23 @@
     "@material-ui/pickers" "^3.2.10"
     clsx "^1.0.4"
     date-fns "^1.30.1"
+    lodash "^4.17.21"
     moment "^2.23.0"
 
-"@data-driven-forms/pf4-component-mapper@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@data-driven-forms/pf4-component-mapper/-/pf4-component-mapper-3.2.0.tgz#21030f7d3addd8ad31c96c0b9809b9c7863b8c3b"
-  integrity sha512-9EQJNoEHAJihKLvdS8XF8/P5wfcAphxRWBEWjZMeDEalx1eiky6pjHXZjpfTEx4BP6kxjsN9F02x/wMinObGHA==
+"@data-driven-forms/pf4-component-mapper@^3.4.1":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@data-driven-forms/pf4-component-mapper/-/pf4-component-mapper-3.4.1.tgz#a38d59a52eb00c281402d5a798ca29a07d22e7e6"
+  integrity sha512-U1OUCQjBVKCiZCA7m9WViCbVsyaK0xg0wlVjIYVIc3ZZGHT4GeBU9JTbN8MmQ9edUJnDBolyM/Ws59eoGRcDWg==
   dependencies:
     "@data-driven-forms/common" "*"
     downshift "^5.4.3"
+    lodash "^4.17.21"
     prop-types "^15.7.2"
 
-"@data-driven-forms/react-form-renderer@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@data-driven-forms/react-form-renderer/-/react-form-renderer-3.2.0.tgz#e89feb2d2eea65cf0bb2f52e449f719b0eca95fb"
-  integrity sha512-Falc15XgxopuQsJn1SeM06lDcTcc7IksEeqnP5Al4ilYz2TGP6mZzoDOnRbkLbKsA+skziJrtWwjHbKT8eVKgg==
+"@data-driven-forms/react-form-renderer@^3.4.1":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@data-driven-forms/react-form-renderer/-/react-form-renderer-3.4.1.tgz#320f57cd1eff479783d2bb845d8a80865949a699"
+  integrity sha512-kLrvrRtZnoL5VvrFz0+vbybi/KfAz7arFiY36x+vuj/lH0VmfKwdt8/7/nNSFhv2z8L0BqO3aAomlWOGQciBVw==
   dependencies:
     final-form "^4.20.0"
     final-form-arrays "^3.0.2"
@@ -6854,7 +6856,7 @@ lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
 
-lodash@^4.17.4:
+lodash@^4.17.21, lodash@^4.17.4:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==

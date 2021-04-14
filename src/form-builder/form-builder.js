@@ -55,7 +55,9 @@ const FormBuilder = ({
     >
       <Form onSubmit={() => {}}>
         {() => (
-          <RendererContext.Provider value={{ formOptions: {} }}>
+          <RendererContext.Provider
+            value={{ formOptions: { internalRegisterField: () => null, renderForm: () => null, internalUnRegisterField: () => null } }}
+          >
             <Provider store={builderStore}>
               <FormBuilderLayout
                 initialFields={helpers.createInitialData(initialFields, schema, mode === 'subset', schemaTemplate)}

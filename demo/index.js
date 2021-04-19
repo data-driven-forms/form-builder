@@ -12,13 +12,13 @@ import {
   pickerMapper as muiPickerMapper,
   propertiesMapper as muiPropertiesMapper,
   builderMapper as muiPBuilderMapper,
-  BuilderTemplate as muiBuilderTemplate
+  BuilderTemplate as muiBuilderTemplate,
 } from '../src/mui-builder-mappers';
 import {
   pickerMapper as pf4PickerMapper,
   propertiesMapper as pf4PropertiesMapper,
   builderMapper as pf4PBuilderMapper,
-  BuilderTemplate as pf4BuilderTemplate
+  BuilderTemplate as pf4BuilderTemplate,
 } from '../src/pf4-builder-mappers';
 
 import {
@@ -54,33 +54,34 @@ import {
   CHECKBOX_VARIANT,
   STEP,
   MIN,
-  MAX
+  MAX,
 } from './field-properties';
+import DndKit from '../src/dnd-kit';
 
 const componentProperties = {
   [componentTypes.TEXT_FIELD]: {
-    attributes: [LABEL, HELPER_TEXT, PLACEHOLDER, INPUT_TYPE, IS_DISABLED, IS_READ_ONLY, HIDE_FIELD]
+    attributes: [LABEL, HELPER_TEXT, PLACEHOLDER, INPUT_TYPE, IS_DISABLED, IS_READ_ONLY, HIDE_FIELD],
   },
   [componentTypes.CHECKBOX]: {
-    attributes: [LABEL, IS_DISABLED, OPTIONS, HIDE_FIELD]
+    attributes: [LABEL, IS_DISABLED, OPTIONS, HIDE_FIELD],
   },
   [componentTypes.SELECT]: {
-    attributes: [LABEL, OPTIONS, IS_DISABLED, PLACEHOLDER, HELPER_TEXT, HIDE_FIELD]
+    attributes: [LABEL, OPTIONS, IS_DISABLED, PLACEHOLDER, HELPER_TEXT, HIDE_FIELD],
   },
   [componentTypes.DATE_PICKER]: {
-    attributes: [LABEL, TODAY_BUTTON_LABEL, IS_CLEARABLE, CLOSE_ON_DAY_SELECT, SHOW_TODAY_BUTTON, HIDE_FIELD]
+    attributes: [LABEL, TODAY_BUTTON_LABEL, IS_CLEARABLE, CLOSE_ON_DAY_SELECT, SHOW_TODAY_BUTTON, HIDE_FIELD],
   },
   [componentTypes.PLAIN_TEXT]: { attributes: [MULTI_LINE_LABEL] },
   [componentTypes.RADIO]: { attributes: [LABEL, IS_DISABLED, OPTIONS, HIDE_FIELD] },
   [componentTypes.SWITCH]: {
-    attributes: [LABEL, IS_READ_ONLY, IS_DISABLED, HIDE_FIELD]
+    attributes: [LABEL, IS_READ_ONLY, IS_DISABLED, HIDE_FIELD],
   },
   [componentTypes.TEXTAREA]: {
-    attributes: [LABEL, HELPER_TEXT, IS_READ_ONLY, IS_DISABLED, HIDE_FIELD]
+    attributes: [LABEL, HELPER_TEXT, IS_READ_ONLY, IS_DISABLED, HIDE_FIELD],
   },
   [componentTypes.SUB_FORM]: {
     isContainer: true,
-    attributes: [TITLE, DESCRIPTION]
+    attributes: [TITLE, DESCRIPTION],
   },
   [componentTypes.DUAL_LIST_SELECT]: {
     attributes: [
@@ -103,12 +104,12 @@ const componentProperties = {
       FILTER_VALUE_TITLE,
       FILTER_VALUE_TEXT,
       FILTER_OPTIONS_TEXT,
-      CHECKBOX_VARIANT
-    ]
+      CHECKBOX_VARIANT,
+    ],
   },
   [componentTypes.SLIDER]: {
-    attributes: [LABEL, HELPER_TEXT, DESCRIPTION, HIDE_FIELD, MIN, MAX, STEP]
-  }
+    attributes: [LABEL, HELPER_TEXT, DESCRIPTION, HIDE_FIELD, MIN, MAX, STEP],
+  },
 };
 
 const schema = {
@@ -123,17 +124,17 @@ const schema = {
       validate: [
         {
           type: validatorTypes.REQUIRED,
-          message: 'This field is required'
+          message: 'This field is required',
         },
         {
           type: validatorTypes.MIN_LENGTH,
-          threshold: 7
+          threshold: 7,
         },
         {
           type: validatorTypes.MAX_LENGTH,
-          threshold: 10
-        }
-      ]
+          threshold: 10,
+        },
+      ],
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -144,13 +145,13 @@ const schema = {
       validate: [
         {
           type: validatorTypes.MAX_NUMBER_VALUE,
-          value: 33
+          value: 33,
         },
         {
           type: validatorTypes.MIN_NUMBER_VALUE,
-          value: 14
-        }
-      ]
+          value: 14,
+        },
+      ],
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -159,9 +160,9 @@ const schema = {
       validate: [
         {
           type: validatorTypes.PATTERN,
-          pattern: /^Foo$/
-        }
-      ]
+          pattern: /^Foo$/,
+        },
+      ],
     },
     {
       component: componentTypes.SELECT,
@@ -171,15 +172,15 @@ const schema = {
       options: [
         {
           label: 'Option 1',
-          value: '1'
+          value: '1',
         },
         {
           label: 'Option 2',
-          value: '2'
-        }
-      ]
-    }
-  ]
+          value: '2',
+        },
+      ],
+    },
+  ],
 };
 
 const schemaTemplate = {
@@ -193,17 +194,17 @@ const schemaTemplate = {
       validate: [
         {
           type: validatorTypes.REQUIRED,
-          message: 'This field is required'
+          message: 'This field is required',
         },
         {
           type: validatorTypes.MIN_LENGTH,
-          threshold: 5
+          threshold: 5,
         },
         {
           type: validatorTypes.MAX_LENGTH,
-          threshold: 10
-        }
-      ]
+          threshold: 10,
+        },
+      ],
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -215,13 +216,13 @@ const schemaTemplate = {
       validate: [
         {
           type: validatorTypes.MAX_NUMBER_VALUE,
-          value: 50
+          value: 50,
         },
         {
           type: validatorTypes.MIN_NUMBER_VALUE,
-          value: 14
-        }
-      ]
+          value: 14,
+        },
+      ],
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -230,9 +231,9 @@ const schemaTemplate = {
       validate: [
         {
           type: validatorTypes.PATTERN,
-          pattern: /^Foo$/
-        }
-      ]
+          pattern: /^Foo$/,
+        },
+      ],
     },
     {
       component: componentTypes.SELECT,
@@ -242,19 +243,19 @@ const schemaTemplate = {
       options: [
         {
           label: 'Option 1',
-          value: '1'
+          value: '1',
         },
         {
           label: 'Option 2',
-          value: '2'
+          value: '2',
         },
         {
           label: 'Option 3',
-          value: '3'
-        }
-      ]
-    }
-  ]
+          value: '3',
+        },
+      ],
+    },
+  ],
 };
 
 const pf4State = {
@@ -262,7 +263,7 @@ const pf4State = {
   propertiesMapper: pf4PropertiesMapper,
   builderMapper: pf4PBuilderMapper,
   BuilderTemplate: pf4BuilderTemplate,
-  componentMapper: pf4ComponentMapper
+  componentMapper: pf4ComponentMapper,
 };
 
 const muiState = {
@@ -270,7 +271,7 @@ const muiState = {
   propertiesMapper: muiPropertiesMapper,
   builderMapper: muiPBuilderMapper,
   BuilderTemplate: muiBuilderTemplate,
-  componentMapper: muiComponentMapper
+  componentMapper: muiComponentMapper,
 };
 
 const Demo = () => {
@@ -309,4 +310,6 @@ const Demo = () => {
   );
 };
 
-ReactDom.render(<Demo />, document.getElementById('root'));
+const DndKitDemo = () => <DndKit />;
+
+ReactDom.render(<DndKitDemo />, document.getElementById('root'));

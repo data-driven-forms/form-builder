@@ -1,20 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Draggable from './draggable';
 
-const avaiableItems = [
-  { component: 'text-field', id: 'template-text-field' },
-  { id: 'template-switch', component: 'switch' },
-  { component: 'container', id: 'template-nested-cmp' },
-];
-
-const DraggableSource = () => (
+const DraggableSource = ({ templates }) => (
   <div style={{ width: 200, display: 'flex', flexDirection: 'column' }}>
-    {avaiableItems.map(({ id, component, ...rest }) => (
+    {templates.map(({ id, component, ...rest }) => (
       <Draggable id={id} key={id} {...rest}>
         <button>{component}</button>
       </Draggable>
     ))}
   </div>
 );
+
+DraggableSource.propTypes = {
+  templates: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.string.isRequired })).isRequired,
+};
 
 export default DraggableSource;

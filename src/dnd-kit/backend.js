@@ -45,7 +45,16 @@ export const sortItems = (itemId, collisionId) => ({
 });
 
 const addToContainer = (state, containerId, newId, collisionId, template) => {
-  const position = state.containers[containerId].children.findIndex((id) => id === collisionId);
+  let position;
+  if (collisionId.match(/^voidzone-(top|bot)/)) {
+    if (collisionId.match(/^voidzone-top/)) {
+      position = 0;
+    } else {
+      position = state.containers[containerId].children.length;
+    }
+  } else {
+    position = state.containers[containerId].children.findIndex((id) => id === collisionId) + 1;
+  }
   return {
     ...state,
     fields: {
@@ -57,11 +66,7 @@ const addToContainer = (state, containerId, newId, collisionId, template) => {
       ...(template.isContainer ? { [newId]: { children: [] } } : {}),
       [containerId]: {
         ...state.containers[containerId],
-        children: [
-          ...state.containers[containerId].children.slice(0, position + 1),
-          newId,
-          ...state.containers[containerId].children.slice(position + 1),
-        ],
+        children: [...state.containers[containerId].children.slice(0, position), newId, ...state.containers[containerId].children.slice(position)],
       },
     },
   };
@@ -117,8 +122,13 @@ const sortTreeItems = (state, { itemId, collisionId }) => {
   const currentContainer = findInjection(state, itemId, true);
   const targetContainer = findInjection(state, collisionId);
   if (currentContainer === targetContainer) {
-    const oldIndex = state.containers[currentContainer].children.indexOf(itemId);
-    const newIndex = state.containers[currentContainer].children.indexOf(collisionId);
+    let oldIndex = state.containers[currentContainer].children.indexOf(itemId);
+    let newIndex;
+    if (collisionId.match(/^voidzone-(top|bot)/)) {
+      newIndex = collisionId.match(/^voidzone-top/) ? 0 : state.containers[currentContainer].children.length;
+    } else {
+      newIndex = state.containers[currentContainer].children.indexOf(collisionId);
+    }
     return {
       ...state,
       containers: {

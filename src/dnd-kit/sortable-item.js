@@ -10,6 +10,7 @@ const SortableItem = (props) => {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    padding: 16,
   };
 
   return (

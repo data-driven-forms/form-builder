@@ -35,7 +35,7 @@ function SingleItem({ id, isContainer, containers }) {
   const items = containers[id].children;
   return (
     <SortableContainer id={id}>
-      <h1>I am a container {id}</h1>
+      <h1 style={{ marginBottom: 16 }}>I am a container {id}</h1>
       <div style={{ padding: 16 }}>
         <ItemsRendererConnector items={items} />
       </div>

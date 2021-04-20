@@ -1,12 +1,11 @@
-import { closestCorners, DndContext, DragOverlay, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { closestCenter, closestCorners, DndContext, DragOverlay, KeyboardSensor, PointerSensor, rectIntersection, useSensor, useSensors } from '@dnd-kit/core';
 import PropTypes from 'prop-types';
-import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { rectSortingStrategy, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import React, { useReducer } from 'react';
-import backend, { addItem, initialState, MAIN_CONTAINER, setActiveId, setItems, sortItems } from './backend';
+import backend, { addItem, initialState, MAIN_CONTAINER, setActiveId, sortItems } from './backend';
 import Container from './container';
 import DraggableSource from './draggable-source';
 import Item from './item';
-import SortableItem from './sortable-item';
 import { BuilderProvider } from './builder-context';
 import ItemsRendererConnector from './ItemsRenderer';
 
@@ -27,7 +26,6 @@ const DndKit = ({ components }) => {
   } = containers;
 
   const bindSetActiveId = (id) => dispatch(setActiveId(id));
-  const bindSetItems = (items) => dispatch(setItems(items));
   const bindSortItems = (...args) => dispatch(sortItems(...args));
 
   const handleDragStart = (event) => {
@@ -48,14 +46,13 @@ const DndKit = ({ components }) => {
     bindSetActiveId(null);
   };
 
-  console.log({ containers, tree });
   return (
-    <DndContext sensors={sensors} collisionDetection={closestCorners} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+    <DndContext sensors={sensors} collisionDetection={rectIntersection} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <DraggableSource templates={Object.values(templates)} />
         <Container style={{ background: 'tomato', padding: 40 }} id={MAIN_CONTAINER}>
           <BuilderProvider value={{ templates, containers, fields }}>
-            <SortableContext items={tree} strategy={verticalListSortingStrategy}>
+            <SortableContext items={tree} strategy={rectSortingStrategy}>
               <ItemsRendererConnector items={tree} />
             </SortableContext>
             <DragOverlay>{activeId ? <Item id={activeId}>{activeId}</Item> : null}</DragOverlay>

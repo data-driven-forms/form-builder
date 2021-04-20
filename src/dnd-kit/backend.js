@@ -8,9 +8,11 @@ const ADD_ITEM = 'ADD_ITEM';
 const SORT_ITEMS = 'SORT_ITEMS';
 export const initialState = {
   activeId: undefined,
+  templates: {},
+  fields: {},
   containers: {
     [MAIN_CONTAINER]: {
-      accessot: 'tree',
+      accessor: 'tree',
       children: [],
     },
   },
@@ -42,38 +44,47 @@ export const sortItems = (itemId, collisionId) => ({
   },
 });
 
-const addToContainer = (state, containerId, newId, collisionId) => {
-  const position = state.containers[containerId].children.findIndex((id) => id === collisionId);
+const addToContainer = (state, containerId, newId, collisionId, template) => {
+  let position;
+  if (collisionId.match(/^voidzone-(top|bot)/)) {
+    if (collisionId.match(/^voidzone-top/)) {
+      position = 0;
+    } else {
+      position = state.containers[containerId].children.length;
+    }
+  } else {
+    position = state.containers[containerId].children.findIndex((id) => id === collisionId) + 1;
+  }
   return {
     ...state,
+    fields: {
+      ...state.fields,
+      [newId]: template,
+    },
     containers: {
       ...state.containers,
+      ...(template.isContainer ? { [newId]: { children: [] } } : {}),
       [containerId]: {
         ...state.containers[containerId],
-        children: [
-          ...state.containers[containerId].children.slice(0, position + 1),
-          newId,
-          ...state.containers[containerId].children.slice(position + 1),
-        ],
+        children: [...state.containers[containerId].children.slice(0, position), newId, ...state.containers[containerId].children.slice(position)],
       },
     },
   };
 };
 
-const findInjection = (state, collisionId) => {
+const findInjection = (state, collisionId, selfContainer) => {
   let firstContainer;
-  if (Object.keys(state.containers).find((key) => key === collisionId)) {
+  const keys = Object.keys(state.containers);
+  /**
+   * prevent container to adding into itself
+   */
+  if (!selfContainer && keys.includes(collisionId)) {
     firstContainer = collisionId;
   }
   if (!firstContainer) {
     let currentIndex = 0;
-    const allContainers = Object.entries(state.containers);
-    while (!firstContainer || currentIndex < Object.keys(state.containers).length) {
-      const currField =
-        allContainers[currentIndex][1].children.find((value) => {
-          return value === collisionId;
-        }) || [];
-      firstContainer = currField ? allContainers[currentIndex][0] : firstContainer;
+    while (!firstContainer && currentIndex < keys.length) {
+      firstContainer = state.containers[keys[currentIndex]].children.find((id) => id === collisionId) ? keys[currentIndex] : undefined;
       currentIndex += 1;
     }
   }
@@ -85,11 +96,18 @@ const findInjection = (state, collisionId) => {
 
 const addNewItem = (state, { itemId, collisionId }) => {
   const newId = itemId.replace(/^template/, `field-${Date.now() + Math.random()}`);
+  const template = { ...state.templates[itemId] };
+  template.id = newId;
   if (collisionId === MAIN_CONTAINER) {
     return {
       ...state,
+      fields: {
+        ...state.fields,
+        [newId]: template,
+      },
       containers: {
         ...state.containers,
+        ...(template.isContainer ? { [newId]: { children: [] } } : {}),
         [MAIN_CONTAINER]: {
           ...state.containers[MAIN_CONTAINER],
           children: [...state.containers[MAIN_CONTAINER].children, newId],
@@ -97,15 +115,20 @@ const addNewItem = (state, { itemId, collisionId }) => {
       },
     };
   }
-  return addToContainer(state, findInjection(state, collisionId), newId, collisionId);
+  return addToContainer(state, findInjection(state, collisionId), newId, collisionId, template);
 };
 
 const sortTreeItems = (state, { itemId, collisionId }) => {
-  const currentContainer = findInjection(state, collisionId);
+  const currentContainer = findInjection(state, itemId, true);
   const targetContainer = findInjection(state, collisionId);
   if (currentContainer === targetContainer) {
-    const oldIndex = state.containers[currentContainer].children.indexOf(itemId);
-    const newIndex = state.containers[currentContainer].children.indexOf(collisionId);
+    let oldIndex = state.containers[currentContainer].children.indexOf(itemId);
+    let newIndex;
+    if (collisionId.match(/^voidzone-(top|bot)/)) {
+      newIndex = collisionId.match(/^voidzone-top/) ? 0 : state.containers[currentContainer].children.length;
+    } else {
+      newIndex = state.containers[currentContainer].children.indexOf(collisionId);
+    }
     return {
       ...state,
       containers: {
@@ -117,10 +140,18 @@ const sortTreeItems = (state, { itemId, collisionId }) => {
       },
     };
   } else {
-    /**
-     * Mooving between different containers
-     * TBD
-     */
+    const currentChildren = state.containers[currentContainer].children.filter((id) => id !== itemId);
+    const targetChildren = state.containers[targetContainer].children;
+    const collisionIndex = targetChildren.indexOf(collisionId);
+    const newChildren = [...targetChildren.slice(0, collisionIndex), itemId, ...targetChildren.slice(collisionIndex)];
+    return {
+      ...state,
+      containers: {
+        ...state.containers,
+        [currentContainer]: { children: currentChildren },
+        [targetContainer]: { children: newChildren },
+      },
+    };
   }
 };
 

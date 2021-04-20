@@ -6,6 +6,12 @@ const Container = ({ id, style, children }) => {
   const { isOver, setNodeRef } = useDroppable({
     id,
   });
+  const { isOver: topIsOver, setNodeRef: topSetNodeRef } = useDroppable({
+    id: `voidzone-top-${id}`,
+  });
+  const { isOver: botIsIver, setNodeRef: botSetNodeRef } = useDroppable({
+    id: `voidzone-bot-${id}`,
+  });
 
   const innerStylestyle = {
     color: isOver ? 'green' : undefined,
@@ -14,9 +20,18 @@ const Container = ({ id, style, children }) => {
     ...style,
   };
 
+  const voidzoneStyle = {
+    padding: 4,
+    background: 'black',
+  };
+
   return (
-    <div id={id} ref={setNodeRef} style={innerStylestyle}>
-      {children}
+    <div style={{ width: '100%' }}>
+      <div id={`voidzone-top-${id}`} ref={topSetNodeRef} style={voidzoneStyle}></div>
+      <div id={id} ref={setNodeRef} style={innerStylestyle}>
+        {children}
+      </div>
+      <div id={`voidzone-bot-${id}`} ref={botSetNodeRef} style={voidzoneStyle}></div>
     </div>
   );
 };

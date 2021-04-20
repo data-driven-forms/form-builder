@@ -310,6 +310,8 @@ const Demo = () => {
   );
 };
 
-const DndKitDemo = () => <DndKit />;
+const avaiableItems = [{ component: 'text-field' }, { component: 'switch' }, { component: 'container', isContainer: true }];
+
+const DndKitDemo = () => <DndKit components={avaiableItems} />;
 
 ReactDom.render(<DndKitDemo />, document.getElementById('root'));

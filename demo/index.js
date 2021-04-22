@@ -13,6 +13,7 @@ import {
   propertiesMapper as muiPropertiesMapper,
   builderMapper as muiPBuilderMapper,
   BuilderTemplate as muiBuilderTemplate,
+  BuilderTemplate,
 } from '../src/mui-builder-mappers';
 import {
   pickerMapper as pf4PickerMapper,
@@ -319,7 +320,11 @@ const avaiableItems = [
 const DndKitDemo = () => {
   return (
     <ThemeProvider theme={createMuiTheme({})}>
-      <DndKit pickerMapper={muiPickerMapper} components={avaiableItems} />
+      <DndKit pickerMapper={muiPickerMapper} components={avaiableItems}>
+        {({ DropTarget, DraggableSource, PropertiesEditor }) => (
+          <BuilderTemplate ComponentPicker={DraggableSource} DropTarget={DropTarget} PropertiesEditor={PropertiesEditor} />
+        )}
+      </DndKit>
     </ThemeProvider>
   );
 };

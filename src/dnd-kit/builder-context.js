@@ -5,6 +5,7 @@ const BuilderContext = createContext({
   templates: {},
   fields: {},
   pickerMapper: {},
+  componentMapper: {},
   containers: {
     [MAIN_CONTAINER]: {
       children: [],

@@ -6,14 +6,12 @@ import SortableItem from './sortable-item';
 import SortableContainer from './sortable-container';
 
 const ItemsRenderer = memo(
-  ({ items, containers, fields, componentMapper }) => {
+  ({ items, containers, fields }) => {
     return items.map((id) => {
       if (!fields[id]) {
         return null;
       }
-      const field = fields[id];
-      const Component = componentMapper[field.component];
-      return <SingleItem key={id} containers={containers} Component={Component} {...field} />;
+      return <SingleItem key={id} containers={containers} {...fields[id]} />;
     });
   },
   (prev, next) => isEqual(prev, next)
@@ -27,16 +25,11 @@ ItemsRenderer.propTypes = {
       children: PropTypes.arrayOf(PropTypes.string).isRequired,
     }),
   }).isRequired,
-  componentMapper: PropTypes.shape({ [PropTypes.string]: PropTypes.elementType }).isRequired,
 };
 
-function SingleItem({ id, isContainer, containers, Component }) {
+function SingleItem({ id, isContainer, containers }) {
   if (!isContainer) {
-    return (
-      <SortableItem id={id}>
-        <Component name={id} />
-      </SortableItem>
-    );
+    return <SortableItem id={id} />;
   }
 
   const items = containers[id].children;
@@ -44,8 +37,6 @@ function SingleItem({ id, isContainer, containers, Component }) {
     <SortableContainer id={id}>
       <h1 style={{ marginBottom: 16 }}>I am a container {id}</h1>
       <div style={{ padding: 16 }}>
-        <b>Not ready yet</b>
-        <Component fields={[]} name={id} />
         <ItemsRendererConnector items={items} />
       </div>
     </SortableContainer>
@@ -60,12 +51,11 @@ SingleItem.propTypes = {
       children: PropTypes.arrayOf(PropTypes.string).isRequired,
     }),
   }).isRequired,
-  Component: PropTypes.elementType.isRequired,
 };
 
 function ItemsRendererConnector({ items }) {
-  const { containers, fields, componentMapper } = useContext(BuilderContext);
-  return <ItemsRenderer items={items} fields={fields} containers={containers} componentMapper={componentMapper} />;
+  const { containers, fields } = useContext(BuilderContext);
+  return <ItemsRenderer items={items} fields={fields} containers={containers} />;
 }
 
 ItemsRendererConnector.propTypes = {

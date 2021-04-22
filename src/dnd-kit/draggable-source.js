@@ -23,8 +23,8 @@ DraggableSource.propTypes = {
 };
 
 const DraggableSourceConnector = (props) => {
-  const { pickerMapper } = useContext(BuilderContext);
-  return <DraggableSource pickerMapper={pickerMapper} {...props} />;
+  const { pickerMapper, templates } = useContext(BuilderContext);
+  return <DraggableSource {...props} pickerMapper={pickerMapper} templates={Object.values(templates)} />;
 };
 
 export default DraggableSourceConnector;

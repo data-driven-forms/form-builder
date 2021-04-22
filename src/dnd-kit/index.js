@@ -1,14 +1,12 @@
 import { DndContext, KeyboardSensor, PointerSensor, rectIntersection, useSensor, useSensors } from '@dnd-kit/core';
 import PropTypes from 'prop-types';
-import { rectSortingStrategy, SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import React, { useReducer } from 'react';
-import backend, { addItem, initialState, MAIN_CONTAINER, setActiveId, sortItems } from './backend';
-import Container from './container';
-import DraggableSource from './draggable-source';
+import backend, { addItem, initialState, setActiveId, sortItems } from './backend';
 import { BuilderProvider } from './builder-context';
-import ItemsRendererConnector from './ItemsRenderer';
+import BuilderLayout from './builder-layout';
 
-const DndKit = ({ components, pickerMapper }) => {
+const DndKit = ({ components, pickerMapper, children, render }) => {
   const [{ templates, containers, fields }, dispatch] = useReducer(backend, {
     ...initialState,
     templates: components.reduce((acc, curr) => ({ ...acc, [`template-${curr.component}`]: { ...curr, id: `template-${curr.component}` } }), {}),
@@ -19,10 +17,6 @@ const DndKit = ({ components, pickerMapper }) => {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-
-  const {
-    [MAIN_CONTAINER]: { children: tree },
-  } = containers;
 
   const bindSetActiveId = (id) => dispatch(setActiveId(id));
   const bindSortItems = (...args) => dispatch(sortItems(...args));
@@ -49,12 +43,7 @@ const DndKit = ({ components, pickerMapper }) => {
     <BuilderProvider value={{ templates, containers, fields, pickerMapper }}>
       <DndContext sensors={sensors} collisionDetection={rectIntersection} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <DraggableSource templates={Object.values(templates)} />
-          <Container style={{ background: 'tomato', padding: 40 }} id={MAIN_CONTAINER}>
-            <SortableContext items={tree} strategy={rectSortingStrategy}>
-              <ItemsRendererConnector items={tree} />
-            </SortableContext>
-          </Container>
+          <BuilderLayout render={render}>{children}</BuilderLayout>
         </div>
       </DndContext>
     </BuilderProvider>
@@ -64,6 +53,8 @@ const DndKit = ({ components, pickerMapper }) => {
 DndKit.propTypes = {
   components: PropTypes.arrayOf(PropTypes.shape({ component: PropTypes.string.isRequired, isContainer: PropTypes.bool })).isRequired,
   pickerMapper: PropTypes.shape({ [PropTypes.string]: PropTypes.elementType }).isRequired,
+  children: PropTypes.func,
+  render: PropTypes.func,
 };
 
 export default DndKit;

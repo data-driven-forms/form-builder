@@ -310,8 +310,18 @@ const Demo = () => {
   );
 };
 
-const avaiableItems = [{ component: 'text-field' }, { component: 'switch' }, { component: 'container', isContainer: true }];
+const avaiableItems = [
+  { component: componentTypes.TEXT_FIELD },
+  { component: componentTypes.SWITCH },
+  { component: componentTypes.SUB_FORM, isContainer: true },
+];
 
-const DndKitDemo = () => <DndKit components={avaiableItems} />;
+const DndKitDemo = () => {
+  return (
+    <ThemeProvider theme={createMuiTheme({})}>
+      <DndKit pickerMapper={muiPickerMapper} components={avaiableItems} />
+    </ThemeProvider>
+  );
+};
 
 ReactDom.render(<DndKitDemo />, document.getElementById('root'));

@@ -320,7 +320,7 @@ const avaiableItems = [
 const DndKitDemo = () => {
   return (
     <ThemeProvider theme={createMuiTheme({})}>
-      <DndKit componentMapper={muiComponentMapper} pickerMapper={muiPickerMapper} components={avaiableItems}>
+      <DndKit builderMapper={muiPBuilderMapper} componentMapper={muiComponentMapper} pickerMapper={muiPickerMapper} components={avaiableItems}>
         {({ DropTarget, DraggableSource, PropertiesEditor }) => (
           <BuilderTemplate ComponentPicker={DraggableSource} DropTarget={DropTarget} PropertiesEditor={PropertiesEditor} />
         )}

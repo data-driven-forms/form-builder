@@ -4,12 +4,12 @@ import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import Form from '@data-driven-forms/react-form-renderer/form';
 import RendererContext from '@data-driven-forms/react-form-renderer/renderer-context';
 import React, { useReducer } from 'react';
-import backend, { addItem, initialState, setActiveId, sortItems } from './backend';
+import backend, { addItem, initialState, setActiveId, setSelectedComponent, sortItems } from './backend';
 import { BuilderProvider } from './builder-context';
 import BuilderLayout from './builder-layout';
 
-const DndKit = ({ components, pickerMapper, children, render, componentMapper }) => {
-  const [{ templates, containers, fields }, dispatch] = useReducer(backend, {
+const DndKit = ({ components, pickerMapper, children, render, componentMapper, builderMapper }) => {
+  const [{ templates, containers, fields, selectedComponent }, dispatch] = useReducer(backend, {
     ...initialState,
     templates: components.reduce((acc, curr) => ({ ...acc, [`template-${curr.component}`]: { ...curr, id: `template-${curr.component}` } }), {}),
   });
@@ -22,6 +22,7 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper })
 
   const bindSetActiveId = (id) => dispatch(setActiveId(id));
   const bindSortItems = (...args) => dispatch(sortItems(...args));
+  const bindetSelectedComponent = (id) => dispatch(setSelectedComponent(id));
 
   const handleDragStart = (event) => {
     const { active } = event;
@@ -47,7 +48,18 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper })
         <RendererContext.Provider
           value={{ formOptions: { internalRegisterField: () => null, renderForm: () => null, internalUnRegisterField: () => null } }}
         >
-          <BuilderProvider value={{ templates, containers, fields, pickerMapper, componentMapper }}>
+          <BuilderProvider
+            value={{
+              selectComponent: bindetSelectedComponent,
+              selectedComponent,
+              builderMapper,
+              templates,
+              containers,
+              fields,
+              pickerMapper,
+              componentMapper,
+            }}
+          >
             <DndContext sensors={sensors} collisionDetection={rectIntersection} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
               <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <BuilderLayout render={render}>{children}</BuilderLayout>
@@ -66,6 +78,7 @@ DndKit.propTypes = {
   children: PropTypes.func,
   render: PropTypes.func,
   componentMapper: PropTypes.shape({ [PropTypes.string]: PropTypes.elementType }).isRequired,
+  builderMapper: PropTypes.shape({ [PropTypes.string]: PropTypes.elementType }).isRequired,
 };
 
 export default DndKit;

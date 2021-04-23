@@ -6,6 +6,9 @@ const BuilderContext = createContext({
   fields: {},
   pickerMapper: {},
   componentMapper: {},
+  builderMapper: {},
+  selectedComponent: undefined,
+  selectComponent: () => undefined,
   containers: {
     [MAIN_CONTAINER]: {
       children: [],

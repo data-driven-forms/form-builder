@@ -6,14 +6,24 @@ import SortableItem from './sortable-item';
 import SortableContainer from './sortable-container';
 
 const ItemsRenderer = memo(
-  ({ items, containers, fields, componentMapper }) => {
+  ({ items, containers, fields, componentMapper, FieldLayout, DragHandle, BuilderField }) => {
     return items.map((id) => {
       if (!fields[id]) {
         return null;
       }
       const field = fields[id];
       const Component = componentMapper[field.component];
-      return <SingleItem key={id} containers={containers} Component={Component} {...field} />;
+      return (
+        <SingleItem
+          key={id}
+          BuilderField={BuilderField}
+          DragHandle={DragHandle}
+          FieldLayout={FieldLayout}
+          containers={containers}
+          Component={Component}
+          {...field}
+        />
+      );
     });
   },
   (prev, next) => isEqual(prev, next)
@@ -28,13 +38,14 @@ ItemsRenderer.propTypes = {
     }),
   }).isRequired,
   componentMapper: PropTypes.shape({ [PropTypes.string]: PropTypes.elementType }).isRequired,
+  BuilderField: PropTypes.elementType.isRequired,
 };
 
-function SingleItem({ id, isContainer, containers, Component }) {
+function SingleItem({ id, isContainer, containers, Component, BuilderField, component }) {
   if (!isContainer) {
     return (
       <SortableItem id={id}>
-        <Component name={id} />
+        <BuilderField name={id} innerProps={{ snapshot: {} }} component={component} Component={Component} />
       </SortableItem>
     );
   }
@@ -61,11 +72,23 @@ SingleItem.propTypes = {
     }),
   }).isRequired,
   Component: PropTypes.elementType.isRequired,
+  BuilderField: PropTypes.elementType.isRequired,
+  component: PropTypes.string.isRequired,
 };
 
 function ItemsRendererConnector({ items }) {
-  const { containers, fields, componentMapper } = useContext(BuilderContext);
-  return <ItemsRenderer items={items} fields={fields} containers={containers} componentMapper={componentMapper} />;
+  const { containers, fields, componentMapper, builderMapper } = useContext(BuilderContext);
+  return (
+    <ItemsRenderer
+      FieldLayout={builderMapper.FieldLayout}
+      DragHandle={builderMapper.DragHandle}
+      BuilderField={builderMapper['builder-field']}
+      items={items}
+      fields={fields}
+      containers={containers}
+      componentMapper={componentMapper}
+    />
+  );
 }
 
 ItemsRendererConnector.propTypes = {

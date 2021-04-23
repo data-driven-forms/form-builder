@@ -6,10 +6,12 @@ const SET_ACTIVE_ID = 'SET_ACTIVE_ID';
 const SET_ITEMS = 'SET_ITEMS';
 const ADD_ITEM = 'ADD_ITEM';
 const SORT_ITEMS = 'SORT_ITEMS';
+const SET_SELECTED_COMPONENT = 'SET_SELECTED_COMPONENT';
 export const initialState = {
   activeId: undefined,
   templates: {},
   fields: {},
+  selectedComponent: '',
   containers: {
     [MAIN_CONTAINER]: {
       accessor: 'tree',
@@ -20,6 +22,11 @@ export const initialState = {
 
 export const setActiveId = (id) => ({
   type: SET_ACTIVE_ID,
+  payload: id,
+});
+
+export const setSelectedComponent = (id) => ({
+  type: SET_SELECTED_COMPONENT,
   payload: id,
 });
 
@@ -165,6 +172,8 @@ const reducer = (state, action) => {
       return sortTreeItems(state, action.payload);
     case ADD_ITEM:
       return addNewItem(state, action.payload);
+    case SET_SELECTED_COMPONENT:
+      return { ...state, selectedComponent: action.payload };
     default:
       return state;
   }

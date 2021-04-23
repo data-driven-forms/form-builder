@@ -402,14 +402,7 @@ const DragHandle = ({ dragHandleProps, hasPropertyError, disableDrag }) => {
 };
 
 DragHandle.propTypes = {
-  dragHandleProps: PropTypes.shape({
-    'data-rbd-drag-handle-draggable-id': PropTypes.string.isRequired,
-    'data-rbd-drag-handle-context-id': PropTypes.string.isRequired,
-    'aria-labelledby': PropTypes.string,
-    tabIndex: PropTypes.number,
-    draggable: PropTypes.bool,
-    onDragStart: PropTypes.func.isRequired
-  }),
+  dragHandleProps: PropTypes.object.isRequired,
   disableDrag: PropTypes.bool,
   hasPropertyError: PropTypes.bool
 };

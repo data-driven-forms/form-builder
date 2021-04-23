@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 
 import DraggableSource from './draggable-source';
 import DropTarget from './drop-target';
+import PropertiesEditor from './properties-editor';
 
 const Layout = ({ render, children }) => {
   const layoutProps = {
     DraggableSource,
     DropTarget,
-    PropertiesEditor: () => <div>There will be dragons</div>,
+    PropertiesEditor,
   };
   if (render) {
     return render(layoutProps);

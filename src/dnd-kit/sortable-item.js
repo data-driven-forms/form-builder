@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import Item from './item';
+import BuilderContext from './builder-context';
 
 const SortableItem = ({ children, ...props }) => {
+  const {
+    selectComponent,
+    selectedComponent,
+    builderMapper: { DragHandle, FieldLayout },
+  } = useContext(BuilderContext);
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
 
   const style = {
@@ -14,8 +20,11 @@ const SortableItem = ({ children, ...props }) => {
   };
 
   return (
-    <Item ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {children}
+    <Item ref={setNodeRef} style={style} onClick={() => selectComponent(props.id)} {...attributes}>
+      <FieldLayout selected={selectedComponent === props.id}>
+        {children}
+        <DragHandle dragHandleProps={listeners} />
+      </FieldLayout>
     </Item>
   );
 };

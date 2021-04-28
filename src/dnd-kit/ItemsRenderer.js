@@ -41,11 +41,11 @@ ItemsRenderer.propTypes = {
   BuilderField: PropTypes.elementType.isRequired,
 };
 
-function SingleItem({ id, isContainer, containers, Component, BuilderField, component }) {
+function SingleItem({ id, isContainer, containers, Component, BuilderField, component, ...rest }) {
   if (!isContainer) {
     return (
       <SortableItem id={id}>
-        <BuilderField name={id} innerProps={{ snapshot: {} }} component={component} Component={Component} />
+        <BuilderField innerProps={{ snapshot: {} }} component={component} Component={Component} {...rest} name={id} />
       </SortableItem>
     );
   }

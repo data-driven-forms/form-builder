@@ -1,4 +1,7 @@
 import { arrayMove } from '@dnd-kit/sortable';
+import convertInitialValue from '@data-driven-forms/react-form-renderer/use-field-api/convert-initial-value';
+import propertiesValidation from '../properties-editor/initial-value-checker';
+import validatorTypes from '@data-driven-forms/react-form-renderer/validator-types';
 
 export const MAIN_CONTAINER = 'main-container';
 
@@ -7,6 +10,10 @@ const SET_ITEMS = 'SET_ITEMS';
 const ADD_ITEM = 'ADD_ITEM';
 const SORT_ITEMS = 'SORT_ITEMS';
 const SET_SELECTED_COMPONENT = 'SET_SELECTED_COMPONENT';
+const REMOVE_COMPONENT = 'REMOVE_COMPONENT';
+const SET_FIELD_PROPERTY = 'SET_FIELD_PROPERTY';
+const SET_FIELD_VALIDATOR = 'SET_FIELD_VALIDATOR';
+
 export const initialState = {
   activeId: undefined,
   templates: {},
@@ -48,6 +55,30 @@ export const sortItems = (itemId, collisionId) => ({
   payload: {
     itemId,
     collisionId,
+  },
+});
+
+export const removeComponent = (itemId) => ({
+  type: REMOVE_COMPONENT,
+  payload: { itemId },
+});
+
+export const setFieldProperty = (itemId, propertyName, value, dataType) => ({
+  type: SET_FIELD_PROPERTY,
+  payload: {
+    value: convertInitialValue(value, dataType),
+    propertyName,
+    itemId: itemId,
+  },
+});
+
+export const setFieldValidator = (itemId, value, index, action) => ({
+  type: SET_FIELD_VALIDATOR,
+  payload: {
+    ...value,
+    itemId,
+    index,
+    action,
   },
 });
 
@@ -125,6 +156,60 @@ const addNewItem = (state, { itemId, collisionId }) => {
   return addToContainer(state, findInjection(state, collisionId), newId, collisionId, template);
 };
 
+const removeItem = (state, { itemId }) => {
+  const newFields = state.fields;
+  delete newFields[itemId];
+
+  const newContainers = Object.keys(state.containers).reduce(
+    (acc, curr) => ({
+      ...acc,
+      [curr]: {
+        ...state.containers[curr],
+        children: state.containers[curr].children.filter((id) => id !== itemId),
+      },
+    }),
+    {}
+  );
+
+  return {
+    ...state,
+    fields: newFields,
+    containers: newContainers,
+    selectedComponent: '',
+  };
+};
+
+const changeFieldProperty = (field, { propertyName, value }) => ({
+  ...field,
+  [propertyName]: value,
+  propertyValidation: {
+    ...field.propertyValidation,
+    ...propertiesValidation(propertyName)({ ...field, [propertyName]: value }),
+  },
+});
+
+const changeValidator = (field, { index, action, itemId, ...validator }) => {
+  console.log(validator);
+  const result = { ...field };
+  const validate = result.validate || [];
+  if (validator.type === validatorTypes.REQUIRED) {
+    result.isRequired = action !== 'remove';
+  }
+  if (action === 'remove') {
+    result.validate = [...validate.slice(0, index), ...validate.slice(index + 1)];
+  }
+
+  if (action === 'add') {
+    result.validate = [...validate, { ...validator }];
+  }
+
+  if (action === 'modify') {
+    result.validate = validate.map((item, itemIndex) => (itemIndex === index ? { ...item, ...validator } : item));
+  }
+
+  return result;
+};
+
 const sortTreeItems = (state, { itemId, collisionId }) => {
   const currentContainer = findInjection(state, itemId, true);
   const targetContainer = findInjection(state, collisionId);
@@ -174,6 +259,24 @@ const reducer = (state, action) => {
       return addNewItem(state, action.payload);
     case SET_SELECTED_COMPONENT:
       return { ...state, selectedComponent: action.payload };
+    case REMOVE_COMPONENT:
+      return removeItem(state, action.payload);
+    case SET_FIELD_PROPERTY:
+      return {
+        ...state,
+        fields: {
+          ...state.fields,
+          [action.payload.itemId]: changeFieldProperty(state.fields[action.payload.itemId], action.payload),
+        },
+      };
+    case SET_FIELD_VALIDATOR:
+      return {
+        ...state,
+        fields: {
+          ...state.fields,
+          [action.payload.itemId]: changeValidator(state.fields[action.payload.itemId], action.payload),
+        },
+      };
     default:
       return state;
   }

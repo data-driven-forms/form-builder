@@ -18,7 +18,7 @@ import {
   Divider,
   Box,
   Badge,
-  IconButton
+  IconButton,
 } from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
@@ -37,7 +37,7 @@ const childrenPropType = PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(
 const useStyles = makeStyles((theme) => ({
   form: {
     display: 'grid',
-    'grid-gap': 16
+    'grid-gap': 16,
   },
   formContainer: {
     'flex-grow': 1,
@@ -45,26 +45,26 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'transparent',
     transitionProperty: 'background-color',
     transitionDuration: theme.transitions.duration.standard,
-    transitionTimingFunction: theme.transitions.easing.easeInOut
+    transitionTimingFunction: theme.transitions.easing.easeInOut,
   },
   propertiesContainer: {
     'padding-left': 8,
     'flex-grow': 1,
     'max-width': '30%',
     width: '30%',
-    minHeight: '100vh'
+    minHeight: '100vh',
   },
   componentWrapper: {
     position: 'relative',
     display: 'flex',
     flexGrow: 1,
-    padding: 8
+    padding: 8,
   },
   tabs: {
-    marginBottom: 8
+    marginBottom: 8,
   },
   badge: {
-    width: '100%'
+    width: '100%',
   },
   handle: {
     background: grey[300],
@@ -74,11 +74,18 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     '&:hover svg:last-child': {
-      fill: theme.palette.primary.main
-    }
+      fill: theme.palette.primary.main,
+    },
   },
   warning: {
-    fill: red[500]
+    fill: red[500],
+  },
+  containerLayout: {},
+  containerLayoutCard: {
+    display: 'flex',
+    '& > div:first-child': {
+      flexGrow: 1,
+    },
   },
   fieldLayout: {
     paddingBottom: 8,
@@ -98,31 +105,31 @@ const useStyles = makeStyles((theme) => ({
       transform: 'scaleX(0)',
       transitionProperty: 'transform',
       transitionDuration: theme.transitions.duration.standard,
-      transitionTimingFunction: theme.transitions.easing.easeInOut
-    }
+      transitionTimingFunction: theme.transitions.easing.easeInOut,
+    },
   },
   fieldLayoutDragging: {
     '& .mui-builder-drag-handle-icon': {
-      fill: theme.palette.primary.main
-    }
+      fill: theme.palette.primary.main,
+    },
   },
   fieldLayoutSelected: {
     '&:after': {
       pointerEvents: 'none',
-      transform: 'scaleX(1)'
-    }
+      transform: 'scaleX(1)',
+    },
   },
   fieldContent: {
     padding: 0,
-    paddingBottom: 0
+    paddingBottom: 0,
   },
   fieldCard: {
     overflow: 'unset',
     paddingBottom: 0,
-    display: 'flex'
+    display: 'flex',
   },
   builderColumn: {
-    margin: 16
+    margin: 16,
   },
   componentWrapperOverlay: {
     '&:after': {
@@ -138,15 +145,15 @@ const useStyles = makeStyles((theme) => ({
       top: 0,
       left: 0,
       right: 0,
-      bottom: 0
-    }
+      bottom: 0,
+    },
   },
   componentWrapperHidden: {
     pointerEvents: 'none',
     '&:after': {
       background: grey[200],
-      opacity: 0.8
-    }
+      opacity: 0.8,
+    },
   },
   hiddenIconIndicator: {
     zIndex: 1,
@@ -157,17 +164,17 @@ const useStyles = makeStyles((theme) => ({
     opacity: 0,
     transitionProperty: 'opacity',
     transitionDuration: theme.transitions.duration.standard,
-    transitionTimingFunction: theme.transitions.easing.easeInOut
+    transitionTimingFunction: theme.transitions.easing.easeInOut,
   },
   showHiddenIndicator: {
-    opacity: 1
+    opacity: 1,
   },
   emptyTarget: {
-    height: '100%'
+    height: '100%',
   },
   formContainerOver: {
-    backgroundColor: blue[100]
-  }
+    backgroundColor: blue[100],
+  },
 }));
 
 const prepareLabel = (component, isDragging) =>
@@ -175,14 +182,14 @@ const prepareLabel = (component, isDragging) =>
     [componentTypes.CHECKBOX]: 'Please, provide label',
     [componentTypes.PLAIN_TEXT]: 'Please provide a label to plain text component',
     [componentTypes.DUAL_LIST_SELECT]: 'Please pick label and options',
-    [componentTypes.RADIO]: 'Please pick label and options'
+    [componentTypes.RADIO]: 'Please pick label and options',
   }[component] || (isDragging ? component : ''));
 
 const prepareOptions = (component, options = []) =>
   ({
     [componentTypes.SELECT]: { options: options.filter(({ deleted }) => !deleted) },
     [componentTypes.DUAL_LIST_SELECT]: { options },
-    [componentTypes.RADIO]: { options }
+    [componentTypes.RADIO]: { options },
   }[component] || {});
 
 const ComponentWrapper = ({
@@ -199,12 +206,12 @@ const ComponentWrapper = ({
   return (
     <div
       className={clsx(classes.componentWrapper, classes.componentWrapperOverlay, {
-        [classes.componentWrapperHidden]: hideField
+        [classes.componentWrapperHidden]: hideField,
       })}
     >
       <VisibilityOffIcon
         className={clsx(classes.hiddenIconIndicator, {
-          [classes.showHiddenIndicator]: hideField
+          [classes.showHiddenIndicator]: hideField,
         })}
       />
       <Component
@@ -221,7 +228,7 @@ ComponentWrapper.propTypes = {
   component: PropTypes.string,
   innerProps: PropTypes.shape({
     snapshot: snapshotPropType,
-    hideField: PropTypes.bool
+    hideField: PropTypes.bool,
   }).isRequired,
   label: PropTypes.string,
   preview: PropTypes.bool,
@@ -231,7 +238,7 @@ ComponentWrapper.propTypes = {
   propertyName: PropTypes.string,
   fieldId: PropTypes.string,
   propertyValidation: PropTypes.any,
-  hasPropertyError: PropTypes.bool
+  hasPropertyError: PropTypes.bool,
 };
 
 const FieldLayout = ({ children, disableDrag, dragging, selected }) => {
@@ -241,7 +248,7 @@ const FieldLayout = ({ children, disableDrag, dragging, selected }) => {
       className={clsx(classes.fieldLayout, {
         [classes.fieldLayoutDragging]: dragging,
         [classes.fieldLayoutSelected]: selected,
-        'drag-disabled': disableDrag
+        'drag-disabled': disableDrag,
       })}
     >
       <Card square className={classes.fieldCard}>
@@ -255,7 +262,29 @@ FieldLayout.propTypes = {
   children: childrenPropType,
   disableDrag: PropTypes.bool,
   dragging: PropTypes.bool,
-  selected: PropTypes.bool
+  selected: PropTypes.bool,
+};
+
+const ContainerLayout = ({ children, disableDrag, dragging, selected }) => {
+  const classes = useStyles();
+  return (
+    <div
+      className={clsx(classes.containerLayout, {
+        [classes.fieldLayoutSelected]: selected,
+      })}
+    >
+      <Card className={classes.containerLayoutCard} square>
+        {children}
+      </Card>
+    </div>
+  );
+};
+
+ContainerLayout.propTypes = {
+  children: childrenPropType,
+  disableDrag: PropTypes.bool,
+  dragging: PropTypes.bool,
+  selected: PropTypes.bool,
 };
 
 const BuilderColumn = ({ children, isDraggingOver, ...props }) => {
@@ -270,7 +299,7 @@ const BuilderColumn = ({ children, isDraggingOver, ...props }) => {
 BuilderColumn.propTypes = {
   className: PropTypes.string,
   children: childrenPropType,
-  isDraggingOver: PropTypes.bool
+  isDraggingOver: PropTypes.bool,
 };
 
 const PropertiesEditor = ({
@@ -280,7 +309,7 @@ const PropertiesEditor = ({
   avaiableValidators,
   handleClose,
   handleDelete,
-  hasPropertyError
+  hasPropertyError,
 }) => {
   const [activeTab, setActiveTab] = useState(0);
   const classes = useStyles();
@@ -355,7 +384,7 @@ PropertiesEditor.propTypes = {
   fieldName: PropTypes.string,
   handleClose: PropTypes.func.isRequired,
   handleDelete: PropTypes.func,
-  hasPropertyError: PropTypes.array
+  hasPropertyError: PropTypes.array,
 };
 
 const PropertyGroup = ({ className, children, title, handleDelete, ...props }) => {
@@ -383,7 +412,7 @@ PropertyGroup.propTypes = {
   className: PropTypes.string,
   children: childrenPropType,
   title: PropTypes.string.isRequired,
-  handleDelete: PropTypes.func
+  handleDelete: PropTypes.func,
 };
 
 const DragHandle = ({ dragHandleProps, hasPropertyError, disableDrag }) => {
@@ -404,7 +433,7 @@ const DragHandle = ({ dragHandleProps, hasPropertyError, disableDrag }) => {
 DragHandle.propTypes = {
   dragHandleProps: PropTypes.object.isRequired,
   disableDrag: PropTypes.bool,
-  hasPropertyError: PropTypes.bool
+  hasPropertyError: PropTypes.bool,
 };
 
 const FormContainer = ({ children, isDraggingOver }) => {
@@ -413,7 +442,7 @@ const FormContainer = ({ children, isDraggingOver }) => {
   return (
     <div
       className={clsx(classes.formContainer, {
-        [classes.formContainerOver]: isDraggingOver
+        [classes.formContainerOver]: isDraggingOver,
       })}
     >
       {children}
@@ -433,18 +462,19 @@ const EmptyTarget = () => {
 FormContainer.propTypes = {
   children: childrenPropType,
   className: PropTypes.string,
-  isDraggingOver: PropTypes.bool
+  isDraggingOver: PropTypes.bool,
 };
 
 const builderMapper = {
   FieldLayout,
+  ContainerLayout,
   PropertiesEditor,
   FormContainer,
   [builderComponentTypes.BUILDER_FIELD]: ComponentWrapper,
   BuilderColumn,
   PropertyGroup,
   DragHandle,
-  EmptyTarget
+  EmptyTarget,
 };
 
 export default builderMapper;

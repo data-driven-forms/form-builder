@@ -18,6 +18,8 @@ import { BuilderProvider } from './builder-context';
 import BuilderLayout from './builder-layout';
 import validatorTypes from '@data-driven-forms/react-form-renderer/validator-types';
 
+import ItemsRendererConnector from './ItemsRenderer';
+
 const DndKit = ({ components, pickerMapper, children, render, componentMapper, builderMapper, componentProperties, propertiesMapper }) => {
   const [{ templates, containers, fields, selectedComponent }, dispatch] = useReducer(backend, {
     ...initialState,
@@ -67,7 +69,11 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper, b
               }),
               {}
             ),
-            formOptions: { internalRegisterField: () => null, renderForm: () => null, internalUnRegisterField: () => null },
+            formOptions: {
+              internalRegisterField: () => null,
+              renderForm: (items) => <ItemsRendererConnector items={items} />,
+              internalUnRegisterField: () => null,
+            },
           }}
         >
           <BuilderProvider

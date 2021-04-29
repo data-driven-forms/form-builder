@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Fragment } from 'react';
 import { useDroppable } from '@dnd-kit/core';
+import BuilderContext from './builder-context';
 
 const SortableContainer = ({ id, isActive, style, children }) => {
+  const {
+    selectComponent,
+    selectedComponent,
+    builderMapper: { DragHandle, ContainerLayout },
+  } = useContext(BuilderContext);
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
   const { isOver, setNodeRef: droppablSetNodeRef } = useDroppable({
     id,
@@ -20,8 +26,7 @@ const SortableContainer = ({ id, isActive, style, children }) => {
 
   const internalStyle = {
     padding: 24,
-    background: isOver ? 'green' : 'tomato',
-    color: 'white',
+    background: isOver ? 'green' : 'inherit',
     margin: 8,
     visibility: isActive ? 'hidden' : undefined,
     ...style,
@@ -36,15 +41,26 @@ const SortableContainer = ({ id, isActive, style, children }) => {
   };
 
   return (
-    <Fragment>
-      <div id={`voidzone-top-${id}`} ref={topSetNodeRef} style={voidzoneStyle}></div>
-      <div id={id} ref={setNodeRef} style={internalStyle} {...attributes} {...listeners}>
-        <div id={`droppable-${id}`} style={{ paddingTop: 8, paddingBottom: 8 }} ref={droppablSetNodeRef}>
-          {children}
+    <ContainerLayout selected={selectedComponent === id}>
+      <div>
+        <div id={`voidzone-top-${id}`} ref={topSetNodeRef} style={voidzoneStyle}></div>
+        <div id={id} ref={setNodeRef} style={internalStyle} {...attributes}>
+          <div
+            id={`droppable-${id}`}
+            onClick={(event) => {
+              event.stopPropagation();
+              selectComponent(id);
+            }}
+            style={{ paddingTop: 8, paddingBottom: 8 }}
+            ref={droppablSetNodeRef}
+          >
+            {children}
+          </div>
         </div>
+        <div id={`voidzone-bot-${id}`} ref={botSetNodeRef} style={voidzoneStyle}></div>
       </div>
-      <div id={`voidzone-bot-${id}`} ref={botSetNodeRef} style={voidzoneStyle}></div>
-    </Fragment>
+      <DragHandle dragHandleProps={listeners} />
+    </ContainerLayout>
   );
 };
 

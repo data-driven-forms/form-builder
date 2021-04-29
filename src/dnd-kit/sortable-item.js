@@ -17,10 +17,19 @@ const SortableItem = ({ children, ...props }) => {
     transform: CSS.Transform.toString(transform),
     transition,
     padding: 16,
+    width: '100%',
   };
 
   return (
-    <Item ref={setNodeRef} style={style} onClick={() => selectComponent(props.id)} {...attributes}>
+    <Item
+      ref={setNodeRef}
+      style={style}
+      onClick={(event) => {
+        event.stopPropagation();
+        selectComponent(props.id);
+      }}
+      {...attributes}
+    >
       <FieldLayout selected={selectedComponent === props.id}>
         {children}
         <DragHandle dragHandleProps={listeners} />

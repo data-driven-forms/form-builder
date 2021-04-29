@@ -58,6 +58,7 @@ import {
   MAX,
 } from './field-properties';
 import DndKit from '../src/dnd-kit';
+import { Grid } from '@material-ui/core';
 
 const componentProperties = {
   [componentTypes.TEXT_FIELD]: {
@@ -300,9 +301,11 @@ const Demo = () => {
           debug={false}
           render={({ isValid, getSchema, ...props }) => (
             <state.BuilderTemplate {...props}>
-              <div>
-                <button onClick={() => console.log(getSchema())}>Click to get state</button>
-              </div>
+              <Grid container>
+                <div>
+                  <button onClick={() => console.log(getSchema())}>Click to get state</button>
+                </div>
+              </Grid>
             </state.BuilderTemplate>
           )}
         />

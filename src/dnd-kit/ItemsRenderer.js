@@ -53,12 +53,7 @@ function SingleItem({ id, isContainer, containers, Component, BuilderField, comp
   const items = containers[id].children;
   return (
     <SortableContainer id={id}>
-      <h1 style={{ marginBottom: 16 }}>I am a container {id}</h1>
-      <div style={{ padding: 16 }}>
-        <b>Not ready yet</b>
-        <Component fields={[]} name={id} />
-        <ItemsRendererConnector items={items} />
-      </div>
+      <BuilderField innerProps={{ snapshot: {} }} component={component} Component={Component} {...rest} name={id} fields={items} />
     </SortableContainer>
   );
 }

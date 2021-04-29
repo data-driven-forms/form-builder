@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import DraggableSource from './draggable-source';
 import DropTarget from './drop-target';
-import PropertiesEditor from './properties-editor';
+import PropertiesEditor from './properties-editor/index';
 
 const Layout = ({ render, children }) => {
   const layoutProps = {

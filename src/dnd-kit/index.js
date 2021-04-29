@@ -4,11 +4,21 @@ import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import Form from '@data-driven-forms/react-form-renderer/form';
 import RendererContext from '@data-driven-forms/react-form-renderer/renderer-context';
 import React, { useReducer } from 'react';
-import backend, { addItem, initialState, setActiveId, setSelectedComponent, sortItems } from './backend';
+import backend, {
+  addItem,
+  initialState,
+  removeComponent,
+  setActiveId,
+  setFieldProperty,
+  setFieldValidator,
+  setSelectedComponent,
+  sortItems,
+} from './backend';
 import { BuilderProvider } from './builder-context';
 import BuilderLayout from './builder-layout';
+import validatorTypes from '@data-driven-forms/react-form-renderer/validator-types';
 
-const DndKit = ({ components, pickerMapper, children, render, componentMapper, builderMapper }) => {
+const DndKit = ({ components, pickerMapper, children, render, componentMapper, builderMapper, componentProperties, propertiesMapper }) => {
   const [{ templates, containers, fields, selectedComponent }, dispatch] = useReducer(backend, {
     ...initialState,
     templates: components.reduce((acc, curr) => ({ ...acc, [`template-${curr.component}`]: { ...curr, id: `template-${curr.component}` } }), {}),
@@ -23,6 +33,9 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper, b
   const bindSetActiveId = (id) => dispatch(setActiveId(id));
   const bindSortItems = (...args) => dispatch(sortItems(...args));
   const bindetSelectedComponent = (id) => dispatch(setSelectedComponent(id));
+  const bindRemoveComponent = (id) => dispatch(removeComponent(id));
+  const bindSetFieldProperty = (id, propertyName, value, dataType) => dispatch(setFieldProperty(id, propertyName, value, dataType));
+  const bindSetFieldValidator = (id, value, index, action) => dispatch(setFieldValidator(id, value, index, action));
 
   const handleDragStart = (event) => {
     const { active } = event;
@@ -46,7 +59,16 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper, b
     <Form onSubmit={() => undefined}>
       {() => (
         <RendererContext.Provider
-          value={{ formOptions: { internalRegisterField: () => null, renderForm: () => null, internalUnRegisterField: () => null } }}
+          value={{
+            validatorMapper: Object.values(validatorTypes).reduce(
+              (acc, curr) => ({
+                ...acc,
+                [curr]: () => () => undefined,
+              }),
+              {}
+            ),
+            formOptions: { internalRegisterField: () => null, renderForm: () => null, internalUnRegisterField: () => null },
+          }}
         >
           <BuilderProvider
             value={{
@@ -58,6 +80,11 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper, b
               fields,
               pickerMapper,
               componentMapper,
+              componentProperties,
+              propertiesMapper,
+              removeComponent: bindRemoveComponent,
+              setFieldProperty: bindSetFieldProperty,
+              setFieldValidator: bindSetFieldValidator,
             }}
           >
             <DndContext sensors={sensors} collisionDetection={rectIntersection} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
@@ -79,6 +106,16 @@ DndKit.propTypes = {
   render: PropTypes.func,
   componentMapper: PropTypes.shape({ [PropTypes.string]: PropTypes.elementType }).isRequired,
   builderMapper: PropTypes.shape({ [PropTypes.string]: PropTypes.elementType }).isRequired,
+  componentProperties: PropTypes.shape({
+    attributes: PropTypes.arrayOf(
+      PropTypes.shape({
+        component: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired,
+        propertyName: PropTypes.string.isRequired,
+      })
+    ),
+  }).isRequired,
+  propertiesMapper: PropTypes.object.isRequired,
 };
 
 export default DndKit;

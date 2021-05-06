@@ -70,7 +70,7 @@ const componentProperties = {
   [componentTypes.DATE_PICKER]: {
     attributes: [LABEL, TODAY_BUTTON_LABEL, IS_CLEARABLE, CLOSE_ON_DAY_SELECT, SHOW_TODAY_BUTTON, HIDE_FIELD],
   },
-  [componentTypes.PLAIN_TEXT]: { attributes: [MULTI_LINE_LABEL], disableInitialValue: true, disableValidators: true },
+  [componentTypes.PLAIN_TEXT]: { attributes: [MULTI_LINE_LABEL] },
   [componentTypes.RADIO]: { attributes: [LABEL, IS_DISABLED, OPTIONS, HIDE_FIELD] },
   [componentTypes.SWITCH]: {
     attributes: [LABEL, IS_READ_ONLY, IS_DISABLED, HIDE_FIELD],

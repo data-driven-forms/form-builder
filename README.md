@@ -203,9 +203,13 @@ A component corresponding to a key in properties mapper.
 
 Disables validator selection in `PropertiesEditor`.
 
+Automatically disabled in fields that are not registered in the form state.
+
 ### disableInitialValue
 
 Disables initial value field in `PropertiesEditor`.
+
+Automatically disabled in fields that are not registered in the form state.
 
 ### Example
 

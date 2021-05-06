@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect, Fragment } from 'react';
 import { validatorTypes } from '@data-driven-forms/react-form-renderer';
+import { useForm } from 'react-final-form';
 import ComponentsContext from '../components-context';
 import validatorsProperties from '../validators-properties';
 import MemoizedProperty from './memoized-property';
@@ -18,6 +19,7 @@ const checkRequiredDisabled = (field) => {
 };
 
 const PropertiesEditor = () => {
+  const form = useForm();
   const dispatch = useDispatch();
   const selectedComponent = useSelector(({ selectedComponent }) => selectedComponent, shallowEqual);
   const { field, dropTargets } = useSelector(
@@ -47,9 +49,12 @@ const PropertiesEditor = () => {
   if (!selectedComponent) {
     return null;
   }
+  const registeredFields = form?.getRegisteredFields();
+  const interactiveField = registeredFields.includes(field.name);
+
   const properties = componentProperties[field.component].attributes;
-  const disableInitialValue = componentProperties[field.component].disableInitialValue;
-  const disableValidators = componentProperties[field.component].disableValidators;
+  const disableInitialValue = !interactiveField || componentProperties[field.component].disableInitialValue;
+  const disableValidators = !interactiveField || componentProperties[field.component].disableValidators;
 
   const validate = field.validate || [];
   const NameComponent = propertiesMapper.input;

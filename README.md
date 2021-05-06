@@ -220,7 +220,7 @@ const componentProperties = {
     [componentTypes.TEXT_FIELD]: {
         attributes: [LABEL, IS_REQUIRED]
     },
-    [componentTypes.TEXT_FIELD]: {
+    [componentTypes.PLAIN_TEXT]: {
         attributes: [LABEL],
         disableValidators: true,
         disableInitialValue: true

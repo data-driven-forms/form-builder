@@ -30,9 +30,12 @@ This component allows to build [Data Driven Forms](https://github.com/data-drive
     - [DragHandle](#draghandle)
     - [EmptyTarget](#emptytarget)
   - [componentProperties](#componentproperties)
-    - [propertyName](#propertyname)
-    - [label](#label)
-    - [component](#component)
+    - [attributes](#attributes)
+      - [propertyName](#propertyname)
+      - [label](#label)
+      - [component](#component)
+    - [disableValidators](#disablevalidators)
+    - [disableInitialValue](#disableinitialvalue)
     - [Example](#example)
   - [pickerMapper](#pickermapper)
   - [propertiesMapper](#propertiesmapper)
@@ -175,23 +178,34 @@ EmptyTarget is shown when there are no fields created.
 
 A mapper of editable properties for each component. A property is a object with following attributes:
 
-### propertyName
+### attributes
+
+Editable attributes of the component.
+#### propertyName
 
 *string*
 
 Corresponds to an attribute in the schema.
 
-### label
+#### label
 
 *string*
 
 A label shown for the property in the editor.
 
-### component
+#### component
 
 *string*
 
 A component corresponding to a key in properties mapper.
+
+### disableValidators
+
+Disables validator selection in `PropertiesEditor`.
+
+### disableInitialValue
+
+Disables initial value field in `PropertiesEditor`.
 
 ### Example
 
@@ -205,6 +219,11 @@ const LABEL = {
 const componentProperties = {
     [componentTypes.TEXT_FIELD]: {
         attributes: [LABEL, IS_REQUIRED]
+    },
+    [componentTypes.TEXT_FIELD]: {
+        attributes: [LABEL],
+        disableValidators: true,
+        disableInitialValue: true
     }
 }
 ```

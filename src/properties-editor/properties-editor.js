@@ -48,6 +48,9 @@ const PropertiesEditor = () => {
     return null;
   }
   const properties = componentProperties[field.component].attributes;
+  const disableInitialValue = componentProperties[field.component].disableInitialValue;
+  const disableValidators = componentProperties[field.component].disableValidators;
+
   const validate = field.validate || [];
   const NameComponent = propertiesMapper.input;
   const InitialValueComponent = propertiesMapper.input;
@@ -84,7 +87,7 @@ const PropertiesEditor = () => {
       <PropertiesEditor
         fieldName={field.name}
         hasPropertyError={hasPropertyError}
-        avaiableValidators={validatorOptions}
+        avaiableValidators={disableValidators ? [] : validatorOptions}
         addValidator={(type) => handleValidatorChange({ type }, 'add')}
         handleClose={() => dispatch({ type: SET_SELECTED_COMPONENT })}
         handleDelete={
@@ -96,6 +99,8 @@ const PropertiesEditor = () => {
                 })
             : undefined
         }
+        disableInitialValue={disableInitialValue}
+        disableValidators={disableValidators}
         propertiesChildren={
           <Fragment>
             <MemoizedProperty
@@ -106,13 +111,15 @@ const PropertiesEditor = () => {
               handlePropertyChange={handlePropertyChange}
               label="Name"
             />
-            <MemoizedProperty
-              label="Initial value"
-              type="text"
-              Component={InitialValueComponent}
-              handlePropertyChange={handlePropertyChange}
-              property={{ propertyName: 'initialValue' }}
-            />
+            {!disableInitialValue && (
+              <MemoizedProperty
+                label="Initial value"
+                type="text"
+                Component={InitialValueComponent}
+                handlePropertyChange={handlePropertyChange}
+                property={{ propertyName: 'initialValue' }}
+              />
+            )}
             {properties.map((property) => {
               const Component = propertiesMapper[property.component];
               return (
@@ -128,63 +135,65 @@ const PropertiesEditor = () => {
           </Fragment>
         }
         validationChildren={
-          <Fragment>
-            <PropertyGroup title="required validator">
-              <IsRequiredComponent
-                value={field.isRequired}
-                label="Required"
-                fieldId="required-validator"
-                isDisabled={requiredDisabled}
-                innerProps={{}}
-                onChange={(value) =>
-                  handleValidatorChange(
-                    {
-                      type: validatorTypes.REQUIRED,
-                    },
-                    value ? 'add' : 'remove',
-                    requiredIndex
-                  )
-                }
-              />
-              {field.isRequired && (
-                <MessageComponent
-                  label="Message"
-                  fieldId="required-message"
+          disableValidators ? null : (
+            <Fragment>
+              <PropertyGroup title="required validator">
+                <IsRequiredComponent
+                  value={field.isRequired}
+                  label="Required"
+                  fieldId="required-validator"
+                  isDisabled={requiredDisabled}
                   innerProps={{}}
-                  value={validate.find(({ type }) => type === validatorTypes.REQUIRED).message || ''}
                   onChange={(value) =>
                     handleValidatorChange(
                       {
-                        message: value,
+                        type: validatorTypes.REQUIRED,
                       },
-                      'modify',
+                      value ? 'add' : 'remove',
                       requiredIndex
                     )
                   }
                 />
+                {field.isRequired && (
+                  <MessageComponent
+                    label="Message"
+                    fieldId="required-message"
+                    innerProps={{}}
+                    value={validate.find(({ type }) => type === validatorTypes.REQUIRED).message || ''}
+                    onChange={(value) =>
+                      handleValidatorChange(
+                        {
+                          message: value,
+                        },
+                        'modify',
+                        requiredIndex
+                      )
+                    }
+                  />
+                )}
+              </PropertyGroup>
+              {validate.map(({ type, original, ...rest }, index) =>
+                type !== validatorTypes.REQUIRED ? (
+                  <PropertyGroup
+                    title={type.split('-').join(' ')}
+                    handleDelete={!original ? () => handleValidatorChange({}, 'remove', index) : undefined}
+                    key={`${type}-${index}`}
+                  >
+                    {validatorsProperties[type].map((property, propertyIndex) => (
+                      <MemoizedValidator
+                        key={propertyIndex}
+                        handleValidatorChange={handleValidatorChange}
+                        validator={rest}
+                        property={property}
+                        original={original}
+                        index={index}
+                      />
+                    ))}
+                  </PropertyGroup>
+                ) : null
               )}
-            </PropertyGroup>
-            {validate.map(({ type, original, ...rest }, index) =>
-              type !== validatorTypes.REQUIRED ? (
-                <PropertyGroup
-                  title={type.split('-').join(' ')}
-                  handleDelete={!original ? () => handleValidatorChange({}, 'remove', index) : undefined}
-                  key={`${type}-${index}`}
-                >
-                  {validatorsProperties[type].map((property, propertyIndex) => (
-                    <MemoizedValidator
-                      key={propertyIndex}
-                      handleValidatorChange={handleValidatorChange}
-                      validator={rest}
-                      property={property}
-                      original={original}
-                      index={index}
-                    />
-                  ))}
-                </PropertyGroup>
-              ) : null
-            )}
-          </Fragment>
+            </Fragment>
+          )
         }
       />
       {debug && <pre>{JSON.stringify(field, null, 2)}</pre>}

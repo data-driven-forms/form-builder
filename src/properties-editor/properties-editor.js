@@ -50,7 +50,7 @@ const PropertiesEditor = () => {
     return null;
   }
   const registeredFields = form?.getRegisteredFields();
-  const interactiveField = registeredFields.includes(field.name);
+  const interactiveField = registeredFields.includes(field.name || field.id);
 
   const properties = componentProperties[field.component].attributes;
   const disableInitialValue = !interactiveField || componentProperties[field.component].disableInitialValue;

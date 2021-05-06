@@ -2,11 +2,16 @@ import React from 'react';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import { validatorTypes } from '@data-driven-forms/react-form-renderer';
+import { validatorTypes, Form, useFieldApi, RendererContext } from '@data-driven-forms/react-form-renderer';
 
 import PropertiesEditor from '../../properties-editor';
 import ComponentsContext from '../../components-context';
 import { SET_SELECTED_COMPONENT, REMOVE_COMPONENT } from '../../builder-store/builder-reducer';
+
+const Field = (props) => {
+  useFieldApi(props);
+  return null;
+};
 
 const AddValidatorComponent = ({ addValidator }) => (
   <button id="add" onClick={() => addValidator(validatorTypes.MIN_LENGTH)}>
@@ -47,34 +52,43 @@ const Switch = ({ value, onChange, fieldId, isDisabled }) => (
 );
 
 const ComponentWrapper = ({ store, ...props }) => (
-  <Provider store={store}>
-    <ComponentsContext.Provider
-      value={{
-        componentProperties: {
-          'text-field': {
-            attributes: [
-              {
-                propertyName: 'label',
-                component: 'input',
-                label: 'Label',
+  <Form onSubmit={jest.fn()}>
+    {() => (
+      <Provider store={store}>
+        <RendererContext.Provider
+          value={{ formOptions: { internalRegisterField: () => null, renderForm: () => null, internalUnRegisterField: () => null } }}
+        >
+          <Field name="selected-component" />
+        </RendererContext.Provider>
+        <ComponentsContext.Provider
+          value={{
+            componentProperties: {
+              'text-field': {
+                attributes: [
+                  {
+                    propertyName: 'label',
+                    component: 'input',
+                    label: 'Label',
+                  },
+                ],
               },
-            ],
-          },
-        },
-        builderMapper: {
-          PropertiesEditor: PropertiesEditorWrapper,
-          PropertyGroup,
-        },
-        propertiesMapper: {
-          input: TextField,
-          switch: Switch,
-        },
-        debug: true,
-      }}
-    >
-      <PropertiesEditor {...props} />
-    </ComponentsContext.Provider>
-  </Provider>
+            },
+            builderMapper: {
+              PropertiesEditor: PropertiesEditorWrapper,
+              PropertyGroup,
+            },
+            propertiesMapper: {
+              input: TextField,
+              switch: Switch,
+            },
+            debug: true,
+          }}
+        >
+          <PropertiesEditor {...props} />
+        </ComponentsContext.Provider>
+      </Provider>
+    )}
+  </Form>
 );
 
 describe('<PropertiesEditor />', () => {
@@ -83,6 +97,7 @@ describe('<PropertiesEditor />', () => {
     fields: {
       'selected-component': {
         id: 'selected-component-id',
+        name: 'selected-component',
         component: 'text-field',
         isRequired: true,
         validate: [{ type: 'required' }],
@@ -110,6 +125,25 @@ describe('<PropertiesEditor />', () => {
     expect(wrapper.find(TextField).at(1).props().fieldId).toEqual('initialValue');
     expect(wrapper.find(TextField).at(2).props().fieldId).toEqual('label');
     expect(wrapper.find(TextField).at(3).props().fieldId).toEqual('required-message');
+  });
+
+  it('should set disableValidators and disableInitialValue when not field component', () => {
+    const initialStateNoFieldComponent = {
+      fields: {
+        'selected-component-second': {
+          id: 'selected-component-id',
+          name: 'selected-component-second',
+          component: 'text-field',
+        },
+      },
+      selectedComponent: 'selected-component-second',
+    };
+
+    const store = mockStore(initialStateNoFieldComponent);
+    const wrapper = mount(<ComponentWrapper store={store} />);
+
+    expect(wrapper.find(PropertiesEditorWrapper).prop('disableInitialValue')).toEqual(true);
+    expect(wrapper.find(PropertiesEditorWrapper).prop('disableValidators')).toEqual(true);
   });
 
   it('should add new validator to a list', () => {

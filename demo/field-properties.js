@@ -68,13 +68,13 @@ export const TODAY_BUTTON_LABEL = {
 export const MULTI_LINE_LABEL = {
   propertyName: 'label',
   label: 'Label',
-  component: 'textarea'
+  component: 'input'
 };
 
 export const TITLE = {
   propertyName: 'title',
   label: 'Title',
-  component: 'input'
+  component: 'textarea'
 };
 
 export const DESCRIPTION = {

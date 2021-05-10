@@ -171,7 +171,7 @@ const addNewItem = (state, { itemId, collisionId }) => {
       ...newState,
       fields: {
         ...newState.fields,
-        [nestedContainer]: { ...initialChild, name: 'first-tab' },
+        [nestedContainer]: { ...initialChild, id: nestedContainer, name: 'first-tab' },
       },
       ...(newState.templates[!nestedTemplateName]
         ? {
@@ -317,8 +317,8 @@ const createContainerChild = (state, containerId) => {
   /**
    * NOTE come up with better naming than date number
    */
-  const newContainerField = { ...state.containers[containerId].childrenTemplate, name: `tab-item-${Date.now()}` };
   const newContainerFieldId = `${containerId}-nested-${Date.now()}`;
+  const newContainerField = { ...state.containers[containerId].childrenTemplate, id: newContainerFieldId, name: newContainerFieldId };
   return {
     ...state,
     fields: {

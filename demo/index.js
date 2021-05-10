@@ -116,8 +116,10 @@ const componentProperties = {
     isContainer: true,
     isNestedContainer: true,
     attributes: [],
-    nestedAttributes: [TITLE],
-    nestedTemplate: { title: 'Tab title' },
+    nestedTemplate: { component: 'tab-item', title: 'Tab title' },
+  },
+  'tab-item': {
+    attributes: [TITLE],
   },
 };
 

@@ -10,7 +10,7 @@ import { Fragment } from 'react';
 import BuilderContext from '../dnd-kit/builder-context';
 import { SortableContext, useSortable, arrayMove } from '@dnd-kit/sortable';
 
-const TabContent = ({ name, fields, formOptions }) => <Fragment key={name}>{formOptions.renderForm(fields, formOptions)}</Fragment>;
+const TabContent = ({ name, fields, formOptions, a11yProps }) => <Fragment key={name}>{formOptions.renderForm(fields, formOptions)}</Fragment>;
 
 const SortableTab = ({ name, title, internalId, ...props }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: internalId });
@@ -18,17 +18,13 @@ const SortableTab = ({ name, title, internalId, ...props }) => {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-  return (
-    <span {...attributes} style={style} {...listeners} ref={setNodeRef}>
-      <Tab key={name} label={title} {...props} />
-    </span>
-  );
+  return <Tab {...attributes} style={style} {...listeners} ref={setNodeRef} label={title} {...props} />;
 };
 
 const CustomTabs = (props) => {
   const [activeTab, setActiveTab] = useState(0);
   const formOptions = useFormApi();
-  const { fields: builderFields, setContainerChildren, addSubcontainer } = useContext(BuilderContext);
+  const { fields: builderFields, setContainerChildren, addSubcontainer, selectComponent } = useContext(BuilderContext);
   const sensors = useSensors(useSensor(PointerSensor));
 
   const handleDragEnd = (event) => {
@@ -46,18 +42,32 @@ const CustomTabs = (props) => {
   return (
     <div>
       <AppBar position="static" {...AppBarProps}>
-        <Tabs
-          value={activeTab}
-          onChange={(_e, tabIndex) => {
-            setActiveTab(tabIndex);
-          }}
-          {...TabsProps}
-        >
-          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={fields}>
-              {fields.map((field) => {
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={fields}>
+            <Tabs
+              value={activeTab}
+              onChange={(_e, tabIndex) => {
+                setActiveTab(tabIndex);
+              }}
+              {...TabsProps}
+            >
+              {fields.map((field, index) => {
                 const { title, name } = builderFields[field];
-                return <SortableTab key={name} name={name} label={title} internalId={field} {...TabProps} />;
+                return (
+                  <SortableTab
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      selectComponent(field);
+                    }}
+                    key={name}
+                    name={name}
+                    label={title}
+                    internalId={field}
+                    index={index}
+                    {...TabProps}
+                  />
+                );
               })}
               <Tab
                 key="add-tab"
@@ -68,18 +78,18 @@ const CustomTabs = (props) => {
                 }}
                 icon={<Add />}
               />
-            </SortableContext>
-          </DndContext>
-        </Tabs>
+            </Tabs>
+          </SortableContext>
+        </DndContext>
       </AppBar>
-      {/* {fields.map((field, index) => {
+      {fields.map((field, index) => {
         const data = builderFields[field];
         return (
           <div key={data.name} hidden={index !== activeTab}>
             <TabContent {...data} name={data.name} formOptions={formOptions} />
           </div>
         );
-      })} */}
+      })}
     </div>
   );
 };

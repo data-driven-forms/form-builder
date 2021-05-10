@@ -202,7 +202,6 @@ const ComponentWrapper = ({
   ...props
 }) => {
   const classes = useStyles();
-
   return (
     <div
       className={clsx(classes.componentWrapper, classes.componentWrapperOverlay, {

@@ -13,6 +13,7 @@ const SET_SELECTED_COMPONENT = 'SET_SELECTED_COMPONENT';
 const REMOVE_COMPONENT = 'REMOVE_COMPONENT';
 const SET_FIELD_PROPERTY = 'SET_FIELD_PROPERTY';
 const SET_FIELD_VALIDATOR = 'SET_FIELD_VALIDATOR';
+const SET_CONTAINER_CHILDREN = 'SET_CONTAINER_CHILDREN';
 
 export const initialState = {
   activeId: undefined,
@@ -79,6 +80,14 @@ export const setFieldValidator = (itemId, value, index, action) => ({
     itemId,
     index,
     action,
+  },
+});
+
+export const setContainerChildren = (containerId, callback) => ({
+  type: SET_CONTAINER_CHILDREN,
+  payload: {
+    containerId,
+    callback,
   },
 });
 
@@ -233,7 +242,6 @@ const changeFieldProperty = (field, { propertyName, value }) => ({
 });
 
 const changeValidator = (field, { index, action, itemId, ...validator }) => {
-  console.log(validator);
   const result = { ...field };
   const validate = result.validate || [];
   if (validator.type === validatorTypes.REQUIRED) {
@@ -313,6 +321,18 @@ const reducer = (state, action) => {
           [action.payload.itemId]: changeFieldProperty(state.fields[action.payload.itemId], action.payload),
         },
       };
+    case SET_CONTAINER_CHILDREN: {
+      return {
+        ...state,
+        containers: {
+          ...state.containers,
+          [action.payload.containerId]: {
+            ...state.containers[action.payload.containerId],
+            children: action.payload.callback(state.containers[action.payload.containerId].children),
+          },
+        },
+      };
+    }
     case SET_FIELD_VALIDATOR:
       return {
         ...state,

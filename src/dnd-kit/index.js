@@ -14,6 +14,7 @@ import backend, {
   setSelectedComponent,
   sortItems,
   setContainerChildren,
+  addSubcontainer,
 } from './backend';
 import { BuilderProvider } from './builder-context';
 import BuilderLayout from './builder-layout';
@@ -41,6 +42,7 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper, b
   const bindSetFieldProperty = (id, propertyName, value, dataType) => dispatch(setFieldProperty(id, propertyName, value, dataType));
   const bindSetFieldValidator = (id, value, index, action) => dispatch(setFieldValidator(id, value, index, action));
   const bindSetContainerChildren = (...args) => dispatch(setContainerChildren(...args));
+  const bindAddSubcontainer = (...args) => dispatch(addSubcontainer(...args));
 
   const handleDragStart = (event) => {
     const { active } = event;
@@ -95,6 +97,7 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper, b
               setFieldProperty: bindSetFieldProperty,
               setFieldValidator: bindSetFieldValidator,
               setContainerChildren: bindSetContainerChildren,
+              addSubcontainer: bindAddSubcontainer,
             }}
           >
             <DndContext sensors={sensors} collisionDetection={rectIntersection} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>

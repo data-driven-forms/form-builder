@@ -82,7 +82,7 @@ export const setFieldValidator = (itemId, value, index, action) => ({
   },
 });
 
-const addToContainer = (state, containerId, newId, collisionId, template) => {
+const addToContainer = (state, containerId, newId, collisionId, template, intialChildren = []) => {
   let position;
   if (collisionId.match(/^voidzone-(top|bot)/)) {
     if (collisionId.match(/^voidzone-top/)) {
@@ -101,7 +101,7 @@ const addToContainer = (state, containerId, newId, collisionId, template) => {
     },
     containers: {
       ...state.containers,
-      ...(template.isContainer ? { [newId]: { children: [] } } : {}),
+      ...(template.isContainer ? { [newId]: { children: intialChildren } } : {}),
       [containerId]: {
         ...state.containers[containerId],
         children: [...state.containers[containerId].children.slice(0, position), newId, ...state.containers[containerId].children.slice(position)],
@@ -135,25 +135,69 @@ const findInjection = (state, collisionId, selfContainer) => {
 const addNewItem = (state, { itemId, collisionId }) => {
   const newId = itemId.replace(/^template/, `field-${Date.now() + Math.random()}`);
   const template = { ...state.templates[itemId] };
-  template.id = newId;
-  if (collisionId === MAIN_CONTAINER) {
-    return {
-      ...state,
+  let newState = { ...state };
+  let nestedTemplateName;
+  let nestedContainer;
+  if (template.isNestedContainer) {
+    const initialChild = state.componentProperties[template.component].nestedTemplate;
+    nestedContainer = `${newId}-nested-0`;
+    let nestedTemplate;
+
+    nestedTemplate = {
+      isNestedTemplate: true,
+      isContainer: true,
+      component: nestedTemplateName,
+      id: nestedTemplateName,
+    };
+    newState = {
+      ...newState,
       fields: {
-        ...state.fields,
-        [newId]: template,
+        ...newState.fields,
+        [nestedContainer]: { ...initialChild, name: 'first-tab' },
       },
+      ...(newState.templates[!nestedTemplateName]
+        ? {
+            ...newState.templates,
+            [nestedTemplateName]: nestedTemplate,
+          }
+        : {}),
       containers: {
-        ...state.containers,
-        ...(template.isContainer ? { [newId]: { children: [] } } : {}),
-        [MAIN_CONTAINER]: {
-          ...state.containers[MAIN_CONTAINER],
-          children: [...state.containers[MAIN_CONTAINER].children, newId],
+        ...newState.containers,
+        [nestedContainer]: {
+          children: [],
+        },
+        nestedContainer2: {
+          children: [],
         },
       },
     };
   }
-  return addToContainer(state, findInjection(state, collisionId), newId, collisionId, template);
+  template.id = newId;
+  if (collisionId === MAIN_CONTAINER) {
+    return {
+      ...newState,
+      fields: {
+        ...newState.fields,
+        [newId]: template,
+      },
+      containers: {
+        ...newState.containers,
+        ...(template.isContainer ? { [newId]: { children: nestedContainer ? [nestedContainer] : [] } } : {}),
+        [MAIN_CONTAINER]: {
+          ...newState.containers[MAIN_CONTAINER],
+          children: [...newState.containers[MAIN_CONTAINER].children, newId],
+        },
+      },
+    };
+  }
+  return addToContainer(
+    newState,
+    findInjection(newState, collisionId),
+    newId,
+    collisionId,
+    template,
+    nestedContainer ? [nestedContainer] : undefined
+  );
 };
 
 const removeItem = (state, { itemId }) => {

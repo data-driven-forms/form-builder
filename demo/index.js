@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import FormBuilder from '../src/form-builder';
 
 import { componentMapper as pf4ComponentMapper } from '@data-driven-forms/pf4-component-mapper';
-import { componentMapper as muiComponentMapper } from '@data-driven-forms/mui-component-mapper';
+import muiComponentMapper from '../src/mui-builder-mappers/componentMapper';
 
 import {
   pickerMapper as muiPickerMapper,
@@ -111,6 +111,13 @@ const componentProperties = {
   },
   [componentTypes.SLIDER]: {
     attributes: [LABEL, HELPER_TEXT, DESCRIPTION, HIDE_FIELD, MIN, MAX, STEP],
+  },
+  [componentTypes.TABS]: {
+    isContainer: true,
+    isNestedContainer: true,
+    attributes: [],
+    nestedAttributes: [TITLE],
+    nestedTemplate: { title: 'Tab title' },
   },
 };
 
@@ -314,10 +321,15 @@ const Demo = () => {
   );
 };
 
+/**
+ * NOTE:
+ * Thinking about mergning available items and component properties objects into a single definitiom
+ */
 const avaiableItems = [
   { component: componentTypes.TEXT_FIELD },
   { component: componentTypes.SWITCH },
   { component: componentTypes.SUB_FORM, isContainer: true },
+  { component: componentTypes.TABS, isContainer: true, isNestedContainer: true },
 ];
 
 const DndKitDemo = () => {

@@ -24,6 +24,7 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper, b
   const [{ templates, containers, fields, selectedComponent }, dispatch] = useReducer(backend, {
     ...initialState,
     templates: components.reduce((acc, curr) => ({ ...acc, [`template-${curr.component}`]: { ...curr, id: `template-${curr.component}` } }), {}),
+    componentProperties,
   });
   const sensors = useSensors(
     useSensor(PointerSensor),

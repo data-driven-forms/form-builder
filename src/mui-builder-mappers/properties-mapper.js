@@ -29,15 +29,15 @@ Input.propTypes = {
   value: PropTypes.any,
   fieldId: PropTypes.string.isRequired,
   innerProps: PropTypes.shape({
-    propertyValidation: PropTypes.shape({ message: PropTypes.string })
+    propertyValidation: PropTypes.shape({ message: PropTypes.string }),
   }).isRequired,
   onChange: PropTypes.func,
-  isDisabled: PropTypes.bool
+  isDisabled: PropTypes.bool,
 };
 
 Input.defaultProps = {
   onChange: () => {},
-  value: ''
+  value: '',
 };
 
 const PropertySwitch = ({ label, value, fieldId, innerProps: { propertyValidation = {} }, helperText, onChange, isDisabled }) => (
@@ -59,15 +59,15 @@ PropertySwitch.propTypes = {
   value: PropTypes.any,
   fieldId: PropTypes.string.isRequired,
   innerProps: PropTypes.shape({
-    propertyValidation: PropTypes.shape({ message: PropTypes.string })
+    propertyValidation: PropTypes.shape({ message: PropTypes.string }),
   }).isRequired,
   onChange: PropTypes.func,
   isDisabled: PropTypes.bool,
-  helperText: PropTypes.node
+  helperText: PropTypes.node,
 };
 
 PropertySwitch.defaultProps = {
-  value: false
+  value: false,
 };
 
 const PropertySelect = ({ value, fieldId, onChange, innerProps: { propertyValidation = {} }, isDisabled, helperText, options, ...rest }) => (
@@ -95,34 +95,34 @@ PropertySelect.propTypes = {
   value: PropTypes.any,
   fieldId: PropTypes.string.isRequired,
   innerProps: PropTypes.shape({
-    propertyValidation: PropTypes.shape({ message: PropTypes.string })
+    propertyValidation: PropTypes.shape({ message: PropTypes.string }),
   }).isRequired,
   onChange: PropTypes.func,
   isDisabled: PropTypes.bool,
-  options: PropTypes.arrayOf(PropTypes.string)
+  options: PropTypes.arrayOf(PropTypes.string),
 };
 
 PropertySelect.defaultProps = {
   onChange: () => {},
-  options: []
+  options: [],
 };
 
 const useStyles = makeStyles(() => ({
   remove: {
     '&:hover': {
-      color: red[500]
-    }
+      color: red[500],
+    },
   },
   restore: {
     '&:hover': {
-      color: blue[500]
-    }
+      color: blue[500],
+    },
   },
   cell: {
     '&:not(:last-child)': {
-      'padding-right': 8
-    }
-  }
+      'padding-right': 8,
+    },
+  },
 }));
 
 const PropertyOptions = ({ value = [], label, onChange, innerProps: { restricted } }) => {
@@ -139,7 +139,7 @@ const PropertyOptions = ({ value = [], label, onChange, innerProps: { restricted
         itemIndex === index
           ? {
               ...item,
-              deleted: !item.deleted
+              deleted: !item.deleted,
             }
           : item
       );
@@ -155,7 +155,7 @@ const PropertyOptions = ({ value = [], label, onChange, innerProps: { restricted
         style={{
           display: 'flex',
           justifyContent: 'flex-start',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <FormLabel>{label}</FormLabel>
@@ -209,7 +209,7 @@ PropertyOptions.propTypes = {
   value: PropTypes.array,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  innerProps: PropTypes.shape({ restricted: PropTypes.bool }).isRequired
+  innerProps: PropTypes.shape({ restricted: PropTypes.bool }).isRequired,
 };
 
 const Textarea = (props) => <Input {...props} multiline />;
@@ -219,7 +219,7 @@ const propertiesMapper = {
   switch: PropertySwitch,
   select: PropertySelect,
   options: PropertyOptions,
-  textarea: Textarea
+  textarea: Textarea,
 };
 
 export default propertiesMapper;

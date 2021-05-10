@@ -6,7 +6,7 @@ import SortableItem from './sortable-item';
 import SortableContainer from './sortable-container';
 
 const ItemsRenderer = memo(
-  ({ items, containers, fields, componentMapper, FieldLayout, DragHandle, BuilderField }) => {
+  ({ items = [], containers, fields, componentMapper, FieldLayout, DragHandle, BuilderField }) => {
     return items.map((id) => {
       if (!fields[id]) {
         return null;
@@ -87,7 +87,11 @@ function ItemsRendererConnector({ items }) {
 }
 
 ItemsRendererConnector.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  items: PropTypes.arrayOf(PropTypes.string),
+};
+
+ItemsRendererConnector.defaultProps = {
+  items: [],
 };
 
 export default ItemsRendererConnector;

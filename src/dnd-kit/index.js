@@ -13,6 +13,8 @@ import backend, {
   setFieldValidator,
   setSelectedComponent,
   sortItems,
+  setContainerChildren,
+  addSubcontainer,
 } from './backend';
 import { BuilderProvider } from './builder-context';
 import BuilderLayout from './builder-layout';
@@ -24,6 +26,7 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper, b
   const [{ templates, containers, fields, selectedComponent }, dispatch] = useReducer(backend, {
     ...initialState,
     templates: components.reduce((acc, curr) => ({ ...acc, [`template-${curr.component}`]: { ...curr, id: `template-${curr.component}` } }), {}),
+    componentProperties,
   });
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -38,6 +41,8 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper, b
   const bindRemoveComponent = (id) => dispatch(removeComponent(id));
   const bindSetFieldProperty = (id, propertyName, value, dataType) => dispatch(setFieldProperty(id, propertyName, value, dataType));
   const bindSetFieldValidator = (id, value, index, action) => dispatch(setFieldValidator(id, value, index, action));
+  const bindSetContainerChildren = (...args) => dispatch(setContainerChildren(...args));
+  const bindAddSubcontainer = (...args) => dispatch(addSubcontainer(...args));
 
   const handleDragStart = (event) => {
     const { active } = event;
@@ -91,6 +96,8 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper, b
               removeComponent: bindRemoveComponent,
               setFieldProperty: bindSetFieldProperty,
               setFieldValidator: bindSetFieldValidator,
+              setContainerChildren: bindSetContainerChildren,
+              addSubcontainer: bindAddSubcontainer,
             }}
           >
             <DndContext sensors={sensors} collisionDetection={rectIntersection} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>

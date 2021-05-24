@@ -13,6 +13,8 @@ const SET_SELECTED_COMPONENT = 'SET_SELECTED_COMPONENT';
 const REMOVE_COMPONENT = 'REMOVE_COMPONENT';
 const SET_FIELD_PROPERTY = 'SET_FIELD_PROPERTY';
 const SET_FIELD_VALIDATOR = 'SET_FIELD_VALIDATOR';
+const SET_CONTAINER_CHILDREN = 'SET_CONTAINER_CHILDREN';
+const ADD_SUB_CONTAINER = 'ADD_SUB_CONTAINER';
 
 export const initialState = {
   activeId: undefined,
@@ -82,7 +84,22 @@ export const setFieldValidator = (itemId, value, index, action) => ({
   },
 });
 
-const addToContainer = (state, containerId, newId, collisionId, template) => {
+export const setContainerChildren = (containerId, callback) => ({
+  type: SET_CONTAINER_CHILDREN,
+  payload: {
+    containerId,
+    callback,
+  },
+});
+
+export const addSubcontainer = (containerId) => ({
+  type: ADD_SUB_CONTAINER,
+  payload: {
+    containerId,
+  },
+});
+
+const addToContainer = (state, containerId, newId, collisionId, template, intialChildren = [], initialChild) => {
   let position;
   if (collisionId.match(/^voidzone-(top|bot)/)) {
     if (collisionId.match(/^voidzone-top/)) {
@@ -101,7 +118,7 @@ const addToContainer = (state, containerId, newId, collisionId, template) => {
     },
     containers: {
       ...state.containers,
-      ...(template.isContainer ? { [newId]: { children: [] } } : {}),
+      ...(template.isContainer ? { [newId]: { children: intialChildren, childrenTemplate: initialChild } } : {}),
       [containerId]: {
         ...state.containers[containerId],
         children: [...state.containers[containerId].children.slice(0, position), newId, ...state.containers[containerId].children.slice(position)],
@@ -135,25 +152,75 @@ const findInjection = (state, collisionId, selfContainer) => {
 const addNewItem = (state, { itemId, collisionId }) => {
   const newId = itemId.replace(/^template/, `field-${Date.now() + Math.random()}`);
   const template = { ...state.templates[itemId] };
-  template.id = newId;
-  if (collisionId === MAIN_CONTAINER) {
-    return {
-      ...state,
+  let newState = { ...state };
+  let nestedTemplateName;
+  let nestedContainer;
+  let initialChild;
+  if (template.isNestedContainer) {
+    initialChild = state.componentProperties[template.component].nestedTemplate;
+    nestedContainer = `${newId}-nested-0`;
+    let nestedTemplate;
+
+    nestedTemplate = {
+      isNestedTemplate: true,
+      isContainer: true,
+      component: nestedTemplateName,
+      id: nestedTemplateName,
+    };
+    newState = {
+      ...newState,
       fields: {
-        ...state.fields,
-        [newId]: template,
+        ...newState.fields,
+        [nestedContainer]: { ...initialChild, id: nestedContainer, name: 'first-tab' },
       },
+      ...(newState.templates[!nestedTemplateName]
+        ? {
+            ...newState.templates,
+            [nestedTemplateName]: nestedTemplate,
+          }
+        : {}),
       containers: {
-        ...state.containers,
-        ...(template.isContainer ? { [newId]: { children: [] } } : {}),
-        [MAIN_CONTAINER]: {
-          ...state.containers[MAIN_CONTAINER],
-          children: [...state.containers[MAIN_CONTAINER].children, newId],
+        ...newState.containers,
+        [nestedContainer]: {
+          children: [],
         },
       },
     };
   }
-  return addToContainer(state, findInjection(state, collisionId), newId, collisionId, template);
+  template.id = newId;
+  if (collisionId === MAIN_CONTAINER) {
+    return {
+      ...newState,
+      fields: {
+        ...newState.fields,
+        [newId]: template,
+      },
+      containers: {
+        ...newState.containers,
+        ...(template.isContainer
+          ? {
+              [newId]: {
+                childrenTemplate: initialChild,
+                children: nestedContainer ? [nestedContainer] : [],
+              },
+            }
+          : {}),
+        [MAIN_CONTAINER]: {
+          ...newState.containers[MAIN_CONTAINER],
+          children: [...newState.containers[MAIN_CONTAINER].children, newId],
+        },
+      },
+    };
+  }
+  return addToContainer(
+    newState,
+    findInjection(newState, collisionId),
+    newId,
+    collisionId,
+    template,
+    nestedContainer ? [nestedContainer] : undefined,
+    initialChild
+  );
 };
 
 const removeItem = (state, { itemId }) => {
@@ -189,7 +256,6 @@ const changeFieldProperty = (field, { propertyName, value }) => ({
 });
 
 const changeValidator = (field, { index, action, itemId, ...validator }) => {
-  console.log(validator);
   const result = { ...field };
   const validate = result.validate || [];
   if (validator.type === validatorTypes.REQUIRED) {
@@ -247,6 +313,31 @@ const sortTreeItems = (state, { itemId, collisionId }) => {
   }
 };
 
+const createContainerChild = (state, containerId) => {
+  /**
+   * NOTE come up with better naming than date number
+   */
+  const newContainerFieldId = `${containerId}-nested-${Date.now()}`;
+  const newContainerField = { ...state.containers[containerId].childrenTemplate, id: newContainerFieldId, name: newContainerFieldId };
+  return {
+    ...state,
+    fields: {
+      ...state.fields,
+      [newContainerFieldId]: newContainerField,
+    },
+    containers: {
+      ...state.containers,
+      [newContainerFieldId]: {
+        children: [],
+      },
+      [containerId]: {
+        ...state.containers[containerId],
+        children: [...state.containers[containerId].children, newContainerFieldId],
+      },
+    },
+  };
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case SET_ACTIVE_ID:
@@ -269,6 +360,20 @@ const reducer = (state, action) => {
           [action.payload.itemId]: changeFieldProperty(state.fields[action.payload.itemId], action.payload),
         },
       };
+    case SET_CONTAINER_CHILDREN: {
+      return {
+        ...state,
+        containers: {
+          ...state.containers,
+          [action.payload.containerId]: {
+            ...state.containers[action.payload.containerId],
+            children: action.payload.callback(state.containers[action.payload.containerId].children),
+          },
+        },
+      };
+    }
+    case ADD_SUB_CONTAINER:
+      return createContainerChild(state, action.payload.containerId);
     case SET_FIELD_VALIDATOR:
       return {
         ...state,

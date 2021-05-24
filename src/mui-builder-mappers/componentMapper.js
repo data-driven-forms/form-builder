@@ -13,7 +13,7 @@ import BuilderContext from '../dnd-kit/builder-context';
 import SortableContainer from '../dnd-kit/sortable-container';
 
 const TabContent = ({ name, id, fields, formOptions, a11yProps }) => (
-  <SortableContainer id={id}>
+  <SortableContainer disableDrag id={id}>
     <div style={{ minHeight: 50 }}>{fields?.length > 0 ? formOptions.renderForm(fields, formOptions) : <div>There will be drop zone</div>}</div>
   </SortableContainer>
 );

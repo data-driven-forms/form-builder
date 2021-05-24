@@ -7,7 +7,7 @@ import { Fragment } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import BuilderContext from './builder-context';
 
-const SortableContainer = ({ id, isActive, style, children }) => {
+const SortableContainer = ({ disableDrag, id, isActive, style, children }) => {
   const {
     selectComponent,
     selectedComponent,
@@ -59,7 +59,7 @@ const SortableContainer = ({ id, isActive, style, children }) => {
         </div>
         <div id={`voidzone-bot-${id}`} ref={botSetNodeRef} style={voidzoneStyle}></div>
       </div>
-      <DragHandle dragHandleProps={listeners} />
+      {!disableDrag && <DragHandle dragHandleProps={listeners} />}
     </ContainerLayout>
   );
 };

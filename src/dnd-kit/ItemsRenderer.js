@@ -52,7 +52,7 @@ function SingleItem({ id, isContainer, containers, Component, BuilderField, comp
 
   const items = containers[id].children;
   return (
-    <SortableContainer id={id}>
+    <SortableContainer disableDrop={rest.isNestedContainer} id={id}>
       <BuilderField innerProps={{ snapshot: {} }} component={component} Component={Component} {...rest} name={id} fields={items} />
     </SortableContainer>
   );

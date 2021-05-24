@@ -7,14 +7,15 @@ import { Fragment } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import BuilderContext from './builder-context';
 
-const SortableContainer = ({ disableDrag, id, isActive, style, children }) => {
+const SortableContainer = ({ disableDrag, disableDrop, id, isActive, style, children }) => {
   const {
     selectComponent,
     selectedComponent,
     builderMapper: { DragHandle, ContainerLayout },
   } = useContext(BuilderContext);
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id, disabled: disableDrag });
   const { isOver, setNodeRef: droppablSetNodeRef } = useDroppable({
+    disabled: disableDrop,
     id,
   });
   const { isOver: topIsOver, setNodeRef: topSetNodeRef } = useSortable({

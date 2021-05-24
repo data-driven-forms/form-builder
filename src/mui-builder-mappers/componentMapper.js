@@ -7,10 +7,16 @@ import useFormApi from '@data-driven-forms/react-form-renderer/use-form-api';
 import { AppBar, Tab, Tabs } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { Fragment } from 'react';
-import BuilderContext from '../dnd-kit/builder-context';
 import { SortableContext, useSortable, arrayMove } from '@dnd-kit/sortable';
 
-const TabContent = ({ name, fields, formOptions, a11yProps }) => <Fragment key={name}>{formOptions.renderForm(fields, formOptions)}</Fragment>;
+import BuilderContext from '../dnd-kit/builder-context';
+import SortableContainer from '../dnd-kit/sortable-container';
+
+const TabContent = ({ name, id, fields, formOptions, a11yProps }) => (
+  <SortableContainer id={id}>
+    <div style={{ minHeight: 50 }}>{fields?.length > 0 ? formOptions.renderForm(fields, formOptions) : <div>There will be drop zone</div>}</div>
+  </SortableContainer>
+);
 
 const SortableTab = ({ name, title, internalId, ...props }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: internalId });
@@ -24,7 +30,7 @@ const SortableTab = ({ name, title, internalId, ...props }) => {
 const CustomTabs = (props) => {
   const [activeTab, setActiveTab] = useState(0);
   const formOptions = useFormApi();
-  const { fields: builderFields, setContainerChildren, addSubcontainer, selectComponent } = useContext(BuilderContext);
+  const { fields: builderFields, setContainerChildren, addSubcontainer, selectComponent, containers } = useContext(BuilderContext);
   const sensors = useSensors(useSensor(PointerSensor));
 
   const handleDragEnd = (event) => {
@@ -40,7 +46,7 @@ const CustomTabs = (props) => {
 
   const { fields = [], name, AppBarProps, TabProps, TabsProps } = props;
   return (
-    <div>
+    <div style={{ width: '100%' }} onClick={() => selectComponent(name)}>
       <AppBar position="static" {...AppBarProps}>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={fields}>
@@ -71,7 +77,6 @@ const CustomTabs = (props) => {
               })}
               <Tab
                 key="add-tab"
-                label="Add tab"
                 onClick={(event) => {
                   event.stopPropagation();
                   addSubcontainer(name);
@@ -84,9 +89,10 @@ const CustomTabs = (props) => {
       </AppBar>
       {fields.map((field, index) => {
         const data = builderFields[field];
+        const { children } = containers[field];
         return (
           <div key={data.name} hidden={index !== activeTab}>
-            <TabContent {...data} name={data.name} formOptions={formOptions} />
+            <TabContent {...data} fields={children} name={data.name} formOptions={formOptions} />
           </div>
         );
       })}

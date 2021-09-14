@@ -6,12 +6,12 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%'
+    height: '100%',
   },
   builderLayout: {
     display: 'flex',
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 });
 
 const BuilderTemplate = ({ ComponentPicker, PropertiesEditor, DropTarget, children }) => {
@@ -32,7 +32,7 @@ BuilderTemplate.propTypes = {
   ComponentPicker: PropTypes.func.isRequired,
   PropertiesEditor: PropTypes.func.isRequired,
   DropTarget: PropTypes.func.isRequired,
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)])
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
 };
 
 export default BuilderTemplate;

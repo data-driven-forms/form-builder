@@ -17,17 +17,17 @@ import { builderComponentTypes } from '../constants';
 const useStyles = makeStyles(() => ({
   root: {
     '& > *': {
-      'margin-bottom': 8
-    }
+      'margin-bottom': 8,
+    },
   },
   label: {
-    justifyContent: 'end'
+    justifyContent: 'end',
   },
   buttonRoot: {
     pointerEvents: 'none',
     backgroundImage: 'linear-gradient(135deg, #41108E 0%, rgba(165, 37, 193, 1) 44.76%, #FC9957 100%)',
-    backgroundRepeat: 'no-repeat'
-  }
+    backgroundRepeat: 'no-repeat',
+  },
 }));
 
 const labels = {
@@ -41,7 +41,7 @@ const labels = {
   [componentTypes.TEXTAREA]: 'Textarea',
   [componentTypes.SUB_FORM]: 'Sub form',
   [componentTypes.DUAL_LIST_SELECT]: 'Dual list select',
-  [componentTypes.SLIDER]: 'Slider'
+  [componentTypes.SLIDER]: 'Slider',
 };
 
 const icons = {
@@ -55,7 +55,7 @@ const icons = {
   [componentTypes.SWITCH]: <ToggleOffIcon />,
   [componentTypes.TEXTAREA]: <TextFieldsIcon />,
   [componentTypes.SUB_FORM]: null,
-  [componentTypes.SLIDER]: <TuneIcon />
+  [componentTypes.SLIDER]: <TuneIcon />,
 };
 
 const PickerRoot = ({ component }) => {
@@ -69,7 +69,7 @@ const PickerRoot = ({ component }) => {
         tabIndex={-1}
         classes={{
           label: classes.label,
-          root: classes.buttonRoot
+          root: classes.buttonRoot,
         }}
         color="primary"
         fullWidth
@@ -81,11 +81,11 @@ const PickerRoot = ({ component }) => {
 };
 
 PickerRoot.propTypes = {
-  component: PropTypes.string.isRequired
+  component: PropTypes.string.isRequired,
 };
 
 const pickerMapper = {
-  [builderComponentTypes.PICKER_FIELD]: PickerRoot
+  [builderComponentTypes.PICKER_FIELD]: PickerRoot,
 };
 
 export default pickerMapper;

@@ -16,6 +16,13 @@ This component allows to build [Data Driven Forms](https://github.com/data-drive
 
 - [FormBuilder](#formbuilder)
 - [Installation](#installation)
+- [Development](#development)
+  - [Requirements](#requirements)
+  - [Install with yarn](#install-with-yarn)
+  - [Start the playground](#start-the-playground)
+  - [Lint](#lint)
+  - [Tests](#tests)
+  - [Build](#build)
 - [Usage](#usage)
 - [Props](#props)
   - [render or children](#render-or-children)
@@ -59,6 +66,41 @@ This component allows to build [Data Driven Forms](https://github.com/data-drive
 or
 
 `yarn add @data-driven-forms/form-builder`
+
+# Development
+
+## Requirements
+
+- UNIX like system (Linux, MacOS)
+- Node 12+
+
+## Install with yarn
+
+`yarn`
+
+## Start the playground
+
+`yarn start`
+
+Running on `http://localhost:8080/`
+
+## Lint
+
+`yarn lint`
+
+For automatic fix: `yarn lint --fix`
+
+## Tests
+
+`yarn test`
+
+For watching changes: `yarn test --watchAll`
+
+## Build
+
+`yarn build`
+
+To clean built files: `yarn clean-build`. This is also done automatically before `build`.
 
 # Usage
 

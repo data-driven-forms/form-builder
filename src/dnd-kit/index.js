@@ -1,4 +1,4 @@
-import { DndContext, KeyboardSensor, PointerSensor, rectIntersection, useSensor, useSensors } from '@dnd-kit/core';
+import { DndContext, KeyboardSensor, PointerSensor, closestCorners, rectIntersection, useSensor, useSensors } from '@dnd-kit/core';
 import PropTypes from 'prop-types';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import Form from '@data-driven-forms/react-form-renderer/form';
@@ -100,7 +100,23 @@ const DndKit = ({ components, pickerMapper, children, render, componentMapper, b
               addSubcontainer: bindAddSubcontainer,
             }}
           >
-            <DndContext sensors={sensors} collisionDetection={rectIntersection} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={(rects, rect) => {
+                const trashRect = rects.filter(([id]) => id === 'trash');
+                const intersectingTrashRect = rectIntersection(trashRect, rect);
+
+                if (intersectingTrashRect) {
+                  return intersectingTrashRect;
+                }
+
+                const otherRects = rects.filter(([id]) => id !== 'trash');
+
+                return closestCorners(otherRects, rect);
+              }}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+            >
               <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <BuilderLayout render={render}>{children}</BuilderLayout>
               </div>

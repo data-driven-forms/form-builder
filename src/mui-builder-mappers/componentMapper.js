@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import { DndContext, PointerSensor, useSensor, useSensors, closestCenter } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import muiComponentMapper from '@data-driven-forms/mui-component-mapper/component-mapper';
@@ -6,17 +7,22 @@ import componentTypes from '@data-driven-forms/react-form-renderer/component-typ
 import useFormApi from '@data-driven-forms/react-form-renderer/use-form-api';
 import { AppBar, Tab, Tabs } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import { Fragment } from 'react';
 import { SortableContext, useSortable, arrayMove } from '@dnd-kit/sortable';
 
 import BuilderContext from '../dnd-kit/builder-context';
 import SortableContainer from '../dnd-kit/sortable-container';
 
-const TabContent = ({ name, id, fields, formOptions, a11yProps }) => (
+const TabContent = ({ id, fields, formOptions }) => (
   <SortableContainer disableDrag id={id}>
     <div style={{ minHeight: 50 }}>{fields?.length > 0 ? formOptions.renderForm(fields, formOptions) : <div>There will be drop zone</div>}</div>
   </SortableContainer>
 );
+
+TabContent.propTypes = {
+  id: PropTypes.string,
+  fields: PropTypes.array,
+  formOptions: PropTypes.object,
+};
 
 const SortableTab = ({ name, title, internalId, ...props }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: internalId });
@@ -25,6 +31,12 @@ const SortableTab = ({ name, title, internalId, ...props }) => {
     transition,
   };
   return <Tab {...attributes} style={style} {...listeners} ref={setNodeRef} label={title} {...props} />;
+};
+
+SortableTab.propTypes = {
+  name: PropTypes.string,
+  internalId: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const CustomTabs = (props) => {
@@ -98,6 +110,14 @@ const CustomTabs = (props) => {
       })}
     </div>
   );
+};
+
+CustomTabs.propTypes = {
+  fields: PropTypes.array,
+  name: PropTypes.string,
+  AppBarProps: PropTypes.object,
+  TabProps: PropTypes.object,
+  TabsProps: PropTypes.object,
 };
 
 const componentMapper = {

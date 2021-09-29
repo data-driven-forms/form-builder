@@ -39,6 +39,8 @@ ItemsRenderer.propTypes = {
   }).isRequired,
   componentMapper: PropTypes.shape({ [PropTypes.string]: PropTypes.elementType }).isRequired,
   BuilderField: PropTypes.elementType.isRequired,
+  FieldLayout: PropTypes.any,
+  DragHandle: PropTypes.any,
 };
 
 function SingleItem({ id, isContainer, containers, Component, BuilderField, component, ...rest }) {

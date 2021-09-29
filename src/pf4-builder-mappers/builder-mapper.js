@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 
@@ -108,9 +108,17 @@ const PropertiesEditor = ({
   handleClose,
   handleDelete,
   hasPropertyError,
+  disableValidators,
 }) => {
   const [activeTab, setActiveTab] = useState(0);
   const Select = InternalSelect;
+
+  useEffect(() => {
+    if (activeTab === 1 && disableValidators) {
+      setActiveTab(0);
+    }
+  }, [disableValidators]);
+
   return (
     <div className="pf4-properties-editor-container">
       <Card className="pf4-properties-editor-header">
@@ -136,7 +144,7 @@ const PropertiesEditor = ({
               eventKey={0}
               title={<span>Properties {hasPropertyError && <ExclamationCircleIcon className="pf4-property-error-icon" />}</span>}
             />
-            <Tab tabIndex="-1" eventKey={1} title="Validation" />
+            {!disableValidators && <Tab tabIndex="-1" eventKey={1} title="Validation" disabled={disableValidators} />}
           </Tabs>
         </CardBody>
       </Card>
@@ -177,6 +185,7 @@ PropertiesEditor.propTypes = {
   handleClose: PropTypes.func.isRequired,
   handleDelete: PropTypes.func,
   hasPropertyError: PropTypes.array,
+  disableValidators: PropTypes.bool,
 };
 
 const PropertyGroup = ({ className, children, title, handleDelete, ...props }) => (

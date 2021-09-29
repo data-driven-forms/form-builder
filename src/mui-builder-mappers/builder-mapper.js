@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 
@@ -264,7 +264,7 @@ FieldLayout.propTypes = {
   selected: PropTypes.bool,
 };
 
-const ContainerLayout = ({ children, disableDrag, dragging, selected }) => {
+const ContainerLayout = ({ children, selected }) => {
   const classes = useStyles();
   return (
     <div
@@ -309,9 +309,16 @@ const PropertiesEditor = ({
   handleClose,
   handleDelete,
   hasPropertyError,
+  disableValidators,
 }) => {
   const [activeTab, setActiveTab] = useState(0);
   const classes = useStyles();
+
+  useEffect(() => {
+    if (activeTab === 1 && disableValidators) {
+      setActiveTab(0);
+    }
+  }, [disableValidators]);
 
   return (
     <Card className={classes.propertiesContainer}>
@@ -347,7 +354,7 @@ const PropertiesEditor = ({
               </Badge>
             }
           />
-          <Tab label="Validation" />
+          {!disableValidators && <Tab label="Validation" />}
         </Tabs>
         <div hidden={activeTab !== 0}>
           <form className={classes.form}>{propertiesChildren}</form>
@@ -384,6 +391,7 @@ PropertiesEditor.propTypes = {
   handleClose: PropTypes.func.isRequired,
   handleDelete: PropTypes.func,
   hasPropertyError: PropTypes.array,
+  disableValidators: PropTypes.bool,
 };
 
 const PropertyGroup = ({ className, children, title, handleDelete, ...props }) => {

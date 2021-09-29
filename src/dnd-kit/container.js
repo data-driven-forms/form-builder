@@ -6,10 +6,10 @@ const Container = ({ id, style, children }) => {
   const { isOver, setNodeRef } = useDroppable({
     id,
   });
-  const { isOver: topIsOver, setNodeRef: topSetNodeRef } = useDroppable({
+  const { setNodeRef: topSetNodeRef } = useDroppable({
     id: `voidzone-top-${id}`,
   });
-  const { isOver: botIsIver, setNodeRef: botSetNodeRef } = useDroppable({
+  const { setNodeRef: botSetNodeRef } = useDroppable({
     id: `voidzone-bot-${id}`,
   });
 

@@ -264,7 +264,7 @@ FieldLayout.propTypes = {
   selected: PropTypes.bool,
 };
 
-const ContainerLayout = ({ children, disableDrag, dragging, selected }) => {
+const ContainerLayout = ({ children, selected }) => {
   const classes = useStyles();
   return (
     <div

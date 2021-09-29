@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Fragment } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import BuilderContext from './builder-context';
 
@@ -18,10 +17,10 @@ const SortableContainer = ({ disableDrag, disableDrop, id, isActive, style, chil
     disabled: disableDrop,
     id,
   });
-  const { isOver: topIsOver, setNodeRef: topSetNodeRef } = useSortable({
+  const { setNodeRef: topSetNodeRef } = useSortable({
     id: `voidzone-top-${id}`,
   });
-  const { isOver: botIsIver, setNodeRef: botSetNodeRef } = useSortable({
+  const { setNodeRef: botSetNodeRef } = useSortable({
     id: `voidzone-bot-${id}`,
   });
 
@@ -70,6 +69,8 @@ SortableContainer.propTypes = {
   isActive: PropTypes.bool,
   style: PropTypes.object,
   children: PropTypes.node,
+  disableDrag: PropTypes.bool,
+  disableDrop: PropTypes.bool,
 };
 
 export default SortableContainer;

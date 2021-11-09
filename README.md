@@ -56,6 +56,7 @@ This component allows to build [Data Driven Forms](https://github.com/data-drive
   - [disableDrag](#disabledrag)
 - [Mappers](#mappers)
   - [Material UI](#material-ui)
+    - [Version 5](#version-5)
   - [PatternFly 4](#patternfly-4)
   - [Example](#example-1)
 
@@ -361,6 +362,10 @@ import {
   fieldProperties
 } from '@data-driven-forms/form-builder/mui-builder-mappers';
 ```
+
+### Version 5
+
+MUI-BUILDER is using MUI of version 5. To use version 4 (`@material-ui/core`), please use the builder of version `0.0.12-rc1`.
 
 ## PatternFly 4
 

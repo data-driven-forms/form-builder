@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import ReactDom from 'react-dom';
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import FormBuilder from '../src/form-builder';
 
 import { componentMapper as pf4ComponentMapper } from '@data-driven-forms/pf4-component-mapper';
@@ -281,30 +281,32 @@ const Demo = () => {
       <button onClick={() => setState(pf4State)}>PF4 demo</button>
       <button onClick={() => setState(muiState)}>MUI demo</button>
       <CssBaseline />
-      <ThemeProvider theme={createMuiTheme({})}>
-        <FormBuilder
-          schema={schema}
-          schemaTemplate={schemaTemplate}
-          pickerMapper={state.pickerMapper}
-          componentProperties={componentProperties}
-          builderMapper={state.builderMapper}
-          propertiesMapper={state.propertiesMapper}
-          componentMapper={state.componentMapper}
-          cloneWhileDragging
-          disableDrag={false}
-          disableAdd={false}
-          openEditor
-          mode="subset"
-          debug={false}
-          render={({ isValid, getSchema, ...props }) => (
-            <state.BuilderTemplate {...props}>
-              <div>
-                <button onClick={() => console.log(getSchema())}>Click to get state</button>
-              </div>
-            </state.BuilderTemplate>
-          )}
-        />
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={createTheme()}>
+          <FormBuilder
+            schema={schema}
+            schemaTemplate={schemaTemplate}
+            pickerMapper={state.pickerMapper}
+            componentProperties={componentProperties}
+            builderMapper={state.builderMapper}
+            propertiesMapper={state.propertiesMapper}
+            componentMapper={state.componentMapper}
+            cloneWhileDragging
+            disableDrag={false}
+            disableAdd={false}
+            openEditor
+            mode="subset"
+            debug={false}
+            render={({ isValid, getSchema, ...props }) => (
+              <state.BuilderTemplate {...props}>
+                <div>
+                  <button onClick={() => console.log(getSchema())}>Click to get state</button>
+                </div>
+              </state.BuilderTemplate>
+            )}
+          />
+        </ThemeProvider>
+      </StyledEngineProvider>
     </Fragment>
   );
 };

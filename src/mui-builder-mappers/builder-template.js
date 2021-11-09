@@ -1,32 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles({
-  root: {
+const Root = styled('div')(() => ({
+  '&.root': {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
   },
-  builderLayout: {
+  '& .builderLayout': {
     display: 'flex',
     flexGrow: 1,
   },
-});
+}));
 
-const BuilderTemplate = ({ ComponentPicker, PropertiesEditor, DropTarget, children }) => {
-  const classes = useStyles();
-  return (
-    <div className={classes.root}>
-      {children}
-      <div className={classes.builderLayout}>
-        <ComponentPicker />
-        <DropTarget key="drop-target" />
-        <PropertiesEditor />
-      </div>
+const BuilderTemplate = ({ ComponentPicker, PropertiesEditor, DropTarget, children }) => (
+  <Root className="root">
+    {children}
+    <div className="builderLayout">
+      <ComponentPicker />
+      <DropTarget key="drop-target" />
+      <PropertiesEditor />
     </div>
-  );
-};
+  </Root>
+);
 
 BuilderTemplate.propTypes = {
   ComponentPicker: PropTypes.func.isRequired,

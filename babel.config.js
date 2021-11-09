@@ -104,8 +104,8 @@ module.exports = {
         [
           'transform-imports',
           {
-            '@material-ui/core': {
-              transform: (importName) => `@material-ui/core/${importName}`,
+            '@mui/material': {
+              transform: (importName) => `@mui/material/node/${importName}`,
               preventFullImport: false,
               skipDefaultConversion: false,
             },
@@ -203,8 +203,8 @@ module.exports = {
         [
           'transform-imports',
           {
-            '@material-ui/core': {
-              transform: (importName) => `@material-ui/core/esm/${importName}`,
+            '@mui/material': {
+              transform: (importName) => `@mui/material/${importName}`,
               preventFullImport: false,
               skipDefaultConversion: false,
             },

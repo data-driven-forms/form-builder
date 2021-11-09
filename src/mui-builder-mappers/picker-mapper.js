@@ -1,29 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
-import { Button } from '@material-ui/core';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
-import TodayIcon from '@material-ui/icons/Today';
-import ChromeReaderModeIcon from '@material-ui/icons/ChromeReaderMode';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
-import ToggleOffIcon from '@material-ui/icons/ToggleOff';
-import LowPriorityIcon from '@material-ui/icons/LowPriority';
-import TuneIcon from '@material-ui/icons/Tune';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@mui/material';
+import TextFieldsIcon from '@mui/icons-material/TextFields';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import TodayIcon from '@mui/icons-material/Today';
+import ChromeReaderModeIcon from '@mui/icons-material/ChromeReaderMode';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import ToggleOffIcon from '@mui/icons-material/ToggleOff';
+import LowPriorityIcon from '@mui/icons-material/LowPriority';
+import TuneIcon from '@mui/icons-material/Tune';
+import { styled } from '@mui/material/styles';
 import { builderComponentTypes } from '../constants';
 
-const useStyles = makeStyles(() => ({
-  root: {
+const Root = styled('div')(() => ({
+  '&.root': {
     '& > *': {
       'margin-bottom': 8,
     },
   },
-  label: {
+  '& .label': {
     justifyContent: 'end',
   },
-  buttonRoot: {
+  '& .buttonRoot': {
     pointerEvents: 'none',
     backgroundImage: 'linear-gradient(135deg, #41108E 0%, rgba(165, 37, 193, 1) 44.76%, #FC9957 100%)',
     backgroundRepeat: 'no-repeat',
@@ -58,27 +58,23 @@ const icons = {
   [componentTypes.SLIDER]: <TuneIcon />,
 };
 
-const PickerRoot = ({ component }) => {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <Button
-        variant="contained"
-        startIcon={icons[component]}
-        tabIndex={-1}
-        classes={{
-          label: classes.label,
-          root: classes.buttonRoot,
-        }}
-        color="primary"
-        fullWidth
-      >
-        {labels[component] || component}
-      </Button>
-    </div>
-  );
-};
+const PickerRoot = ({ component }) => (
+  <Root className="root">
+    <Button
+      variant="contained"
+      startIcon={icons[component]}
+      tabIndex={-1}
+      classes={{
+        label: 'label',
+        root: 'buttonRoot',
+      }}
+      color="primary"
+      fullWidth
+    >
+      {labels[component] || component}
+    </Button>
+  </Root>
+);
 
 PickerRoot.propTypes = {
   component: PropTypes.string.isRequired,
